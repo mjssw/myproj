@@ -9,8 +9,8 @@ endif
 
 OUT_FILE = libsgnet.a
 SRC_INCLUDE = ./
-MYSQL_INCLUDE = ../MySql/include
-TINYXML_INCLUDE = ../tinyxml
+MYSQL_INCLUDE = ../third_part/mysql/include
+TINYXML_INCLUDE = ../third_part/tinyxml/include
 SRC_DIR = ./
 AR_FLAGS = rcs
 CC  = gcc

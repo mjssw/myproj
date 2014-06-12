@@ -14,7 +14,7 @@ LD_FLAGS = -pthread
 endif
 
 INCLUDE_SRC = .
-INCLUDE_NETLIB = ../NetLib
+INCLUDE_NETLIB = ../../sglib
 
 SRC_DIR_CURRENT = $(INCLUDE_SRC)
 

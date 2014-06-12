@@ -291,3 +291,4 @@ void CCenterClient::_GroupGateInfoReport(const byte *pPkg, s32 nPkgLen)
 		SERVER_LOG_ERROR( "CCenterClient,_GroupGateInfoReport,ParseFromArray" );
 	}
 }
+

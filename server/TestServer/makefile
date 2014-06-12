@@ -20,16 +20,16 @@ endif
 
 INCLUDE_SRC = .
 INCLUDE_SERVER_BASE = ../ServerBase
-INCLUDE_PROTO_MSG = ../MsgDefine/msg
-INCLUDE_MYSQL = ../MySql/include
-INCLUDE_TINYXML = ../tinyxml
-INCLUDE_NETLIB = ../NetLib
-INCLUDE_APR = ../log4cxx/linux/apr/include
-INCLUDE_APR_UTIL = ../log4cxx/linux/apr-util/include
-INCLUDE_LOG4CXX = ../log4cxx/linux/log4cxx/include
-INCLUDE_PROTO_ROOT = ../protobuf-2.5.0/src
-INCLUDE_PROTOBUF = ../protobuf-2.5.0/src/google/protobuf
-INCLUDE_PROTOBUF_STUBS = ../protobuf-2.5.0/src/google/protobuf/stubs
+INCLUDE_PROTO_MSG = ../../protomsg/msg
+INCLUDE_MYSQL = ../../third_part/mysql/include
+INCLUDE_TINYXML = ../../third_part/tinyxml/include
+INCLUDE_NETLIB = ../../sglib
+INCLUDE_APR = ../../third_part/log4cxx/linux/apr/include
+INCLUDE_APR_UTIL = ../../third_part/log4cxx/linux/apr-util/include
+INCLUDE_LOG4CXX = ../../third_part/log4cxx/linux/log4cxx/include
+INCLUDE_PROTO_ROOT = ../../third_part/protobuf/include
+INCLUDE_PROTOBUF = ../../third_part/protobuf/include/google/protobuf
+INCLUDE_PROTOBUF_STUBS = ../../third_part/protobuf/include/google/protobuf/stubs
 
 SRC_DIR_CURRENT = $(INCLUDE_SRC)
 SRC_DIR_SERVER_BASE = $(INCLUDE_SERVER_BASE)
