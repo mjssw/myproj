@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateClient.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateRpcClient.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MsgDefine\msg\center.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MsgDefine\msg\client.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MsgDefine\msg\common.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MsgDefine\msg\errno.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MsgDefine\msg\gamemanager.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MsgDefine\msg\gate.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MsgDefine\msg\login.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MsgDefine\msg\msgid.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MsgDefine\msg\public.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MsgDefine\msg\tetris.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ServerBase\Client.cpp">
+      <Filter>ServerBase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ServerBase\GameManager.cpp">
+      <Filter>ServerBase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ServerBase\GateClientBase.cpp">
+      <Filter>ServerBase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ServerBase\GateClientManager.cpp">
+      <Filter>ServerBase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ServerBase\Hall.cpp">
+      <Filter>ServerBase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ServerBase\mtwist.cpp">
+      <Filter>ServerBase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ServerBase\PlayerBase.cpp">
+      <Filter>ServerBase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ServerBase\RoomBase.cpp">
+      <Filter>ServerBase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ServerBase\RpcClient.cpp">
+      <Filter>ServerBase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ServerBase\ServerManager.cpp">
+      <Filter>ServerBase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ServerBase\StateManager.cpp">
+      <Filter>ServerBase</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TemplateClient.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateRpcClient.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MsgDefine\msg\center.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MsgDefine\msg\client.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MsgDefine\msg\common.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MsgDefine\msg\errno.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MsgDefine\msg\gamemanager.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MsgDefine\msg\gate.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MsgDefine\msg\login.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MsgDefine\msg\msgid.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MsgDefine\msg\public.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MsgDefine\msg\tetris.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\Client.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\GameId.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\GameManager.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\GameServerInfo.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\GateClientBase.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\GateClientManager.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\Hall.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\HallConfig.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\Log4cxxCreater.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\MTRandom.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\mtwist.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\PlayerBase.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\PlayerStateBase.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\RoomBase.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\RoomStateBase.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\RpcClient.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\Server.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\ServerConfig.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\ServerManager.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\StateBase.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\StateManager.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ServerBase\Utils.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="msg">
+      <UniqueIdentifier>{39f32c66-cd2a-4c30-bb42-97e4e1c039b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerBase">
+      <UniqueIdentifier>{974908d7-a94e-4a30-b25e-5af7040c189f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{ecfbbf85-376f-4e99-95b6-94b4da044ffc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

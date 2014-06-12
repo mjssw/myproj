@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Configure>
+	<Server Id="3" Ip="127.0.0.1" Port="10003" DisplayName="LoginGateServer" />
+	<Connects CenterServerId="0" GameManagerId="0" GroupManagerId="0">
+		<Connect Id="2" Name="LoginServer" Ip="127.0.0.1" Port="10002" IsDefault="true" />
+	</Connects>
+	<Log>
+		<File Path="./login_gate.log" Enable="true" Layout="%d [%-2t] %-5p - %m%n" MinLevel="DEBUG" MaxLevel="FATAL" />
+		<Console Enable="true" Layout="%d [%-2t] %-5p - %m%n" MinLevel="DEBUG" MaxLevel="FATAL" />
+	</Log>
+</Configure>

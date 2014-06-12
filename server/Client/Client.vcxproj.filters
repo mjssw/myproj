@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="msg">
+      <UniqueIdentifier>{207875b1-1c95-4e26-8b1b-a0a5cc09a88d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ClientMain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientForTestServer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientForTestIoService.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\protomsg\msg\center.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\protomsg\msg\client.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\protomsg\msg\common.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\protomsg\msg\errno.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\protomsg\msg\gamemanager.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\protomsg\msg\gate.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\protomsg\msg\group.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\protomsg\msg\login.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\protomsg\msg\msgid.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\protomsg\msg\public.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\protomsg\msg\tetris.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\protomsg\msg\center.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\protomsg\msg\client.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\protomsg\msg\common.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\protomsg\msg\errno.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\protomsg\msg\gamemanager.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\protomsg\msg\gate.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\protomsg\msg\group.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\protomsg\msg\login.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\protomsg\msg\msgid.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\protomsg\msg\public.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\protomsg\msg\tetris.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

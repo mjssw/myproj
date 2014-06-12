@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Configure>
+	<Server Id="4" Ip="127.0.0.1" Port="10004" DisplayName="TetrisServer" />
+	<Connects CenterServerId="0" GameManagerId="6" GroupManagerId="0">
+		<Connect Id="6" Name="TetrisGameManager" Ip="127.0.0.1" Port="10006" IsDefault="true" />
+	</Connects>
+	<Log>
+		<File Path="./tetris.log" Enable="true" Layout="%d [%-2t] %-5p - %m%n" MinLevel="DEBUG" MaxLevel="FATAL" />
+		<Console Enable="true" Layout="%d [%-2t] %-5p - %m%n" MinLevel="DEBUG" MaxLevel="FATAL" />
+	</Log>
+	<HallCfg IsDynamicStart="0" Id="1" Name="新手1区" RoomIdFrom="1" RoomCount="50" RoomPlayerCount="2" />
+</Configure>

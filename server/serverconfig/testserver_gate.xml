@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Configure>
+	<Server Id="91" Ip="127.0.0.1" Port="10091" DisplayName="TestGateServer" />
+	<Connects CenterServerId="0" GameManagerId="0" GroupManagerId="0">
+		<Connect Id="90" Name="TestServer" Ip="127.0.0.1" Port="10090" IsDefault="true" />
+	</Connects>
+	<Log>
+		<File Path="./testserver_gate.log" Enable="true" Layout="%d [%-2t] %-5p - %m%n" MinLevel="DEBUG" MaxLevel="FATAL" />
+		<Console Enable="true" Layout="%d [%-2t] %-5p - %m%n" MinLevel="DEBUG" MaxLevel="FATAL" />
+	</Log>
+</Configure>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Configure>
+	<Server Id="10" Ip="127.0.0.1" Port="10010" DisplayName="Group" />
+	<Connects CenterServerId="0" GameManagerId="0" GroupManagerId="9">
+		<Connect Id="9" Name="GroupManager" Ip="127.0.0.1" Port="10009" IsDefault="true" />
+	</Connects>
+	<Log>
+		<File Path="./Group.log" Enable="true" Layout="%d [%-2t] %-5p - %m%n" MinLevel="DEBUG" MaxLevel="FATAL" />
+		<Console Enable="true" Layout="%d [%-2t] %-5p - %m%n" MinLevel="DEBUG" MaxLevel="FATAL" />
+	</Log>
+	<Param IsDynamicStart="0" />
+</Configure>

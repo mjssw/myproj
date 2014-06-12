@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Configure>
+	<Server Id="90" Ip="172.18.5.48" Port="10090" DisplayName="TestServerForClient" />
+	<Connects CenterServerId="0" GameManagerId="0" GroupManagerId="0">
+	</Connects>
+	<Log>
+		<File Path="./testserverforclient.log" Enable="true" Layout="%d [%-2t] %-5p - %m%n" MinLevel="DEBUG" MaxLevel="FATAL" />
+		<Console Enable="true" Layout="%d [%-2t] %-5p - %m%n" MinLevel="DEBUG" MaxLevel="FATAL" />
+	</Log>
+</Configure>

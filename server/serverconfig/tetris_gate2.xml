@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Configure>
+	<Server Id="8" Ip="127.0.0.1" Port="10008" DisplayName="TetrisGateServer2" />
+	<Connects CenterServerId="0" GameManagerId="0" GroupManagerId="0">
+		<Connect Id="4" Name="TetrisServer" Ip="127.0.0.1" Port="10004" IsDefault="true" />
+	</Connects>
+	<Log>
+		<File Path="./tetris_gate2.log" Enable="true" Layout="%d [%-2t] %-5p - %m%n" MinLevel="DEBUG" MaxLevel="FATAL" />
+		<Console Enable="true" Layout="%d [%-2t] %-5p - %m%n" MinLevel="DEBUG" MaxLevel="FATAL" />
+	</Log>
+</Configure>

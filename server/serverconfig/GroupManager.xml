@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Configure>
+	<Server Id="9" Ip="127.0.0.1" Port="10009" DisplayName="GroupManager" />
+	<Connects CenterServerId="1" GameManagerId="0" GroupManagerId="0">
+		<Connect Id="1" Name="CenterServer" Ip="127.0.0.1" Port="10001" IsDefault="false" />
+	</Connects>
+	<Log>
+		<File Path="./GroupManager.log" Enable="true" Layout="%d [%-2t] %-5p - %m%n" MinLevel="DEBUG" MaxLevel="FATAL" />
+		<Console Enable="true" Layout="%d [%-2t] %-5p - %m%n" MinLevel="DEBUG" MaxLevel="FATAL" />
+	</Log>
+</Configure>

@@ -164,7 +164,7 @@ namespace SGLib
 				CallBackData *cbData = (CallBackData*)data;
 				CCallbackTimer *pthis = (CCallbackTimer*)(cbData->head.obj);
 				pthis->m_eventWorkerPool.PushEvent(
-					0, len, data, cbData->head.obj );
+					0, len, data, (IEventEx*)cbData->head.obj );
 			}
 		protected:
 			CEventWorkerExPool &m_eventWorkerPool;

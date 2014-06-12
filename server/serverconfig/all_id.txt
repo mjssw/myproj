@@ -1,0 +1,17 @@
+ID		SERVER
+1		center
+2		login
+3		login_gate
+4		tetris
+5		tetris_gate
+6		tetris_gamemgr
+7		tetris2
+8		tetris_gate2
+90		testserver_forclient
+90		testserver_forgate
+91		testserver_gate
+9		GroupManager
+10		Group
+11		GroupGate
+12		Group2
+13		GroupGate2

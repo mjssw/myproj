@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{CCA61DFD-74FD-44D1-AB85-B2FF25398531}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Center</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_USE_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../NetLib;../MySQL51/include;../tinyxml;../protobuf-2.5.0/src;../MsgDefine/msg;../log4cxx/apache-log4cxx-0.10.0/src/main/include;../ServerBase;../protobuf-2.5.0/src/google/protobuf;../protobuf-2.5.0/src/google/protobuf/stubs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\MySQL51\lib\debug;..\tinyxml\lib\windows\$(PlatformName)\$(Configuration);..\protobuf-2.5.0\lib\$(PlatformName)\$(Configuration);..\log4cxx\lib\$(Configuration)\$(PlatformName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmysql.lib;tinyxml.lib;libprotobuf.lib;log4cxx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>copy /Y ..\MySQL51\lib\debug\libmysql.dll .\
+copy /Y ..\global.xml .\
+copy /Y ..\netconfig.xml .\
+mkdir serverconfig
+xcopy /Y ..\serverconfig .\serverconfig /s
+copy /Y ..\log4cxx\lib\$(Configuration)\$(PlatformName)\log4cxx.dll .\</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_USE_WIN32;_USE_IOSERVICE_EX_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\sglib;$(SolutionDir)ServerBase;$(SolutionDir)..\protomsg\msg;$(SolutionDir)..\third_part\mysql\include;$(SolutionDir)..\third_part\tinyxml\include;$(SolutionDir)..\third_part\protobuf\include;$(SolutionDir)..\third_part\protobuf\include\google\protobuf;$(SolutionDir)..\third_part\protobuf\include\google\protobuf\stubs;$(SolutionDir)..\third_part\log4cxx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\third_part\mysql\lib;$(SolutionDir)..\third_part\tinyxml\lib;$(SolutionDir)..\third_part\protobuf\lib\Debug;$(SolutionDir)..\third_part\log4cxx\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmysql.lib;tinyxml.lib;libprotobuf.lib;log4cxx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>copy /Y $(SolutionDir)..\third_part\mysql\lib\libmysql.dll $(ProjectDir)
+copy /Y $(SolutionDir)netconfig.xml $(ProjectDir)
+mkdir $(ProjectDir)serverconfig
+xcopy /Y $(SolutionDir)serverconfig $(ProjectDir)serverconfig /s
+copy /Y $(SolutionDir)..\third_part\log4cxx\lib\Debug\log4cxx.dll $(ProjectDir)</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_USE_WIN32;_USE_IOSERVICE_EX_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\sglib;$(SolutionDir)ServerBase;$(SolutionDir)..\protomsg\msg;$(SolutionDir)..\third_part\mysql\include;$(SolutionDir)..\third_part\tinyxml\include;$(SolutionDir)..\third_part\protobuf\include;$(SolutionDir)..\third_part\protobuf\include\google\protobuf;$(SolutionDir)..\third_part\protobuf\include\google\protobuf\stubs;$(SolutionDir)..\third_part\log4cxx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\third_part\mysql\lib;$(SolutionDir)..\third_part\tinyxml\lib;$(SolutionDir)..\third_part\protobuf\lib;$(SolutionDir)..\third_part\log4cxx\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmysql.lib;tinyxml.lib;libprotobuf.lib;log4cxx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\protomsg\msg\center.pb.cc" />
+    <ClCompile Include="..\..\protomsg\msg\client.pb.cc" />
+    <ClCompile Include="..\..\protomsg\msg\common.pb.cc" />
+    <ClCompile Include="..\..\protomsg\msg\errno.pb.cc" />
+    <ClCompile Include="..\..\protomsg\msg\gamemanager.pb.cc" />
+    <ClCompile Include="..\..\protomsg\msg\gate.pb.cc" />
+    <ClCompile Include="..\..\protomsg\msg\group.pb.cc" />
+    <ClCompile Include="..\..\protomsg\msg\login.pb.cc" />
+    <ClCompile Include="..\..\protomsg\msg\msgid.pb.cc" />
+    <ClCompile Include="..\..\protomsg\msg\public.pb.cc" />
+    <ClCompile Include="..\..\protomsg\msg\tetris.pb.cc" />
+    <ClCompile Include="..\ServerBase\Client.cpp" />
+    <ClCompile Include="..\ServerBase\DynamicServerManager.cpp" />
+    <ClCompile Include="..\ServerBase\GameManager.cpp" />
+    <ClCompile Include="..\ServerBase\GateClientBase.cpp" />
+    <ClCompile Include="..\ServerBase\GateClientManager.cpp" />
+    <ClCompile Include="..\ServerBase\GroupInfoManager.cpp" />
+    <ClCompile Include="..\ServerBase\Hall.cpp" />
+    <ClCompile Include="..\ServerBase\mtwist.cpp" />
+    <ClCompile Include="..\ServerBase\MySqlManager.cpp" />
+    <ClCompile Include="..\ServerBase\PlayerBase.cpp" />
+    <ClCompile Include="..\ServerBase\PlayerStateManager.cpp" />
+    <ClCompile Include="..\ServerBase\ReportServerManager.cpp" />
+    <ClCompile Include="..\ServerBase\RoomBase.cpp" />
+    <ClCompile Include="..\ServerBase\RoomStateMananger.cpp" />
+    <ClCompile Include="..\ServerBase\RpcClient.cpp" />
+    <ClCompile Include="..\ServerBase\ServerManager.cpp" />
+    <ClCompile Include="..\ServerBase\StateManager.cpp" />
+    <ClCompile Include="CenterClient.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="User.cpp" />
+    <ClCompile Include="UserManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\protomsg\msg\center.pb.h" />
+    <ClInclude Include="..\..\protomsg\msg\client.pb.h" />
+    <ClInclude Include="..\..\protomsg\msg\common.pb.h" />
+    <ClInclude Include="..\..\protomsg\msg\errno.pb.h" />
+    <ClInclude Include="..\..\protomsg\msg\gamemanager.pb.h" />
+    <ClInclude Include="..\..\protomsg\msg\gate.pb.h" />
+    <ClInclude Include="..\..\protomsg\msg\group.pb.h" />
+    <ClInclude Include="..\..\protomsg\msg\login.pb.h" />
+    <ClInclude Include="..\..\protomsg\msg\msgid.pb.h" />
+    <ClInclude Include="..\..\protomsg\msg\public.pb.h" />
+    <ClInclude Include="..\..\protomsg\msg\tetris.pb.h" />
+    <ClInclude Include="..\ServerBase\Client.h" />
+    <ClInclude Include="..\ServerBase\DynamicServerManager.h" />
+    <ClInclude Include="..\ServerBase\GameId.h" />
+    <ClInclude Include="..\ServerBase\GameManager.h" />
+    <ClInclude Include="..\ServerBase\GameServerInfo.h" />
+    <ClInclude Include="..\ServerBase\GateClientBase.h" />
+    <ClInclude Include="..\ServerBase\GateClientManager.h" />
+    <ClInclude Include="..\ServerBase\GroupInfoManager.h" />
+    <ClInclude Include="..\ServerBase\Hall.h" />
+    <ClInclude Include="..\ServerBase\HallConfig.h" />
+    <ClInclude Include="..\ServerBase\Log4cxxCreater.h" />
+    <ClInclude Include="..\ServerBase\MTRandom.h" />
+    <ClInclude Include="..\ServerBase\mtwist.h" />
+    <ClInclude Include="..\ServerBase\MySqlManager.h" />
+    <ClInclude Include="..\ServerBase\PlayerBase.h" />
+    <ClInclude Include="..\ServerBase\PlayerStateBase.h" />
+    <ClInclude Include="..\ServerBase\PlayerStateManager.h" />
+    <ClInclude Include="..\ServerBase\ReportServerManager.h" />
+    <ClInclude Include="..\ServerBase\RoomBase.h" />
+    <ClInclude Include="..\ServerBase\RoomStateBase.h" />
+    <ClInclude Include="..\ServerBase\RoomStateManager.h" />
+    <ClInclude Include="..\ServerBase\RpcClient.h" />
+    <ClInclude Include="..\ServerBase\Server.h" />
+    <ClInclude Include="..\ServerBase\ServerConfig.h" />
+    <ClInclude Include="..\ServerBase\ServerManager.h" />
+    <ClInclude Include="..\ServerBase\StateBase.h" />
+    <ClInclude Include="..\ServerBase\StateManager.h" />
+    <ClInclude Include="..\ServerBase\Utils.h" />
+    <ClInclude Include="CenterClient.h" />
+    <ClInclude Include="CenterRpcClient.h" />
+    <ClInclude Include="User.h" />
+    <ClInclude Include="UserManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\sglib\NetLib.vcxproj">
+      <Project>{5e65c6b3-eb78-4d0e-81dd-44bb27ef40af}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
