@@ -1,0 +1,47 @@
+// =============================================================================
+
+typedef void (*DBCallBackFunc)(IDBRecordSet *RecordSet, char *ErrMsg);
+void dbCallBack1(IDBRecordSet *RecordSet, char *ErrMsg)
+{
+	printf("run here, recored count=%d\n", RecordSet->GetRecordCount());
+}
+
+class CCallbackTest
+{
+public:
+	void dbCallBack2(IDBRecordSet *RecordSet, char *ErrMsg)
+	{
+		printf("run here2, recored count=%d\n", RecordSet->GetRecordCount());
+	}
+};
+//typedef void (*CCallbackTest::pMemFunc)(IDBRecordSet *RecordSet, char *ErrMsg);
+
+void TestFunctorAndDBPool()
+{
+	CCallbackTest cbtest;
+	CDBCallbackFunctor functor1(&dbCallBack1);
+	CDBCallbackFunctor functor2(&cbtest, &CCallbackTest::dbCallBack2);
+/*	
+	CDBCallbackFunctor *functor3 = new CDBCallbackFunctor(&dbCallBack1);
+	CDBCallbackFunctor *functor4 = new CDBCallbackFunctor(&cbtest, &CCallbackTest::dbCallBack2);
+	CFunctorImpl *impl = new CFuncHandler<DBCallBackFunc>(&dbCallBack1);
+	CFunctorImpl *imp2 = new CMemFuncHandler<CCallbackTest, CCallbackTest::pMemFunc>\
+		(&cbtest, &CCallbackTest::dbCallBack2);
+        //*/
+
+	MySqlDBInfo dbInfo("127.0.0.1", "test", "root", "sjj", 3306);
+	CDBPool<MySqlDBQuery> dbPool(2, 100);
+	if( dbPool.Start(&dbInfo) )
+	{
+		dbPool.Execute("select *from user", &dbCallBack1);
+		dbPool.Execute("select *from user", &cbtest, &CCallbackTest::dbCallBack2);
+		printf("success\n");
+	}
+
+	printf("press enter to quit...\n");getchar();
+
+	dbPool.Stop();
+}
+//*/
+
+// =========================================================================
