@@ -1,0 +1,417 @@
+package sglib.groupproto;
+import 'public.proto';
+
+// group server<->gate/client message
+
+message CSGroupUserLoginReq 
+{
+	required string user	= 1;
+	required string token	= 2;
+}
+
+message SCGroupUserLoginRsp 
+{
+	required int32 result 	= 1;
+}
+
+message SCGroupListUpdate 
+{
+	repeated sglib.publicproto.GroupInfo groups	= 1;
+}
+
+message SCGroupInfoUpdate
+{
+	required uint64 id		= 1;
+	repeated sglib.publicproto.GroupMemberInfo members	= 2;
+}
+
+message CSGroupCreateReq
+{
+	required string name	= 1;
+}
+
+message SCGroupCreateRsp
+{
+	required int32 result	= 1;
+	required string name	= 2;
+	optional uint64 groupid	= 3;
+}
+
+message CSGroupSearchReq
+{
+	required uint64 groupid	= 1;
+}
+
+message SCGroupSearchRsp
+{
+	required int32 result	= 1;
+	optional sglib.publicproto.GroupInfo group = 2;
+}
+
+message CSGroupJoinReq
+{
+	required uint64 groupid	= 1;
+}
+
+message SCGroupJoinRsp
+{
+	required int32 result	= 1;
+	required uint64 groupid	= 2;
+}
+
+message CSGroupAddMemberReq
+{
+	required uint64 groupid	= 1;
+	repeated string users	= 2;
+}
+
+message SCGroupAddMemberRsp
+{
+	required int32 result	= 1;
+	required uint64 groupid	= 2;
+}
+
+message SCGroupAskJoinNtf
+{
+	required sglib.publicproto.GroupInfo group = 1;
+}
+
+message CSGroupAgreeJoinReq
+{
+	required uint64 groupid	= 1;
+}
+
+message SCGroupMemberJoinNtf
+{
+	required uint64 groupid	= 1;
+	required sglib.publicproto.GroupMemberInfo member	= 2;
+}
+
+message CSGroupLeaveReq
+{
+	required uint64 groupid	= 1;
+}
+
+message SCGroupLeaveRsp
+{
+	required int32 result	= 1;
+	required uint64 groupid	= 2;
+}
+
+message SCGroupMemberLeaveNtf
+{
+	required uint64 groupid	= 1;
+	required string user	= 2;
+}
+
+message CSGroupDeleteReq
+{
+	required uint64 groupid	= 1;
+}
+
+message SCGroupDeleteRsp
+{
+	required int32 result	= 1;
+	required uint64 groupid	= 2;
+}
+
+message SCGroupDeleteNtf
+{
+	required uint64 groupid	= 1;
+}
+
+message CSGroupMessageReq
+{
+	required uint64 groupid	= 1;
+	required string content	= 2;
+}
+
+message SCGroupMessageNtf
+{
+	required uint64 groupid	= 1;
+	required string content	= 2;
+	required string sender	= 3;
+}
+
+message SCGroupMemberOnlineNtf
+{
+	required uint64 groupid	= 1;
+	required string user	= 2;
+}
+
+message SCGroupMemberOfflineNtf
+{
+	required uint64 groupid	= 1;
+	required string user	= 2;
+}
+
+message CSGroupCreateGameRoomReq
+{
+	required uint64 groupid	= 1;	// 请求创建游戏房间的群
+	required int32 game		= 2;	// 请求创建的游戏
+}
+
+message SCGroupCreateGameRoomRsp
+{
+	required int32 result		= 1;
+	required uint64 groupid		= 2;	// 请求创建游戏房间的群
+	required int32 game			= 3;	// 请求创建的游戏
+	optional string ip			= 4;	// 游戏所在的gate ip
+	optional int32 port			= 5;	// 游戏所在的gate port
+	optional int32 roomid		= 6;	// 游戏的房间ID
+	optional string password	= 7;	// 游戏房间的密码
+}
+
+message SCGroupCreateGameRoomNtf
+{
+	required string creater		= 1;	// 创建者
+	required int32 game			= 2;	// 请求创建的游戏
+	optional string ip			= 3;	// 游戏所在的gate ip
+	optional int32 port			= 4;	// 游戏所在的gate port
+	optional int32 roomid		= 5;	// 游戏的房间ID
+	optional string password	= 6;	// 游戏房间的密码
+	required uint64 groupid		= 7;
+}
+
+
+// RPC message
+
+// group通知gate 群(groupid)位于serverid的groupserver上
+message GroupGateAddGroupNtf 
+{
+	required uint64 groupid		= 1;
+	required int32 serverid		= 2;
+}
+
+// group通知gate 群(groupid)不在serverid的groupserver上
+message GroupGateDelGroupNtf
+{
+	required uint64 groupid		= 1;
+}
+
+// group 通知 groupmanager 有 groupgate动态关闭了
+message GroupGroupmanagerGateCloseNtf
+{
+	required int32 gateid	= 1; // gate在配置文件中的id
+}
+
+// groupmanager 通知 center 有 groupgate动态关闭了
+message GroupmanagerCenterGateCloseNtf
+{
+	required int32 gateid	= 1; // gate在配置文件中的id
+}
+
+// group 通知 groupmanager 动态启动了
+message GroupGroupmanagerDynamicStartNtf
+{
+	required int32 id		= 1;
+	required string ip		= 2;
+	required int32 port		= 3;
+}
+
+// groupmanager通知 group 有其他group动态启动了
+message GroupmanagerGroupDynamicServerStartNtf
+{
+	required int32 id	= 1;
+	required string ip	= 2;
+	required int32 port	= 3;
+}
+
+// groupmanager 通知 center 有 group 关闭了
+message GroupmanagerCenterGroupCloseNtf
+{
+	required int32 serverid = 1;
+}
+
+message GroupGroupmanagerReportStatusInfo
+{
+	required int32 serverid		= 1;
+	required int32 totalgroup	= 2;	// 此group上加载的group数量
+	required int32 totalmember	= 3;	// 此group上加载的member数量
+	repeated sglib.publicproto.GateServerInfo gateservers	= 4;
+}
+
+message GroupmanagerCenterReportGroupGateInfo
+{
+	repeated sglib.publicproto.GateServerInfo gateservers	= 1;
+}
+
+message GroupGroupmanagerUserLoginNtf
+{
+    required int32 gateresid    = 1;
+	required uint64 clientid	= 2;
+    required string user        = 3;
+}
+
+message GroupGroupmanagerUserLogoutNtf
+{
+    required int32 gateresid    = 1;
+	required uint64 clientid	= 2;
+}
+
+message GroupGroupmanageCreateGroupReq
+{
+	required uint64 gateid		= 1;		// 请求建群的玩家所在的groupgate instance id
+	required int32 gateresid	= 2;		// 请求建群的玩家所在的groupgate server id(xml中配置)
+	required uint64 clientid	= 3;		// 请求建群的玩家在此gate上的clientid
+	required string name		= 4;		// 群名
+}
+
+message GroupmanageGroupCreateGroupNtf
+{
+	required uint64 gateid		= 1;		// 请求建群的玩家所在的groupgate instance id
+	required int32 gateresid	= 2;		// 请求建群的玩家所在的groupgate server id(xml中配置)
+	required uint64 clientid	= 3;		// 请求建群的玩家在此gate上的clientid
+	required string user		= 4;		// 请求创建群的玩家
+	required string name		= 5;		// 群名
+	required uint64 groupid		= 6;		// 群id
+	required uint64 groupserverid = 7;		// 委托建群的group server 的 instance id
+}
+
+message GroupGroupmanagerCreateGroupResult
+{
+	required int32 result		= 1;
+	required uint64 gateid		= 2;		// 请求建群的玩家所在的groupgate instance id
+	required uint64 clientid	= 3;		// 请求建群的玩家在此gate上的clientid
+	required string user		= 4;		// 请求创建群的玩家
+	required string name		= 5;		// 群名
+	required uint64 groupid		= 6;		// 群id
+	required uint64 groupserverid = 7;		// 委托建群的group server 的 instance id
+	optional int32 serverid		= 8;		// 被委托建群的group server 的 res id (xml 中配置的serverid)
+}
+
+message GroupmanagerGroupCreateGroupRsp
+{
+	required int32 result		= 1;
+	required uint64 gateid		= 2;		// 请求建群的玩家所在的groupgate instance id
+	required uint64 clientid	= 3;		// 请求建群的玩家在此gate上的clientid
+	required string name		= 4;		// 群名
+	optional uint64 groupid		= 5;		// 群id
+	optional int32 serverid		= 6;		// 被委托建群的group server 的 res id (xml 中配置的serverid)
+}
+
+message GroupGroupmanagerAddMemberToGroupReq
+{
+	required uint64 gateid		= 1;		// 发出请求的玩家所在的groupgate instance id
+	required int32 gateresid	= 2;		// 发出请求的玩家所在的groupgate server id(xml中配置)
+	required uint64 clientid	= 3;		// 发出请求的玩家在此gate上的clientid
+	required uint64 groupid		= 4;		// 群id
+	repeated string users		= 5;		// 要加入的玩家
+}
+
+message GroupmanagerGroupAddMemberToGroupRsp
+{
+	required uint64 gateid		= 1;		// 发出请求的玩家所在的groupgate instance id
+	required int32 gateresid	= 2;		// 发出请求的玩家所在的groupgate server id(xml中配置)
+	required uint64 clientid	= 3;		// 发出请求的玩家在此gate上的clientid
+	required uint64 groupid		= 4;		// 群id
+	repeated sglib.publicproto.GroupMemberPosInfo users	= 5;	// 要加入群的玩家信息数组
+}
+
+message GroupGroupmanagerForAgreeJoinAskInfoReq
+{
+	required int32 gateresid	= 1;
+	required uint64 clientid	= 2;
+	required uint64 groupid		= 3;
+}
+
+message GroupmanagerGroupForAgreeJoinAskInfoRsp
+{
+	required int32 result		= 1;
+	required int32 gateresid	= 2;
+	required uint64 clientid	= 3;
+	required uint64 groupid		= 4;
+	optional string user		= 5;
+}
+
+message GroupmanagerGroupLoadGroupNtf
+{
+	required uint64 groupid		= 1;		// 需要加载的群
+	required int32 gateresid	= 2;		// 导致需要加载群信息的玩家(群中第一个登录的玩家)所在的gate(xml配置的id)
+	required uint64 clientid	= 3;		// 导致需要加载群信息的玩家在gate上的id
+	required string user		= 4;		// 玩家的帐号
+}
+
+message GroupGroupmanagerLoadGroupResult
+{
+	required int32 result	= 1;			// 答复加载群的结果
+	required uint64 groupid	= 2;			// 加载的群id
+	optional int32 serverid	= 3;			// 新加载的群所在的group server的id(xml中配置)
+	required string user	= 4;			// 玩家的帐号
+	required int32 totalgroup	= 5;		// 此group上加载的group数量
+	required int32 totalmember	= 6;		// 此group上加载的member数量
+}
+
+message GroupmanagerGroupMemberOnlineNtf
+{
+	required uint64 groupid		= 1;
+	required int32 gateresid	= 2;		// 上线玩家所在的gate(xml配置的id)
+	required uint64 clientid	= 3;		// 上线玩家在gate上的id
+	required string user		= 4;		// 上线玩家的帐号
+}
+
+message GroupmanagerGroupMemberOfflineNtf
+{
+	required uint64 groupid		= 1;
+	required int32 gateresid	= 2;		// 下线玩家所在的gate(xml配置的id)
+	required uint64 clientid	= 3;		// 下线玩家在gate上的id
+	required string user		= 4;		// 下线玩家的帐号
+}
+
+message GroupGroupmanagerMemberLeaveNtf
+{
+	required uint64 groupid		= 1;
+	repeated string user		= 2;		// 玩家的帐号
+}
+
+message GroupGroupmanagerGroupDeleteNtf
+{
+	required uint64 groupid		= 1;		// 解散的群
+}
+
+message GroupGroupmanagerCreateGameRoomReq
+{
+	required uint64 groupid		= 1;
+	required int32 gateresid	= 2;		// 玩家所在的gate(xml配置的id)
+	required uint64 clientid	= 3;		// 玩家在gate上的id
+	required int32 game			= 4;		// 请求的游戏
+}
+
+message GroupmanagerGroupCreateGameRoomRsp
+{
+	required int32 result		= 1;
+	required uint64 groupid		= 2;
+	required int32 gateresid	= 3;		// 玩家所在的gate(xml配置的id)
+	required uint64 clientid	= 4;		// 玩家在gate上的id
+	required int32 game			= 5;		// 请求的游戏
+	optional string ip			= 6;		// 游戏所在的gate ip
+	optional int32 port			= 7;		// 游戏所在的gate port
+	optional int32 roomid		= 8;		// 游戏的房间ID
+	optional string password	= 9;		// 游戏房间的密码
+}
+
+message GroupmanagerGamemanagerCreateGameRoomReq
+{
+	required uint64 groupid		= 1;
+	required int32 gateresid	= 2;		// 玩家所在的gate(xml配置的id)
+	required uint64 clientid	= 3;		// 玩家在gate上的id
+	required int32 game			= 4;		// 请求的游戏
+	required int32 gameid		= 5;		// 请求的游戏id
+	required uint64 serverid	= 6;		// 发出此请求的group server对应的内存id
+}
+
+message GamemanagerGroupmanagerCreateGameRoomRsp
+{
+	required int32 result		= 1;
+	required uint64 groupid		= 2;
+	required int32 gateresid	= 3;		// 玩家所在的gate(xml配置的id)
+	required uint64 clientid	= 4;		// 玩家在gate上的id
+	required int32 game			= 5;		// 请求的游戏
+	required uint64 serverid	= 6;		// 发出此请求的group server对应的内存id
+	optional string ip			= 7;		// 游戏所在的gate ip
+	optional int32 port			= 8;		// 游戏所在的gate port
+	optional int32 roomid		= 9;		// 游戏的房间ID
+	optional string password	= 10;		// 游戏房间的密码
+}
+
+

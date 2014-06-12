@@ -1,0 +1,45 @@
+package sglib.gateproto;
+
+message ServerGateForwardMsgReq
+{
+	repeated uint64 clientid	= 1;
+	required bytes msg			= 2;
+}
+
+message ServerGateCloseClientReq 
+{
+	required uint64 clientid	= 1;
+}
+
+message ServerGateSetForwardServerReq 
+{
+	required uint64 clientid	= 1;
+	required int32 serverid		= 2;
+}
+
+message GateServerForwardMsgReq
+{
+	required uint64 clientid	= 1;
+	required bytes msg			= 2;
+}
+
+message GateServerReportStatusReq
+{
+	required int32 gateid	= 1;
+	required int32 cur_conn	= 2;
+	required int32 max_conn	= 3;
+	optional string ip		= 4;
+	optional int32 port		= 5;
+}
+
+message GateServerClientCloseNtf
+{
+	required uint64 clientid	= 1;
+}
+
+message ServerGateConnectNewServerNtf
+{
+	required int32 id	= 1;
+	required string ip	= 2;
+	required int32 port	= 3;
+}

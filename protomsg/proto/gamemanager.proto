@@ -1,0 +1,96 @@
+package sglib.gamemanagerproto;
+import 'public.proto';
+
+message GamemanagerCenterReportGameInfo
+{
+	required int32 gameid	= 1;
+	repeated sglib.publicproto.GameServerInfo gameservers	= 2;
+	repeated sglib.publicproto.GateServerInfo gateservers	= 3;
+}
+
+message ServerGamemanagerReportGameInfo
+{
+	required int32 gameid	= 1;
+	required sglib.publicproto.GameServerInfo gameserver	= 2;
+	repeated sglib.publicproto.GateServerInfo gateservers	= 3;
+}
+
+message ServerGamemanagerEnterGameReq
+{
+	required uint64 gateid		= 1; // gate的id
+	required uint64 clientid	= 2; // 玩家在此gate上的id
+	required int32 gameid		= 3;
+}
+
+message GamemanagerServerEnterGameRsp
+{
+	required int32 result		= 1;
+	required uint64 gateid		= 2;
+	required uint64 clientid	= 3;
+	required int32 gameid		= 4;
+	optional string ip			= 5;
+	optional int32 port			= 6;
+	optional int32 serverid		= 7;	// client连接成功游戏的gate后用此参数设置他的对应的gameserver
+}
+
+message ServerGamemanagerGateCloseNtf
+{
+	required int32 gameid	= 1;
+	required int32 gateid	= 2; // gate在配置文件中的id
+}
+
+message GamemanagerCenterGateCloseNtf
+{
+	required int32 gameid	= 1;
+	required int32 gateid	= 2; // gate在配置文件中的id
+}
+
+message ServerGamemanagerDynamicStartNtf
+{
+	required int32 id		= 1;
+	required string ip		= 2;
+	required int32 port		= 3;
+	required int32 gameid	= 4;
+}
+
+message GamemanagerServerDynamicServerStartNtf
+{
+	required int32 id	= 1;
+	required string ip	= 2;
+	required int32 port	= 3;
+}
+
+message GamemanagerCenterServerCloseNtf
+{
+	required int32 gameid	= 1;
+	required int32 serverid = 2;
+}
+
+message GamemanagerGroupmanagerReportGameInfo
+{
+	required int32 gameid	= 1; // 游戏id
+	required int32 count	= 2; // 当前人数
+}
+
+message GamemanagerServerCreateGameRoomReq
+{
+	required uint64 groupid		= 1;
+	required int32 gateresid	= 2;		// 玩家所在的gate(xml配置的id)
+	required uint64 clientid	= 3;		// 玩家在gate上的id
+	required int32 game			= 4;		// 请求的游戏
+	required uint64 serverid	= 5;		// 发出此请求的group server对应的内存id
+}
+
+message ServerGamemanagerCreateGameRoomRsp
+{
+	required int32 result		= 1;
+	required uint64 groupid		= 2;
+	required int32 gateresid	= 3;		// 玩家所在的gate(xml配置的id)
+	required uint64 clientid	= 4;		// 玩家在gate上的id
+	required int32 game			= 5;		// 请求的游戏
+	required uint64 serverid	= 6;		// 发出此请求的group server对应的内存id
+	optional int32 roomid		= 7;		// 游戏的房间ID
+	optional string password	= 8;		// 游戏房间的密码
+	required int32 gameid		= 9;
+}
+

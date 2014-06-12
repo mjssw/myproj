@@ -1,0 +1,11 @@
+package sglib.clientproto;
+
+message CSTestMsgReq 
+{
+	required string msg 		= 1;
+}
+
+message SCTestMsgRsp
+{
+	required string msg 	= 1;
+}

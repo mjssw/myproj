@@ -1,0 +1,43 @@
+package sglib.centerproto;
+import 'public.proto';
+
+message CenterServerEnterGameRsp
+{
+	required int32 result		= 1;
+	required uint64 gateid		= 2;
+	required uint64 clientid	= 3;
+	required int32 gameid		= 4;
+	optional string ip			= 5;
+	optional int32 port			= 6;
+	optional int32 serverid		= 7;	// client连接成功游戏的gate后用此参数设置他的对应的gameserver
+	optional uint64 gsid		= 8;
+}
+
+message CenterLoginUserLoginRsp 
+{
+	required int32 result	= 1;
+	required uint64 gateid	= 2;
+	required uint64 clientid	= 3;
+	required string user	= 4;
+	optional string token	= 5;
+}
+
+message CenterLoginGameInfoNotify 
+{
+	required uint64 gateid	= 1;
+	required uint64 clientid	= 2;
+	repeated sglib.publicproto.GameInfo games	= 3;
+}
+
+message ServerCenterEnterGameReq
+{
+	required uint64 gateid		= 1; // gate的id
+	required uint64 clientid	= 2; // 玩家在此gate上的id
+	required int32 gameid		= 3;
+	optional uint64 gsid		= 4; // game server的id, game manager 会使用
+}
+
+message ServerCenterUserLogoutNotify 
+{
+	required string user	= 1;
+}

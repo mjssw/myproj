@@ -1,0 +1,45 @@
+package sglib.loginproto;
+import 'public.proto';
+
+// client<->server message
+
+message CSUserLoginReq 
+{
+	required string user		= 1;
+	required string password	= 2;
+	optional string flag		= 3;
+}
+
+message SCUserLoginRsp 
+{
+	required int32 result 	= 1;
+	optional string token	= 2;
+}
+
+message CSUserRegisterReq
+{
+	required string user		= 1;
+	required string password	= 2;
+}
+
+message SCUserRegisterRsp
+{
+	required int32 result	= 1;
+}
+
+message SCGameInfoNotify 
+{
+	repeated sglib.publicproto.GameInfo games	= 1;
+}
+
+// RPC message
+
+message LoginCenterUserLoginReq 
+{
+	required uint64 gateid		= 1;
+	required uint64 clientid	= 2;
+	required string user		= 3;
+	required string flag		= 4;
+}
+
+

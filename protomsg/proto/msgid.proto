@@ -1,0 +1,135 @@
+package sglib.msgid;
+
+enum EMsgId
+{
+	// gate msg
+	SG_FORWARD_MSG_REQ			= 1; 		// server请求gate转发消息给指定client
+	SG_CLOSE_CLIENT_REQ			= 2;		// server请求gate关闭指定client
+	SG_SET_FORWARD_SERVER		= 3;		// server通知gate client的下一条消息转发至指定server
+	GS_FORWARD_MSG_REQ			= 4;		// gate 转发client包给server
+	GS_REPORT_STATUS_REQ		= 5;		// gate 汇报状态
+	GS_CLIENT_CLOSE_NOTIFY		= 6;		// gate通知server client断开连接了
+	SG_CONNECT_NEW_SERVER_NTF	= 7;		// server通知gate连接新的server
+	
+	// login msg
+	CL_USER_LOGIN_REQ			= 101;		// client->login 登录请求
+	LC_USER_LOGIN_RSP			= 102;		// login->client 登录返回结果
+	LC_GAME_INFO_NOTIFY			= 103;		// login->client 游戏列表通知
+	LCT_USER_LOGIN_REQ			= 104;		// login->center 通知center玩家登录
+	CL_USER_REGISTER_REQ		= 105;		// client->login 注册
+	LC_USER_REGISTER_RSP		= 106;		// login->client 注册结果
+	
+	// center msg
+	CTL_USER_LOGIN_RSP			= 301;		// center通知login玩家登录结果
+	CTL_GAME_INFO_NOTIFY		= 302;		// center通知login游戏列表信息
+	CTS_ENTER_GAME_RSP			= 303;		// center回复其他rpc server玩家进入游戏请求结果
+	SCT_USER_LOGOUT_NOTIFY		= 304;		// server->center 通知center玩家登出
+	SCT_ENTER_GAME_REQ			= 305;		// server->center 转发玩家请求进入游戏请求
+	
+	// common msg
+	CS_USER_ENTER_GAME_REQ		= 501;		// client请求进入游戏
+	SC_USER_ENTER_GAME_RSP		= 502;		// client请求进入游戏结果
+	CS_LOGIN_GAME_REQ			= 503;		// client登录游戏
+	SC_LOGIN_GAME_RSP			= 504;		// client登录游戏结果
+	CS_ENTER_ROOM_REQ			= 505;		// client进入房间
+	SC_ENTER_ROOM_RSP			= 506;		// client进入房间结果
+	SC_ENTER_ROOM_NTF			= 507;		// 进入房间广播
+	CS_LEAVE_ROOM_REQ			= 508;		// 离开房间请求
+	SC_LEAVE_ROOM_RSP			= 509;		// 离开房间结果
+	SC_LEAVE_ROOM_NTF			= 510;		// 离开房间广播
+	
+	// gamemanager msg
+	GMCT_REPORT_GAME_INFO		= 701;		// game manager->center 报告自己管理的本游戏状态信息
+	SGM_REPORT_GAME_INFO		= 702;		// game server->game manager 报告本游戏服务器的状态信息
+	SGM_ENTER_GAME_REQ			= 703;		// game server->game manager 请求进入指定游戏
+	GMS_ENTER_GAME_RSP			= 704;		// game manager->game server 答复
+	SGM_GATE_CLOSE_NTF			= 705;		// game server->game manager 报告有gate关闭了
+	GMCT_GATE_CLOSE_NTF			= 706;		// game manager->center 报告有gate关闭了
+	SGM_DYNAMIC_START_NTF		= 707;		// game server->game manager 通知本server动态启动了
+	GMS_DYNAMIC_SERVERSTART_NTF = 708;		// game manager->game server 通知其他某个server有新的server动态启动了
+	GMCT_GAME_SERVER_CLOSE_NTF  = 709;		// game manager->center 通知center有gameserver关闭了
+	GMGM_GAME_INFO_REPORT		= 710;		// game manager -> group manager 汇报信息
+	GMS_CREATE_GAMEROOM_REQ		= 711;		// game manager -> game server 请求创建房间
+	SGM_CREATE_GAMEROOM_RSP		= 712;		// game server -> game mananger 请求创建房间答复
+	
+	// group msg
+	GPGG_ADD_GROUPID_NTF			= 951;	// group -> group gate 增加groupid和group的映射
+	GPGG_DEL_GROUPID_NTF			= 952;	// group -> group gate 去除groupid和group的映射
+	GPGM_GP_GATE_CLOSE_NTF			= 953;	// group -> group manager 有 group gate关闭了
+	GMCT_GP_GATE_CLOSE_NTF			= 954;	// group manager -> center 有 group gate关闭了
+	GPGM_DYNAMIC_START_NTF			= 955;	// group -> group manager 通知本server动态启动了
+	GMGP_DYNAMIC_SERVERSTART_NTF	= 956;	// group manager -> group 通知其他某个server有新的server动态启动了
+	GMCT_GP_SERVER_CLOSE_NTF		= 9357;	// group manager-> center 通知center有group关闭了
+	GPGM_REPORT_STATUS_INFO			= 958;	// group -> group manager 定时汇报状态信息
+	GMCT_GP_GROUP_GATE_INFO			= 959;	// group manager -> center 定时汇报group gate的信息
+    GPGM_USER_LOGIN_NTF				= 960;	// group -> group manager 玩家登录群服务器
+    GPGM_USER_LOGOUT_NTF			= 961;	// group -> group manager 玩家登出群服务器
+	GPGM_GROUP_CREATE_REQ			= 962;	// group -> group manager 玩家请求创建群
+	GMGP_GROUP_CREATE_NTF			= 963;	// group manager -> group  委托创建群
+	GPGM_GROUP_CREATE_RESULT		= 964;	// group -> group manager 创建群结果
+	GMGP_GROUP_CREATE_RSP			= 965;	// group manager -> group 回复创建结果
+	GPGM_GROUP_ADD_MEMBER_REQ		= 966;	// group -> group manager 请求加一批玩家到群
+	GMGP_GROUP_ADD_MEMBER_RSP		= 967;	// group manager -> group 回复此批玩家所在的gate信息
+	GPGM_AGREE_ASK_MEMBER_INFO_REQ	= 968;
+	GMGP_AGREE_ASK_MEMBER_INFO_RSP	= 969;
+	GMGP_GROUP_LOAD_NTF				= 970;	// group manager -> group 加载一个群的信息
+	GPGM_GROUP_LOAD_RESULT			= 971;	// group -> group manager 加载群的结果
+	GMGP_GROUP_MEMBER_ONLINE_NTF	= 972;	// group manager -> group 通知玩家上线
+	GMGP_GROUP_MEMBER_OFFLINE_NTF	= 973;	// group manager -> group 通知玩家下线
+	GPGM_GROUP_MEMBER_LEAVE_NTF		= 974;	// group -> group manager 通知玩家退群
+	GPGM_GROUP_DELETE_NTF			= 975;	// group -> group manager 通知群解散
+	GPGM_GROUP_CREATE_GAMEROOM_REQ	= 976;	// group -> group manager 请求创建游戏房间
+	GMGP_GROUP_CREATE_GAMEROOM_RSP	= 977;	// group manager -> group 请求创建房间答复
+	GMGM_ASK_CREATE_GAMEROOM_REQ	= 978;	// group manager -> game manager 请求创建游戏房间
+	GMGM_ASK_CREATE_GAMEROOM_RSP	= 979;	// game manager -> group manager 请求创建游戏房间答复
+	
+	CS_GROUP_LOGIN_REQ			= 903;		// client -> group 登录群服务器
+	SC_GROUP_LOGIN_RSP			= 904;		// group -> client 登录返回
+	SC_GROUP_LIST_UPDATE		= 905;		// group -> client  群列表更新
+	SC_GROUP_INFO_UPDATE		= 906;		// group -> client 群详细信息更新
+	CS_GROUP_CREATE_REQ			= 907;
+	SC_GROUP_CREATE_RSP			= 908;
+	CS_GROUP_SEARCH_REQ			= 909;
+	SC_GROUP_SEARCH_RSP			= 910;
+	CS_GROUP_JOIN_REQ			= 911;
+	SC_GROUP_JOIN_RSP			= 912;
+	CS_GROUP_ADD_MEMBER_REQ		= 913;
+	SC_GROUP_ADD_MEMBER_RSP		= 914;
+	SC_GROUP_ASK_JOIN_NTF		= 915;
+	CS_GROUP_AGREE_JOIN_REQ		= 916;
+	CS_GROUP_LEAVE_REQ			= 917;
+	SC_GROUP_LEAVE_RSP			= 918;
+	SC_GROUP_MEMBER_LEAVE_NTF	= 919;
+	CS_GROUP_DELETE_REQ			= 920;
+	SC_GROUP_DELETE_RSP			= 921;
+	SC_GROUP_DELETE_NTF			= 922;
+	CS_GROUP_MESSAGE_REQ		= 923;
+	SC_GROUP_MESSAGE_NTF		= 924;
+	SC_GROUP_MEMBER_JOIN_NTF	= 925;
+	SC_GROUP_MEMBER_ONLINE		= 926;
+	SC_GROUP_MEMBER_OFFLINE		= 927;
+	CS_GROUP_CREATE_GAMEROOM_REQ= 928;
+	SC_GROUP_CREATE_GAMEROOM_RSP= 929;
+	SC_GROUP_CREATE_GAMEROOM_NTF= 930;
+	
+	
+	
+	// tetris msg
+	CS_TETRIS_READY_REQ			= 1001;
+	SC_TETRIS_READY_RSP			= 1002;
+	SC_TETRIS_GAMESTART_NOTIFY	= 1003;
+	CS_TETRIS_GAMELOST_REQ		= 1004;
+	SC_TETRIS_GAMEEND_NOTIFY	= 1005;
+	CS_TETRIS_PUT_BLOCK_REQ		= 1006;
+	CS_TETRIS_CLEAR_BLOCK_REQ	= 1007;
+	SC_TETRIS_PUT_BLOCK_NOTIFY	= 1008;
+	SC_TETRIS_CLEAR_BLOCK_NOTIFY= 1009;
+	SC_TETRIS_READY_NOTIFY		= 1010;
+	SC_TETRIS_ROOM_INFO_NOTIFY	= 1011;
+	
+	
+	
+	// client msg
+	CS_TEST_MSG_REQ		= 80001;
+	SC_TEST_MSG_RSP		= 80002;
+}

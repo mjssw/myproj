@@ -1,0 +1,59 @@
+package sglib.tetrisproto;
+import 'public.proto';
+
+message CSMsgReadyReq 
+{
+}
+
+message SCMsgReadyRsp
+{
+	required int32 result	= 1;
+}
+
+message SCMsgReadyNtf
+{
+	required string player	= 1;
+}
+
+message CSMsgGameLostReq
+{
+}
+
+message SCMsgGameStartNtf
+{
+	required int32 blockseed	= 1;	// 方块种子
+}
+
+message SCMsgGameEndNtf
+{
+	required string loser	= 1;
+}
+
+message CSMsgPutBlockReq
+{
+	required int32 blockid	= 1;	// 方块id
+	required int32 column	= 2;	// 列
+}
+
+message CSMsgClearBlockReq
+{
+	repeated int32 rows	= 1;		// 消息的行数组
+}
+
+message SCMsgPutBlockNtf			// 对手放置方块
+{
+	required int32 blockid	= 1;
+	required int32 column	= 2;
+}
+
+message SCMsgClearBlockNtf			// 对手消除方块
+{
+	repeated int32 rows	= 1;
+}
+
+message SCMsgRoomInfoNtf			// 玩家进入房间后，房间内的玩家等信息同步
+{
+	repeated sglib.publicproto.RoomPlayerInfo players	= 1;
+}
+
+

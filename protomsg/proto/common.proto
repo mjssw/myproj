@@ -1,0 +1,57 @@
+package sglib.commonproto;
+
+message CSEnterGameReq
+{
+	required int32 gameid	= 1;
+}
+
+message SCEnterGameRsp
+{
+	required int32 result	= 1;
+	optional int32 gameid	= 2;
+	optional string ip		= 3;
+	optional int32 port		= 4;
+}
+
+message CSLoginGameReq
+{
+	required string userid	= 1;
+	required string token	= 2;
+}
+
+message SCLoginGameRsp
+{
+	required int32 result	= 1;
+}
+
+message CSEnterRoomReq
+{
+	required int32 roomid		= 1;
+	optional string password	= 2;
+}
+
+message SCEnterRoomRsp
+{
+	required int32 result	= 1;
+	required int32 roomid	= 2;
+}
+
+message SCEnterRoomNtf
+{
+	required string user	= 1;
+}
+
+message CSLeaveRoomReq
+{
+}
+
+message SCLeaveRoomRsp
+{
+	required int32 result	= 1;
+}
+
+message SCLeaveRoomNtf
+{
+	required string user	= 1;
+}
+
