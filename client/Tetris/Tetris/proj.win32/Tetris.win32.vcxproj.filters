@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{6bcbbee6-f574-4a51-bbf7-6890da7e2a5f}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{9479cc75-f264-47ca-b78d-54c30cd7d0a4}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc</Extensions>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{81d1e955-dae7-47b5-a923-44054d1e583a}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;jpg;jpeg;jpe;png;manifest</Extensions>
+    </Filter>
+    <Filter Include="NetLib">
+      <UniqueIdentifier>{df2f5a30-c477-4de0-9547-a69fd6d2e529}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="protobuf">
+      <UniqueIdentifier>{2ffc8dcd-38b3-4b4a-8de3-d93957c6cd53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="message">
+      <UniqueIdentifier>{3f4807e2-269f-4536-ba72-4568d5fc02f0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Tetris.ico">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="..\Resources\CloseSelected.png">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="..\Resources\CloseNormal.png">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="..\Resources\HelloWorld.png">
+      <Filter>resource</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Tetris.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LoginScene.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\utils.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameList.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NetManager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NetClient.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgBase.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgConnect.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgLoginRsp.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameManager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgGameInfo.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgConnectError.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameWorldBase.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameCell.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgEnterGameRsp.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgLoginGameRsp.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TetrisScene.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Room.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RoomBase.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TetrisRoomScene.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgEnterRoomRsp.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgEnterRoomNtf.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgLeaveRoomRsp.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgLeaveRoomNtf.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgRoomInfoNtf.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgReadyRsp.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgEnemyReady.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgGameStart.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgGameEnd.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgEnemyPutBlockNtf.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgEnemyClearBlockNtf.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TetrisBattleScene.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Block.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameScene.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CursorTextControl.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GroupClient.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MsgGroup.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DropDownList.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GroupMainScene.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GroupCell.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GroupInfoScene.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\center.pb.h">
+      <Filter>protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\client.pb.h">
+      <Filter>protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\common.pb.h">
+      <Filter>protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\errno.pb.h">
+      <Filter>protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\gamemanager.pb.h">
+      <Filter>protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\gate.pb.h">
+      <Filter>protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\group.pb.h">
+      <Filter>protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\login.pb.h">
+      <Filter>protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\msgid.pb.h">
+      <Filter>protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\public.pb.h">
+      <Filter>protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\tetris.pb.h">
+      <Filter>protobuf</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LoginScene.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\utils.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameList.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NetManager.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NetClient.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameManager.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameCell.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TetrisScene.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Room.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TetrisRoomScene.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TetrisBattleScene.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Block.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameScene.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CursorTextControl.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GroupClient.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GroupMainScene.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GroupCell.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GroupInfoScene.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\center.pb.cc">
+      <Filter>protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\client.pb.cc">
+      <Filter>protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\common.pb.cc">
+      <Filter>protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\errno.pb.cc">
+      <Filter>protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\gamemanager.pb.cc">
+      <Filter>protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\gate.pb.cc">
+      <Filter>protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\group.pb.cc">
+      <Filter>protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\login.pb.cc">
+      <Filter>protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\msgid.pb.cc">
+      <Filter>protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\public.pb.cc">
+      <Filter>protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\tetris.pb.cc">
+      <Filter>protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\sglib\Event.cpp">
+      <Filter>NetLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\sglib\Lock.cpp">
+      <Filter>NetLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\sglib\Thread.cpp">
+      <Filter>NetLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\server\ServerBase\mtwist.cpp">
+      <Filter>NetLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\sglib\Log.cpp">
+      <Filter>NetLib</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

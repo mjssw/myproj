@@ -1,0 +1,50 @@
+(1) add in ~/.bashrc
+# Andriod SDK
+export ANDROID_SDK=/home/sjj/adt-bundle-linux-x86-20131030/sdk
+export PATH=$ANDROID_SDK/platform-tools:$ANDROID_SDK/tools:$PATH
+export NDK_ROOT=/home/sjj/android-ndk-r9b
+
+(2) add in /etc/profile
+export JAVA_HOME=/home/sjj/jdk1.7.0_45
+export JRE_HOME=/home/sjj/jdk1.7.0_45/jre
+export PATH=/home/sjj/jdk1.7.0_45/bin:$PATH
+export CLASSPATH=.:/home/sjj/jdk1.7.0_45/lib:/home/sjj/jdk1.7.0_45/jre/lib
+
+
+------------------------------------------------------------------------------------
+
+1. eclipse中打包时出现如下错误 
+问题提示：Unable to execute dex: java.nio.BufferOverflowException. Check the Eclipse log for stack trace.
+Conversion to Dalvik format failed: Unable to execute dex: java.nio.BufferOverflowException. Check the Eclipse log for stack trace.
+
+
+最新的19版本会在你的项目下建立一个依赖包 Android Dependencies，在eclipse中右键这个文件夹，在Build Path选项中选择 remove it from build path。。。然后就没问题了。。
+
+
+2. 编译cocos2dx ， 提示LuaCpp相关编译失败，去掉了此相关的编译项
+
+
+3. 在 项目的 proj.android 目录下的 project.properties 文件内，如果把target设置为 android-7,
+   在eclipse中会提示 opengl.ETC1Util 之类的 cannot be resolved.
+   因此target至少是andriod-8, 但是为了支持andriod-7, 在 AndroidManifest.xml 中将  <uses-sdk android:minSdkVersion="8"/> 设置为7即可。
+   
+4.
+在ANDROD_HOME目录的platform-tools目录中，输入“./adb devices”命令，提示下面信息：
+输入命令后，显示“List of devices attached”后没有其他信息，表示没有发现移动设备与电脑联接。
+$ ./adb devices
+List of devices attached 
+解决方法：到VirtualBox虚拟机的“设备”->“分配USB设备”->“选择自己的手机设备”
+
+输入命令后，显示下面信息，表示移动设备没有联接成功。
+?$ ./adb 
+devicesList of devices attached 
+????????????no permissions
+解决方法：
+$ sudo ./adb kill-server
+$ sudo ./adb start-server
+* daemon not running. starting it now on port 5037 *
+* daemon started successfully *
+输入命令后，显示下面信息，表示移动设备没有联接成功。
+$ ./adb devices
+List of devices attached 
+HC*****device
