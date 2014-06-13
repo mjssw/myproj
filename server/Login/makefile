@@ -5,13 +5,14 @@ OUT_FILE = login
 
 ifeq ($(VER), Debug)
 BUILD_MODE = Debug
-CPP_FLAGS = -g -Wall -D_DEBUG -D_USE_IOSERVICE_EX_
+CPP_FLAGS = -g -Wall -D_DEBUG
 LD_FLAGS = -g -pthread
 else
 BUILD_MODE = Release
 CPP_FLAGS = -Wall -O2
 LD_FLAGS = -pthread
 endif
+CPP_FLAGS += -D_USE_IOSERVICE_EX_
 
 INCLUDE_SRC = .
 INCLUDE_SERVER_BASE = ../ServerBase

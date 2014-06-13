@@ -12,6 +12,7 @@ BUILD_MODE = Release
 CPP_FLAGS = -Wall -O2
 LD_FLAGS = -pthread
 endif
+CPP_FLAGS += -D_USE_IOSERVICE_EX_
 
 INCLUDE_SRC = .
 INCLUDE_SERVER_BASE = ../ServerBase

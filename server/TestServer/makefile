@@ -15,8 +15,9 @@ LD_FLAGS = -pthread
 endif
 
 ifeq ($(TEST_MODE), facegate)
-CPP_FLAGS = -D_FACE_TO_GATE
+CPP_FLAGS += -D_FACE_TO_GATE
 endif
+CPP_FLAGS += -D_USE_IOSERVICE_EX_
 
 INCLUDE_SRC = .
 INCLUDE_SERVER_BASE = ../ServerBase
