@@ -217,3 +217,5 @@ pip-log.txt
 
 ### cocos2d-x
 cocos2d-x/
+### debug release win32
+[Dd]ebug.win32/
