@@ -14,7 +14,7 @@ CLock CLog::m_printLock;
 #ifdef _USE_WIN32
 #define BUILD_LOG_INFO  do\
 {\
-    GetCurrentDirectory( sizeof(strDir), strDir );\
+    GetCurrentDirectoryA( sizeof(strDir), strDir );\
     sprintf( strDir, "%s\\Log\\%s", strDir, pstrDir );\
     if( CLog::IsDirExist(strDir)==false && CLog::CreateDir(strDir)==false )\
     {\
@@ -57,7 +57,7 @@ CLock CLog::m_printLock;
 bool CLog::IsDirExist(const char *pstrDir)
 {
 #ifdef _USE_WIN32
-    DWORD dwRet = GetFileAttributes( pstrDir );
+    DWORD dwRet = GetFileAttributesA( pstrDir );
     if( !((dwRet!=0xFFFFFFFF) && (dwRet & FILE_ATTRIBUTE_DIRECTORY)) )
     {
         return false;
@@ -79,7 +79,7 @@ bool CLog::IsDirExist(const char *pstrDir)
 bool CLog::CreateDir(const char *pstrDir)
 {
 #ifdef _USE_WIN32
-    s32 nRet = SHCreateDirectoryEx( NULL, pstrDir, NULL );
+    s32 nRet = SHCreateDirectoryExA( NULL, pstrDir, NULL );
     if( nRet==ERROR_SUCCESS || nRet==ERROR_FILE_EXISTS || nRet==ERROR_ALREADY_EXISTS )
     {
         return true;
