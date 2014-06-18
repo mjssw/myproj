@@ -15,31 +15,58 @@ s32 CLoginManager::HashUser(const std::string &user)
 	return 1;
 }
 
-void CLoginManager::UserLogin(CLoginClient &client, u64 clientId, const std::string &user, const std::string &pwd, const std::string &flag)
-{
-	s32 ret = _UserLogin( user, pwd, flag );
-	string token = "";
-	if( ret == sglib::errorcode::E_ErrorCode_Success )
-	{
-		token = _BuildToken( user, flag );
-		_NotifyCenterUserLogin( clientId, client.GetClientId(), user, flag );
-	}
-	
-	_NotifyLoginResult( client, clientId, ret, token );
-}
-
 struct _LoginManagerDBParam
 {
 	CLoginClient *client;
 	u64 clientid;
+	CUser *user;
 };
+
+void CLoginManager::UserLogin(CLoginClient &client, u64 clientId, const std::string &user, const std::string &pwd, const std::string &flag)
+{
+	CUser *puser = NULL;
+	map<string, CUser*>::iterator it = m_userLogin.find( user );
+	if( it != m_userLogin.end() )
+	{
+		if( it->second->GetState() == CUser::E_State_Logining )
+		{
+			// 忽略正在登录中的请求
+			return;
+		}
+
+		if( it->second->GetState() == CUser::E_State_LoginSuccess )
+		{
+			// 已经登录成功
+			_NotifyLoginResult( client, clientId, sglib::errorcode::E_ErrorCode_Success, it->second->GetToken() );
+			return;
+		}
+		puser = it->second;
+	}
+	else
+	{
+		puser = new CUser( user );
+		SELF_ASSERT( puser, return; );
+		//m_userLogin[ user ] = puser;
+	}
+	puser->SetState( CUser::E_State_Logining );
+	puser->SetFlag( flag );
+
+	_LoginManagerDBParam _param = { &client, clientId, puser };
+	s32 id = HashUser( user );
+	string sql = "call UserLogin('" + user + "','" + pwd + "');";
+	bool ret = CServerManager::Instance().ExecSql( id, sql, this, &CLoginManager::_UserLoginCallback, &_param, sizeof(_param) );
+	if( !ret )
+	{
+		SERVER_LOG_ERROR( "CLoginManager,UserLogin,ExecSql," << sql.c_str() );
+	}
+}
 
 void CLoginManager::UserRegister(CLoginClient &client, u64 clientId, const std::string &user, const std::string &pwd)
 {
-	_LoginManagerDBParam _param = { &client, clientId };
+	_LoginManagerDBParam _param = { &client, clientId, NULL };
 
 	s32 id = HashUser( user );
-	string sql = "call UserRegister('" + user + "','" + pwd + "','abc')";
+	string sql = "call UserRegister('" + user + "','" + pwd + "','abc');";
 	bool ret = CServerManager::Instance().ExecSql( id, sql, this, &CLoginManager::_RegisterCallback, &_param, sizeof(_param) );
 	if( !ret )
 	{
@@ -55,12 +82,6 @@ void CLoginManager::UserAskEnterGame(u64 clientid, u64 gateid, s32 gameid)
 	enterReq.set_gameid( gameid );
 	CServerManager::Instance().SendRpcMsg( CServerManager::Instance().GetCenterServerId(),
 		enterReq, sglib::msgid::SCT_ENTER_GAME_REQ );
-}
-
-s32 CLoginManager::_UserLogin(const std::string &user, const std::string &pwd, const std::string &flag)
-{
-	// TODO 
-	return sglib::errorcode::E_ErrorCode_Success;
 }
 
 void CLoginManager::_NotifyLoginResult(CLoginClient &client, u64 clientId, s32 result, const std::string &token)
@@ -119,4 +140,41 @@ void CLoginManager::_RegisterCallback(SGLib::IDBRecordSet *RecordSet, char *ErrM
 	_LoginManagerDBParam *_param = (_LoginManagerDBParam*)param;
 	SELF_ASSERT( _param->client, return; );
 	_NotifyRegisterResult( *(_param->client), _param->clientid, result );
+}
+
+void CLoginManager::_UserLoginCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
+{
+	s32 result = sglib::errorcode::E_ErrorCode_Unknown;
+	while( RecordSet && RecordSet->GetRecord() )
+	{
+		s32 count = (s32)RecordSet->GetRecordCount();
+		SELF_ASSERT( count == 1, break; );
+		result = sglib::errorcode::E_ErrorCode_LoginError;
+		const char *val = RecordSet->GetFieldValue( 1 );
+		if( atoi(val) == 1 )
+		{
+			result = sglib::errorcode::E_ErrorCode_Success;
+		}
+
+		break;
+	}
+
+	SELF_ASSERT( param && len==sizeof(_LoginManagerDBParam), return; );
+	_LoginManagerDBParam *_param = (_LoginManagerDBParam*)param;
+	CUser *puser = _param->user;
+	SELF_ASSERT( _param->client && puser && puser->GetState() == CUser::E_State_Logining, return; );
+
+	string token = "";
+	if( result == sglib::errorcode::E_ErrorCode_Success )
+	{
+		puser->SetState( CUser::E_State_LoginSuccess );
+		token = _BuildToken( puser->User(), puser->GetFlag() );
+		_NotifyCenterUserLogin( _param->clientid, _param->client->GetClientId(), puser->User(), puser->GetFlag() );
+	}
+	else
+	{
+		puser->SetState( CUser::E_State_LoginFailed );
+	}
+	
+	_NotifyLoginResult( *_param->client, _param->clientid, result, token );
 }

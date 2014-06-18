@@ -389,11 +389,12 @@ public:
 		ctCLient *pThis = (ctCLient*)(addrThis);
 	}
 
-	void UserLogin()
+	void UserLogin(const string &user, const string &pwd, const string &flag)
 	{
 		sglib::loginproto::CSUserLoginReq req;
-		req.set_user("sjj");
-		req.set_password("123");
+		req.set_user(user);
+		req.set_password(pwd);
+		req.set_flag( flag );
 		SendMsg( req, sglib::msgid::CL_USER_LOGIN_REQ );
 	}
 
@@ -898,7 +899,10 @@ void ClientLogin(const char *ip, int port, int clientNum)
 		}
 		else if( vCmd[0] == "login" )
 		{
-			g_mapClient.begin()->second->UserLogin();
+			if( vCmd.size() == 4 )
+			{
+				g_mapClient.begin()->second->UserLogin(vCmd[1], vCmd[2], vCmd[3]);
+			}
 		}
 		else if( vCmd[0] == "entergame" )
 		{

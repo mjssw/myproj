@@ -59,26 +59,27 @@ void protobuf_AddDesc_errno_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\013errno.proto\022\017sglib.errorcode*\354\005\n\nEErro"
+    "\n\013errno.proto\022\017sglib.errorcode*\221\006\n\nEErro"
     "rCode\022\027\n\023E_ErrorCode_Success\020\000\022 \n\023E_Erro"
     "rCode_Unknown\020\377\377\377\377\377\377\377\377\377\001\022#\n\026E_ErrorCode_"
     "StateError\020\376\377\377\377\377\377\377\377\377\001\022!\n\024E_ErrorCode_Reg"
-    "Error\020\375\377\377\377\377\377\377\377\377\001\022#\n\026E_ErrorCode_NoSuchGa"
-    "me\020\233\377\377\377\377\377\377\377\377\001\022%\n\030E_ErrorCode_GameUserFul"
-    "l\020\232\377\377\377\377\377\377\377\377\001\022%\n\030E_ErrorCode_NotLoginGame"
-    "\020\231\377\377\377\377\377\377\377\377\001\022)\n\034E_ErrorCode_AleardyLoginG"
-    "ame\020\230\377\377\377\377\377\377\377\377\001\022#\n\026E_ErrorCode_NoThisRoom"
-    "\020\267\376\377\377\377\377\377\377\377\001\022#\n\026E_ErrorCode_RoomIsFull\020\266\376"
-    "\377\377\377\377\377\377\377\001\022%\n\030E_ErrorCode_RoomPwdError\020\265\376\377"
-    "\377\377\377\377\377\377\001\022&\n\031E_ErrorCode_AleardyInRoom\020\264\376\377"
-    "\377\377\377\377\377\377\001\022)\n\034E_ErrorCode_CreateGroupError\020"
-    "\323\375\377\377\377\377\377\377\377\001\022&\n\031E_ErrorCode_NotFoundGroup\020"
-    "\322\375\377\377\377\377\377\377\377\001\022+\n\036E_ErrorCode_NotFoundLoginG"
-    "roup\020\321\375\377\377\377\377\377\377\377\001\022\'\n\032E_ErrorCode_NotInThis"
-    "Group\020\320\375\377\377\377\377\377\377\377\001\022(\n\033E_ErrorCode_NoThisGr"
-    "oupGame\020\317\375\377\377\377\377\377\377\377\001\022&\n\031E_ErrorCode_NotEno"
-    "ughRoom\020\316\375\377\377\377\377\377\377\377\001\022)\n\034E_ErrorCode_Tetris"
-    "_NotInRoom\020\357\261\377\377\377\377\377\377\377\001", 781);
+    "Error\020\375\377\377\377\377\377\377\377\377\001\022#\n\026E_ErrorCode_LoginErr"
+    "or\020\374\377\377\377\377\377\377\377\377\001\022#\n\026E_ErrorCode_NoSuchGame\020"
+    "\233\377\377\377\377\377\377\377\377\001\022%\n\030E_ErrorCode_GameUserFull\020\232"
+    "\377\377\377\377\377\377\377\377\001\022%\n\030E_ErrorCode_NotLoginGame\020\231\377"
+    "\377\377\377\377\377\377\377\001\022)\n\034E_ErrorCode_AleardyLoginGame"
+    "\020\230\377\377\377\377\377\377\377\377\001\022#\n\026E_ErrorCode_NoThisRoom\020\267\376"
+    "\377\377\377\377\377\377\377\001\022#\n\026E_ErrorCode_RoomIsFull\020\266\376\377\377\377"
+    "\377\377\377\377\001\022%\n\030E_ErrorCode_RoomPwdError\020\265\376\377\377\377\377"
+    "\377\377\377\001\022&\n\031E_ErrorCode_AleardyInRoom\020\264\376\377\377\377\377"
+    "\377\377\377\001\022)\n\034E_ErrorCode_CreateGroupError\020\323\375\377"
+    "\377\377\377\377\377\377\001\022&\n\031E_ErrorCode_NotFoundGroup\020\322\375\377"
+    "\377\377\377\377\377\377\001\022+\n\036E_ErrorCode_NotFoundLoginGrou"
+    "p\020\321\375\377\377\377\377\377\377\377\001\022\'\n\032E_ErrorCode_NotInThisGro"
+    "up\020\320\375\377\377\377\377\377\377\377\001\022(\n\033E_ErrorCode_NoThisGroup"
+    "Game\020\317\375\377\377\377\377\377\377\377\001\022&\n\031E_ErrorCode_NotEnough"
+    "Room\020\316\375\377\377\377\377\377\377\377\001\022)\n\034E_ErrorCode_Tetris_No"
+    "tInRoom\020\357\261\377\377\377\377\377\377\377\001", 818);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "errno.proto", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_errno_2eproto);
@@ -111,6 +112,7 @@ bool EErrorCode_IsValid(int value) {
     case -103:
     case -102:
     case -101:
+    case -4:
     case -3:
     case -2:
     case -1:

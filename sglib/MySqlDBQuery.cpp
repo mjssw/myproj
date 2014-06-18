@@ -188,6 +188,15 @@ bool MySqlDBQuery::Execute1(const char *sql, MySqlDBRecordSet *RecordSet, char *
 
 		//MySqlDBQuery is friend of MySqlDBRecordSet
 		RecordSet->m_res = mysql_store_result( m_MySqlConnection );
+		// TODO 目前只取一个结果集 2014-06-18
+		// 如果执行的是一个存储过程，实际会有2个结果集，而在上层代码中只free掉一个结果集,
+		// 会导致后续的查询失败，错误为：Commands out of sync,
+		// 这里目前只考虑第一个结果集
+		while( !mysql_next_result( m_MySqlConnection ) )
+		{
+			MYSQL_RES *res = mysql_store_result( m_MySqlConnection ); 
+			mysql_free_result( res );
+		}
 	}
 	else
 	{
