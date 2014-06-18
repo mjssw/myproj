@@ -63,7 +63,7 @@ void CLoginClient::_UserRegisterProc(u64 clientId, const byte *pPkg, s32 nPkgLen
 	if( req.ParseFromArray(pPkg, nPkgLen) )
 	{
 		SERVER_LOG_DEBUG( "recv client CSUserRegisterReq : user=" << req.user() << ", pwd=" << req.password() \
-			<< "clientid:" << clientId );
+			<< " clientid:" << clientId );
 
 		CLoginManager::Instance().UserRegister( *this, clientId, req.user(), req.password() );
 	}

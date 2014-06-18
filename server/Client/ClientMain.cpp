@@ -340,6 +340,14 @@ public:
 						_GroupMemberCreateGameRoomNtf( ntf );
 					}
 				}break;
+			case sglib::msgid::LC_USER_REGISTER_RSP:
+				{
+					sglib::loginproto::SCUserRegisterRsp rsp;
+					if( rsp.ParseFromArray(pbuf+MSG_ID_LEN+sizeof(int), pkgLen-MSG_ID_LEN-sizeof(int)) )
+					{
+						printf( "register result:%d\n", rsp.result() );
+					}
+				}break;
 			default:
 				break;
 			}
@@ -446,6 +454,14 @@ public:
 			req.add_rows( *it );
 		}
 		SendMsg( req, sglib::msgid::CS_TETRIS_CLEAR_BLOCK_REQ );
+	}
+
+	void Register(const string &user, const string &pwd)
+	{
+		sglib::loginproto::CSUserRegisterReq req;
+		req.set_user( user );
+		req.set_password( pwd );
+		SendMsg( req, sglib::msgid::CL_USER_REGISTER_REQ );
 	}
 
 	// ====================== group ==================================
@@ -941,6 +957,13 @@ void ClientLogin(const char *ip, int port, int clientNum)
 				g_mapClient.begin()->second->ClearBlock( vecRows );
 			}
 		}
+		else if( vCmd[0] == "register" )
+		{
+			if( vCmd.size() == 3 )
+			{
+				g_mapClient.begin()->second->Register( vCmd[1], vCmd[2] );
+			}
+		}
 	}
 
 	mgr.Stop();
@@ -1131,6 +1154,7 @@ extern void TestForTestServer(const char *ip, int port, int clientNum, int freq)
 extern void TestForIoService(const char *ip, int port, int clientNum, int freq);
 int main(int argc, char *argv[])
 {
+	/*
 	testtime();
 	if( argc == 5 )
 	{
@@ -1147,11 +1171,12 @@ int main(int argc, char *argv[])
 
 	if( argc == 4 )
 	{
+		/*
 		printf("====== player enter GROUP ======\n");
 		ClientInGroup(argv[1], atoi(argv[2]), atoi(argv[3]));
 		printf("====== player leave GROUP ======\n");
+		//*/
 
-		/*
 		printf("====== player enter LOGIN ======\n");
 		ClientLogin(argv[1], atoi(argv[2]), atoi(argv[3]));
 		printf("====== player leave LOGIN ======\n");

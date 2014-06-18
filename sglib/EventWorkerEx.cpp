@@ -25,7 +25,8 @@ CEventWorkerEx::~CEventWorkerEx()
 void CEventWorkerEx::PushEvent(s32 paramLen, void *paramData, void *obj)
 {
     if( obj == NULL || 
-        (paramLen>0 && paramData==NULL) )
+        (paramLen>0 && paramData==NULL) ||
+		paramLen > E_Max_SessionEvent_ParamSize )
     {
         return;
     }

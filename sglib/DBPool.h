@@ -13,7 +13,7 @@ namespace SGLib
 	public:
 		enum
 		{
-			E_DBTask_Param_Len = 32,
+			E_DBTask_Param_Len = 128,
 		};
 
 		CDBTask(IDBQuery &DBQuery, const char *sql, CDBCallbackFunctor *pFunctor) : 

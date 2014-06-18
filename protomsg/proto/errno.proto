@@ -5,6 +5,7 @@ enum EErrorCode
 	E_ErrorCode_Success 	= 0; 		// 成功
 	E_ErrorCode_Unknown		= -1;		// 未知错误
 	E_ErrorCode_StateError	= -2;		// 状态不正确
+	E_ErrorCode_RegError	= -3;		// 注册失败，此用户名已经被使用
 	
 	// 通用错误码
 	E_ErrorCode_NoSuchGame		= -101;		// 没有此游戏

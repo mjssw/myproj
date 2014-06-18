@@ -38,6 +38,7 @@ enum EErrorCode {
   E_ErrorCode_Success = 0,
   E_ErrorCode_Unknown = -1,
   E_ErrorCode_StateError = -2,
+  E_ErrorCode_RegError = -3,
   E_ErrorCode_NoSuchGame = -101,
   E_ErrorCode_GameUserFull = -102,
   E_ErrorCode_NotLoginGame = -103,

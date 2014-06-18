@@ -4,12 +4,20 @@
 #include "LoginManager.h"
 #include "common.h"
 
+struct _DB_PARAM
+{
+	void *data;
+};
+
 class CTestClient : public CRpcClient
 {
 public:
 	CTestClient(s32 id) : CRpcClient(id){}
 	void _mysql_callback1(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
 	{
+		_DB_PARAM *pdbparam = (_DB_PARAM*)param; 
+		CTestClient *pt = (CTestClient*)pdbparam->data;
+
 		printf( "[%llu]run here\n", CServerEx<CLoginClient, CLoginRpcClient, CServerConfig>::GetProcessId() );
 		s32 count = (s32)RecordSet->GetRecordCount();
 		for( s32 i=0; i<count; ++i )
@@ -28,6 +36,9 @@ public:
 	}
 	void _mysql_callback2(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
 	{
+		_DB_PARAM *pdbparam = (_DB_PARAM*)param; 
+		CTestClient *pt = (CTestClient*)pdbparam->data;
+
 		printf( "[%llu]run here2\n", CServerEx<CLoginClient, CLoginRpcClient, CServerConfig>::GetProcessId() );
 		if( RecordSet->GetRecord() )
 		{
@@ -37,6 +48,7 @@ public:
 		}
 	}
 };
+
 
 int main(int argc, char *argv[])
 {
@@ -48,6 +60,7 @@ int main(int argc, char *argv[])
 	IEventEx *pev = (IEventEx*)&test;
 	pev->HandleEvent(sizeof(obj), (char*)&obj);//*/
 
+	CTestClient test100(100);
 
 	GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -74,7 +87,8 @@ int main(int argc, char *argv[])
 				{
 					CTestClient _testct(0);
 					CMysqlManager *mgr = CServerManager::Instance().GetMysqlManager(1);
-					mgr->Execute( "select * from user;", &_testct, &CTestClient::_mysql_callback1 ); 
+					_DB_PARAM dbparam = { &test100 };
+					mgr->Execute( "select * from user;", &_testct, &CTestClient::_mysql_callback1, &dbparam, sizeof(dbparam) ); 
 				}
 				else if( strcmp(cmd, "testdb1") == 0 )
 				{
@@ -83,7 +97,8 @@ int main(int argc, char *argv[])
 					//string sql = "insert into user(User,Password,Name) values('sjj3','123456','sjj3');";
 					//string sql = "call TestProc();";
 					string sql = "call UserRegister('sjj6','123456','sjj6');";
-					mgr->Execute( sql.c_str(), &_testct, &CTestClient::_mysql_callback2 ); 
+					_DB_PARAM dbparam = { &test100 };
+					mgr->Execute( sql.c_str(), &_testct, &CTestClient::_mysql_callback2, &dbparam, sizeof(dbparam) ); 
 				}
 				
 			}

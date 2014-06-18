@@ -416,6 +416,18 @@ public:
 		return NULL;
 	}
 
+	template<class ClassObj, class ClassMemFunc>
+	bool ExecSql(s32 id, const std::string &sql, const ClassObj &classObj, ClassMemFunc memCallbackFunc, void *param, s32 len)
+	{
+		CMysqlManager *sqlMgr = GetMysqlManager( id );
+		if( !sqlMgr )
+		{
+			return false;
+		}
+
+		return sqlMgr->Execute( sql.c_str(), classObj, memCallbackFunc, param, len );
+	}
+
 private:
 	bool _SendRpcMsg(s32 serverId, const byte *pPkg, s32 pkgLen)
 	{

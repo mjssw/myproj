@@ -4,8 +4,10 @@
 #include "DBPool.h"
 #include "MySqlDBQuery.h"
 #include "IEventEx.h"
+#include "EventWorkerEx.h"
 #include "EventWorkerExPool.h"
 
+#define DB_PARAM_MAX_LEN (SGLib::CEventWorkerEx::E_Max_SessionEvent_ParamSize - 3*sizeof(void*))
 class CMysqlManager : public SGLib::IEventEx
 {
 public:
@@ -15,20 +17,20 @@ public:
 	bool Start(const char *addr, const char *dbname, const char *user, const char *pass, u32 port);
 	void Stop();
 
-	struct SDBParam
-	{
-		void *data;
-	};
-
 	template<typename Func>
-	bool Execute(const char *sql, Func callbackFunc)
+	bool Execute(const char *sql, Func callbackFunc, void *param, s32 len)
 	{
+		if( len > DB_PARAM_MAX_LEN )
+		{
+			return false;
+		}
+
 		SGLib::CDBCallbackFunctor *callback = new SGLib::CDBCallbackFunctor( callbackFunc );
 		if( callback == NULL )
 		{
 			return false;
 		}
-		bool ret = _DoExecute( sql, callback );
+		bool ret = _DoExecute( sql, callback, param, len );
 		if( !ret )
 		{
 			SAFE_DELETE( callback );
@@ -37,14 +39,19 @@ public:
 	}
 
 	template<class ClassObj, class ClassMemFunc>
-	bool Execute(const char *sql, const ClassObj &classObj, ClassMemFunc memCallbackFunc)
+	bool Execute(const char *sql, const ClassObj &classObj, ClassMemFunc memCallbackFunc, void *param, s32 len)
 	{
+		if( len > DB_PARAM_MAX_LEN )
+		{
+			return false;
+		}
+
 		SGLib::CDBCallbackFunctor *callback = new SGLib::CDBCallbackFunctor( classObj, memCallbackFunc );
 		if( callback == NULL )
 		{
 			return false;
 		}
-		bool ret = _DoExecute( sql, callback );
+		bool ret = _DoExecute( sql, callback, param, len );
 		if( !ret )
 		{
 			SAFE_DELETE( callback );
@@ -55,7 +62,15 @@ public:
 	virtual void HandleEvent(s32 paramLen, char *paramData);
 
 private:
-	bool _DoExecute(const char *sql, SGLib::CDBCallbackFunctor *callback); 
+	struct SDBParam
+	{
+		void *data;
+		char param[DB_PARAM_MAX_LEN];
+		s32 len;
+	};
+
+private:
+	bool _DoExecute(const char *sql, SGLib::CDBCallbackFunctor *callback, void *data, s32 len); 
 	void _mysql_callback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 
 private:

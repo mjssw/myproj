@@ -30,6 +30,8 @@ struct _dbEventParam
 {
 	void *recordSet;
 	void *callbackObj;
+	s32 len;
+	char param[DB_PARAM_MAX_LEN];
 };
 
 void CMysqlManager::HandleEvent(s32 paramLen, char *paramData)
@@ -40,15 +42,22 @@ void CMysqlManager::HandleEvent(s32 paramLen, char *paramData)
 
 	CDBCallbackFunctor *func = (CDBCallbackFunctor*)(dbparam->callbackObj);
 	IDBRecordSet *record = (IDBRecordSet*)(dbparam->recordSet);
-	(*func)( record, NULL, NULL, 0 );
+	(*func)( record, NULL, dbparam->param, dbparam->len );
 	SAFE_DELETE( func );
 	SAFE_DELETE( record );
 }
 
-bool CMysqlManager::_DoExecute(const char *sql, CDBCallbackFunctor *callback)
+bool CMysqlManager::_DoExecute(const char *sql, CDBCallbackFunctor *callback, void *param, s32 len)
 {
-	SDBParam param = { callback };
-	return m_dbPool.Execute( sql, this, &CMysqlManager::_mysql_callback, &param, sizeof(SDBParam) );
+	SDBParam dbparam;
+	dbparam.data = callback;
+	dbparam.len = len;
+	if( len > 0 )
+	{
+		SELF_ASSERT( param, return false; );
+		memcpy( dbparam.param, param, len );
+	}
+	return m_dbPool.Execute( sql, this, &CMysqlManager::_mysql_callback, &dbparam, sizeof(SDBParam) );
 }
 	
 void CMysqlManager::_mysql_callback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
@@ -57,15 +66,25 @@ void CMysqlManager::_mysql_callback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg
 	SDBParam *dbparam = (SDBParam*)param; 
 	SELF_ASSERT( dbparam && dbparam->data, return; );
 	CDBCallbackFunctor *func = (CDBCallbackFunctor*)(dbparam->data);
+	void *real_param = dbparam->param;
+	s32 real_len = dbparam->len;
 
 	if( m_eventWorkerPool )
 	{
-		_dbEventParam _param = { RecordSet, func };
+		_dbEventParam _param;
+		_param.recordSet = RecordSet;
+		_param.callbackObj =  func;
+		_param.len = real_len;
+		if( real_len > 0 )
+		{
+			SELF_ASSERT( real_param, return; );
+			memcpy( _param.param, real_param, real_len );
+		}
 		m_eventWorkerPool->PushEvent( 0, sizeof(_dbEventParam), &_param, this );
 	}
 	else
 	{
-		(*func)( RecordSet, NULL, NULL, 0 );
+		(*func)( RecordSet, NULL, real_param, real_len );
 		SAFE_DELETE( func );
 		SAFE_DELETE( RecordSet );			
 	}
