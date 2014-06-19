@@ -2,6 +2,7 @@
 #include "ServerManager.h"
 #include "GameManager.h"
 #include "GroupInfoManager.h"
+#include "UserManager.h"
 #include <map>
 using namespace std;
 
@@ -51,7 +52,7 @@ void CCenterClient::_RegisterProc(int id, ProtoProc proc)
 	}
 }
 
-void CCenterClient::_SendMsg(const ::google::protobuf::Message &Msg, s32 nMsgId)
+void CCenterClient::SendMsg(const ::google::protobuf::Message &Msg, s32 nMsgId)
 {
 	int count = Msg.ByteSize();
 	byte buf[MAX_MSG_LEN] = {0};
@@ -61,12 +62,12 @@ void CCenterClient::_SendMsg(const ::google::protobuf::Message &Msg, s32 nMsgId)
 		bool ret = Send( buf, count + MSG_ID_LEN );
 		if( !ret )
 		{
-			SERVER_LOG_ERROR( "CCenterClient,_SendMsg," << nMsgId << "Send" );
+			SERVER_LOG_ERROR( "CCenterClient,SendMsg," << nMsgId << "Send" );
 		}
 	}
 	else
 	{
-		SERVER_LOG_ERROR( "CCenterClient,_SendMsg," << nMsgId << ",SerializeToArray" );
+		SERVER_LOG_ERROR( "CCenterClient,SendMsg," << nMsgId << ",SerializeToArray" );
 	}
 }
 
@@ -75,35 +76,8 @@ void CCenterClient::_UserLogin(const byte *pPkg, s32 nPkgLen)
 	sglib::loginproto::LoginCenterUserLoginReq req;
 	if( req.ParseFromArray(pPkg, nPkgLen) )
 	{
-		// TODO
-		sglib::centerproto::CenterLoginUserLoginRsp rsp;
-		rsp.set_result( sglib::errorcode::E_ErrorCode_Success );
-		rsp.set_clientid( req.clientid() );
-		rsp.set_gateid( req.gateid() );
-		rsp.set_user( req.user() );
-		rsp.set_token( "comeon" );
-		_SendMsg( rsp, sglib::msgid::CTL_USER_LOGIN_RSP );
-
-		// notify game list
-		vector<s32> vecGameList;
-		CGameManager::Instance().GetGameList( vecGameList );
-		sglib::centerproto::CenterLoginGameInfoNotify ntf;
-		ntf.set_clientid( req.clientid() );
-		ntf.set_gateid( req.gateid() );
-		for( vector<s32>::iterator it=vecGameList.begin(); it!=vecGameList.end(); ++it )
-		{
-			const CGameInfo *pInfo = CGameManager::Instance().GetGameInfo( *it );
-			if( pInfo != NULL )
-			{
-				sglib::publicproto::GameInfo *info = ntf.add_games();
-				if( info != NULL )
-				{
-					info->set_gameid( pInfo->GameId() );
-					info->set_cur_count( pInfo->GetPlayerCount() );
-				}
-			}
-		}
-		_SendMsg( ntf, sglib::msgid::CTL_GAME_INFO_NOTIFY );
+		CUserManager::Instance().AddUser( req.user(), req.flag() );
+		CUserManager::Instance().NotifyGameListToUser( *this, req.gateid(), req.clientid() );
 	}
 	else
 	{
@@ -113,6 +87,15 @@ void CCenterClient::_UserLogin(const byte *pPkg, s32 nPkgLen)
 
 void CCenterClient::_UserLogout(const byte *pPkg, s32 nPkgLen)
 {
+	sglib::centerproto::ServerCenterUserLogoutNotify ntf;
+	if( ntf.ParseFromArray(pPkg, nPkgLen) )
+	{
+		CUserManager::Instance().DelUser( ntf.user() );
+	}
+	else
+	{
+		SERVER_LOG_ERROR( "CCenterClient,_UserLogout,ParseFromArray" );
+	}
 }
 
 void CCenterClient::_GameInfoReport(const byte *pPkg, s32 nPkgLen)
@@ -164,36 +147,8 @@ void CCenterClient::_UserAskEnterGame(const byte *pPkg, s32 nPkgLen)
 	{
 		SERVER_LOG_DEBUG( "ServerCenterEnterGameReq : GameID=" << req.gameid() );
 
-		sglib::centerproto::CenterServerEnterGameRsp rsp;
-		s32 result = sglib::errorcode::E_ErrorCode_Success; 
-		rsp.set_clientid( req.clientid() );
-		rsp.set_gateid( req.gateid() );
-		rsp.set_gameid( req.gameid() );
-		rsp.set_gsid( req.gsid() );
-
-		const CGameInfo *pGame = CGameManager::Instance().GetGameInfo( req.gameid() );
-		if( pGame != NULL )
-		{
-			std::string gateIp = "";
-			s32 gatePort = INVALID_VAL;
-			bool ret = pGame->GetOptimalGateInfo( gateIp, gatePort );
-			if( ret )
-			{
-				rsp.set_ip( gateIp );
-				rsp.set_port( gatePort );
-			}
-			else
-			{
-				result = sglib::errorcode::E_ErrorCode_GameUserFull;
-			}
-		}
-		else
-		{
-			result = sglib::errorcode::E_ErrorCode_NoSuchGame;
-		}
-		rsp.set_result( result );
-		
-		_SendMsg( rsp, sglib::msgid::CTS_ENTER_GAME_RSP );
+		CUserManager::Instance().UserAskEnterGameInfo(
+			*this, req.gateid(), req.clientid(), req.gameid(), req.gsid() );
 	}
 	else
 	{

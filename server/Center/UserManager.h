@@ -6,23 +6,17 @@
 #include <string>
 
 class CUser;
+class CCenterClient;
 class CUserManager
 {
+	SINGLETON_CLASS_DEFINE(CUserManager);
 public:
-	~CUserManager(){}
-	static CUserManager& Instance()
-	{
-		if( m_pInstance == NULL )
-		{
-			m_pInstance = new CUserManager();
-		}
-		return *m_pInstance;
-	}
+	void AddUser(const std::string &user, const std::string &flag);
+	void DelUser(const std::string &user);
+	void NotifyGameListToUser(CCenterClient &client, u64 gateid, u64 clientid);
+	void UserAskEnterGameInfo(CCenterClient &client, u64 gateid, u64 clientid, s32 gameid, u64 gsid);
 
-protected:
-	CUserManager(){}
-	
-	static CUserManager *m_pInstance;
+private:
 	std::map<std::string, CUser*> m_mapUsers;
 };
 

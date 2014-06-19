@@ -19,7 +19,6 @@ struct _LoginManagerDBParam
 {
 	CLoginClient *client;
 	u64 clientid;
-	CUser *user;
 };
 
 void CLoginManager::UserLogin(CLoginClient &client, u64 clientId, const std::string &user, const std::string &pwd, const std::string &flag)
@@ -46,12 +45,13 @@ void CLoginManager::UserLogin(CLoginClient &client, u64 clientId, const std::str
 	{
 		puser = new CUser( user );
 		SELF_ASSERT( puser, return; );
-		//m_userLogin[ user ] = puser;
+		m_userLogin[ user ] = puser;
+		m_userIndex[ client.GetClientId() ][ clientId ] = puser;
 	}
 	puser->SetState( CUser::E_State_Logining );
 	puser->SetFlag( flag );
 
-	_LoginManagerDBParam _param = { &client, clientId, puser };
+	_LoginManagerDBParam _param = { &client, clientId };
 	s32 id = HashUser( user );
 	string sql = "call UserLogin('" + user + "','" + pwd + "');";
 	bool ret = CServerManager::Instance().ExecSql( id, sql, this, &CLoginManager::_UserLoginCallback, &_param, sizeof(_param) );
@@ -63,7 +63,7 @@ void CLoginManager::UserLogin(CLoginClient &client, u64 clientId, const std::str
 
 void CLoginManager::UserRegister(CLoginClient &client, u64 clientId, const std::string &user, const std::string &pwd)
 {
-	_LoginManagerDBParam _param = { &client, clientId, NULL };
+	_LoginManagerDBParam _param = { &client, clientId };
 
 	s32 id = HashUser( user );
 	string sql = "call UserRegister('" + user + "','" + pwd + "','abc');";
@@ -75,13 +75,62 @@ void CLoginManager::UserRegister(CLoginClient &client, u64 clientId, const std::
 }
 
 void CLoginManager::UserAskEnterGame(u64 clientid, u64 gateid, s32 gameid)
-{		
+{
+	// 检查是否已经登录了
+	CUser *user = _FindUser( gateid, clientid );
+	if( !user || user->GetState() != CUser::E_State_LoginSuccess )
+	{
+		return;
+	}
+
 	sglib::centerproto::ServerCenterEnterGameReq enterReq;
 	enterReq.set_clientid( clientid );
 	enterReq.set_gateid( gateid );
 	enterReq.set_gameid( gameid );
 	CServerManager::Instance().SendRpcMsg( CServerManager::Instance().GetCenterServerId(),
 		enterReq, sglib::msgid::SCT_ENTER_GAME_REQ );
+}
+
+void CLoginManager::UserClose(u64 clientid, u64 gateid)
+{
+	map<u64, map<u64, CUser*> >::iterator it = m_userIndex.find( gateid );
+	if( it == m_userIndex.end() )
+	{
+		return;
+	}
+	map<u64, CUser*>::iterator _it = it->second.find( clientid );
+	if( _it == it->second.end() || !_it->second )
+	{
+		return;
+	}
+
+	CUser *puser = _it->second;
+	SERVER_LOG_INFO( "CLoginManager,UserClose," << puser->User() << "," << puser->GetState() );
+	it->second.erase( _it );
+	{
+		map<string, CUser*>::iterator it = m_userLogin.find( puser->User() );
+		SELF_ASSERT( it != m_userLogin.end(), ; );
+	}
+	SAFE_DELETE( puser );
+}
+
+void CLoginManager::UserLogout(u64 gateid, u64 clientid, const std::string &user)
+{
+	CUser *puser = _FindUser( gateid, clientid );
+	if( !puser )
+	{
+		SERVER_LOG_ERROR( "CLoginManager,UserLogout," << gateid << "," << clientid << "," << user.c_str() );
+		return;
+	}
+
+	SERVER_LOG_INFO( "CLoginManager,UserLogout," << puser->User() << "," << puser->GetState() );
+
+	if( puser->GetState() == CUser::E_State_LoginSuccess ||
+		puser->GetState() == CUser::E_State_Logining )
+	{
+		_NotifyCenterUserLogout( user );
+	}
+	puser->SetState( CUser::E_State_Logout );
 }
 
 void CLoginManager::_NotifyLoginResult(CLoginClient &client, u64 clientId, s32 result, const std::string &token)
@@ -95,7 +144,8 @@ void CLoginManager::_NotifyLoginResult(CLoginClient &client, u64 clientId, s32 r
 string CLoginManager::_BuildToken(const std::string &user, const std::string &flag)
 {
 	// TODO
-	return "token_abc";
+	string token = user + "|" + flag + "|" + CServerManager::TimeNow();
+	return token;
 }
 
 void CLoginManager::_NotifyCenterUserLogin(u64 clientId, u64 gateid, const std::string &user, const std::string &flag)
@@ -115,6 +165,30 @@ void CLoginManager::_NotifyRegisterResult(CLoginClient &client, u64 clientId, s3
 	sglib::loginproto::SCUserRegisterRsp rsp;
 	rsp.set_result( result );
 	client.SendMsgToClient( clientId, rsp, sglib::msgid::LC_USER_REGISTER_RSP );
+}
+
+CUser* CLoginManager::_FindUser(u64 gateid, u64 clientid)
+{
+	map<u64, map<u64, CUser*> >::iterator it = m_userIndex.find( gateid );
+	if( it == m_userIndex.end() )
+	{
+		return NULL;
+	}
+	map<u64, CUser*>::iterator _it = it->second.find( clientid );
+	if( _it == it->second.end() || !_it->second )
+	{
+		return NULL;
+	}
+
+	return _it->second;
+}
+
+void CLoginManager::_NotifyCenterUserLogout(const std::string &user)
+{
+	sglib::centerproto::ServerCenterUserLogoutNotify ntf;
+	ntf.set_user( user );
+	CServerManager::Instance().SendRpcMsg( CServerManager::Instance().GetCenterServerId(),
+		ntf, sglib::msgid::SCT_USER_LOGOUT_NOTIFY );
 }
 
 void CLoginManager::_RegisterCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
@@ -161,8 +235,17 @@ void CLoginManager::_UserLoginCallback(SGLib::IDBRecordSet *RecordSet, char *Err
 
 	SELF_ASSERT( param && len==sizeof(_LoginManagerDBParam), return; );
 	_LoginManagerDBParam *_param = (_LoginManagerDBParam*)param;
-	CUser *puser = _param->user;
-	SELF_ASSERT( _param->client && puser && puser->GetState() == CUser::E_State_Logining, return; );
+	SELF_ASSERT( _param->client, return; );
+
+	CUser *puser = _FindUser( _param->client->GetClientId(), _param->clientid );
+	if( !puser )
+	{
+		SERVER_LOG_ERROR( "CLoginManager,_UserLoginCallback," << _param->client->GetClientId() << "," \
+			<< _param->clientid << ",AleardyClose"  );
+		return;
+	}
+
+	SELF_ASSERT( puser && puser->GetState() == CUser::E_State_Logining, return; );
 
 	string token = "";
 	if( result == sglib::errorcode::E_ErrorCode_Success )

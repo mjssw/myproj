@@ -37,6 +37,7 @@ enum EMsgId
 	CS_LEAVE_ROOM_REQ			= 508;		// 离开房间请求
 	SC_LEAVE_ROOM_RSP			= 509;		// 离开房间结果
 	SC_LEAVE_ROOM_NTF			= 510;		// 离开房间广播
+	CS_USER_LOGOUT				= 511;		// 用户登出
 	
 	// gamemanager msg
 	GMCT_REPORT_GAME_INFO		= 701;		// game manager->center 报告自己管理的本游戏状态信息

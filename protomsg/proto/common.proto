@@ -55,3 +55,8 @@ message SCLeaveRoomNtf
 	required string user	= 1;
 }
 
+message CSUserLogout
+{
+	required string user	= 1;
+}
+

@@ -66,7 +66,7 @@ void CLoginRpcClient::CenterLoginUserLoginRsp(const byte *pPkg, s32 nPkgLen)
 		sglib::loginproto::SCUserLoginRsp msg;
 		msg.set_result( rsp.result() );
 		msg.set_token( "abc" );
-		_SendMsgToClient( rsp.gateid(), rsp.clientid(), msg, sglib::msgid::LC_USER_LOGIN_RSP );
+		//_SendMsgToClient( rsp.gateid(), rsp.clientid(), msg, sglib::msgid::LC_USER_LOGIN_RSP );
 	}
 	else
 	{

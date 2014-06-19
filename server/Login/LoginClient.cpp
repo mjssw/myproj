@@ -16,6 +16,7 @@ CLoginClient::CLoginClient(int nId) : CGateClientBase(nId)
 	_RegisterClientProc( sglib::msgid::CL_USER_LOGIN_REQ,		&CLoginClient::_UserLoginProc );
 	_RegisterClientProc( sglib::msgid::CS_USER_ENTER_GAME_REQ,	&CLoginClient::_UserEnterGameProc );
 	_RegisterClientProc( sglib::msgid::CL_USER_REGISTER_REQ,	&CLoginClient::_UserRegisterProc );
+	_RegisterClientProc( sglib::msgid::CS_USER_LOGOUT,			&CLoginClient::_UserLogoutProc );
 }
 
 void CLoginClient::_RegisterClientProc(s32 id, ClientProtoProcFunc proc)
@@ -39,6 +40,12 @@ void CLoginClient::ProcPlayerMessage(u64 gateid, u64 clientid, s32 msgid, const 
 	{
 		SERVER_LOG_ERROR( "CLoginClient,ProcPlayerMessage," << msgid );
 	}
+}
+
+void CLoginClient::OnClientClose(u64 clientid)
+{
+	CGateClientBase::OnClientClose( clientid );
+	CLoginManager::Instance().UserClose( clientid, GetClientId() );
 }
 
 void CLoginClient::_UserLoginProc(u64 clientId, const byte *pPkg, s32 nPkgLen)
@@ -70,6 +77,20 @@ void CLoginClient::_UserRegisterProc(u64 clientId, const byte *pPkg, s32 nPkgLen
 	else
 	{
 		SERVER_LOG_ERROR( "CLoginClient,_UserRegisterProc,ParseFromArray" );
+	}
+}
+
+void CLoginClient::_UserLogoutProc(u64 clientId, const byte *pPkg, s32 nPkgLen)
+{
+	sglib::commonproto::CSUserLogout req;
+	if( req.ParseFromArray(pPkg, nPkgLen) )
+	{
+		SERVER_LOG_DEBUG( "recv client CSUserLogout: user=" << req.user() );
+		CLoginManager::Instance().UserLogout( GetClientId(), clientId, req.user() );
+	}
+	else
+	{
+		SERVER_LOG_ERROR( "CLoginClient,_UserLogoutProc,ParseFromArray" );
 	}
 }
 

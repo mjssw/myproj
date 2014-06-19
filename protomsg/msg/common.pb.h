@@ -44,6 +44,7 @@ class SCEnterRoomNtf;
 class CSLeaveRoomReq;
 class SCLeaveRoomRsp;
 class SCLeaveRoomNtf;
+class CSUserLogout;
 
 // ===================================================================
 
@@ -945,6 +946,93 @@ class SCLeaveRoomNtf : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static SCLeaveRoomNtf* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class CSUserLogout : public ::google::protobuf::Message {
+ public:
+  CSUserLogout();
+  virtual ~CSUserLogout();
+
+  CSUserLogout(const CSUserLogout& from);
+
+  inline CSUserLogout& operator=(const CSUserLogout& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CSUserLogout& default_instance();
+
+  void Swap(CSUserLogout* other);
+
+  // implements Message ----------------------------------------------
+
+  CSUserLogout* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CSUserLogout& from);
+  void MergeFrom(const CSUserLogout& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string user = 1;
+  inline bool has_user() const;
+  inline void clear_user();
+  static const int kUserFieldNumber = 1;
+  inline const ::std::string& user() const;
+  inline void set_user(const ::std::string& value);
+  inline void set_user(const char* value);
+  inline void set_user(const char* value, size_t size);
+  inline ::std::string* mutable_user();
+  inline ::std::string* release_user();
+  inline void set_allocated_user(::std::string* user);
+
+  // @@protoc_insertion_point(class_scope:sglib.commonproto.CSUserLogout)
+ private:
+  inline void set_has_user();
+  inline void clear_has_user();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* user_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_common_2eproto();
+  friend void protobuf_AssignDesc_common_2eproto();
+  friend void protobuf_ShutdownFile_common_2eproto();
+
+  void InitAsDefaultInstance();
+  static CSUserLogout* default_instance_;
+};
 // ===================================================================
 
 
@@ -1594,6 +1682,80 @@ inline ::std::string* SCLeaveRoomNtf::release_user() {
   }
 }
 inline void SCLeaveRoomNtf::set_allocated_user(::std::string* user) {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    delete user_;
+  }
+  if (user) {
+    set_has_user();
+    user_ = user;
+  } else {
+    clear_has_user();
+    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// CSUserLogout
+
+// required string user = 1;
+inline bool CSUserLogout::has_user() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void CSUserLogout::set_has_user() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void CSUserLogout::clear_has_user() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void CSUserLogout::clear_user() {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    user_->clear();
+  }
+  clear_has_user();
+}
+inline const ::std::string& CSUserLogout::user() const {
+  return *user_;
+}
+inline void CSUserLogout::set_user(const ::std::string& value) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(value);
+}
+inline void CSUserLogout::set_user(const char* value) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(value);
+}
+inline void CSUserLogout::set_user(const char* value, size_t size) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* CSUserLogout::mutable_user() {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  return user_;
+}
+inline ::std::string* CSUserLogout::release_user() {
+  clear_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = user_;
+    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void CSUserLogout::set_allocated_user(::std::string* user) {
   if (user_ != &::google::protobuf::internal::kEmptyString) {
     delete user_;
   }

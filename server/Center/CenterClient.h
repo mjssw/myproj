@@ -17,6 +17,8 @@ public:
 #ifdef _USE_IOSERVICE_EX_
 	DECLARE_IOSERVICEEX_CLONE_FUNC(CCenterClient);
 #endif
+	
+	void SendMsg(const ::google::protobuf::Message &Msg, s32 nMsgId);
 
 private:
 	void _UserLogin(const byte *pPkg, s32 nPkgLen);
@@ -31,7 +33,6 @@ private:
 
 private:
 	void _RegisterProc(int id, ProtoProc proc);
-	void _SendMsg(const ::google::protobuf::Message &Msg, s32 nMsgId);
 
 private:
 	std::map<int, ProtoProc> m_mapProtoProc;

@@ -3,6 +3,7 @@
 #include "CenterRpcClient.h"
 #include "GameManager.h"
 #include "GroupInfoManager.h"
+#include "UserManager.h"
 #include "common.h"
 
 int main(int argc, char *argv[])
@@ -14,6 +15,7 @@ int main(int argc, char *argv[])
 		CServerManager::Instance();
 		CGameManager::Instance();
 		CGroupInfoManager::Instance();
+		CUserManager::Instance();
 		bool bInit = CServerManager::Instance().InitServer<CCenterClient, CCenterRpcClient, CServerConfig>(
 			argv[1], 
 			argv[2], 

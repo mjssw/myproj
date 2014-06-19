@@ -28,6 +28,15 @@ public:
 		E_Mysql_Queue_Size = 1024,
 	};
 
+	static std::string TimeNow()
+	{
+		char strTime[64] = {0};
+		time_t now;
+		time( &now );
+		strftime( strTime, sizeof(strTime), "%Y-%m-%d", localtime(&now) );
+		return std::string( strTime );
+	}
+
 	~CServerManager()
 	{
 		SAFE_DELETE( m_pServer );

@@ -17,6 +17,7 @@ public:
 		E_State_Logining,
 		E_State_LoginSuccess,
 		E_State_LoginFailed,
+		E_State_Logout,
 	};
 
 	CUser() : m_user(""), m_state(E_State_Free), m_token("")
@@ -49,12 +50,16 @@ public:
 	void UserLogin(CLoginClient &client, u64 clientId, const std::string &user, const std::string &pwd, const std::string &flag);
 	void UserRegister(CLoginClient &client, u64 clientId, const std::string &user, const std::string &pwd);
 	void UserAskEnterGame(u64 clientid, u64 gateid, s32 gameid);
+	void UserClose(u64 clientid, u64 gateid);
+	void UserLogout(u64 gateid, u64 clientid, const std::string &user);
 
 private:
 	void _NotifyLoginResult(CLoginClient &client, u64 clientId, s32 result, const std::string &token);
 	std::string _BuildToken(const std::string &user, const std::string &flag);
 	void _NotifyCenterUserLogin(u64 clientId, u64 gateid, const std::string &user, const std::string &flag);
 	void _NotifyRegisterResult(CLoginClient &client, u64 clientId, s32 result);
+	CUser* _FindUser(u64 gateid, u64 clientid);
+	void _NotifyCenterUserLogout(const std::string &user);
 
 private:
 	void _RegisterCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
@@ -62,6 +67,7 @@ private:
 
 private:
 	std::map<std::string, CUser*> m_userLogin;
+	std::map<u64, std::map<u64, CUser*> > m_userIndex;
 };
 
 #endif
