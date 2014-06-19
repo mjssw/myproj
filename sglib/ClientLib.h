@@ -287,7 +287,6 @@ namespace SGLib
 		}
 
 	private:
-	public:
 		int		m_id;
 		int		m_hSock;
 		bool	m_bConnect;
@@ -514,6 +513,22 @@ namespace SGLib
 			m_StopWoker = true;
 			m_Worker->Stop();
 		}
+		
+		void DumpAllClients(TClient *clients[], s32 size, s32 idx, s32 &realCount)
+		{
+			realCount = 0;
+			for(int i=0; i<m_nCount; ++i)
+			{
+				if( idx >= size )
+				{
+					break;
+				}
+
+				clients[ idx ] = m_ClientList[i];
+				++idx;
+				++realCount;
+			}
+		}
 
 	private:
 		bool _Init(const char *ip, int port)
@@ -575,7 +590,6 @@ namespace SGLib
 		}
 
 	private:
-	public:
 		int		 m_id;
 		int		 m_nCount;
 		TClient *m_ClientList[E_Client_Count_Pre_Group];
@@ -677,8 +691,26 @@ namespace SGLib
 			}
 		}
 
+		void DumpAllClients(TClient *clients[], s32 size, s32 &realCount)
+		{
+			s32 idx = 0;
+			s32 count = 0;
+			realCount = 0;
+			for(int i=0; i<m_nCount; ++i)
+			{
+				m_ClientGroupList[i]->DumpAllClients( clients, size, idx, count );
+				idx += count;
+				realCount += count;
+				count = 0;
+
+				if( realCount >= size )
+				{
+					break;
+				}
+			}
+		}
+
 	private:
-	public:
 		int m_nCount;
 		CClientGroup<TClient> *m_ClientGroupList[E_Max_Group_Count];
 	};
