@@ -173,6 +173,8 @@
     <ClInclude Include="..\..\protomsg\msg\msgid.pb.h" />
     <ClInclude Include="..\..\protomsg\msg\public.pb.h" />
     <ClInclude Include="..\..\protomsg\msg\tetris.pb.h" />
+    <ClInclude Include="GameClient.h" />
+    <ClInclude Include="GameManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\sglib\NetLib.vcxproj">

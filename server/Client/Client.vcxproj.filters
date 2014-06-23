@@ -95,5 +95,11 @@
     <ClInclude Include="..\..\protomsg\msg\tetris.pb.h">
       <Filter>msg</Filter>
     </ClInclude>
+    <ClInclude Include="GameClient.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
