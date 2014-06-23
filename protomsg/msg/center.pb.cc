@@ -36,6 +36,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* ServerCenterUserLogoutNotify_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   ServerCenterUserLogoutNotify_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CenterLoginGroupGateNotify_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CenterLoginGroupGateNotify_reflection_ = NULL;
 
 }  // namespace
 
@@ -137,6 +140,24 @@ void protobuf_AssignDesc_center_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ServerCenterUserLogoutNotify));
+  CenterLoginGroupGateNotify_descriptor_ = file->message_type(5);
+  static const int CenterLoginGroupGateNotify_offsets_[4] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CenterLoginGroupGateNotify, gateid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CenterLoginGroupGateNotify, clientid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CenterLoginGroupGateNotify, ip_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CenterLoginGroupGateNotify, port_),
+  };
+  CenterLoginGroupGateNotify_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      CenterLoginGroupGateNotify_descriptor_,
+      CenterLoginGroupGateNotify::default_instance_,
+      CenterLoginGroupGateNotify_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CenterLoginGroupGateNotify, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CenterLoginGroupGateNotify, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(CenterLoginGroupGateNotify));
 }
 
 namespace {
@@ -159,6 +180,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
     ServerCenterEnterGameReq_descriptor_, &ServerCenterEnterGameReq::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     ServerCenterUserLogoutNotify_descriptor_, &ServerCenterUserLogoutNotify::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    CenterLoginGroupGateNotify_descriptor_, &CenterLoginGroupGateNotify::default_instance());
 }
 
 }  // namespace
@@ -174,6 +197,8 @@ void protobuf_ShutdownFile_center_2eproto() {
   delete ServerCenterEnterGameReq_reflection_;
   delete ServerCenterUserLogoutNotify::default_instance_;
   delete ServerCenterUserLogoutNotify_reflection_;
+  delete CenterLoginGroupGateNotify::default_instance_;
+  delete CenterLoginGroupGateNotify_reflection_;
 }
 
 void protobuf_AddDesc_center_2eproto() {
@@ -197,7 +222,10 @@ void protobuf_AddDesc_center_2eproto() {
     "roto.GameInfo\"Z\n\030ServerCenterEnterGameRe"
     "q\022\016\n\006gateid\030\001 \002(\004\022\020\n\010clientid\030\002 \002(\004\022\016\n\006g"
     "ameid\030\003 \002(\005\022\014\n\004gsid\030\004 \001(\004\",\n\034ServerCente"
-    "rUserLogoutNotify\022\014\n\004user\030\001 \002(\t", 551);
+    "rUserLogoutNotify\022\014\n\004user\030\001 \002(\t\"X\n\032Cente"
+    "rLoginGroupGateNotify\022\016\n\006gateid\030\001 \002(\004\022\020\n"
+    "\010clientid\030\002 \002(\004\022\n\n\002ip\030\003 \002(\t\022\014\n\004port\030\004 \002("
+    "\005", 641);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "center.proto", &protobuf_RegisterTypes);
   CenterServerEnterGameRsp::default_instance_ = new CenterServerEnterGameRsp();
@@ -205,11 +233,13 @@ void protobuf_AddDesc_center_2eproto() {
   CenterLoginGameInfoNotify::default_instance_ = new CenterLoginGameInfoNotify();
   ServerCenterEnterGameReq::default_instance_ = new ServerCenterEnterGameReq();
   ServerCenterUserLogoutNotify::default_instance_ = new ServerCenterUserLogoutNotify();
+  CenterLoginGroupGateNotify::default_instance_ = new CenterLoginGroupGateNotify();
   CenterServerEnterGameRsp::default_instance_->InitAsDefaultInstance();
   CenterLoginUserLoginRsp::default_instance_->InitAsDefaultInstance();
   CenterLoginGameInfoNotify::default_instance_->InitAsDefaultInstance();
   ServerCenterEnterGameReq::default_instance_->InitAsDefaultInstance();
   ServerCenterUserLogoutNotify::default_instance_->InitAsDefaultInstance();
+  CenterLoginGroupGateNotify::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_center_2eproto);
 }
 
@@ -1972,6 +2002,352 @@ void ServerCenterUserLogoutNotify::Swap(ServerCenterUserLogoutNotify* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = ServerCenterUserLogoutNotify_descriptor_;
   metadata.reflection = ServerCenterUserLogoutNotify_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int CenterLoginGroupGateNotify::kGateidFieldNumber;
+const int CenterLoginGroupGateNotify::kClientidFieldNumber;
+const int CenterLoginGroupGateNotify::kIpFieldNumber;
+const int CenterLoginGroupGateNotify::kPortFieldNumber;
+#endif  // !_MSC_VER
+
+CenterLoginGroupGateNotify::CenterLoginGroupGateNotify()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void CenterLoginGroupGateNotify::InitAsDefaultInstance() {
+}
+
+CenterLoginGroupGateNotify::CenterLoginGroupGateNotify(const CenterLoginGroupGateNotify& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void CenterLoginGroupGateNotify::SharedCtor() {
+  _cached_size_ = 0;
+  gateid_ = GOOGLE_ULONGLONG(0);
+  clientid_ = GOOGLE_ULONGLONG(0);
+  ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  port_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+CenterLoginGroupGateNotify::~CenterLoginGroupGateNotify() {
+  SharedDtor();
+}
+
+void CenterLoginGroupGateNotify::SharedDtor() {
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    delete ip_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+void CenterLoginGroupGateNotify::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CenterLoginGroupGateNotify::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CenterLoginGroupGateNotify_descriptor_;
+}
+
+const CenterLoginGroupGateNotify& CenterLoginGroupGateNotify::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_center_2eproto();
+  return *default_instance_;
+}
+
+CenterLoginGroupGateNotify* CenterLoginGroupGateNotify::default_instance_ = NULL;
+
+CenterLoginGroupGateNotify* CenterLoginGroupGateNotify::New() const {
+  return new CenterLoginGroupGateNotify;
+}
+
+void CenterLoginGroupGateNotify::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    gateid_ = GOOGLE_ULONGLONG(0);
+    clientid_ = GOOGLE_ULONGLONG(0);
+    if (has_ip()) {
+      if (ip_ != &::google::protobuf::internal::kEmptyString) {
+        ip_->clear();
+      }
+    }
+    port_ = 0;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool CenterLoginGroupGateNotify::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint64 gateid = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &gateid_)));
+          set_has_gateid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(16)) goto parse_clientid;
+        break;
+      }
+
+      // required uint64 clientid = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_clientid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &clientid_)));
+          set_has_clientid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(26)) goto parse_ip;
+        break;
+      }
+
+      // required string ip = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_ip:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_ip()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->ip().data(), this->ip().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(32)) goto parse_port;
+        break;
+      }
+
+      // required int32 port = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_port:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &port_)));
+          set_has_port();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void CenterLoginGroupGateNotify::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required uint64 gateid = 1;
+  if (has_gateid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->gateid(), output);
+  }
+
+  // required uint64 clientid = 2;
+  if (has_clientid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->clientid(), output);
+  }
+
+  // required string ip = 3;
+  if (has_ip()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->ip().data(), this->ip().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      3, this->ip(), output);
+  }
+
+  // required int32 port = 4;
+  if (has_port()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->port(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* CenterLoginGroupGateNotify::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required uint64 gateid = 1;
+  if (has_gateid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->gateid(), target);
+  }
+
+  // required uint64 clientid = 2;
+  if (has_clientid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->clientid(), target);
+  }
+
+  // required string ip = 3;
+  if (has_ip()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->ip().data(), this->ip().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->ip(), target);
+  }
+
+  // required int32 port = 4;
+  if (has_port()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->port(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int CenterLoginGroupGateNotify::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint64 gateid = 1;
+    if (has_gateid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->gateid());
+    }
+
+    // required uint64 clientid = 2;
+    if (has_clientid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->clientid());
+    }
+
+    // required string ip = 3;
+    if (has_ip()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->ip());
+    }
+
+    // required int32 port = 4;
+    if (has_port()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->port());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CenterLoginGroupGateNotify::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const CenterLoginGroupGateNotify* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const CenterLoginGroupGateNotify*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void CenterLoginGroupGateNotify::MergeFrom(const CenterLoginGroupGateNotify& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_gateid()) {
+      set_gateid(from.gateid());
+    }
+    if (from.has_clientid()) {
+      set_clientid(from.clientid());
+    }
+    if (from.has_ip()) {
+      set_ip(from.ip());
+    }
+    if (from.has_port()) {
+      set_port(from.port());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void CenterLoginGroupGateNotify::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CenterLoginGroupGateNotify::CopyFrom(const CenterLoginGroupGateNotify& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool CenterLoginGroupGateNotify::IsInitialized() const {
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
+
+  return true;
+}
+
+void CenterLoginGroupGateNotify::Swap(CenterLoginGroupGateNotify* other) {
+  if (other != this) {
+    std::swap(gateid_, other->gateid_);
+    std::swap(clientid_, other->clientid_);
+    std::swap(ip_, other->ip_);
+    std::swap(port_, other->port_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata CenterLoginGroupGateNotify::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CenterLoginGroupGateNotify_descriptor_;
+  metadata.reflection = CenterLoginGroupGateNotify_reflection_;
   return metadata;
 }
 

@@ -18,6 +18,7 @@ enum EMsgId
 	LCT_USER_LOGIN_REQ			= 104;		// login->center 通知center玩家登录
 	CL_USER_REGISTER_REQ		= 105;		// client->login 注册
 	LC_USER_REGISTER_RSP		= 106;		// login->client 注册结果
+	LC_GROUP_GATE_NOTIFY		= 107;		// login->client group的IP和端口通知
 	
 	// center msg
 	CTL_USER_LOGIN_RSP			= 301;		// center通知login玩家登录结果
@@ -25,6 +26,7 @@ enum EMsgId
 	CTS_ENTER_GAME_RSP			= 303;		// center回复其他rpc server玩家进入游戏请求结果
 	SCT_USER_LOGOUT_NOTIFY		= 304;		// server->center 通知center玩家登出
 	SCT_ENTER_GAME_REQ			= 305;		// server->center 转发玩家请求进入游戏请求
+	CTL_GROUP_GATE_NOTIFY		= 306;		// center->login 通知玩家可以连接的group(gate)的ip和端口
 	
 	// common msg
 	CS_USER_ENTER_GAME_REQ		= 501;		// client请求进入游戏

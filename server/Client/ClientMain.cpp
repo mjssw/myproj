@@ -219,7 +219,7 @@ void ClientInGroup(const char *ip, int port, int clientNum)
 		{
 			if( vCmd.size() == 2 )
 			{
-				g_mapClient.begin()->second->LoginGroup( vCmd[1] );
+				g_mapClient.begin()->second->LoginGroup( vCmd[1], "aaa" );
 			}
 		}
 		else if( vCmd[0] == "creategroup" )

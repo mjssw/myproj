@@ -78,6 +78,7 @@ void CCenterClient::_UserLogin(const byte *pPkg, s32 nPkgLen)
 	{
 		CUserManager::Instance().AddUser( req.user(), req.flag() );
 		CUserManager::Instance().NotifyGameListToUser( *this, req.gateid(), req.clientid() );
+		CUserManager::Instance().NotifyGroupGateToUser( *this, req.gateid(), req.clientid() );
 	}
 	else
 	{

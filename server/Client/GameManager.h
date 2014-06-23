@@ -8,9 +8,13 @@ class CGameMgr
 public:
 	std::string m_groupIp;
 	s32 m_groupPort;
+	bool m_bHaveGroupInfo;
+	std::string m_user;
+	std::string m_token;
 
 	CGameMgr() : m_LoginConn(1), m_GroupConn(1), m_GameConn(1)
 	{
+		m_groupIp = "";
 	}
 	~CGameMgr()
 	{
@@ -65,30 +69,51 @@ public:
 			}
 			else if( vCmd[0] == "leavelogin" )
 			{
+				/*
+				m_groupIp = m_loginClient->m_groupIp; 
+				m_groupPort = m_loginClient->m_groupPort; 
+
 				m_LoginConn.Stop();
 				m_loginClient = NULL;
+				//*/
 			}
 
-			else if( vCmd[0] == "conngroup" )
+			else if( vCmd[0] == "startgroup" )
 			{
-				bool ret = m_GroupConn.Start( m_groupIp.c_str(), m_groupPort );
-				if( !ret )
+				m_groupIp = m_loginClient->m_groupIp; 
+				m_groupPort = m_loginClient->m_groupPort;
+				m_bHaveGroupInfo = m_loginClient->m_bHaveGroupInfo; 
+				m_user = m_loginClient->m_User;
+				m_token = m_loginClient->m_token;
+
+				if( m_bHaveGroupInfo )
 				{
-					printf( "Start Group [%s:%d] failed\n", m_groupIp.c_str(), loginPort );
+					m_LoginConn.Stop();
+					m_loginClient = NULL;
+
+					bool ret = m_GroupConn.Start( m_groupIp.c_str(), m_groupPort );
+					if( !ret )
+					{
+						printf( "Start Group [%s:%d] failed\n", m_groupIp.c_str(), loginPort );
+					}
+					else
+					{
+						ctCLient *cts[10] = { 0 };
+						s32 count = 0;
+						m_GroupConn.DumpAllClients( cts, (sizeof(cts)/sizeof(ctCLient*)), count );
+						m_groupClient = cts[0];
+					}
 				}
 				else
 				{
-					ctCLient *cts[10] = { 0 };
-					s32 count = 0;
-					m_GroupConn.DumpAllClients( cts, (sizeof(cts)/sizeof(ctCLient*)), count );
-					m_groupClient = cts[0];
+					printf( "have not get group info" );
 				}
 			}
 			else if( vCmd[0] == "logingroup" )
 			{
-				if( vCmd.size() == 2 )
+				if( vCmd.size() == 1 )
 				{
-					m_groupClient->LoginGroup( vCmd[1] );
+					m_groupClient->LoginGroup( m_user, m_token );
 				}
 			}
 			else if( vCmd[0] == "creategroup" )

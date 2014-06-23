@@ -41,3 +41,11 @@ message ServerCenterUserLogoutNotify
 {
 	required string user	= 1;
 }
+
+message CenterLoginGroupGateNotify
+{
+	required uint64 gateid		= 1;
+	required uint64 clientid	= 2;
+	required string ip			= 3;
+	required int32 port			= 4;
+}

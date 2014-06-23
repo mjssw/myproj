@@ -495,6 +495,12 @@ namespace SGLib
 			}
 			
 			CLog::DebugLog( "ClientGroupWorker:%d End", m_id );
+
+			// close all
+			for( s32 i=0; i<m_nCount; ++i )
+			{
+				CloseClient( m_ClientList[i] );
+			}
 		}
 
 		bool Start(const char *ip, int port)

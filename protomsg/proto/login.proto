@@ -32,6 +32,12 @@ message SCGameInfoNotify
 	repeated sglib.publicproto.GameInfo games	= 1;
 }
 
+message SCGroupGateNotify
+{
+	required string ip		= 1;
+	required int32 port		= 2;
+}
+
 // RPC message
 
 message LoginCenterUserLoginReq 

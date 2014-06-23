@@ -40,6 +40,7 @@ class CenterLoginUserLoginRsp;
 class CenterLoginGameInfoNotify;
 class ServerCenterEnterGameReq;
 class ServerCenterUserLogoutNotify;
+class CenterLoginGroupGateNotify;
 
 // ===================================================================
 
@@ -633,6 +634,123 @@ class ServerCenterUserLogoutNotify : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static ServerCenterUserLogoutNotify* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class CenterLoginGroupGateNotify : public ::google::protobuf::Message {
+ public:
+  CenterLoginGroupGateNotify();
+  virtual ~CenterLoginGroupGateNotify();
+
+  CenterLoginGroupGateNotify(const CenterLoginGroupGateNotify& from);
+
+  inline CenterLoginGroupGateNotify& operator=(const CenterLoginGroupGateNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CenterLoginGroupGateNotify& default_instance();
+
+  void Swap(CenterLoginGroupGateNotify* other);
+
+  // implements Message ----------------------------------------------
+
+  CenterLoginGroupGateNotify* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CenterLoginGroupGateNotify& from);
+  void MergeFrom(const CenterLoginGroupGateNotify& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint64 gateid = 1;
+  inline bool has_gateid() const;
+  inline void clear_gateid();
+  static const int kGateidFieldNumber = 1;
+  inline ::google::protobuf::uint64 gateid() const;
+  inline void set_gateid(::google::protobuf::uint64 value);
+
+  // required uint64 clientid = 2;
+  inline bool has_clientid() const;
+  inline void clear_clientid();
+  static const int kClientidFieldNumber = 2;
+  inline ::google::protobuf::uint64 clientid() const;
+  inline void set_clientid(::google::protobuf::uint64 value);
+
+  // required string ip = 3;
+  inline bool has_ip() const;
+  inline void clear_ip();
+  static const int kIpFieldNumber = 3;
+  inline const ::std::string& ip() const;
+  inline void set_ip(const ::std::string& value);
+  inline void set_ip(const char* value);
+  inline void set_ip(const char* value, size_t size);
+  inline ::std::string* mutable_ip();
+  inline ::std::string* release_ip();
+  inline void set_allocated_ip(::std::string* ip);
+
+  // required int32 port = 4;
+  inline bool has_port() const;
+  inline void clear_port();
+  static const int kPortFieldNumber = 4;
+  inline ::google::protobuf::int32 port() const;
+  inline void set_port(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:sglib.centerproto.CenterLoginGroupGateNotify)
+ private:
+  inline void set_has_gateid();
+  inline void clear_has_gateid();
+  inline void set_has_clientid();
+  inline void clear_has_clientid();
+  inline void set_has_ip();
+  inline void clear_has_ip();
+  inline void set_has_port();
+  inline void clear_has_port();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint64 gateid_;
+  ::google::protobuf::uint64 clientid_;
+  ::std::string* ip_;
+  ::google::protobuf::int32 port_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+
+  friend void  protobuf_AddDesc_center_2eproto();
+  friend void protobuf_AssignDesc_center_2eproto();
+  friend void protobuf_ShutdownFile_center_2eproto();
+
+  void InitAsDefaultInstance();
+  static CenterLoginGroupGateNotify* default_instance_;
 };
 // ===================================================================
 
@@ -1312,6 +1430,146 @@ inline void ServerCenterUserLogoutNotify::set_allocated_user(::std::string* user
     clear_has_user();
     user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// -------------------------------------------------------------------
+
+// CenterLoginGroupGateNotify
+
+// required uint64 gateid = 1;
+inline bool CenterLoginGroupGateNotify::has_gateid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void CenterLoginGroupGateNotify::set_has_gateid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void CenterLoginGroupGateNotify::clear_has_gateid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void CenterLoginGroupGateNotify::clear_gateid() {
+  gateid_ = GOOGLE_ULONGLONG(0);
+  clear_has_gateid();
+}
+inline ::google::protobuf::uint64 CenterLoginGroupGateNotify::gateid() const {
+  return gateid_;
+}
+inline void CenterLoginGroupGateNotify::set_gateid(::google::protobuf::uint64 value) {
+  set_has_gateid();
+  gateid_ = value;
+}
+
+// required uint64 clientid = 2;
+inline bool CenterLoginGroupGateNotify::has_clientid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void CenterLoginGroupGateNotify::set_has_clientid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void CenterLoginGroupGateNotify::clear_has_clientid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void CenterLoginGroupGateNotify::clear_clientid() {
+  clientid_ = GOOGLE_ULONGLONG(0);
+  clear_has_clientid();
+}
+inline ::google::protobuf::uint64 CenterLoginGroupGateNotify::clientid() const {
+  return clientid_;
+}
+inline void CenterLoginGroupGateNotify::set_clientid(::google::protobuf::uint64 value) {
+  set_has_clientid();
+  clientid_ = value;
+}
+
+// required string ip = 3;
+inline bool CenterLoginGroupGateNotify::has_ip() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void CenterLoginGroupGateNotify::set_has_ip() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void CenterLoginGroupGateNotify::clear_has_ip() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void CenterLoginGroupGateNotify::clear_ip() {
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    ip_->clear();
+  }
+  clear_has_ip();
+}
+inline const ::std::string& CenterLoginGroupGateNotify::ip() const {
+  return *ip_;
+}
+inline void CenterLoginGroupGateNotify::set_ip(const ::std::string& value) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(value);
+}
+inline void CenterLoginGroupGateNotify::set_ip(const char* value) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(value);
+}
+inline void CenterLoginGroupGateNotify::set_ip(const char* value, size_t size) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* CenterLoginGroupGateNotify::mutable_ip() {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  return ip_;
+}
+inline ::std::string* CenterLoginGroupGateNotify::release_ip() {
+  clear_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = ip_;
+    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void CenterLoginGroupGateNotify::set_allocated_ip(::std::string* ip) {
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    delete ip_;
+  }
+  if (ip) {
+    set_has_ip();
+    ip_ = ip;
+  } else {
+    clear_has_ip();
+    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 port = 4;
+inline bool CenterLoginGroupGateNotify::has_port() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void CenterLoginGroupGateNotify::set_has_port() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void CenterLoginGroupGateNotify::clear_has_port() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void CenterLoginGroupGateNotify::clear_port() {
+  port_ = 0;
+  clear_has_port();
+}
+inline ::google::protobuf::int32 CenterLoginGroupGateNotify::port() const {
+  return port_;
+}
+inline void CenterLoginGroupGateNotify::set_port(::google::protobuf::int32 value) {
+  set_has_port();
+  port_ = value;
 }
 
 

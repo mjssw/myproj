@@ -48,11 +48,17 @@ public:
     ctCLient(int id) : CClientBase(id), m_timer()
     {
 		m_timer.Start();
+		m_bHaveGroupInfo = false;
     }
 	CTimer<1> m_timer;
 	std::string m_User;
 	std::string m_gameIp;
 	s32 m_gamePort;
+	std::string m_groupIp;
+	s32 m_groupPort;
+	bool m_bHaveGroupInfo;
+	std::string m_token;
+	bool m_bLoginResult;
 
 	virtual int OnRecv(char *buf, int len)
 	{
@@ -90,6 +96,15 @@ public:
 					if( ntf.ParseFromArray(pbuf+MSG_ID_LEN+sizeof(int), pkgLen-MSG_ID_LEN-sizeof(int)) )
 					{
 						_GameInfoNotify(ntf);
+					}
+				}
+				break;
+			case sglib::msgid::LC_GROUP_GATE_NOTIFY:
+				{
+					sglib::loginproto::SCGroupGateNotify ntf;
+					if( ntf.ParseFromArray(pbuf+MSG_ID_LEN+sizeof(int), pkgLen-MSG_ID_LEN-sizeof(int)) )
+					{
+						_GroupGateNotify(ntf);
 					}
 				}
 				break;
@@ -393,6 +408,7 @@ public:
 		req.set_password(pwd);
 		req.set_flag( flag );
 		SendMsg( req, sglib::msgid::CL_USER_LOGIN_REQ );
+		m_User = user;
 	}
 
 	void UserEnterGame(int gameid)
@@ -464,12 +480,13 @@ public:
 
 	// ====================== group ==================================
 
-	void LoginGroup(const std::string &userId)
+	void LoginGroup(const std::string &userId, const std::string &token)
 	{
 		printf( "%s will login group\n", userId.c_str() );
 		m_User = userId;
 		sglib::groupproto::CSGroupUserLoginReq req;
 		req.set_user( userId );
+		req.set_token( token );
 		//req.set_password( "xxx" );
 		SendMsg( req, sglib::msgid::CS_GROUP_LOGIN_REQ );
 	}
@@ -537,6 +554,8 @@ private:
 	void _UserLoginRsp(const sglib::loginproto::SCUserLoginRsp &rsp)
 	{
 		printf("login rsp:%d %s\n", rsp.result(), rsp.token().c_str());
+		m_token = rsp.token();
+		m_bLoginResult = (rsp.result() == 0 );
 	}
 
 	void _GameInfoNotify(const sglib::loginproto::SCGameInfoNotify &ntf)
@@ -547,6 +566,14 @@ private:
 			const sglib::publicproto::GameInfo &info = ntf.games(i);
 			printf("\tGAME:%d online=%d\n", info.gameid(), info.cur_count());
 		}
+	}
+
+	void _GroupGateNotify(const sglib::loginproto::SCGroupGateNotify &ntf)
+	{
+		printf( "group info %s:%d\n", ntf.ip().c_str(), ntf.port() );
+		m_groupIp = ntf.ip();
+		m_groupPort = ntf.port();
+		m_bHaveGroupInfo = true;
 	}
 
 	void _EnterGameRsp(const sglib::commonproto::SCEnterGameRsp &rsp)

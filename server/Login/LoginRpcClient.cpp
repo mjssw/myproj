@@ -1,5 +1,6 @@
 #include "LoginRpcClient.h"
 #include "LoginClient.h"
+#include "LoginManager.h"
 #include "msgid.pb.h"
 #include "login.pb.h"
 #include "center.pb.h"
@@ -10,6 +11,7 @@ CLoginRpcClient::CLoginRpcClient(int nId) : CRpcClient(nId)
 {
 	_RegisterProc( sglib::msgid::CTL_USER_LOGIN_RSP,   &CLoginRpcClient::CenterLoginUserLoginRsp );
 	_RegisterProc( sglib::msgid::CTL_GAME_INFO_NOTIFY, &CLoginRpcClient::CenterLoginGameInfoNotify );
+	_RegisterProc( sglib::msgid::CTL_GROUP_GATE_NOTIFY,&CLoginRpcClient::CenterLoginGroupGateNotify );
 	_RegisterProc( sglib::msgid::CTS_ENTER_GAME_RSP,   &CLoginRpcClient::CenterServerEnterGameRsp );
 }
 
@@ -43,7 +45,7 @@ void CLoginRpcClient::_RegisterProc(int id, ProtoProc proc)
 	}
 }
 	
-void CLoginRpcClient::_SendMsgToClient(u64 gateid, u64 clientid, const ::google::protobuf::Message &Msg, s32 nMsgId)
+void CLoginRpcClient::SendMsgToClient(u64 gateid, u64 clientid, const ::google::protobuf::Message &Msg, s32 nMsgId)
 {
 	CClient *client = CServerManager::Instance().FindClient( gateid );
 	if( client != NULL )
@@ -66,7 +68,7 @@ void CLoginRpcClient::CenterLoginUserLoginRsp(const byte *pPkg, s32 nPkgLen)
 		sglib::loginproto::SCUserLoginRsp msg;
 		msg.set_result( rsp.result() );
 		msg.set_token( "abc" );
-		//_SendMsgToClient( rsp.gateid(), rsp.clientid(), msg, sglib::msgid::LC_USER_LOGIN_RSP );
+		//SendMsgToClient( rsp.gateid(), rsp.clientid(), msg, sglib::msgid::LC_USER_LOGIN_RSP );
 	}
 	else
 	{
@@ -79,14 +81,25 @@ void CLoginRpcClient::CenterLoginGameInfoNotify(const byte *pPkg, s32 nPkgLen)
 	sglib::centerproto::CenterLoginGameInfoNotify ntf;
 	if( ntf.ParseFromArray(pPkg, nPkgLen) )
 	{
-		// TODO
-		sglib::loginproto::SCGameInfoNotify msg;
-		msg.mutable_games()->CopyFrom( ntf.games() );
-		_SendMsgToClient( ntf.gateid(), ntf.clientid(), msg, sglib::msgid::LC_GAME_INFO_NOTIFY );
+		CLoginManager::Instance().GameInfoNotifyToUser( *this, ntf );
 	}
 	else
 	{
 		SERVER_LOG_ERROR( "CenterLoginGameInfoNotify ParseFromArray failed." );
+	}
+}
+
+void CLoginRpcClient::CenterLoginGroupGateNotify(const byte *pPkg, s32 nPkgLen)
+{
+	sglib::centerproto::CenterLoginGroupGateNotify ntf;
+	if( ntf.ParseFromArray(pPkg, nPkgLen) )
+	{
+		CLoginManager::Instance().GroupGateNotifyToUser(
+			*this, ntf.gateid(), ntf.clientid(), ntf.ip(), ntf.port() );
+	}
+	else
+	{
+		SERVER_LOG_ERROR( "CenterLoginGroupGateNotify ParseFromArray failed." );
 	}
 }
 
@@ -95,13 +108,8 @@ void CLoginRpcClient::CenterServerEnterGameRsp(const byte *pPkg, s32 nPkgLen)
 	sglib::centerproto::CenterServerEnterGameRsp rsp;
 	if( rsp.ParseFromArray(pPkg, nPkgLen) )
 	{
-		sglib::commonproto::SCEnterGameRsp msg;
-		msg.set_result( rsp.result() );
-		msg.set_gameid( rsp.gameid() );
-		msg.set_ip( rsp.ip() );
-		msg.set_port( rsp.port() );
-
-		_SendMsgToClient( rsp.gateid(), rsp.clientid(), msg, sglib::msgid::SC_USER_ENTER_GAME_RSP );
+		CLoginManager::Instance().EnterGameRspToUser(
+			*this, rsp.gateid(), rsp.clientid(), rsp.result(), rsp.gameid(), rsp.ip(), rsp.port() );
 	}
 	else
 	{

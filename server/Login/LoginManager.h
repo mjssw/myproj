@@ -5,8 +5,10 @@
 #include "DBQuery.h"
 #include <map>
 #include <string>
+#include "center.pb.h"
 
 class CLoginClient;
+class CLoginRpcClient;
 
 class CUser
 {
@@ -52,6 +54,10 @@ public:
 	void UserAskEnterGame(u64 clientid, u64 gateid, s32 gameid);
 	void UserClose(u64 clientid, u64 gateid);
 	void UserLogout(u64 gateid, u64 clientid, const std::string &user);
+	
+	void GameInfoNotifyToUser(CLoginRpcClient &rpcClient, sglib::centerproto::CenterLoginGameInfoNotify &ntf);
+	void GroupGateNotifyToUser(CLoginRpcClient &rpcClient, u64 gateid, u64 clientid, const std::string &ip, s32 port);
+	void EnterGameRspToUser(CLoginRpcClient &rpcClient, u64 gateid, u64 clientid, s32 result, s32 gameid, const std::string &ip, s32 port);
 
 private:
 	void _NotifyLoginResult(CLoginClient &client, u64 clientId, s32 result, const std::string &token);

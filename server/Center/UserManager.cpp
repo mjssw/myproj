@@ -3,6 +3,8 @@
 #include "CenterClient.h"
 #include "GameManager.h"
 #include "ServerManager.h"
+#include "GroupInfoManager.h"
+#include "GateClientManager.h"
 #include "StackTrace.h"
 #include "center.pb.h"
 #include "msgid.pb.h"
@@ -67,6 +69,19 @@ void CUserManager::NotifyGameListToUser(CCenterClient &client, u64 gateid, u64 c
 	client.SendMsg( ntf, sglib::msgid::CTL_GAME_INFO_NOTIFY );
 }
 
+void CUserManager::NotifyGroupGateToUser(CCenterClient &client, u64 gateid, u64 clientid)
+{
+	string ip = "";
+	s32 port = 0;
+	_GetOptimalGroupGate( ip, port );
+	sglib::centerproto::CenterLoginGroupGateNotify ntf;
+	ntf.set_clientid( clientid );
+	ntf.set_gateid( gateid );
+	ntf.set_ip( ip );
+	ntf.set_port( port );
+	client.SendMsg( ntf, sglib::msgid::CTL_GROUP_GATE_NOTIFY );
+}
+
 void CUserManager::UserAskEnterGameInfo(CCenterClient &client, u64 gateid, u64 clientid, s32 gameid, u64 gsid)
 {
 	sglib::centerproto::CenterServerEnterGameRsp rsp;
@@ -99,4 +114,31 @@ void CUserManager::UserAskEnterGameInfo(CCenterClient &client, u64 gateid, u64 c
 	rsp.set_result( result );
 
 	client.SendMsg( rsp, sglib::msgid::CTS_ENTER_GAME_RSP );
+}
+
+void CUserManager::_GetOptimalGroupGate(std::string &ip, s32 &port)
+{
+	// TODO
+	ip = "";
+	port = 0;
+
+	s32 minCount = 0;
+	vector<s32> vecGates;
+	CGroupInfoManager::Instance().GetGateList( vecGates );
+	vector<s32>::iterator it = vecGates.begin();
+	for( ; it != vecGates.end(); ++it )
+	{
+		const CGateClientInfo *info = CGroupInfoManager::Instance().GetGroupGateInfo( *it );
+		if( !info || info->m_GateCurConnCount >= info->m_GateMaxConnCount )
+		{
+			continue;
+		}
+
+		if( port == 0 || minCount > info->m_GateCurConnCount )
+		{
+			ip = info->m_GateIp;
+			port = info->m_GatePort;
+			minCount = info->m_GateCurConnCount;
+		}
+	}
 }

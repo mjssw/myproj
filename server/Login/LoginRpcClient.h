@@ -18,13 +18,16 @@ public:
 #ifdef _USE_IOSERVICE_EX_
 	DECLARE_IOSERVICEEX_CLONE_FUNC(CLoginRpcClient);
 #endif
+
+	void SendMsgToClient(u64 gateid, u64 clientid, const ::google::protobuf::Message &Msg, s32 nMsgId);
+
 private:
 	void CenterLoginUserLoginRsp(const byte *pPkg, s32 nPkgLen);
 	void CenterLoginGameInfoNotify(const byte *pPkg, s32 nPkgLen);
+	void CenterLoginGroupGateNotify(const byte *pPkg, s32 nPkgLen);
 	void CenterServerEnterGameRsp(const byte *pPkg, s32 nPkgLen);
 
 private:
-	void _SendMsgToClient(u64 gateid, u64 clientid, const ::google::protobuf::Message &Msg, s32 nMsgId);
 	void _RegisterProc(int id, ProtoProc proc);
 
 private:

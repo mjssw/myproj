@@ -1,10 +1,12 @@
 #include "LoginManager.h"
 #include "LoginClient.h"
+#include "LoginRpcClient.h"
 #include "ServerManager.h"
 #include "errno.pb.h"
 #include "login.pb.h"
 #include "center.pb.h"
 #include "msgid.pb.h"
+#include "common.pb.h"
 using namespace std;
 
 SIGNLETON_CLASS_INIT(CLoginManager);
@@ -110,6 +112,7 @@ void CLoginManager::UserClose(u64 clientid, u64 gateid)
 	{
 		map<string, CUser*>::iterator it = m_userLogin.find( puser->User() );
 		SELF_ASSERT( it != m_userLogin.end(), ; );
+		m_userLogin.erase( it );
 	}
 	SAFE_DELETE( puser );
 }
@@ -131,6 +134,32 @@ void CLoginManager::UserLogout(u64 gateid, u64 clientid, const std::string &user
 		_NotifyCenterUserLogout( user );
 	}
 	puser->SetState( CUser::E_State_Logout );
+}
+
+void CLoginManager::GameInfoNotifyToUser(CLoginRpcClient &rpcClient, sglib::centerproto::CenterLoginGameInfoNotify &ntf)
+{
+	sglib::loginproto::SCGameInfoNotify msg;
+	msg.mutable_games()->CopyFrom( ntf.games() );
+	rpcClient.SendMsgToClient( ntf.gateid(), ntf.clientid(), msg, sglib::msgid::LC_GAME_INFO_NOTIFY );
+}
+
+void CLoginManager::GroupGateNotifyToUser(CLoginRpcClient &rpcClient, u64 gateid, u64 clientid, const std::string &ip, s32 port)
+{
+	sglib::loginproto::SCGroupGateNotify msg;
+	msg.set_ip( ip );
+	msg.set_port( port );
+	rpcClient.SendMsgToClient( gateid, clientid, msg, sglib::msgid::LC_GROUP_GATE_NOTIFY );
+}
+
+void CLoginManager::EnterGameRspToUser(CLoginRpcClient &rpcClient, u64 gateid, u64 clientid, s32 result, s32 gameid, const std::string &ip, s32 port)
+{
+	sglib::commonproto::SCEnterGameRsp msg;
+	msg.set_result( result );
+	msg.set_gameid( gameid );
+	msg.set_ip( ip );
+	msg.set_port( port );
+
+	rpcClient.SendMsgToClient( gateid, clientid, msg, sglib::msgid::SC_USER_ENTER_GAME_RSP );
 }
 
 void CLoginManager::_NotifyLoginResult(CLoginClient &client, u64 clientId, s32 result, const std::string &token)
