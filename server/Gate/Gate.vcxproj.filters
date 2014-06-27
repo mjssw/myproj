@@ -133,5 +133,8 @@
     <ClInclude Include="..\..\protomsg\msg\tetris.pb.h">
       <Filter>msg</Filter>
     </ClInclude>
+    <ClInclude Include="..\ServerBase\ServerEx.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

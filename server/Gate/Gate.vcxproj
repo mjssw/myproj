@@ -217,6 +217,7 @@ copy /Y $(SolutionDir)..\third_part\log4cxx\lib\Debug\log4cxx.dll $(ProjectDir)<
     <ClInclude Include="..\ServerBase\RpcClient.h" />
     <ClInclude Include="..\ServerBase\Server.h" />
     <ClInclude Include="..\ServerBase\ServerConfig.h" />
+    <ClInclude Include="..\ServerBase\ServerEx.h" />
     <ClInclude Include="..\ServerBase\ServerManager.h" />
     <ClInclude Include="GateRpcClient.h" />
   </ItemGroup>

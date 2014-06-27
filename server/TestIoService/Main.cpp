@@ -383,8 +383,72 @@ void testCycleBuffer()
 #endif
 }
 
+static std::string TimeNow()
+{
+	char strTime[64] = {0};
+	time_t now;
+	time( &now );
+    strftime( strTime, sizeof(strTime), "%Y-%m-%d %X", localtime(&now) );
+	return std::string( strTime );
+}
+static void timerCallBackFunc(void *pData, s32 nDataLen)
+{
+	int *param = (int*)pData;
+	printf( "[%s] param=%d\n", TimeNow().c_str(), *param );
+}
+void TestTimer(int tcount)
+{
+	CTimer<2000> *timer = new CTimer<2000>();
+	if( !timer )
+	{
+		printf( "new timer failed.\n" );
+		return;
+	}
+	bool ret = timer->Start();
+	if( !ret )
+	{
+		printf( "start timer failed.\n" );
+		return;
+	}
+	bool flag = true;
+	srand( (unsigned int)time(NULL) );
+	for( int i=0; i<tcount; ++i )
+	{
+		int param = i;
+		s32 timerId = timer->AddTimer( 5000, timerCallBackFunc, &param, sizeof(int), true );
+		if( timerId == CTimer<2000>::E_Invalid_TimerId )
+		{
+			flag = false;
+			break;
+		}
+
+		SGLib::CBasicThreadOps::_Sleep( (rand() % 5) * 1000 );
+	}
+	if( flag )
+	{
+		while(1)
+		{
+			char cmd[32] = {0};
+			gets( cmd );
+			if( strcmp(cmd, "quit") == 0 )
+			{
+				break;
+			}
+		}
+	}
+	timer->Stop();
+	SAFE_DELETE( timer );
+}
+
 int main(int argc, char *argv[])
 {
+	if( argc == 2 )
+	{
+		TestTimer( atoi(argv[1]) ); 
+		return 0;
+	}
+	return 0;
+
 	//testCycleBuffer(); getchar(); return 0;
 
 	if( argc == 5 )

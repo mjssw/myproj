@@ -73,6 +73,8 @@ namespace SGLib
             s8	 m_nFlag;
             bool m_bIsRunning;    // if is calling timer-callback now
             CallBackFunc m_nCallBackFunc;
+			
+			CInUseList<CTimerData, MaxTimerCount> *m_pUseList;
             
             void SetFlag(bool bPersist)
             {
@@ -280,7 +282,16 @@ namespace SGLib
 
         if( pData->m_bIsRunning == false )
         {
-            CInUseList<CTimerData, MaxTimerCount> *pList = _FindInUserList( *pData );
+			// 通过 _FindInUserList 找到时钟所在的队列有问题的:
+			// 一个实际的情况：5秒间隔的时钟在时刻:270524913(0x101FE1F1)加入到时钟队列中, 其到期时间为:270529913(0x101FF579).
+			// 加入的时钟队列在 m_TimerList2[53]里面(参加_FindInUserList函数)。
+			// 此时时刻点(m_u64LastCheckTime)继续往前走，当m_u64LastCheckTime达到0x101FF500时，
+			// 在  _RunTimers::_Cascade 函数才会将此时钟从m_TimerList2移动到m_TimerList1对应的位置上，
+			// 但是如果在此时刻点之前例如270529702(0x101FF4A6)时删除此时钟，
+			// 如果使用 _FindInUserList 查找时钟所在队列则会找到m_TimerList1中的一个队列中，导致删除时assert掉.
+
+            //CInUseList<CTimerData, MaxTimerCount> *pList = _FindInUserList( *pData );
+			CInUseList<CTimerData, MaxTimerCount> *pList = pData->m_pUseList;
             SELF_ASSERT( pList != NULL, return; );
 
             bool bRet = pList->Delete( nTimerId );
@@ -292,6 +303,8 @@ namespace SGLib
         {
             pData->ClearPersistFlag();
         }
+		
+		CLog::DebugLog( "CTimer::DelTimer %d", nTimerId );
     }
 
     template<s32 MaxTimerCount>

@@ -99,6 +99,7 @@ namespace SGLib
             m_Nodes[i].m_nNext = (i==MaxNodeCount-1) ? E_Invalid_ListNode_Id : (i+1);
             m_Nodes[i].m_nPrev = (i==0) ? E_Invalid_ListNode_Id : (i-1);
             m_Nodes[i].m_bInUse = false;
+			m_Nodes[i].m_Data.m_pUseList = NULL;
         }
     }
     
@@ -126,6 +127,7 @@ namespace SGLib
 
         m_Nodes[nId].m_nNext = m_nFirstFreeNode;
         m_Nodes[nId].m_bInUse = false;
+		m_Nodes[nId].m_Data.m_pUseList = NULL;
         m_nFirstFreeNode = nId;
     }
     
@@ -237,6 +239,8 @@ namespace SGLib
         m_nListHeadNode = nId;
         ++m_nSize;
 
+		pNode->m_Data.m_pUseList = this;
+
         return true;
     }
     
@@ -286,6 +290,8 @@ namespace SGLib
         }
 
         --m_nSize;
+		
+		pNode->m_Data.m_pUseList = NULL;
 
         return true;
     }
