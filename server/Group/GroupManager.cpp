@@ -2,8 +2,10 @@
 #include "ServerManager.h"
 #include "GateClientManager.h"
 #include "GroupClient.h"
+#include "GroupRpcClient.h"
 #include "group.pb.h"
 #include "msgid.pb.h"
+#include "errno.pb.h"
 using namespace std;
 using namespace SGLib;
 
@@ -308,6 +310,339 @@ void CGroupManager::BroadcastMsgInGroup(u64 groupid, const ::google::protobuf::M
 	}
 }
 
+void CGroupManager::UserLogin(CGroupClient &client, s32 gateresid, u64 clientid, const std::string &user, const std::string &token)
+{
+	SERVER_LOG_INFO( "GroupUserLogin,"<< gateresid << "," << clientid << "," << user.c_str() << "," << token.c_str() );
+
+	s32 result = _CheckLoginValid( user, token );
+	if( result == sglib::errorcode::E_ErrorCode_Success )
+	{
+		_NotifyManagerUserLogin( gateresid, clientid, user );
+		_NotifyGroupgateLoginSuccess( client, clientid );
+	}
+	_NotifyUserLoginResult( client, result, clientid );
+}
+
+void CGroupManager::CreateGroup(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, const std::string &groupName)
+{
+	SERVER_LOG_DEBUG( "CreateGroup,"<< gateresid << "," << gateid << "," << clientid << "," << groupName.c_str() );
+	_NotifyManagerCreateGroup( gateid, gateresid, clientid, groupName );
+}
+
+void CGroupManager::AddGroupMembers(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, sglib::groupproto::CSGroupAddMemberReq &req)
+{
+	SERVER_LOG_INFO( "AddGroupMembers,"<< gateresid << "," << clientid << "," <<\
+		req.groupid() << "," << req.users_size() );
+
+	CGroupInfo *group = CGroupManager::Instance().FindGroup( req.groupid() );
+	if( !group )
+	{
+		_NotifyAddGroupMemberRsp( client, clientid, req.groupid(), sglib::errorcode::E_ErrorCode_NotFoundGroup );
+		return;
+	}
+
+	// TODO 检查自己是否在此群
+
+#if _DEBUG
+	string allusers = "";
+#endif
+	vector<string> vecUser;
+	for( s32 i=0; i<(s32)req.users_size(); ++i )
+	{
+#if _DEBUG
+		allusers += req.users( i );
+		allusers += ",";
+#endif
+		if( !group->FindMember( req.users(i).c_str() ) )
+		{
+			vecUser.push_back( req.users(i) );
+		}
+		else
+		{
+			SERVER_LOG_DEBUG( "AddGroupMembers," << req.users(i) << ",AleardyInGroup" );
+		}
+	}
+#if _DEBUG
+	SERVER_LOG_DEBUG( "AddGroupMembers," << allusers.c_str() );
+#endif
+
+	_NotifyManagerAddMemberToGroup( gateresid, gateid, clientid, req.groupid(), vecUser );
+}
+
+void CGroupManager::AgreeJoinGroup(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, u64 groupid)
+{
+	SERVER_LOG_INFO( "AgreeJoinGroup,"<< gateresid << "," << clientid << "," << groupid );
+
+	// TODO 检查是否受到邀请
+
+	CGroupInfo *group = CGroupManager::Instance().FindGroup( groupid );
+	if( !group )
+	{
+		SERVER_LOG_ERROR( "CGroupClient,_GroupAgreeJoinProc,FindGroup," << groupid );
+		return;
+	}
+
+	_AskManagerInfoToAgree( gateresid, clientid, groupid );
+}
+
+void CGroupManager::LeaveGroup(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, u64 groupid)
+{
+	SERVER_LOG_DEBUG( "LeaveGroup," << gateresid << "," << clientid << "," << groupid ); 
+	_DoMemberLeaveGroup( client, gateresid, clientid, groupid );
+}
+
+void CGroupManager::DeleteGroup(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, u64 groupid)
+{		
+	SERVER_LOG_DEBUG( "DeleteGroup," << gateresid << "," << clientid << "," << groupid ); 
+	_DoMemberDeleteGroup( client, gateresid, clientid, groupid );
+}
+
+void CGroupManager::GroupMessage(s32 gateresid, u64 gateid, u64 clientid, u64 groupid, const std::string &content)
+{
+	SERVER_LOG_DEBUG( "GroupMessage," << gateresid << "," << clientid <<\
+		"," << groupid << "," << content.c_str() );
+
+	CGroupInfo *group = CGroupManager::Instance().FindGroup( groupid );
+	if( !group )
+	{
+		SERVER_LOG_ERROR( "CGroupManager,_GroupMessageProc,FindGroup," << groupid );
+		return;
+	}
+
+	CGroupMember *member = group->FindMember(
+		gateresid, clientid );
+	if( !member )
+	{
+		SERVER_LOG_ERROR( "CGroupManager,_GroupMessageProc,FindMember," << gateresid << "," << clientid );
+		return;
+	}
+
+	BroadcastGroupMessage( groupid, member->GetUser(), content );
+}
+
+void CGroupManager::UserLogout(s32 gateresid, u64 clientid)
+{
+	sglib::groupproto::GroupGroupmanagerUserLogoutNtf ntf;
+    ntf.set_gateresid( gateresid );
+    ntf.set_clientid( clientid );
+		
+    CServerManager::Instance().SendRpcMsg( 
+        CServerManager::Instance().GetGroupManagerServerId(),
+        ntf, sglib::msgid::GPGM_USER_LOGOUT_NTF );
+}
+
+void CGroupManager::CreateGroupGame(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, u64 groupid, s32 game)
+{
+	SERVER_LOG_DEBUG( "CreateGroupGame," << gateresid << "," << clientid <<\
+		"," << groupid << "," << game );
+
+	CGroupInfo *group = CGroupManager::Instance().FindGroup( groupid );
+	if( !group )
+	{
+		SERVER_LOG_ERROR( "CGroupManager,CreateGroupGame,FindGroup," << groupid );
+		return;
+	}
+
+	_NotifyGroupManagerCreateGameRoom( gateresid, clientid, groupid, game );
+}
+
+void CGroupManager::TryCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const std::string &user, const std::string &name, u64 groupid, u64 groupserverid)
+{
+	SERVER_LOG_INFO( "RpcCreateGroupResult," << gateid << "," <<\
+		gateresid << "," << clientid << "," << user.c_str() << "," <<\
+		name.c_str() << "," << groupid <<\
+		"," << groupserverid );
+
+	s32 result = sglib::errorcode::E_ErrorCode_Success;
+	CGroupInfo *group = CGroupManager::Instance().AddGroup(
+		groupid, name.c_str(), "" );
+	if( group == NULL )
+	{
+		result = sglib::errorcode::E_ErrorCode_CreateGroupError;
+		SERVER_LOG_ERROR( "RpcCreateGroupResult," << groupid << "," << name.c_str() );
+	}
+	else
+	{
+		// TODO
+
+		CGroupMember *member = group->AddMember( 
+			user.c_str(), 
+			user.c_str(), 
+			"", 
+			true );
+		SG_ASSERT( member != NULL );
+		member->SetOnline( true, gateresid, clientid );
+	}
+
+	_NotifyGroupmanagerCreateGroupResult( 
+		result,
+		gateid, clientid, user.c_str(),
+		name.c_str(), groupid, groupserverid );
+}
+
+void CGroupManager::CreateGroupResult(s32 result, u64 gateid, u64 clientid, const std::string &name, u64 groupid, u64 groupserverid)
+{
+	SERVER_LOG_INFO( "CreateGroupResult," << result << "," << gateid << "," <<\
+		clientid << "," << name.c_str() << "," << groupid << "," << groupserverid );
+
+	if( result == sglib::errorcode::E_ErrorCode_Success )
+	{
+		// 创建成功，先通知所有gate
+		CGroupManager::Instance().NotifyAllGroupGateAddGroupInfo(
+			groupid, groupserverid );
+	}
+
+	_NotifyClientCreateGroupRsp(
+		result, gateid, clientid,
+		name.c_str(), groupid );
+}
+
+void CGroupManager::AddGroupMemberRsp(sglib::groupproto::GroupmanagerGroupAddMemberToGroupRsp &rsp)
+{
+	SERVER_LOG_INFO( "AddMemberToGroupRsp," << rsp.gateid() << "," << rsp.gateresid() << "," <<\
+		rsp.clientid() << "," << rsp.groupid() << "," << rsp.users_size() );
+
+	// 先通知原请求的玩家
+	CGroupClient *client = (CGroupClient*)CServerManager::Instance().FindClient( rsp.gateid() );
+	SG_ASSERT( client != NULL );
+	_NotifyAddGroupMemberRsp( *client, rsp.clientid(), rsp.groupid(), sglib::errorcode::E_ErrorCode_Success );
+
+	CGroupInfo *groupInfo = CGroupManager::Instance().FindGroup( rsp.groupid() );
+	SG_ASSERT( groupInfo != NULL );
+
+	// 发出请求给被邀请的玩家
+	sglib::groupproto::SCGroupAskJoinNtf ntf;
+	sglib::publicproto::GroupInfo *pInfo = ntf.mutable_group();
+	pInfo->set_id( groupInfo->GetId() );
+	pInfo->set_name( groupInfo->GetName() );
+	pInfo->set_count( groupInfo->MemberCount() );
+	pInfo->set_icon( "icon" );
+
+	map<s32, vector<u64> > alluser;
+	for( s32 i=0; i<(s32)rsp.users_size(); ++i )
+	{
+		const sglib::publicproto::GroupMemberPosInfo &info = rsp.users( i );
+		alluser[ info.gateresid() ].push_back( info.clientid() );
+	}
+	map<s32, vector<u64> >::iterator it = alluser.begin();
+	for( ; it != alluser.end(); ++it )
+	{
+		const CGateClientInfo *pGate = CGateClientManager::Instance().GetGateInfo( it->first );
+		if( pGate )
+		{
+			client = (CGroupClient*)CServerManager::Instance().FindClient( pGate->m_GateInstanceId );
+			SG_ASSERT( client != NULL );
+			client->SendMsgToClients(
+				it->second,
+				ntf,
+				sglib::msgid::SC_GROUP_ASK_JOIN_NTF );
+		}
+		else
+		{
+			SERVER_LOG_WARN( "CGroupRpcClient,_GroupmanagerGroupAddMemberRspProc,GetGateInfo," << it->first );
+		}
+	}
+}
+
+void CGroupManager::AgreeJoinGroupAskInfoRsp(sglib::groupproto::GroupmanagerGroupForAgreeJoinAskInfoRsp &rsp)
+{
+	SERVER_LOG_INFO( "AgreeJoinAskInfoRsp," << rsp.result() << "," << rsp.gateresid() << "," <<\
+		rsp.clientid() << "," << rsp.groupid() << "," << rsp.user().c_str() );
+
+	CGroupInfo *group = CGroupManager::Instance().FindGroup( rsp.groupid() );
+	if( !group )
+	{
+		SERVER_LOG_ERROR( "CGroupRpcClient,_GroupAgreeJoinAskInfoRspProc,FindGroup," << rsp.groupid() );
+		return;
+	}
+
+	if( rsp.result() == sglib::errorcode::E_ErrorCode_Success )
+	{
+		CGroupMember *member = group->AddMember( 
+			rsp.user().c_str(), 
+			rsp.user().c_str(), 
+			"", 
+			true );
+		SG_ASSERT( member != NULL );
+		member->SetOnline( true, rsp.gateresid(), rsp.clientid() );
+		CGroupManager::Instance().NotifyMemberJoinGroup( rsp.groupid(), rsp.user() );
+	}
+	else
+	{
+		SERVER_LOG_ERROR( "CGroupRpcClient,_GroupAgreeJoinAskInfoRspProc,Failed," << rsp.result() );
+	}
+}
+
+void CGroupManager::LoadGroup(sglib::groupproto::GroupmanagerGroupLoadGroupNtf &ntf)
+{
+	SERVER_LOG_INFO( "LoadGroup," << ntf.gateresid() << "," <<\
+		ntf.clientid() << "," << ntf.groupid() << "," << ntf.user().c_str() );
+
+	s32 result = _DoLoadGroup( ntf.groupid(), ntf.gateresid(), ntf.clientid(), ntf.user().c_str() );
+	_NotifyLoadGroupResult(
+		result, 
+		ntf.groupid(),
+		CServerManager::Instance().ServerId(),
+		ntf.user().c_str() );
+
+	if( result == sglib::errorcode::E_ErrorCode_Success )
+	{
+		// 先通知所有的group gate更新信息
+		CGroupManager::Instance().NotifyAllGroupGateAddGroupInfo(
+			ntf.groupid(), CServerManager::Instance().ServerId() );
+
+		// 到这里表示加载群成功了,通知client群信息更新
+		CGroupManager::Instance().NotifyGroupInfoToMember(
+			ntf.groupid(), ntf.user() );
+	}
+}
+
+void CGroupManager::GroupMemberOnline(sglib::groupproto::GroupmanagerGroupMemberOnlineNtf &ntf)
+{
+	SERVER_LOG_INFO( "_GroupmanagerGroupMemberOnlineProc," << ntf.gateresid() << "," <<\
+		ntf.clientid() << "," << ntf.groupid() << "," << ntf.user().c_str() );
+
+	_MemberOnline( ntf.groupid(), ntf.gateresid(), ntf.clientid(), ntf.user() );
+}
+
+void CGroupManager::GroupMemberOffline(sglib::groupproto::GroupmanagerGroupMemberOfflineNtf &ntf)
+{
+	SERVER_LOG_INFO( "_GroupmanagerGroupMemberOfflineProc," << ntf.gateresid() << "," <<\
+		ntf.clientid() << "," << ntf.groupid() << "," << ntf.user().c_str() );
+
+	_MemberOffline( ntf.groupid(), ntf.gateresid(), ntf.clientid(), ntf.user() );
+}
+
+void CGroupManager::CreateGroupGameResult(sglib::groupproto::GroupmanagerGroupCreateGameRoomRsp &rsp)
+{
+	SERVER_LOG_INFO( "_GroupmanagerGroupCreateGameResultProc," << rsp.result() << "," \
+		<< rsp.groupid() << "," << rsp.gateresid() << "," << rsp.clientid() << "," \
+		<< rsp.game() << "," << rsp.ip().c_str() << "," << rsp.port() << "," \
+		<< rsp.roomid() << "," << rsp.password().c_str() );
+
+	_NotifyCreateGameRoomResult( rsp.gateresid(), rsp.clientid(),
+		rsp.result(), rsp.groupid(), rsp.game(), rsp.ip(), rsp.port(), rsp.roomid(), rsp.password() );
+	if( rsp.result() == sglib::errorcode::E_ErrorCode_Success )
+	{
+		CGroupInfo *info = CGroupManager::Instance().FindGroup( rsp.groupid() );
+		SELF_ASSERT( info, return; );
+		CGroupMember *member = info->FindMember( rsp.gateresid(), rsp.clientid() );
+		SELF_ASSERT( member, return; );
+
+		sglib::groupproto::SCGroupCreateGameRoomNtf ntf;
+		ntf.set_creater( member->GetUser() );
+		ntf.set_game( rsp.game() );
+		ntf.set_ip( rsp.ip() );
+		ntf.set_port( rsp.port() );
+		ntf.set_roomid( rsp.roomid() );
+		ntf.set_password( rsp.password() );
+		ntf.set_groupid( rsp.groupid() );
+
+		CGroupManager::Instance().BroadcastMsgInGroup( 
+			rsp.groupid(), ntf, sglib::msgid::SC_GROUP_CREATE_GAMEROOM_NTF );
+	}
+}
+
 void CGroupManager::DisplayInfo()
 {
 #if _DEBUG
@@ -416,4 +751,414 @@ void CGroupManager::_NotifyGroupInfoToMember(CGroupInfo &group, vector<string> &
 		}
 	}
 	client->SendMsgToClient( member.GetClientId(), groupInfoUpdate, sglib::msgid::SC_GROUP_INFO_UPDATE );
+}
+
+s32 CGroupManager::_CheckLoginValid(const std::string &user, const std::string &token)
+{
+	// TODO
+	return sglib::errorcode::E_ErrorCode_Success;
+}
+
+void CGroupManager::_NotifyManagerUserLogin(s32 gateResId, u64 clientid, const string &user)
+{
+    sglib::groupproto::GroupGroupmanagerUserLoginNtf ntf;
+    ntf.set_gateresid( gateResId );
+    ntf.set_clientid( clientid );
+    ntf.set_user( user );
+		
+    CServerManager::Instance().SendRpcMsg( 
+        CServerManager::Instance().GetGroupManagerServerId(),
+        ntf, sglib::msgid::GPGM_USER_LOGIN_NTF );
+}
+
+void CGroupManager::_NotifyGroupgateLoginSuccess(CGroupClient &client, u64 clientid)
+{
+	sglib::groupproto::GroupGateLoginSuccessNtf ntf;
+	ntf.set_clientid( clientid );
+	client.SendMsg( ntf, sglib::msgid::GPGG_LOGIN_SUCCESS_NTF );
+}
+
+void CGroupManager::_NotifyUserLoginResult(CGroupClient &client, s32 result, u64 clientid)
+{
+    sglib::groupproto::SCGroupUserLoginRsp rsp;
+    rsp.set_result( result );
+	client.SendMsgToClient( clientid, rsp, sglib::msgid::SC_GROUP_LOGIN_RSP );
+}
+
+void CGroupManager::_NotifyManagerCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const string &name)
+{
+	sglib::groupproto::GroupGroupmanageCreateGroupReq req;
+	req.set_gateid( gateid );
+	req.set_gateresid( gateresid );
+	req.set_clientid( clientid );
+	req.set_name( name );
+	
+	CServerManager::Instance().SendRpcMsg( 
+        CServerManager::Instance().GetGroupManagerServerId(),
+		req, sglib::msgid::GPGM_GROUP_CREATE_REQ );
+}
+
+void CGroupManager::_NotifyAddGroupMemberRsp(CGroupClient &client, u64 clientid, u64 groupid, s32 result)
+{
+	sglib::groupproto::SCGroupAddMemberRsp rsp;
+	rsp.set_groupid( groupid );
+	rsp.set_result( result );
+	client.SendMsgToClient( clientid, rsp, sglib::msgid::SC_GROUP_ADD_MEMBER_RSP );
+}
+
+void CGroupManager::_NotifyManagerAddMemberToGroup(s32 gateresid, u64 gateid, u64 clientid, u64 groupid, std::vector<std::string> &vecUser)
+{
+	sglib::groupproto::GroupGroupmanagerAddMemberToGroupReq req;
+	req.set_gateid( gateid );
+	req.set_gateresid( gateresid );
+	req.set_clientid( clientid );
+	req.set_groupid( groupid );
+	vector<string>::iterator it = vecUser.begin();
+	for( ; it != vecUser.end(); ++it )
+	{
+		string *user = req.add_users();
+		*user = *it;
+	}
+	
+	CServerManager::Instance().SendRpcMsg( 
+        CServerManager::Instance().GetGroupManagerServerId(),
+		req, sglib::msgid::GPGM_GROUP_ADD_MEMBER_REQ );
+}
+
+void CGroupManager::_AskManagerInfoToAgree(s32 gateResId, u64 clientid, u64 groupid)
+{
+	sglib::groupproto::GroupGroupmanagerForAgreeJoinAskInfoReq req;
+	req.set_gateresid( gateResId );
+	req.set_clientid( clientid );
+	req.set_groupid( groupid );
+	
+	CServerManager::Instance().SendRpcMsg( 
+        CServerManager::Instance().GetGroupManagerServerId(),
+		req, sglib::msgid::GPGM_AGREE_ASK_MEMBER_INFO_REQ );
+}
+
+void CGroupManager::_DoMemberLeaveGroup(CGroupClient &client, s32 gateResId, u64 clientid, u64 groupid)
+{
+	s32 result = sglib::errorcode::E_ErrorCode_Success;
+		
+	vector<string> leaveUser;
+	CGroupInfo *group = CGroupManager::Instance().FindGroup( groupid );
+	if( group )
+	{
+		CGroupMember *member = group->FindMember(
+			gateResId, clientid );
+		if( member )
+		{
+			leaveUser.push_back( member->GetUser() );
+			member->SetOnline( false, member->GetGateResId(), member->GetClientId() );
+			group->DelMember( member->GetUser().c_str() );
+		}
+		else
+		{
+			SERVER_LOG_ERROR( "CGroupManager,_DoMemberLeaveGroup,FindMember," << gateResId << "," << clientid );
+			result = sglib::errorcode::E_ErrorCode_NotInThisGroup;
+		}
+	}
+	else
+	{
+		SERVER_LOG_ERROR( "CGroupManager,_DoMemberLeaveGroup,FindGroup," << groupid );
+		result = sglib::errorcode::E_ErrorCode_NotFoundGroup;
+	}
+
+	_NotifyMemberLeaveGroupRsp( client, clientid, result, groupid );
+	if( result == sglib::errorcode::E_ErrorCode_Success )
+	{
+		_NotifyGroupManagerMemberLeaveGroup( groupid, leaveUser );
+
+		sglib::groupproto::SCGroupMemberLeaveNtf ntf;
+		ntf.set_groupid( groupid );
+		SG_ASSERT( leaveUser.size() == 1 );
+		ntf.set_user( leaveUser[0] );
+		CGroupManager::Instance().BroadcastMsgInGroup(
+			groupid,
+			ntf,
+			sglib::msgid::SC_GROUP_MEMBER_LEAVE_NTF );
+	}
+}
+
+void CGroupManager::_NotifyMemberLeaveGroupRsp(CGroupClient &client, u64 clientid, s32 result, u64 groupid)
+{
+	sglib::groupproto::SCGroupLeaveRsp rsp;
+	rsp.set_result( result );
+	rsp.set_groupid( groupid );
+
+	client.SendMsgToClient( clientid, rsp, sglib::msgid::SC_GROUP_LEAVE_RSP );
+}
+
+void CGroupManager::_NotifyGroupManagerMemberLeaveGroup(u64 groupid, const vector<string> &user)
+{
+	// 分批发
+	const int MAX_SEND = 100;
+	for( s32 i=0; i<(s32)user.size(); )
+	{
+		sglib::groupproto::GroupGroupmanagerMemberLeaveNtf ntf;
+		ntf.set_groupid( groupid );
+
+		s32 count = 0;
+		for( s32 j=i; j<(s32)user.size() && count<MAX_SEND; ++j, ++count )
+		{
+			string *pUser = ntf.add_user();
+			SG_ASSERT( pUser );
+			*pUser = user[j];
+		}
+
+		i += count;
+
+		CServerManager::Instance().SendRpcMsg( 
+			CServerManager::Instance().GetGroupManagerServerId(),
+			ntf, sglib::msgid::GPGM_GROUP_MEMBER_LEAVE_NTF );
+	}
+}
+
+void CGroupManager::_DoMemberDeleteGroup(CGroupClient &client, s32 gateResId, u64 clientid, u64 groupid)
+{
+	s32 result = sglib::errorcode::E_ErrorCode_Success;
+		
+	map<s32, vector<u64> > alluser;
+	vector<string> vecUser;
+	CGroupInfo *group = CGroupManager::Instance().FindGroup( groupid );
+	if( group )
+	{
+		group->DumpMemberInfo(  alluser, "", vecUser );
+		CGroupMember *member = group->FindMember(
+			gateResId, clientid );
+		if( !member )
+		{
+			SERVER_LOG_ERROR( "CGroupManager,_DoMemberDeleteGroup,FindMember," << gateResId << "," << clientid );
+			result = sglib::errorcode::E_ErrorCode_NotInThisGroup;
+		}
+	}
+	else
+	{
+		SERVER_LOG_ERROR( "CGroupClient,_DoMemberDeleteGroup,FindGroup," << groupid );
+		result = sglib::errorcode::E_ErrorCode_NotFoundGroup;
+	}
+
+	_NotifyMemberDeleteGroupRsp( client, clientid, result, groupid );
+	if( result == sglib::errorcode::E_ErrorCode_Success )
+	{
+		sglib::groupproto::SCGroupDeleteNtf ntf;
+		ntf.set_groupid( groupid );
+		CGroupManager::Instance().BroadcastMsgInGroup(
+			groupid,
+			ntf,
+			sglib::msgid::SC_GROUP_DELETE_NTF );
+
+		CGroupManager::Instance().DelGroup( groupid );
+
+		_NotifyGroupGateDeleteGroup( groupid );
+		_NotifyGroupManagerMemberLeaveGroup( groupid, vecUser );
+		_NotifyGroupManagerDeleteGroup( groupid );
+	}
+}
+
+void CGroupManager::_NotifyMemberDeleteGroupRsp(CGroupClient &client, u64 clientid, s32 result, u64 groupid)
+{
+	sglib::groupproto::SCGroupDeleteRsp rsp;
+	rsp.set_result( result );
+	rsp.set_groupid( groupid );
+
+	client.SendMsgToClient( clientid, rsp, sglib::msgid::SC_GROUP_DELETE_RSP );
+}
+
+void CGroupManager::_NotifyGroupGateDeleteGroup(u64 groupid)
+{
+	sglib::groupproto::GroupGateDelGroupNtf ntf;
+	ntf.set_groupid( groupid );
+
+	CGroupManager::Instance().BroadcastMsgToGates(
+		ntf,
+		sglib::msgid::GPGG_DEL_GROUPID_NTF );
+}
+
+void CGroupManager::_NotifyGroupManagerDeleteGroup(u64 groupid)
+{
+	sglib::groupproto::GroupGroupmanagerGroupDeleteNtf ntf;
+	ntf.set_groupid( groupid );
+	
+	CServerManager::Instance().SendRpcMsg( 
+		CServerManager::Instance().GetGroupManagerServerId(),
+		ntf, sglib::msgid::GPGM_GROUP_DELETE_NTF );
+}
+
+void CGroupManager::_NotifyGroupManagerCreateGameRoom(s32 gateResId, u64 clientid, u64 groupid, s32 game)
+{
+	sglib::groupproto::GroupGroupmanagerCreateGameRoomReq req;
+	req.set_gateresid( gateResId );
+	req.set_clientid( clientid );
+	req.set_groupid( groupid );
+	req.set_game( game );
+	
+	CServerManager::Instance().SendRpcMsg( 
+		CServerManager::Instance().GetGroupManagerServerId(),
+		req, sglib::msgid::GPGM_GROUP_CREATE_GAMEROOM_REQ );
+}
+
+void CGroupManager::_NotifyGroupmanagerCreateGroupResult(s32 result, u64 gateid, u64 clientid, const char *user, const char *name, u64 groupid, u64 serverid)
+{
+	sglib::groupproto::GroupGroupmanagerCreateGroupResult ret;
+	ret.set_result( result );
+	ret.set_gateid( gateid );
+	ret.set_clientid( clientid );
+	ret.set_user( user );
+	ret.set_name( name );
+	ret.set_groupid( groupid );
+	ret.set_groupserverid( serverid );
+	ret.set_serverid( CServerManager::Instance().ServerId() );
+
+	CServerManager::Instance().SendRpcMsg(
+		CServerManager::Instance().GetGroupManagerServerId(),
+		ret,
+		sglib::msgid::GPGM_GROUP_CREATE_RESULT );
+}
+
+void CGroupManager::_NotifyClientCreateGroupRsp(s32 result, u64 gateid, u64 clientid, const char *name, u64 groupid)
+{
+	sglib::groupproto::SCGroupCreateRsp rsp;
+	rsp.set_result( result );
+	rsp.set_name( name );
+	rsp.set_groupid( groupid );
+
+	CGroupManager::Instance().SendMsgToClient(
+		gateid, clientid, rsp, sglib::msgid::SC_GROUP_CREATE_RSP );
+}
+
+#if _DEBUG
+static void _DebugLoadGroup(u64 groupid, s32 gateresid, u64 clientid, const string &user)
+{
+	char groupName[32] = {0};
+	sprintf( groupName, "gp_%llu", groupid );
+	CGroupInfo *group = CGroupManager::Instance().AddGroup( groupid, groupName, "" );
+	if( !group )
+	{
+		SGDEBUG( "_DebugLoadGroup addgroup:%llu failed\n", groupid );
+		return;
+	}
+
+	if( groupid == 1 )
+	{
+		group->AddMember( "sjj1", "sjj1", "head1", false );
+		group->AddMember( "sjj2", "sjj2", "head2", false );
+		group->AddMember( "sjj3", "sjj3", "head3", false );
+	}
+	else if( groupid == 2 )
+	{
+		group->AddMember( "sjj1", "sjj1", "head1", false );
+		group->AddMember( "sjj2", "sjj2", "head2", false );
+	}
+	else if( groupid == 3 )
+	{
+		group->AddMember( "sjj1", "sjj1", "head1", false );
+		group->AddMember( "sjj3", "sjj3", "head3", false );
+	}
+
+	CGroupMember *member = group->FindMember( user.c_str() );
+	if( !member )
+	{
+		SGDEBUG( "_DebugLoadGroup findMember:%s in group:%llu failed\n", user.c_str(), groupid );
+		return;
+	}
+
+	member->SetOnline( true, gateresid, clientid );
+}
+#endif
+s32 CGroupManager::_DoLoadGroup(u64 groupid, s32 gateresid, u64 clientid, const char *user)
+{
+	// 注意此group有可能已经加载了
+
+	s32 ret = sglib::errorcode::E_ErrorCode_Success;
+	CGroupInfo *group = CGroupManager::Instance().FindGroup( groupid );
+	if( !group )
+	{
+		// 从DB加载一个群的完整信息是一个异步的过程,
+		// 这里是测试，因此是同步处理
+#if _DEBUG
+		_DebugLoadGroup( groupid, gateresid, clientid, string(user) );
+#endif
+	}
+	else
+	{
+		SERVER_LOG_DEBUG( "CGroupManager,_DoLoadGroup,AlreadyLoad," << groupid );
+	}
+
+	return ret;
+}
+
+void CGroupManager::_NotifyLoadGroupResult(s32 result, u64 groupid, s32 serverid, const char *user)
+{
+	sglib::groupproto::GroupGroupmanagerLoadGroupResult ret;
+	ret.set_result( result );
+	ret.set_groupid( groupid );
+	ret.set_serverid( serverid );
+	ret.set_user( user );
+	ret.set_totalgroup( CGroupManager::Instance().TotalGroupCount() );	
+	ret.set_totalmember( CGroupManager::Instance().TotalMemberCount() );	
+
+	CServerManager::Instance().SendRpcMsg(
+		CServerManager::Instance().GetGroupManagerServerId(),
+		ret,
+		sglib::msgid::GPGM_GROUP_LOAD_RESULT );
+}
+
+void CGroupManager::_MemberOnline(u64 groupid, s32 gateresid, u64 clientid, const std::string &user)
+{
+	CGroupInfo *groupInfo = CGroupManager::Instance().FindGroup( groupid );
+	SG_ASSERT( groupInfo != NULL );
+	CGroupMember *member = groupInfo->FindMember( user.c_str() );
+	if( !member )
+	{
+		SERVER_LOG_ERROR( "CGroupManager,_MemberOnline,FindMember," << groupid << "," << user.c_str() );
+		return;
+	}
+
+	member->SetOnline( true, gateresid, clientid );
+
+	// 通知玩家群信息
+	CGroupManager::Instance().NotifyGroupInfoToMember(
+		groupid, user );
+
+	// 群内广播玩家上线
+	sglib::groupproto::SCGroupMemberOnlineNtf ntf;
+	ntf.set_groupid( groupid );
+	ntf.set_user( user );
+	BroadcastMsgInGroup( groupid, ntf, sglib::msgid::SC_GROUP_MEMBER_ONLINE );
+}
+
+void CGroupManager::_MemberOffline(u64 groupid, s32 gateresid, u64 clientid, const std::string &user)
+{
+	CGroupInfo *groupInfo = CGroupManager::Instance().FindGroup( groupid );
+	SG_ASSERT( groupInfo != NULL );
+	CGroupMember *member = groupInfo->FindMember( user.c_str() );
+	if( !member )
+	{
+		SERVER_LOG_ERROR( "CGroupManager,_MemberOffline,FindMember," << groupid << "," << user.c_str() );
+		return;
+	}
+
+	member->SetOnline( false, gateresid, clientid );
+
+	sglib::groupproto::SCGroupMemberOfflineNtf ntf;
+	ntf.set_groupid( groupid );
+	ntf.set_user( user );
+	BroadcastMsgInGroup( groupid, ntf, sglib::msgid::SC_GROUP_MEMBER_OFFLINE );
+}
+
+void CGroupManager::_NotifyCreateGameRoomResult(s32 gateresid, u64 clientid, s32 result, u64 groupid, s32 game, const std::string &ip, s32 port, s32 roomid, const std::string &roompwd)
+{
+	sglib::groupproto::SCGroupCreateGameRoomRsp rsp;
+	rsp.set_result( result );
+	rsp.set_groupid( groupid );
+	rsp.set_game( game );
+	rsp.set_ip( ip );
+	rsp.set_port( port );
+	rsp.set_roomid( roomid );
+	rsp.set_password( roompwd );
+
+	CGroupManager::Instance().SendMsgToClient( 
+		gateresid, clientid, rsp, sglib::msgid::SC_GROUP_CREATE_GAMEROOM_RSP );
 }

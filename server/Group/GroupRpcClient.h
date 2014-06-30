@@ -34,15 +34,6 @@ private:
 	void _GroupmanagerGroupCreateGameResultProc(const byte *pkg, s32 len);
 
 private:
-	void _NotifyGroupmanagerCreateGroupResult(s32 result, u64 gateid, u64 clientid, const char *user, const char *name, u64 groupid, u64 serverid);
-	void _NotifyClientCreateGroupRsp(s32 result, u64 gateid, u64 clientid, const char *name, u64 groupid);
-	s32  _DoLoadGroup(u64 groupid, s32 gateresid, u64 clientid, const char *user);
-	void _NotifyLoadGroupResult(s32 result, u64 groupid, s32 serverid, const char *user);
-	void _MemberOnline(u64 groupid, s32 gateresid, u64 clientid, const std::string &user);
-	void _MemberOffline(u64 groupid, s32 gateresid, u64 clientid, const std::string &user);
-	void _NotifyCreateGameRoomResult(s32 gateresid, u64 clientid, s32 result, u64 groupid, s32 game, const std::string &ip, s32 port, s32 roomid, const std::string &roompwd);
-
-private:
 	std::map<s32, ProtoProc> m_mapProtoProc;
 };
 
