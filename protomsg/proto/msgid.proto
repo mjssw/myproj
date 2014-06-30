@@ -85,6 +85,7 @@ enum EMsgId
 	GMGP_GROUP_CREATE_GAMEROOM_RSP	= 977;	// group manager -> group 请求创建房间答复
 	GMGM_ASK_CREATE_GAMEROOM_REQ	= 978;	// group manager -> game manager 请求创建游戏房间
 	GMGM_ASK_CREATE_GAMEROOM_RSP	= 979;	// game manager -> group manager 请求创建游戏房间答复
+	GPGG_LOGIN_SUCCESS_NTF			= 980;	// group -> group gate 玩家登录成功了
 	
 	CS_GROUP_LOGIN_REQ			= 903;		// client -> group 登录群服务器
 	SC_GROUP_LOGIN_RSP			= 904;		// group -> client 登录返回

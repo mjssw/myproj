@@ -1,4 +1,5 @@
 #include "GroupGateRpcClient.h"
+#include "GroupGateClient.h"
 #include "ServerManager.h"
 #include "GroupIdMap.h"
 #include "gate.pb.h"
@@ -17,6 +18,7 @@ CGateRpcClient::CGateRpcClient(int nId) :
 	_Register( sglib::msgid::SG_CONNECT_NEW_SERVER_NTF,	&CGateRpcClient::ConnectNewServerProc );
 	_Register( sglib::msgid::GPGG_ADD_GROUPID_NTF,	&CGateRpcClient::AddGroupIdMapProc );
 	_Register( sglib::msgid::GPGG_DEL_GROUPID_NTF,	&CGateRpcClient::DelGroupIdMapProc );
+	_Register( sglib::msgid::GPGG_LOGIN_SUCCESS_NTF,&CGateRpcClient::LoginSuccessProc );
 }
 
 struct _callbackData
@@ -227,5 +229,27 @@ void CGateRpcClient::DelGroupIdMapProc(const byte *pkg, s32 len)
 	else
 	{
 		SERVER_LOG_ERROR( "CGateRpcClient,DelGroupIdMapProc,ParseFromArray" );
+	}
+}
+
+void CGateRpcClient::LoginSuccessProc(const byte *pkg, s32 len)
+{
+	sglib::groupproto::GroupGateLoginSuccessNtf ntf;
+	if( ntf.ParseFromArray(pkg, len) )
+	{
+		CGateClient *client = (CGateClient*)CServerManager::Instance().FindClient( ntf.clientid() );
+		if( client )
+		{
+			SERVER_LOG_INFO( "LoginSuccessProc," << ntf.clientid() );
+			client->SetLogin( true );
+		}
+		else
+		{
+			SERVER_LOG_ERROR( "CGateRpcClient,LoginSuccessProc,FindClient," << ntf.clientid() );
+		}
+	}
+	else
+	{
+		SERVER_LOG_ERROR( "CGateRpcClient,LoginSuccessProc,ParseFromArray" );
 	}
 }

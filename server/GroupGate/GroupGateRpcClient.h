@@ -32,6 +32,7 @@ private:
 	void ConnectNewServerProc(const byte *pkg, s32 len);
 	void AddGroupIdMapProc(const byte *pkg, s32 len);
 	void DelGroupIdMapProc(const byte *pkg, s32 len);
+	void LoginSuccessProc(const byte *pkg, s32 len);
 
 	static void TimerCallBack(void *pData, s32 nDataLen);
 	void _ReportStatus();

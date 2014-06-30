@@ -92,6 +92,7 @@ class GroupGroupmanagerCreateGameRoomReq;
 class GroupmanagerGroupCreateGameRoomRsp;
 class GroupmanagerGamemanagerCreateGameRoomReq;
 class GamemanagerGroupmanagerCreateGameRoomRsp;
+class GroupGateLoginSuccessNtf;
 
 // ===================================================================
 
@@ -6134,6 +6135,88 @@ class GamemanagerGroupmanagerCreateGameRoomRsp : public ::google::protobuf::Mess
   void InitAsDefaultInstance();
   static GamemanagerGroupmanagerCreateGameRoomRsp* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class GroupGateLoginSuccessNtf : public ::google::protobuf::Message {
+ public:
+  GroupGateLoginSuccessNtf();
+  virtual ~GroupGateLoginSuccessNtf();
+
+  GroupGateLoginSuccessNtf(const GroupGateLoginSuccessNtf& from);
+
+  inline GroupGateLoginSuccessNtf& operator=(const GroupGateLoginSuccessNtf& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GroupGateLoginSuccessNtf& default_instance();
+
+  void Swap(GroupGateLoginSuccessNtf* other);
+
+  // implements Message ----------------------------------------------
+
+  GroupGateLoginSuccessNtf* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const GroupGateLoginSuccessNtf& from);
+  void MergeFrom(const GroupGateLoginSuccessNtf& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint64 clientid = 1;
+  inline bool has_clientid() const;
+  inline void clear_clientid();
+  static const int kClientidFieldNumber = 1;
+  inline ::google::protobuf::uint64 clientid() const;
+  inline void set_clientid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:sglib.groupproto.GroupGateLoginSuccessNtf)
+ private:
+  inline void set_has_clientid();
+  inline void clear_has_clientid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint64 clientid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_group_2eproto();
+  friend void protobuf_AssignDesc_group_2eproto();
+  friend void protobuf_ShutdownFile_group_2eproto();
+
+  void InitAsDefaultInstance();
+  static GroupGateLoginSuccessNtf* default_instance_;
+};
 // ===================================================================
 
 
@@ -11882,6 +11965,32 @@ inline void GamemanagerGroupmanagerCreateGameRoomRsp::set_allocated_password(::s
     clear_has_password();
     password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// -------------------------------------------------------------------
+
+// GroupGateLoginSuccessNtf
+
+// required uint64 clientid = 1;
+inline bool GroupGateLoginSuccessNtf::has_clientid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void GroupGateLoginSuccessNtf::set_has_clientid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void GroupGateLoginSuccessNtf::clear_has_clientid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void GroupGateLoginSuccessNtf::clear_clientid() {
+  clientid_ = GOOGLE_ULONGLONG(0);
+  clear_has_clientid();
+}
+inline ::google::protobuf::uint64 GroupGateLoginSuccessNtf::clientid() const {
+  return clientid_;
+}
+inline void GroupGateLoginSuccessNtf::set_clientid(::google::protobuf::uint64 value) {
+  set_has_clientid();
+  clientid_ = value;
 }
 
 

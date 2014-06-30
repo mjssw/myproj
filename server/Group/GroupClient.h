@@ -51,6 +51,7 @@ private:
 	void _NotifyGroupGateDeleteGroup(u64 groupid);
 	void _NotifyGroupManagerDeleteGroup(u64 groupid);
 	void _NotifyGroupManagerCreateGameRoom(s32 gateResId, u64 clientid, u64 groupid, s32 game);
+	void _NotifyGroupgateLoginSuccess(u64 clientid);
 
 	s32 _CheckLoginValid(const char *user);
 	void _DoMemberLeaveGroup(s32 gateResId, u64 clientid, u64 groupid);

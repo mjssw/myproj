@@ -414,4 +414,8 @@ message GamemanagerGroupmanagerCreateGameRoomRsp
 	optional string password	= 10;		// 游戏房间的密码
 }
 
+message GroupGateLoginSuccessNtf 
+{
+	required uint64 clientid	= 1;		// 通知登录group成功
+}
 

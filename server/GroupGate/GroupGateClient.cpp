@@ -7,6 +7,13 @@
 
 void CGateClient::OnRecv(const byte *pkg, s32 len)
 {
+	s32 msgid = *((s32*)pkg);
+	if( _NeedCheckLogin( msgid ) && !IsLogin() )
+	{
+		SERVER_LOG_ERROR( "CGateClient,OnRecv,NotLogin," << msgid );
+		return;	
+	}
+
 	s32 fid = _ParseForwardId( pkg, len );
 
 	SERVER_LOG_DEBUG( "ParseForwardId = " << fid );
@@ -32,6 +39,16 @@ void CGateClient::OnClose()
     
 	s32 fid = GetForwardId();
 	CServerManager::Instance().SendRpcMsg( fid, ntf, sglib::msgid::GS_CLIENT_CLOSE_NOTIFY );
+}
+
+bool CGateClient::IsLogin()
+{
+	return m_isLogin;
+}
+
+void CGateClient::SetLogin(bool isLogin)
+{
+	m_isLogin = isLogin;
 }
 
 static s32 _FromMsgGroupAddMember(const byte *pkg, s32 len)
@@ -130,4 +147,17 @@ s32	CGateClient::_ParseForwardId(const byte *pkg, s32 len)
 	};
 
 	return fid;
+}
+
+bool CGateClient::_NeedCheckLogin(s32 msgid)
+{
+	switch(msgid)
+	{
+	case sglib::msgid::CS_GROUP_LOGIN_REQ:
+		return false;
+		break;
+	default:
+		return true;
+	};
+	return true;
 }

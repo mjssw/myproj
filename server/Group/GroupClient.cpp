@@ -89,6 +89,7 @@ void CGroupClient::_GroupUserLoginProc(u64 clientid, const byte *pkg, s32 len)
         if( result == sglib::errorcode::E_ErrorCode_Success )
         {
             _NotifyManagerUserLogin( GateResId(), clientid, req.user().c_str() );
+			_NotifyGroupgateLoginSuccess( clientid );
         }
         _NotifyUserLoginResult( result, clientid );
 	}
@@ -291,6 +292,13 @@ void CGroupClient::_NotifyManagerUserLogin(s32 gateResId, u64 clientid, const ch
     CServerManager::Instance().SendRpcMsg( 
         CServerManager::Instance().GetGroupManagerServerId(),
         ntf, sglib::msgid::GPGM_USER_LOGIN_NTF );
+}
+
+void CGroupClient::_NotifyGroupgateLoginSuccess(u64 clientid)
+{
+	sglib::groupproto::GroupGateLoginSuccessNtf ntf;
+	ntf.set_clientid( clientid );
+	SendMsg( ntf, sglib::msgid::GPGG_LOGIN_SUCCESS_NTF );
 }
 
 void CGroupClient::_NotifyUserLoginResult(s32 result, u64 clientid)
