@@ -12,21 +12,33 @@ public:
 	bool Init(const char *resRoot);
 
 	cocos2d::CCSprite* GetSpriteBg(); 
-	cocos2d::CCSprite* GetSpriteLoginBgLeft(); 
-	cocos2d::CCSprite* GetSpriteLoginBgMidd(); 
-	cocos2d::CCSprite* GetSpriteLoginBgRight();
-	cocos2d::CCSprite* GetSpriteBtnNormalLeft();
-	cocos2d::CCSprite* GetSpriteBtnNormalRight();
+	cocos2d::CCSprite* GetSpriteLoginBg(); 
+	cocos2d::CCSprite* GetSpriteEditBox(); 
+	cocos2d::CCSprite* GetSpriteWordUser();
+	cocos2d::CCSprite* GetSpriteWordPwd();
+	cocos2d::CCSprite* GetSpriteCheckBoxNormal();
+	cocos2d::CCSprite* GetSpriteCheckBoxSelect();
+	cocos2d::CCSprite* GetSpriteWordSavePwd();
+	cocos2d::CCSprite* GetSpriteWordAutoLogin();
 	cocos2d::CCSprite* GetSpriteBtnNormal();
-	cocos2d::CCSprite* GetSpriteBtnHoverLeft();
-	cocos2d::CCSprite* GetSpriteBtnHoverRight();
 	cocos2d::CCSprite* GetSpriteBtnHover();
-	cocos2d::CCSprite* GetSpriteBtnWordLogin();
-	cocos2d::CCSprite* GetSpriteBtnWordExit();
+	cocos2d::CCSprite* GetSpriteWordLogin();
+	cocos2d::CCSprite* GetSpriteWordExit();
 
 private:
     cocos2d::CCSprite *m_spriteBg;
-    cocos2d::CCSprite *m_spriteLayout;
+    cocos2d::CCSprite *m_spriteLoginBg;
+	cocos2d::CCSprite *m_spriteEditBox;
+	cocos2d::CCSprite *m_spriteWordUser;
+	cocos2d::CCSprite *m_spriteWordPwd;
+	cocos2d::CCSprite *m_spriteCheckBoxNormal;
+	cocos2d::CCSprite *m_spriteCheckBoxSelect;
+	cocos2d::CCSprite *m_spriteWordSavePwd;
+	cocos2d::CCSprite *m_spriteWordAutoLogin;
+	cocos2d::CCSprite *m_spriteBtnNormal;
+	cocos2d::CCSprite *m_spriteBtnHover;
+	cocos2d::CCSprite *m_spriteWordLogin;
+	cocos2d::CCSprite *m_spriteWordExit;
 };
 
 #endif

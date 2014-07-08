@@ -22,6 +22,9 @@
     <Filter Include="net">
       <UniqueIdentifier>{ab5dc80c-d66f-4a19-b93b-e098913fa635}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib">
+      <UniqueIdentifier>{5081631b-15c1-46f0-a50e-a40bd69036e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\GroupGame.ico">
@@ -58,6 +61,9 @@
     <ClInclude Include="..\Classes\NetManager.h">
       <Filter>net</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\MyMenuItemImage.h">
+      <Filter>lib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -77,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\NetManager.cpp">
       <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MyMenuItemImage.cpp">
+      <Filter>lib</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

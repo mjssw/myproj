@@ -8,169 +8,99 @@ SIGNLETON_CLASS_INIT(CResManager);
 bool CResManager::Init(const char *resRoot)
 {
 	string root( resRoot );
-	string res = root + "bg.png";
-	m_spriteBg = CCSprite::create( res.c_str() );
-	if( !m_spriteBg )
-	{
-		return false;
-	}
-	m_spriteBg->retain();
+	string res = "";
 
-	res = root + "layout.png";
-	m_spriteLayout = CCSprite::create( res.c_str() );
-	if( !m_spriteLayout )
-	{
-		return false;
-	}
-	m_spriteLayout->retain();
+#define _LOAD_RES(var, res_name) \
+	res = root + res_name;\
+	var = CCSprite::create( res.c_str() );\
+	if( !var )\
+	{\
+		return false;\
+	}\
+	var->retain();
+
+	_LOAD_RES( m_spriteBg,				"bg.png" ); 
+	_LOAD_RES( m_spriteLoginBg,			"loginbg.png" ); 
+	_LOAD_RES( m_spriteEditBox,			"editbox.png" ); 
+	_LOAD_RES( m_spriteWordUser,		"user.png" );
+	_LOAD_RES( m_spriteWordPwd,			"pwd.png" );
+	_LOAD_RES( m_spriteCheckBoxNormal,	"checkbox_normal.png" );
+	_LOAD_RES( m_spriteCheckBoxSelect,	"checkbox_select.png" );
+	_LOAD_RES( m_spriteWordSavePwd,		"savepwd.png" );
+	_LOAD_RES( m_spriteWordAutoLogin,	"autologin.png" );
+	_LOAD_RES( m_spriteBtnNormal,		"btn_normal.png" );
+	_LOAD_RES( m_spriteBtnHover,		"btn_hover.png" );
+	_LOAD_RES( m_spriteWordLogin,		"login.png" );
+	_LOAD_RES( m_spriteWordExit,		"exit.png" );
+
+#undef _LOAD_RES
 
 	return true;
 }
 
+#define _CLONE_SPRITE(obj) CCSprite::createWithTexture(obj->getTexture());
+
 CCSprite* CResManager::GetSpriteBg()
 {
-	return m_spriteBg;
+	return _CLONE_SPRITE( m_spriteBg );
 }
 
-CCSprite* CResManager::GetSpriteLoginBgLeft()
+CCSprite* CResManager::GetSpriteLoginBg()
 {
-	if( m_spriteLayout )
-	{
-		CCRect rc( 155, 0, 88, 476 );	
-		return CCSprite::createWithTexture( m_spriteLayout->getTexture(), rc ); 
-	}
-	return NULL;
+	return _CLONE_SPRITE( m_spriteLoginBg );
 }
 
-CCSprite* CResManager::GetSpriteLoginBgMidd()
+CCSprite* CResManager::GetSpriteEditBox()
 {
-	if( m_spriteLayout )
-	{
-		CCRect rc( 200, 0, 40, 476 );	
-		return CCSprite::createWithTexture( m_spriteLayout->getTexture(), rc ); 
-	}
-	return NULL;
+	return _CLONE_SPRITE( m_spriteEditBox );
 }
 
-CCSprite* CResManager::GetSpriteLoginBgRight()
+CCSprite* CResManager::GetSpriteWordUser()
 {
-	/*
-	if( m_spriteLayout )
-	{
-		CCRect rc( 155, 0, 88, 476 );	
-		CCSprite *sprite = CCSprite::createWithTexture( m_spriteLayout->getTexture(), rc );
-		sprite->setFlipX( true );
-		return sprite;
-	}
-	return NULL;
-	//*/
-	CCSprite *sprite = GetSpriteLoginBgLeft();
-	if( sprite )
-	{
-		sprite->setFlipX( true );
-	}
-	return sprite;
+	return _CLONE_SPRITE( m_spriteWordUser );
 }
 
-CCSprite* CResManager::GetSpriteBtnNormalLeft()
+CCSprite* CResManager::GetSpriteWordPwd()
 {
-	if( m_spriteLayout )
-	{
-		CCRect rc( 40, 10, 95, 85 );
-		return CCSprite::createWithTexture( m_spriteLayout->getTexture(), rc );
-	}
-	return NULL;
+	return _CLONE_SPRITE( m_spriteWordPwd );
 }
 
-CCSprite* CResManager::GetSpriteBtnNormalRight()
+CCSprite* CResManager::GetSpriteCheckBoxNormal()
 {
-	CCSprite *sprite = GetSpriteBtnNormalLeft();
-	if( sprite )
-	{
-		sprite->setFlipX( true );
-	}
-	return sprite;
+	return _CLONE_SPRITE( m_spriteCheckBoxNormal );
+}
+
+CCSprite* CResManager::GetSpriteCheckBoxSelect()
+{
+	return _CLONE_SPRITE( m_spriteCheckBoxSelect );
+}
+
+CCSprite* CResManager::GetSpriteWordSavePwd()
+{
+	return _CLONE_SPRITE( m_spriteWordSavePwd );
+}
+
+CCSprite* CResManager::GetSpriteWordAutoLogin()
+{
+	return _CLONE_SPRITE( m_spriteWordAutoLogin );
 }
 
 CCSprite* CResManager::GetSpriteBtnNormal()
 {
-	CCSprite *pSprite = CResManager::Instance().GetSpriteBtnNormalLeft();
-    if( !pSprite )
-	{
-		return NULL;
-	}
-	pSprite->setAnchorPoint( ccp(0, 0) );
-
-	CCSprite *rpSprite = CResManager::Instance().GetSpriteBtnNormalRight();
-    if( !rpSprite )
-	{
-		return NULL;
-	}
-	rpSprite->setAnchorPoint( ccp(0, 0) );
-	rpSprite->setPosition( ccp(pSprite->getContentSize().width, 0) );
-    pSprite->addChild( rpSprite, 0 );
-	return pSprite;
-}
-
-CCSprite* CResManager::GetSpriteBtnHoverLeft()
-{
-	if( m_spriteLayout )
-	{
-		CCRect rc( 40, 110, 100, 95 );	
-		CCSprite *sprite = CCSprite::createWithTexture( m_spriteLayout->getTexture(), rc );
-		sprite->setFlipX( true );
-		return sprite;
-	}
-	return NULL;
-}
-
-CCSprite* CResManager::GetSpriteBtnHoverRight()
-{
-	CCSprite *sprite = GetSpriteBtnHoverLeft();
-	if( sprite )
-	{
-		sprite->setFlipX( true );
-	}
-
-	return sprite;
+	return _CLONE_SPRITE( m_spriteBtnNormal );
 }
 
 CCSprite* CResManager::GetSpriteBtnHover()
 {
-	CCSprite *pSprite = CResManager::Instance().GetSpriteBtnHoverLeft();
-    if( !pSprite )
-	{
-		return NULL;
-	}
-	pSprite->setAnchorPoint( ccp(0, 0) );
-
-	CCSprite *rpSprite = CResManager::Instance().GetSpriteBtnHoverRight();
-    if( !rpSprite )
-	{
-		return NULL;
-	}
-	rpSprite->setAnchorPoint( ccp(0, 0) );
-	rpSprite->setPosition( ccp(pSprite->getContentSize().width, 0) );
-    pSprite->addChild( rpSprite, 0 );
-	return pSprite;
+	return _CLONE_SPRITE( m_spriteBtnHover );
 }
 
-CCSprite* CResManager::GetSpriteBtnWordLogin()
+CCSprite* CResManager::GetSpriteWordLogin()
 {
-	if( m_spriteLayout )
-	{
-		CCRect rc( 655, 160, 85, 35 );	
-		return CCSprite::createWithTexture( m_spriteLayout->getTexture(), rc );
-	}
-	return NULL;
+	return _CLONE_SPRITE( m_spriteWordLogin );
 }
 
-CCSprite* CResManager::GetSpriteBtnWordExit()
+CCSprite* CResManager::GetSpriteWordExit()
 {
-	if( m_spriteLayout )
-	{
-		CCRect rc( 482, 765, 85, 35 );	
-		return CCSprite::createWithTexture( m_spriteLayout->getTexture(), rc );
-	}
-	return NULL;
+	return _CLONE_SPRITE( m_spriteWordExit );
 }
