@@ -52,12 +52,9 @@ CCMyMenuItemImage * CCMyMenuItemImage::create(const char *normalImage, const cha
     return NULL;
 }
 
-const unsigned int    kNormalTag = 0x1;
-const unsigned int    kSelectedTag = 0x2;
-const unsigned int    kDisableTag = 0x3;
-
 void CCMyMenuItemImage::setSelectedImage(CCNode* pImage)
 {
+	const unsigned int kSelectedTag = 0x2;
 	if (pImage != m_pNormalImage)
     {
         if (pImage)

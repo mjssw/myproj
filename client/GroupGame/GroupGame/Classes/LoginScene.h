@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 
+class CMyEditBox;
 class CLoginScene : public cocos2d::CCLayer
 {
 public:
@@ -12,6 +13,7 @@ public:
     void menuTestCallback(CCObject *pSender);
     void menuLoginCallback(CCObject *pSender);
     void menuCloseCallback(CCObject *pSender);
+    void menuCancelCallback(CCObject *pSender);
     void menuSavePwdCheckBoxCallback(CCObject *pSender);
     void menuAutoLoginCheckBoxCallback(CCObject *pSender);
 
@@ -20,6 +22,7 @@ public:
 	enum
 	{
 		E_Tag_LoginBg = 10,
+		E_Tag_Loading,
 	};
 
 private:
@@ -28,13 +31,16 @@ private:
 	void _AddEditBox(cocos2d::CCSprite &loginBg);
 	void _AddCheckBoxSavePwd(cocos2d::CCSprite &loginBg, bool isSelect);
 	void _AddCheckBoxAuthLogin(cocos2d::CCSprite &loginBg, bool isSelect);
-	void _AddCheckBtnLogin(cocos2d::CCSprite &loginBg);
-	void _AddCheckBtnExit(cocos2d::CCSprite &loginBg);
+	void _AddBtnLogin(cocos2d::CCSprite &loginBg);
+	void _AddBtnExit(cocos2d::CCSprite &loginBg);
+	void _AddLoadingView(int steps);
+	void _AddLoadingIcon(cocos2d::CCNode &loadingNode);
+	void _AddLoadingText(cocos2d::CCNode &loadingNode);
+	void _AddLoadingCancelBtn(cocos2d::CCNode &loadingNode);
 
 	void _RemoveLoginView();
-
-private:
-	int m_inputFrom;
+	void _UpdateLoadingStep();
+	void _RemoveLoadingView();
 };
 
 #endif

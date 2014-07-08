@@ -24,6 +24,7 @@ public:
 	cocos2d::CCSprite* GetSpriteBtnHover();
 	cocos2d::CCSprite* GetSpriteWordLogin();
 	cocos2d::CCSprite* GetSpriteWordExit();
+	cocos2d::CCSprite* GetSpriteLoadingText();
 
 private:
     cocos2d::CCSprite *m_spriteBg;
@@ -39,6 +40,7 @@ private:
 	cocos2d::CCSprite *m_spriteBtnHover;
 	cocos2d::CCSprite *m_spriteWordLogin;
 	cocos2d::CCSprite *m_spriteWordExit;
+	cocos2d::CCSprite *m_spriteLoadingText;
 };
 
 #endif

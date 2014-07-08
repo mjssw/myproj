@@ -22,7 +22,10 @@
     <Filter Include="net">
       <UniqueIdentifier>{ab5dc80c-d66f-4a19-b93b-e098913fa635}</UniqueIdentifier>
     </Filter>
-    <Filter Include="lib">
+    <Filter Include="user">
+      <UniqueIdentifier>{3adcb9cb-a8d6-491c-9dc4-70227b3dfd76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="view">
       <UniqueIdentifier>{5081631b-15c1-46f0-a50e-a40bd69036e7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -62,7 +65,13 @@
       <Filter>net</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MyMenuItemImage.h">
-      <Filter>lib</Filter>
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MyEditBox.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UserManager.h">
+      <Filter>user</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -85,7 +94,13 @@
       <Filter>net</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\MyMenuItemImage.cpp">
-      <Filter>lib</Filter>
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MyEditBox.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UserManager.cpp">
+      <Filter>user</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

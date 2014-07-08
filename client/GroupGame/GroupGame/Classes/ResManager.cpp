@@ -32,6 +32,7 @@ bool CResManager::Init(const char *resRoot)
 	_LOAD_RES( m_spriteBtnHover,		"btn_hover.png" );
 	_LOAD_RES( m_spriteWordLogin,		"login.png" );
 	_LOAD_RES( m_spriteWordExit,		"exit.png" );
+	_LOAD_RES( m_spriteLoadingText,		"loadingtext.png" );
 
 #undef _LOAD_RES
 
@@ -103,4 +104,9 @@ CCSprite* CResManager::GetSpriteWordLogin()
 CCSprite* CResManager::GetSpriteWordExit()
 {
 	return _CLONE_SPRITE( m_spriteWordExit );
+}
+
+CCSprite* CResManager::GetSpriteLoadingText()
+{
+	return _CLONE_SPRITE( m_spriteLoadingText );
 }

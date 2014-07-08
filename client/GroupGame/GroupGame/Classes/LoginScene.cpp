@@ -5,6 +5,24 @@
 using namespace cocos2d;
 using namespace cocos2d::extension;
 #include "MyMenuItemImage.h"
+#include "MyEditBox.h"
+#include "UserManager.h"
+
+static void TextUserChanged(const std::string &text)
+{
+	CCLog( "Text User changed, old:%s new:%s", 
+		CUserManager::Instance().GetUser().c_str(), 
+		text.c_str() );
+	CUserManager::Instance().SetUser( text );
+}
+
+static void TextPwdChanged(const std::string &text)
+{
+	CCLog( "Text Password changed, old:%s new:%s", 
+		CUserManager::Instance().GetPwd().c_str(), 
+		text.c_str() );
+	CUserManager::Instance().SetPwd( text );
+}
 
 CCScene* CLoginScene::scene()
 {
@@ -38,7 +56,9 @@ bool CLoginScene::init()
         //////////////////////////////////////////////////////////////////////////
 
 		_AddSceneBg();
-		_AddLoginView( false, false );
+		_AddLoginView( 
+			CUserManager::Instance().GetSavePwd(),
+			CUserManager::Instance().GetAutoLogin() );
         
 		// for test some code	
 		CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
@@ -91,13 +111,17 @@ void CLoginScene::menuTestCallback(CCObject *pSender)
 	}
 	else
 	{
-		_AddLoginView( false, false );
+		_AddLoginView( 
+			CUserManager::Instance().GetSavePwd(),
+			CUserManager::Instance().GetAutoLogin() );
 	}
 	++a;
 }
 
 void CLoginScene::menuLoginCallback(CCObject *pSender)
 {
+	_RemoveLoginView();
+	_AddLoadingView( 4 );
 }
 
 void CLoginScene::menuCloseCallback(CCObject *pSender)
@@ -105,12 +129,26 @@ void CLoginScene::menuCloseCallback(CCObject *pSender)
     CCDirector::sharedDirector()->end();
 }
 
+void CLoginScene::menuCancelCallback(CCObject *pSender)
+{
+	_RemoveLoadingView();
+	_AddLoginView( 
+		CUserManager::Instance().GetSavePwd(),
+		CUserManager::Instance().GetAutoLogin() );
+}
+
 void CLoginScene::menuSavePwdCheckBoxCallback(CCObject *pSender)
 {
+	bool curState = CUserManager::Instance().GetSavePwd();
+	CCLog( "click save pwd checkbox, pre state:%d, new state:%d", curState?1:0, !curState?1:0 );
+	CUserManager::Instance().SetSavePwd( !curState );
 }
 
 void CLoginScene::menuAutoLoginCheckBoxCallback(CCObject *pSender)
 {
+	bool curState = CUserManager::Instance().GetAutoLogin();
+	CCLog( "click auto login checkbox, cur state:%d, new state:%d", curState?1:0, !curState?1:0 );
+	CUserManager::Instance().SetAutoLogin( !curState );
 }
 
 void CLoginScene::_AddSceneBg()
@@ -138,38 +176,53 @@ void CLoginScene::_AddLoginView(bool isSavePwdSelect, bool isAutoLoginSelect)
 	_AddEditBox( *loginBg );
 	_AddCheckBoxSavePwd( *loginBg, isSavePwdSelect );
 	_AddCheckBoxAuthLogin( *loginBg, isAutoLoginSelect );
-	_AddCheckBtnLogin( *loginBg );
-	_AddCheckBtnExit( *loginBg );
+	_AddBtnLogin( *loginBg );
+	_AddBtnExit( *loginBg );
 }
 
 void CLoginScene::_AddEditBox(CCSprite &loginBg)
 {
 	CCSize bgSz = loginBg.getContentSize();
 
-	CCSprite *editbox = CResManager::Instance().GetSpriteEditBox();
-	CCAssert( editbox, "GetResEditBox Failed" );
-	CCSize sz = editbox->getContentSize();
-	editbox->setAnchorPoint( ccp(0, 0) );
-	editbox->setPosition( 
+	CCSprite *editboxBg = CResManager::Instance().GetSpriteEditBox();
+	CCAssert( editboxBg, "GetResEditBox Failed" );
+	CCSize sz = editboxBg->getContentSize();
+	editboxBg->setAnchorPoint( ccp(0, 0) );
+	editboxBg->setPosition( 
 		ccp((bgSz.width-sz.width)/2, ((bgSz.height/2)-sz.height)/2+(bgSz.height/2)) );
-    loginBg.addChild( editbox, 0 );
+    loginBg.addChild( editboxBg, 0 );
 
 	int x = 10;
 	CCSprite *wordUser = CResManager::Instance().GetSpriteWordUser();
 	CCAssert( wordUser, "GetResWordUser Failed" );
 	CCSize wsz = wordUser->getContentSize();
+	int userY = (sz.height/2-wsz.height)/2 + (sz.height/2);
 	wordUser->setAnchorPoint( ccp(0, 0) );
-	wordUser->setPosition( ccp(x, (sz.height/2-wsz.height)/2 + (sz.height/2)) );
-	editbox->addChild( wordUser, 0 );
+	wordUser->setPosition( ccp(x, userY) );
+	editboxBg->addChild( wordUser, 0 );
 
 	CCSprite *wordPwd = CResManager::Instance().GetSpriteWordPwd();
 	CCAssert( wordPwd, "GetResWordPwd Failed" );
 	wsz = wordPwd->getContentSize();
 	wordPwd->setAnchorPoint( ccp(0, 0) );
 	wordPwd->setPosition( ccp(x, (sz.height/2-wsz.height)/2) );
-	editbox->addChild( wordPwd, 0 );
+	editboxBg->addChild( wordPwd, 0 );
+
+	CCSize editSz = CCSize( sz.width - 3*x - wsz.width, sz.height/3);
+	CMyEditBox *editUser = CMyEditBox::create(
+		editSz, ccp(2*x+wsz.width, (sz.height/2-editSz.height)/2 + (sz.height/2)), 
+		"white_edit.png", "Paint Boy.ttf", 25, ccBLACK, 8 );
+	CCAssert( editUser, "GetUserEditBox Failed" );
+	editUser->SetEditChangedCallback( TextUserChanged );
+    editboxBg->addChild( editUser, 1 );
 	
-	m_inputFrom = x + wsz.width + 10;
+	CMyEditBox *pwdEdit = CMyEditBox::create(
+		editSz, ccp(2*x+wsz.width, (sz.height/2-editSz.height)/2), 
+		"white_edit.png", "Paint Boy.ttf", 25, ccBLACK, 8 );
+	CCAssert( pwdEdit, "GetPwdEditBox Failed" );
+	pwdEdit->SetPasswordMode();
+	pwdEdit->SetEditChangedCallback( TextPwdChanged );
+    editboxBg->addChild( pwdEdit, 1 );
 }
 
 void CLoginScene::_AddCheckBoxSavePwd(CCSprite &loginBg, bool isSelect)
@@ -282,7 +335,7 @@ void CLoginScene::_AddCheckBoxAuthLogin(CCSprite &loginBg, bool isSelect)
 	loginBg.addChild( wordAutoLogin, 0 );
 }
 
-void CLoginScene::_AddCheckBtnLogin(CCSprite &loginBg)
+void CLoginScene::_AddBtnLogin(CCSprite &loginBg)
 {
 	CCSize bgSz = loginBg.getContentSize();
 
@@ -308,7 +361,7 @@ void CLoginScene::_AddCheckBtnLogin(CCSprite &loginBg)
 	loginBg.addChild( menu, 0 );
 }
 
-void CLoginScene::_AddCheckBtnExit(CCSprite &loginBg)
+void CLoginScene::_AddBtnExit(CCSprite &loginBg)
 {
 #if _ENABLE_EXIT_BTN
 	CCSize bgSz = loginBg.getContentSize();
@@ -333,7 +386,81 @@ void CLoginScene::_AddCheckBtnExit(CCSprite &loginBg)
 #endif
 }
 
+void CLoginScene::_AddLoadingView(int steps)
+{
+	CCSize winSz = CCDirector::sharedDirector()->getWinSize();
+
+	/*
+	CCSprite *text = CResManager::Instance().GetSpriteLoadingText();
+	CCAssert( text, "CreateResLoadingText Failed" );
+	CCSize sz = text->getContentSize();
+	text->setPosition( ccp(winSz.width/2, winSz.height/2) );
+	addChild( text );
+	//*/
+
+	CCNode *loadingNode = CCNode::create();
+	CCAssert( loadingNode, "CreateLoadingNode Failed" );
+	CCSize sz = CCSize(10, 10);
+	loadingNode->setContentSize( sz );
+	loadingNode->setAnchorPoint( ccp(0.5, 0.5) );
+	loadingNode->setPosition( ccp(winSz.width/2, winSz.height/2) );
+	addChild( loadingNode, 1, E_Tag_Loading );
+
+	_AddLoadingIcon( *loadingNode );
+	_AddLoadingText( *loadingNode );
+	_AddLoadingCancelBtn( *loadingNode );
+	//*/
+
+}
+
+void CLoginScene::_AddLoadingIcon(cocos2d::CCNode &loadingNode)
+{
+}
+
+void CLoginScene::_AddLoadingText(cocos2d::CCNode &loadingNode)
+{
+	CCSize winSz = CCDirector::sharedDirector()->getWinSize();
+	CCSize nodeSz = loadingNode.getContentSize();
+
+	CCSprite *text = CResManager::Instance().GetSpriteLoadingText();
+	CCAssert( text, "CreateResLoadingText Failed" );
+	text->setPosition( ccp(nodeSz.width/2, nodeSz.height/2) );
+	loadingNode.addChild( text, 0 );
+}
+
+void CLoginScene::_AddLoadingCancelBtn(cocos2d::CCNode &loadingNode)
+{	
+	CCSize winSz = CCDirector::sharedDirector()->getWinSize();
+	CCSize nodeSz = loadingNode.getContentSize();
+
+	CCMyMenuItemImage *cancelItem = CCMyMenuItemImage::create(
+		"btncancel_normal.png",
+		"btncancel_hover.png",
+		this,
+		menu_selector(CLoginScene::menuCancelCallback));
+	CCAssert( cancelItem, "CreateExitItem Failed" );
+	CCSize btnSz = cancelItem->getContentSize();
+
+	int x = nodeSz.width / 2;
+	int y = nodeSz.height / 2 - (winSz.height / 3) ;
+	cancelItem->setPosition( ccp(x, y) );
+
+	CCMenu *menu = CCMenu::create( cancelItem, NULL );
+	menu->setPosition( CCPointZero );
+	CCAssert( menu, "CreateCancelMenu Failed" );
+	loadingNode.addChild( menu, 0 );
+}
+
 void CLoginScene::_RemoveLoginView()
 {
 	removeChildByTag( E_Tag_LoginBg );
+}
+
+void CLoginScene::_UpdateLoadingStep()
+{
+}
+
+void CLoginScene::_RemoveLoadingView()
+{
+	removeChildByTag( E_Tag_Loading );
 }
