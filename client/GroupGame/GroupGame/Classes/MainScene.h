@@ -12,6 +12,16 @@ public:
     void menuCloseCallback(CCObject *pSender);
 
     CREATE_FUNC(CMainScene);
+
+private:
+	void _AddSceneBg();
+	void _AddTitle();
+	void _AddTabButtons();
+	void _AddListView();
+	void _AddMainView();
+
+private:
+	int m_mainViewOffX;
 };
 
 #endif

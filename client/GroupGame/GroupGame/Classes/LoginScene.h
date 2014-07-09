@@ -49,14 +49,6 @@ private:
 private:
 	struct
 	{
-		/*
-		int m_curStep;
-		int m_maxStep;
-		int m_setpWidth;
-		int m_setpHight;
-		cocos2d::CCNode *m_loadNode;
-		//*/
-	
 		CMyLoadingItem *m_loadItem;
 	} m_loadView;
 };

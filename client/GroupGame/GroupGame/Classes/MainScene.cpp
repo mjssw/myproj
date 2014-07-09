@@ -1,5 +1,6 @@
 #include "MainScene.h"
 using namespace cocos2d;
+#include "CommDef.h"
 
 CCScene* CMainScene::scene()
 {
@@ -32,7 +33,13 @@ bool CMainScene::init()
         // add your codes below...
         //////////////////////////////////////////////////////////////////////////
 
+		_AddSceneBg();
+		_AddTitle();
+		_AddListView();
+		_AddMainView();
+		_AddTabButtons();
 
+#ifdef _DEBUG
         CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
             "CloseNormal.png",
             "CloseSelected.png",
@@ -44,17 +51,7 @@ bool CMainScene::init()
         pMenu->setPosition(CCPointZero);
         CC_BREAK_IF(! pMenu);
         this->addChild(pMenu, 1);
-
-        CCLabelTTF* pLabel = CCLabelTTF::create("MainScene", "Arial", 24);
-        CC_BREAK_IF(! pLabel);
-        CCSize size = CCDirector::sharedDirector()->getWinSize();
-        pLabel->setPosition(ccp(size.width / 2, size.height - 50));
-        this->addChild(pLabel, 1);
-
-        CCSprite* pSprite = CCSprite::create("HelloWorld.png");
-        CC_BREAK_IF(! pSprite);
-        pSprite->setPosition(ccp(size.width/2, size.height/2));
-        this->addChild(pSprite, 0);
+#endif
 
         ret = true;
     } while( 0 );
@@ -67,3 +64,51 @@ void CMainScene::menuCloseCallback(CCObject *pSender)
     CCDirector::sharedDirector()->end();
 }
 
+void CMainScene::_AddSceneBg()
+{
+	CCSize winSz = CCDirector::sharedDirector()->getWinSize();
+
+	CCSprite *pSprite = CCSprite::create( "bg.png" );
+    CCAssert( pSprite, "GetBg Failed" );
+	pSprite->setScaleX( WIN_SIZE_W / pSprite->getContentSize().width );
+	pSprite->setScaleY( WIN_SIZE_H / pSprite->getContentSize().height );
+	pSprite->setPosition( ccp(winSz.width/2, winSz.height/2) );
+    addChild( pSprite, 0 );
+}
+
+void CMainScene::_AddTitle()
+{
+	CCSize winSz = CCDirector::sharedDirector()->getWinSize();
+
+	CCSprite *pSprite = CCSprite::create( "title.png" );
+    CCAssert( pSprite, "GetTitle Failed" );
+	CCSize sz = pSprite->getContentSize();
+	pSprite->setPosition( ccp(winSz.width/2, winSz.height-sz.height/2) );
+    addChild( pSprite, 0 );
+}
+
+void CMainScene::_AddTabButtons()
+{
+}
+
+void CMainScene::_AddListView()
+{
+	int off = 2;
+	CCSprite *pSprite = CCSprite::create( "listbg.png" );
+    CCAssert( pSprite, "GetListbg Failed" );
+	CCSize sz = pSprite->getContentSize();
+	pSprite->setPosition( ccp(sz.width/2, sz.height/2 + off) );
+    addChild( pSprite, 0 );
+	
+	m_mainViewOffX = sz.width;
+}
+
+void CMainScene::_AddMainView()
+{
+	int off = 2;
+	CCSprite *pSprite = CCSprite::create( "mainbg.png" );
+    CCAssert( pSprite, "GetMainbg Failed" );
+	CCSize sz = pSprite->getContentSize();
+	pSprite->setPosition( ccp(sz.width/2 + m_mainViewOffX + off, sz.height/2 + off) );
+    addChild( pSprite, 0 );
+}
