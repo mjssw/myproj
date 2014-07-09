@@ -25,6 +25,10 @@ public:
 	cocos2d::CCSprite* GetSpriteWordLogin();
 	cocos2d::CCSprite* GetSpriteWordExit();
 	cocos2d::CCSprite* GetSpriteLoadingText();
+	cocos2d::CCSprite* GetSpriteLoadBg();
+	cocos2d::CCSprite* GetSpriteLoadHead();
+	cocos2d::CCSprite* GetSpriteLoadTail();
+	cocos2d::CCSprite* GetSpriteLoadMid();
 
 private:
     cocos2d::CCSprite *m_spriteBg;
@@ -41,6 +45,10 @@ private:
 	cocos2d::CCSprite *m_spriteWordLogin;
 	cocos2d::CCSprite *m_spriteWordExit;
 	cocos2d::CCSprite *m_spriteLoadingText;
+	cocos2d::CCSprite *m_spriteLoadBg;
+	cocos2d::CCSprite *m_spriteLoadHead;
+	cocos2d::CCSprite *m_spriteLoadTail;
+	cocos2d::CCSprite *m_spriteLoadMid;
 };
 
 #endif

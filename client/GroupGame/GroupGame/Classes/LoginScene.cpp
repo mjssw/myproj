@@ -7,6 +7,7 @@ using namespace cocos2d::extension;
 #include "MyMenuItemImage.h"
 #include "MyEditBox.h"
 #include "UserManager.h"
+#include "MyLoadingItem.h"
 
 static void TextUserChanged(const std::string &text)
 {
@@ -59,6 +60,7 @@ bool CLoginScene::init()
 		_AddLoginView( 
 			CUserManager::Instance().GetSavePwd(),
 			CUserManager::Instance().GetAutoLogin() );
+		m_loadView.m_loadItem = NULL;
         
 		// for test some code	
 		CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
@@ -100,6 +102,11 @@ bool CLoginScene::init()
     } while( 0 );
 
     return ret;
+}
+
+void CLoginScene::TestTimer(float t)
+{
+	_UpdateLoadingStep();
 }
 
 void CLoginScene::menuTestCallback(CCObject *pSender)
@@ -390,14 +397,6 @@ void CLoginScene::_AddLoadingView(int steps)
 {
 	CCSize winSz = CCDirector::sharedDirector()->getWinSize();
 
-	/*
-	CCSprite *text = CResManager::Instance().GetSpriteLoadingText();
-	CCAssert( text, "CreateResLoadingText Failed" );
-	CCSize sz = text->getContentSize();
-	text->setPosition( ccp(winSz.width/2, winSz.height/2) );
-	addChild( text );
-	//*/
-
 	CCNode *loadingNode = CCNode::create();
 	CCAssert( loadingNode, "CreateLoadingNode Failed" );
 	CCSize sz = CCSize(10, 10);
@@ -406,11 +405,20 @@ void CLoginScene::_AddLoadingView(int steps)
 	loadingNode->setPosition( ccp(winSz.width/2, winSz.height/2) );
 	addChild( loadingNode, 1, E_Tag_Loading );
 
-	_AddLoadingIcon( *loadingNode );
-	_AddLoadingText( *loadingNode );
-	_AddLoadingCancelBtn( *loadingNode );
+	/*
+	m_loadView.m_loadNode = loadingNode;
+	m_loadView.m_curStep = 0;
+	m_loadView.m_maxStep = steps;
 	//*/
 
+	_AddLoadingIcon( *loadingNode );
+	_AddLoadingText( *loadingNode );
+	_AddLoadingProgress( *loadingNode, steps );
+	_AddLoadingCancelBtn( *loadingNode );
+
+	// test
+	CCDirector::sharedDirector()->getScheduler()->scheduleSelector(
+		schedule_selector(CLoginScene::TestTimer), this, 1.0f, false);
 }
 
 void CLoginScene::_AddLoadingIcon(cocos2d::CCNode &loadingNode)
@@ -426,6 +434,53 @@ void CLoginScene::_AddLoadingText(cocos2d::CCNode &loadingNode)
 	CCAssert( text, "CreateResLoadingText Failed" );
 	text->setPosition( ccp(nodeSz.width/2, nodeSz.height/2) );
 	loadingNode.addChild( text, 0 );
+}
+
+void CLoginScene::_AddLoadingProgress(cocos2d::CCNode &loadingNode, int steps)
+{
+	CCSize winSz = CCDirector::sharedDirector()->getWinSize();
+	CCSize nodeSz = loadingNode.getContentSize();
+	int x = nodeSz.width / 2;
+	int y = nodeSz.height / 2 - (winSz.height / 6) ;
+	m_loadView.m_loadItem = CMyLoadingItem::create( steps );
+	m_loadView.m_loadItem->SetPosition( ccp(x, y) );
+	loadingNode.addChild( m_loadView.m_loadItem, 0 );
+
+	/*
+	CCSize winSz = CCDirector::sharedDirector()->getWinSize();
+	CCSize nodeSz = loadingNode.getContentSize();
+	
+	CCSprite *loadbg = CResManager::Instance().GetSpriteLoadBg();
+	CCAssert( loadbg, "CreateResLoadbg Failed" );
+	CCSize bgSz = loadbg->getContentSize();
+	int x = nodeSz.width / 2;
+	int y = nodeSz.height / 2 - (winSz.height / 6) ;
+	loadbg->setPosition( ccp(x, y) );
+	loadingNode.addChild( loadbg, 0 );
+
+	CCSprite *loadhead = CResManager::Instance().GetSpriteLoadHead();
+	CCAssert( loadhead, "CreateResLoadhead Failed" );
+	CCSize headSz = loadhead->getContentSize();
+	
+	CCSprite *loadtail = CResManager::Instance().GetSpriteLoadTail();
+	CCAssert( loadtail, "CreateResLoadtail Failed" );
+	CCSize tailSz = loadtail->getContentSize();
+	
+	int off = 10;
+	int remainW = bgSz.width - headSz.width - tailSz.width - 2*off;
+	int stepW = remainW / steps;
+	m_loadView.m_setpWidth = (stepW % 2) ? (stepW+1) : stepW; // 保证是偶数
+	m_loadView.m_setpHight = headSz.height;
+	
+	x = nodeSz.width / 2 - bgSz.width / 2 + off + headSz.width / 2;
+	y = nodeSz.height / 2 - (winSz.height / 6) ;
+	loadhead->setPosition( ccp(x, y) );
+	loadingNode.addChild( loadhead, 0 );
+
+	x += headSz.width / 2 + tailSz.width / 2;
+	loadtail->setPosition( ccp(x, y) );
+	loadingNode.addChild( loadtail, 0, E_Tag_Loading_Tail );
+	//*/
 }
 
 void CLoginScene::_AddLoadingCancelBtn(cocos2d::CCNode &loadingNode)
@@ -458,9 +513,47 @@ void CLoginScene::_RemoveLoginView()
 
 void CLoginScene::_UpdateLoadingStep()
 {
+	if( m_loadView.m_loadItem )
+	{
+		m_loadView.m_loadItem->UpdateProgress();
+	}
+
+	/*
+	if( m_loadView.m_curStep >= m_loadView.m_maxStep )
+	{
+		CCLog( "loading progress reach max" );
+		return;
+	}
+	
+	// 获取尾部进度节点
+	CCAssert( m_loadView.m_loadNode, "loadView.m_loadNode is NULL" );
+	CCNode *loadtail = m_loadView.m_loadNode->getChildByTag( E_Tag_Loading_Tail );
+	CCAssert( loadtail, "can not found loadtail" );
+	CCPoint pos = loadtail->getPosition();
+	
+	// 添加中间进度
+	CCSprite *loadmid = CCSprite::create( "loadmid.png", CCRect(0,0,m_loadView.m_setpWidth,m_loadView.m_setpHight) );
+	CCAssert( loadmid, "CreateLoadmid Failed" );
+	CCSize midSz = loadmid->getContentSize();
+	int x = pos.x - loadtail->getContentSize().width / 2 + m_loadView.m_setpWidth / 2;
+	int y = pos.y;
+	loadmid->setPosition( ccp(x, y) );
+	m_loadView.m_loadNode->addChild( loadmid, 0 );
+	
+	// 调整尾部进步位置
+	pos.x += m_loadView.m_setpWidth;
+	loadtail->setPosition( pos );
+
+	++m_loadView.m_curStep;
+	//*/
 }
 
 void CLoginScene::_RemoveLoadingView()
 {
+	// test
+	CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(
+		schedule_selector(CLoginScene::TestTimer), this );
+
 	removeChildByTag( E_Tag_Loading );
+	m_loadView.m_loadItem = NULL;
 }

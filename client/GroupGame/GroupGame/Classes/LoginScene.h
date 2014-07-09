@@ -5,11 +5,13 @@
 #include "SimpleAudioEngine.h"
 
 class CMyEditBox;
+class CMyLoadingItem;
 class CLoginScene : public cocos2d::CCLayer
 {
 public:
     virtual bool init();  
     static cocos2d::CCScene* scene();
+	void TestTimer(float t);
     void menuTestCallback(CCObject *pSender);
     void menuLoginCallback(CCObject *pSender);
     void menuCloseCallback(CCObject *pSender);
@@ -23,6 +25,7 @@ public:
 	{
 		E_Tag_LoginBg = 10,
 		E_Tag_Loading,
+		E_Tag_Loading_Tail,
 	};
 
 private:
@@ -36,11 +39,26 @@ private:
 	void _AddLoadingView(int steps);
 	void _AddLoadingIcon(cocos2d::CCNode &loadingNode);
 	void _AddLoadingText(cocos2d::CCNode &loadingNode);
+	void _AddLoadingProgress(cocos2d::CCNode &loadingNode, int steps);
 	void _AddLoadingCancelBtn(cocos2d::CCNode &loadingNode);
 
 	void _RemoveLoginView();
 	void _UpdateLoadingStep();
 	void _RemoveLoadingView();
+
+private:
+	struct
+	{
+		/*
+		int m_curStep;
+		int m_maxStep;
+		int m_setpWidth;
+		int m_setpHight;
+		cocos2d::CCNode *m_loadNode;
+		//*/
+	
+		CMyLoadingItem *m_loadItem;
+	} m_loadView;
 };
 
 #endif
