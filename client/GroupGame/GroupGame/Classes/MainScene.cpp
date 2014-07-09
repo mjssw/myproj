@@ -91,13 +91,13 @@ void CMainScene::_AddTabButtons()
 {
 }
 
+static int g_off = 3;
 void CMainScene::_AddListView()
 {
-	int off = 2;
 	CCSprite *pSprite = CCSprite::create( "listbg.png" );
     CCAssert( pSprite, "GetListbg Failed" );
 	CCSize sz = pSprite->getContentSize();
-	pSprite->setPosition( ccp(sz.width/2, sz.height/2 + off) );
+	pSprite->setPosition( ccp(sz.width/2 + g_off, sz.height/2 + g_off) );
     addChild( pSprite, 0 );
 	
 	m_mainViewOffX = sz.width;
@@ -105,10 +105,9 @@ void CMainScene::_AddListView()
 
 void CMainScene::_AddMainView()
 {
-	int off = 2;
 	CCSprite *pSprite = CCSprite::create( "mainbg.png" );
     CCAssert( pSprite, "GetMainbg Failed" );
 	CCSize sz = pSprite->getContentSize();
-	pSprite->setPosition( ccp(sz.width/2 + m_mainViewOffX + off, sz.height/2 + off) );
+	pSprite->setPosition( ccp(sz.width/2 + m_mainViewOffX + 2*g_off, sz.height/2 + g_off) );
     addChild( pSprite, 0 );
 }
