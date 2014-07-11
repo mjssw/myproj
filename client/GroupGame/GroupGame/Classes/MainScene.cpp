@@ -1,6 +1,8 @@
 #include "MainScene.h"
 using namespace cocos2d;
 #include "CommDef.h"
+#include "MyTableView.h"
+using namespace std;
 
 CCScene* CMainScene::scene()
 {
@@ -51,6 +53,18 @@ bool CMainScene::init()
         pMenu->setPosition(CCPointZero);
         CC_BREAK_IF(! pMenu);
         this->addChild(pMenu, 1);
+		
+		CCMenuItemImage *paddItem = CCMenuItemImage::create(
+            "add31.png",
+            "add32.png",
+            this,
+            menu_selector(CMainScene::menuTestCallback));
+        CC_BREAK_IF(! paddItem);
+        paddItem->setPosition(ccp(CCDirector::sharedDirector()->getWinSize().width - 60, 20));
+        CCMenu* pMenu2 = CCMenu::create(paddItem, NULL);
+        pMenu2->setPosition(CCPointZero);
+        CC_BREAK_IF(! pMenu2);
+        this->addChild(pMenu2, 1);
 #endif
 
         ret = true;
@@ -62,6 +76,23 @@ bool CMainScene::init()
 void CMainScene::menuCloseCallback(CCObject *pSender)
 {
     CCDirector::sharedDirector()->end();
+}
+
+void CMainScene::menuTestCallback(CCObject *pSender)
+{
+	// add
+	char icon[64] = {0};
+	char text[64] = {0};
+	sprintf( icon, "group1.png");
+	sprintf( text, "高中斗地主群" );
+	TableViewData data;
+	data.icon = icon;
+	data.text = text;
+
+	if( m_pGroupList )
+	{
+		m_pGroupList->InsertElement( data );
+	}
 }
 
 void CMainScene::_AddSceneBg()
@@ -97,10 +128,32 @@ void CMainScene::_AddListView()
 	CCSprite *pSprite = CCSprite::create( "listbg.png" );
     CCAssert( pSprite, "GetListbg Failed" );
 	CCSize sz = pSprite->getContentSize();
-	pSprite->setPosition( ccp(sz.width/2 + g_off, sz.height/2 + g_off) );
+	CCPoint pt = ccp(sz.width/2 + g_off, sz.height/2 + g_off);
+	pSprite->setPosition( pt );
     addChild( pSprite, 0 );
 	
 	m_mainViewOffX = sz.width;
+	
+	m_ptTableView = pt;
+	m_szTableView = CCSize(sz.width-g_off, sz.height-32);
+
+	// test
+	vector<TableViewData> vecData;
+	for( int i=0; i<12; ++i )
+	{
+		char icon[64] = {0};
+		char text[64] = {0};
+		sprintf( icon, "test\\g1 (%d).png", i+1 );
+		sprintf( text, "abc游戏群 %d", i+1 );
+		TableViewData data;
+		data.icon = icon;
+		data.text = text;
+		vecData.push_back( data ); 
+	}
+	m_pGroupList = CMyTableView::create(m_szTableView, CCSize(264,58), vecData, "selectbg.png" );
+    CCAssert( m_pGroupList, "GetTableView Failed" );
+	m_pGroupList->SetPosition( m_ptTableView );
+	addChild( m_pGroupList, 1 );
 }
 
 void CMainScene::_AddMainView()

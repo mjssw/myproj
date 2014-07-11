@@ -64,7 +64,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcocos2d.lib;opengl32.lib;glew32.lib;libCocosDenshion.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcocos2d.lib;opengl32.lib;glew32.lib;libCocosDenshion.lib;libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <Culture>0x0409</Culture>
@@ -131,9 +131,11 @@
     <ClInclude Include="..\Classes\MyEditBox.h" />
     <ClInclude Include="..\Classes\MyLoadingItem.h" />
     <ClInclude Include="..\Classes\MyMenuItemImage.h" />
+    <ClInclude Include="..\Classes\MyTableView.h" />
     <ClInclude Include="..\Classes\NetManager.h" />
     <ClInclude Include="..\Classes\ResManager.h" />
     <ClInclude Include="..\Classes\UserManager.h" />
+    <ClInclude Include="..\Classes\utils.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
@@ -144,9 +146,11 @@
     <ClCompile Include="..\Classes\MyEditBox.cpp" />
     <ClCompile Include="..\Classes\MyLoadingItem.cpp" />
     <ClCompile Include="..\Classes\MyMenuItemImage.cpp" />
+    <ClCompile Include="..\Classes\MyTableView.cpp" />
     <ClCompile Include="..\Classes\NetManager.cpp" />
     <ClCompile Include="..\Classes\ResManager.cpp" />
     <ClCompile Include="..\Classes\UserManager.cpp" />
+    <ClCompile Include="..\Classes\utils.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

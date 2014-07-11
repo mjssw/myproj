@@ -76,6 +76,12 @@
     <ClInclude Include="..\Classes\MyLoadingItem.h">
       <Filter>view</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\MyTableView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\utils.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -107,6 +113,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\MyLoadingItem.cpp">
       <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MyTableView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\utils.cpp">
+      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
