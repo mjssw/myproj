@@ -2,6 +2,7 @@
 using namespace cocos2d;
 #include "CommDef.h"
 #include "MyTableView.h"
+#include "MyRadioButton.h"
 using namespace std;
 
 CCScene* CMainScene::scene()
@@ -81,6 +82,7 @@ void CMainScene::menuCloseCallback(CCObject *pSender)
 void CMainScene::menuTestCallback(CCObject *pSender)
 {
 	// add
+	/*
 	char icon[64] = {0};
 	char text[64] = {0};
 	sprintf( icon, "group1.png");
@@ -93,6 +95,27 @@ void CMainScene::menuTestCallback(CCObject *pSender)
 	{
 		m_pGroupList->InsertElement( data );
 	}
+	//*/
+
+
+    CCMenuItemImage* pItem1 = CCMenuItemImage::create(
+		"friend_normal.png", "friend_hover.png", "friend_normal.png",  
+        this, menu_selector(CMainScene::menuRadioButtonCallback));  
+    CCMenuItemImage* pItem2 = CCMenuItemImage::create(
+		"game_normal.png", "game_hover.png", "game_normal.png", 
+		this, menu_selector(CMainScene::menuRadioButtonCallback));
+    CCMenuItemImage* pItem3 = CCMenuItemImage::create(
+		"home_normal.png", "home_hover.png", "home_normal.png", 
+		this, menu_selector(CMainScene::menuRadioButtonCallback));
+	CMyRadioMenu* pMenu = CMyRadioMenu::create(1, pItem1, pItem2, pItem3, NULL);  
+    pMenu->SetPosition(ccp(250, 260));
+	pMenu->SetDefaultSelectItem( pItem2 );
+	pMenu->SetItemsHorizontally(0);
+    this->addChild(pMenu,2);
+}
+
+void CMainScene::menuRadioButtonCallback(CCObject *pSender)
+{
 }
 
 void CMainScene::_AddSceneBg()
@@ -116,10 +139,42 @@ void CMainScene::_AddTitle()
 	CCSize sz = pSprite->getContentSize();
 	pSprite->setPosition( ccp(winSz.width/2, winSz.height-sz.height/2) );
     addChild( pSprite, 0 );
+	
+	m_titleHigh = sz.height;
 }
 
 void CMainScene::_AddTabButtons()
 {
+	CCMenuItemImage *pItem1 = CCMenuItemImage::create(
+		"friend_normal.png", "friend_hover.png", "friend_normal.png",  
+        this, menu_selector(CMainScene::menuRadioButtonCallback) );  
+    CCAssert( pItem1, "GetTabButton image friend Failed" );
+	float scale = (WIN_SIZE_H - m_listHigh - m_titleHigh) / pItem1->getContentSize().height;
+
+    CCMenuItemImage *pItem2 = CCMenuItemImage::create(
+		"game_normal.png", "game_hover.png", "game_normal.png", 
+		this, menu_selector(CMainScene::menuRadioButtonCallback) );
+    CCAssert( pItem2, "GetTabButton image game Failed" );
+    CCMenuItemImage *pItem3 = CCMenuItemImage::create(
+		"home_normal.png", "home_hover.png", "home_normal.png", 
+		this, menu_selector(CMainScene::menuRadioButtonCallback) );
+    CCAssert( pItem3, "GetTabButton image home Failed" );
+	
+	CMyRadioMenu *pMenu = CMyRadioMenu::create(scale, pItem1, pItem2, pItem3, NULL );  
+    CCAssert( pMenu, "GetRadioMenu Failed" );
+
+	// TODO default select is from user data
+	pMenu->SetDefaultSelectItem( pItem1 );
+	pMenu->SetItemsHorizontally( 0 );
+
+	CCPoint pt = ccp( pMenu->GetMenuWidth()/2, m_ptTableView.y+m_listHigh/2 + pMenu->getContentSize().height/2 ); 
+	int y = m_ptTableView.y;
+	y += m_listHigh / 2;
+	y += (pMenu->GetMenuHeight()) / 2;
+	pt.y = y;
+    pMenu->SetPosition( pt );
+	
+    addChild( pMenu, 1 );
 }
 
 static int g_off = 3;
@@ -136,6 +191,7 @@ void CMainScene::_AddListView()
 	
 	m_ptTableView = pt;
 	m_szTableView = CCSize(sz.width-g_off, sz.height-32);
+	m_listHigh = sz.height;
 
 	// test
 	vector<TableViewData> vecData;

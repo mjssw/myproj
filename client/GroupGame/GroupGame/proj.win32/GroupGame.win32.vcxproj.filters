@@ -82,6 +82,9 @@
     <ClInclude Include="..\Classes\utils.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\MyRadioButton.h">
+      <Filter>view</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -119,6 +122,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\utils.cpp">
       <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MyRadioButton.cpp">
+      <Filter>view</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

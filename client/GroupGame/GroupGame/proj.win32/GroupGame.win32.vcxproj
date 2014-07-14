@@ -131,6 +131,7 @@
     <ClInclude Include="..\Classes\MyEditBox.h" />
     <ClInclude Include="..\Classes\MyLoadingItem.h" />
     <ClInclude Include="..\Classes\MyMenuItemImage.h" />
+    <ClInclude Include="..\Classes\MyRadioButton.h" />
     <ClInclude Include="..\Classes\MyTableView.h" />
     <ClInclude Include="..\Classes\NetManager.h" />
     <ClInclude Include="..\Classes\ResManager.h" />
@@ -146,6 +147,7 @@
     <ClCompile Include="..\Classes\MyEditBox.cpp" />
     <ClCompile Include="..\Classes\MyLoadingItem.cpp" />
     <ClCompile Include="..\Classes\MyMenuItemImage.cpp" />
+    <ClCompile Include="..\Classes\MyRadioButton.cpp" />
     <ClCompile Include="..\Classes\MyTableView.cpp" />
     <ClCompile Include="..\Classes\NetManager.cpp" />
     <ClCompile Include="..\Classes\ResManager.cpp" />

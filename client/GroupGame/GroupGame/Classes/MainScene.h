@@ -12,6 +12,7 @@ public:
     static cocos2d::CCScene* scene();
     void menuCloseCallback(CCObject *pSender);
 	void menuTestCallback(CCObject *pSender);
+	void menuRadioButtonCallback(CCObject *pSender);
 
     CREATE_FUNC(CMainScene);
 
@@ -26,6 +27,8 @@ private:
 	int m_mainViewOffX;
 	cocos2d::CCPoint m_ptTableView;
 	cocos2d::CCSize m_szTableView;
+	int m_listHigh;
+	int m_titleHigh;
 	
 	CMyTableView *m_pGroupList;
 };
