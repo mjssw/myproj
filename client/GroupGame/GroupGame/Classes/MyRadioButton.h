@@ -11,9 +11,9 @@ public:
     virtual ~CMyRadioMenu(){}
 
     virtual void onEnter();
-    virtual bool ccTouchBegan(cocos2d::CCTouch *touch, cocos2d::CCEvent *event);
-    virtual void ccTouchEnded(cocos2d::CCTouch *touch, cocos2d::CCEvent *event);
-	virtual void draw();
+    virtual bool onTouchBegan(cocos2d::CCTouch *touch, cocos2d::CCEvent *event);
+    virtual void onTouchEnded(cocos2d::CCTouch *touch, cocos2d::CCEvent *event);
+	//virtual void draw();
 
 	void SetPosition(cocos2d::CCPoint &pos);
 	void SetDefaultSelectItem(cocos2d::CCMenuItem *item);

@@ -41,12 +41,12 @@ CMyRadioMenu* CMyRadioMenu::create(float scale, CCMenuItem *item, ...)
     return menu;  
 }  
   
-void CMyRadioMenu::SetPosition(cocos2d::CCPoint &pos)
+void CMyRadioMenu::SetPosition(CCPoint &pos)
 {
 	setPosition( pos );
 }
 
-void CMyRadioMenu::SetDefaultSelectItem(cocos2d::CCMenuItem *item)
+void CMyRadioMenu::SetDefaultSelectItem(CCMenuItem *item)
 {
 	if( item )
 	{
@@ -94,26 +94,26 @@ int CMyRadioMenu::GetMenuHeight()
 void CMyRadioMenu::onEnter()  
 {  
 	CCMenu::onEnter();  
-	if( m_pChildren->count() > 0 )
+	if( _children.size() > 0 )
 	{  
 		if( !m_lastSelectedItem )
 		{  
-			CCMenuItem *pFirstItem = (CCMenuItem*)( m_pChildren->objectAtIndex(0) );
+			CCMenuItem *pFirstItem = (CCMenuItem*)( _children.at(0) );
 			pFirstItem->selected();
 			m_lastSelectedItem = pFirstItem;
 		}
 	}
 }
   
-bool CMyRadioMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)  
+bool CMyRadioMenu::onTouchBegan(CCTouch* touch, CCEvent* event)  
 {  
     CC_UNUSED_PARAM(event);  
-    if( m_eState != kCCMenuStateWaiting || !m_bVisible /*|| !m_bEnabled*/ )  
+	if( _state != kCCMenuStateWaiting || !_enabled /*|| !m_bEnabled*/ )  
     {  
         return false;  
     }  
   
-    for(CCNode *c = this->m_pParent; c != NULL; c = c->getParent() )  
+    for(CCNode *c = this->_parent; c != NULL; c = c->getParent() )  
     {  
         if( c->isVisible() == false )  
         {  
@@ -121,13 +121,13 @@ bool CMyRadioMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)
         }  
     }  
   
-    m_pSelectedItem = this->itemForTouch( touch );  
-    if( m_pSelectedItem )  
+	_selectedItem = this->getItemForTouch( touch );  
+    if( _selectedItem )  
     {  
-        m_eState = kCCMenuStateTrackingTouch;  
-        m_pSelectedItem->selected();  
+        _state = kCCMenuStateTrackingTouch;  
+        _selectedItem->selected();  
         // 上一个被选中的改为未被选中  
-        if( m_lastSelectedItem && m_lastSelectedItem != m_pSelectedItem )  
+        if( m_lastSelectedItem && m_lastSelectedItem != _selectedItem )  
         {  
             m_lastSelectedItem->unselected();  
         }  
@@ -137,27 +137,27 @@ bool CMyRadioMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)
     return false;  
 }  
   
-void CMyRadioMenu::ccTouchEnded(CCTouch* touch, CCEvent* event)  
+void CMyRadioMenu::onTouchEnded(CCTouch* touch, CCEvent* event)  
 {  
     CC_UNUSED_PARAM(touch);  
     CC_UNUSED_PARAM(event);  
-    CCAssert(m_eState == kCCMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");  
-    if( m_pSelectedItem )  
+    CCAssert(_state == kCCMenuStateTrackingTouch, "[Menu ccTouchEnded] -- invalid state");  
+    if( _selectedItem )  
     {  
         // 这里注释掉触摸松开后还是处于被选中状态  
         //m_pSelectedItem->unselected();  
-        m_pSelectedItem->activate();  
-        m_lastSelectedItem = m_pSelectedItem;  
+        _selectedItem->activate();  
+        m_lastSelectedItem = _selectedItem;  
     }  
-    m_eState = kCCMenuStateWaiting;  
+    _state = kCCMenuStateWaiting;  
 }  
 
+/*
 void CMyRadioMenu::draw()
 {
 	CCNode::draw();
 
-	/*
-	extern void _DrawBox(const CCPoint &pos, const CCSize &size, bool isCenter);
-	_DrawBox(CCPoint(0,0), getContentSize(), false);
-	//*/
+	//extern void _DrawBox(const CCPoint &pos, const CCSize &size, bool isCenter);
+	//_DrawBox(CCPoint(0,0), getContentSize(), false);
 }
+//*/

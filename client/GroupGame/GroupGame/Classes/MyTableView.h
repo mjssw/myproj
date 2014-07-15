@@ -12,7 +12,7 @@ struct TableViewData
 	std::string text;
 };
 
-class CMyTableView : public cocos2d::CCNode , public cocos2d::extension::CCTableViewDataSource, public cocos2d::extension::CCTableViewDelegate
+class CMyTableView : public cocos2d::CCNode , public cocos2d::extension::TableViewDataSource, public cocos2d::extension::TableViewDelegate
 {
 public:
 	enum
@@ -29,23 +29,23 @@ public:
 	bool InsertElement(TableViewData &data);
 	void RemoveElementAtIndex(int idx);
 
-	virtual void draw();
+	//virtual void draw();
 
 	static CMyTableView* create(cocos2d::CCSize &sz, cocos2d::CCSize &cellSz, std::vector<TableViewData> &viewData, const char *selectBgImage);
 
-	virtual void scrollViewDidScroll(cocos2d::extension::CCScrollView *view);
-    virtual void scrollViewDidZoom(cocos2d::extension::CCScrollView *view);
-    virtual void tableCellTouched(cocos2d::extension::CCTableView *table, cocos2d::extension::CCTableViewCell *cell);
-    virtual cocos2d::CCSize cellSizeForTable(cocos2d::extension::CCTableView *table);
-    virtual cocos2d::extension::CCTableViewCell* tableCellAtIndex(cocos2d::extension::CCTableView *table, unsigned int idx);
-    virtual unsigned int numberOfCellsInTableView(cocos2d::extension::CCTableView *table);
+	virtual void scrollViewDidScroll(cocos2d::extension::ScrollView *view);
+    virtual void scrollViewDidZoom(cocos2d::extension::ScrollView *view);
+    virtual void tableCellTouched(cocos2d::extension::TableView *table, cocos2d::extension::TableViewCell *cell);
+    virtual cocos2d::Size tableCellSizeForIndex(cocos2d::extension::TableView *table, ssize_t idx);
+    virtual cocos2d::extension::TableViewCell* tableCellAtIndex(cocos2d::extension::TableView *table, ssize_t idx);
+    virtual ssize_t numberOfCellsInTableView(cocos2d::extension::TableView *table);
 
 private:
-	void _AddSelectBg(cocos2d::extension::CCTableViewCell *cell);
+	void _AddSelectBg(cocos2d::extension::TableViewCell *cell);
 
 private:
-	cocos2d::extension::CCTableView *m_tableView;
-	cocos2d::extension::CCTableViewCell *m_lastTouchCell;
+	cocos2d::extension::TableView *m_tableView;
+	cocos2d::extension::TableViewCell *m_lastTouchCell;
 	unsigned int m_lastTouchIdx;
 	cocos2d::CCSize m_cellSz;
 	int m_cellCount;

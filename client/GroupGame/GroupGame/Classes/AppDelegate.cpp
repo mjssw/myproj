@@ -1,8 +1,5 @@
-#include "cocos2d.h"
-#include "CCEGLView.h"
 #include "AppDelegate.h"
 #include "LoginScene.h"
-#include "SimpleAudioEngine.h"
 #include "CommDef.h"
 #include "ResManager.h"
 #include "NetManager.h"
@@ -18,17 +15,22 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    SimpleAudioEngine::end();
+    //SimpleAudioEngine::end();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
-    CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
-	pEGLView->setDesignResolutionSize( WIN_SIZE_W, WIN_SIZE_H, kResolutionShowAll );
+    GLView *glview = pDirector->getOpenGLView();
+    if( !glview )
+	{
+        glview = GLView::create( "GroupGame");
+    }
+    pDirector->setOpenGLView( glview );
+
+	glview->setDesignResolutionSize( WIN_SIZE_W, WIN_SIZE_H, kResolutionShowAll );
 
     // turn on display FPS
     pDirector->setDisplayStats(true);
@@ -57,7 +59,7 @@ void AppDelegate::applicationDidEnterBackground()
 {
     CCDirector::sharedDirector()->stopAnimation();
 
-    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    //SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
 
 // this function will be called when the app is active again
@@ -65,5 +67,5 @@ void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::sharedDirector()->startAnimation();
 
-    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+    //SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }

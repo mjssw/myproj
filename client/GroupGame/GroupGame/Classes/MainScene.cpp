@@ -75,12 +75,12 @@ bool CMainScene::init()
     return ret;
 }
 
-void CMainScene::menuCloseCallback(CCObject *pSender)
+void CMainScene::menuCloseCallback(Object *pSender)
 {
     CCDirector::sharedDirector()->end();
 }
 
-void CMainScene::menuTestCallback(CCObject *pSender)
+void CMainScene::menuTestCallback(Object *pSender)
 {
 	// add
 	char icon[64] = {0};
@@ -121,7 +121,7 @@ void CMainScene::menuTestCallback(CCObject *pSender)
 	}
 }
 
-void CMainScene::menuRadioButtonCallback(CCObject *pSender)
+void CMainScene::menuRadioButtonCallback(Object *pSender)
 {
 }
 

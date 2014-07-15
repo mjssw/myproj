@@ -1,10 +1,9 @@
 #include "MyMenuItemImage.h"
-#include "support/CCPointExtension.h"
 
 CCMyMenuItemImage* CCMyMenuItemImage::create()
 {
     CCMyMenuItemImage *pRet = new CCMyMenuItemImage();
-    if (pRet && pRet->init())
+    if( pRet && pRet->init() )
     {
         pRet->autorelease();
         return pRet;
@@ -15,23 +14,27 @@ CCMyMenuItemImage* CCMyMenuItemImage::create()
 
 bool CCMyMenuItemImage::init(void)
 {
-    return initWithNormalImage(NULL, NULL, NULL, NULL, NULL);
+    return initWithNormalImage( NULL, NULL, NULL, NULL, NULL );
 }
 
-CCMyMenuItemImage * CCMyMenuItemImage::create(const char *normalImage, const char *selectedImage)
+CCMyMenuItemImage* CCMyMenuItemImage::create(const char *normalImage, const char *selectedImage)
 {
-    return CCMyMenuItemImage::create(normalImage, selectedImage, NULL, NULL, NULL);
+    return CCMyMenuItemImage::create( normalImage, selectedImage, NULL, NULL, NULL );
 }
 
-CCMyMenuItemImage * CCMyMenuItemImage::create(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector)
+CCMyMenuItemImage* CCMyMenuItemImage::create(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector)
 {
-    return CCMyMenuItemImage::create(normalImage, selectedImage, NULL, target, selector);
+    return CCMyMenuItemImage::create( normalImage, selectedImage, NULL, target, selector );
 }
 
-CCMyMenuItemImage * CCMyMenuItemImage::create(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector)
+CCMyMenuItemImage* CCMyMenuItemImage::create(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector)
 {
     CCMyMenuItemImage *pRet = new CCMyMenuItemImage();
-    if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, target, selector))
+	if( !disabledImage )
+	{
+		disabledImage = normalImage;
+	}
+    if( pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, target, selector) )
     {
         pRet->autorelease();
         return pRet;
@@ -40,10 +43,10 @@ CCMyMenuItemImage * CCMyMenuItemImage::create(const char *normalImage, const cha
     return NULL;
 }
 
-CCMyMenuItemImage * CCMyMenuItemImage::create(const char *normalImage, const char *selectedImage, const char *disabledImage)
+CCMyMenuItemImage* CCMyMenuItemImage::create(const char *normalImage, const char *selectedImage, const char *disabledImage)
 {
     CCMyMenuItemImage *pRet = new CCMyMenuItemImage();
-    if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, NULL, NULL))
+    if( pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, NULL, NULL) )
     {
         pRet->autorelease();
         return pRet;
@@ -52,31 +55,49 @@ CCMyMenuItemImage * CCMyMenuItemImage::create(const char *normalImage, const cha
     return NULL;
 }
 
-void CCMyMenuItemImage::setSelectedImage(CCNode* pImage)
+/*
+void CCMyMenuItemImage::setSelectedImage(CCNode *pImage)
 {
 	const unsigned int kSelectedTag = 0x2;
-	if (pImage != m_pNormalImage)
+	if( pImage != _normalImage )
     {
-        if (pImage)
+        if( pImage )
         {
-            addChild(pImage, 0, kSelectedTag);
+            addChild( pImage, 0, kSelectedTag );
 
 			// 计算selectedImage的anchorPoint比例，使之与normalImage “同心”，而不是“同左下角”
 			CCSize sz = pImage->getContentSize();
-			CCSize norSz = m_pNormalImage->getContentSize();
+			CCSize norSz = _normalImage->getContentSize();
 			float xRate = 0.5 * (sz.width - norSz.width) / sz.width;
 			float yRate = 0.5 * (sz.height - norSz.height) / sz.height;
-			pImage->setAnchorPoint(ccp(xRate, yRate));
+			pImage->setAnchorPoint( ccp(xRate, yRate) );
         }
 
-        if (m_pSelectedImage)
+        if( _selectedImage )
         {
-            removeChild(m_pSelectedImage, true);
+            removeChild( _selectedImage, true );
         }
 
-        m_pSelectedImage = pImage;
+        _selectedImage = pImage;
         this->updateImagesVisibility();
     }
+}
+//*/
+
+void CCMyMenuItemImage::selected()
+{
+	MenuItemSprite::selected();
+	
+	CCSize sz = _selectedImage->getContentSize();
+	CCSize norSz = _normalImage->getContentSize();
+	float xRate = 0.5 * (sz.width - norSz.width) / sz.width;
+	float yRate = 0.5 * (sz.height - norSz.height) / sz.height;
+	_selectedImage->setAnchorPoint( ccp(xRate, yRate) );
+}
+
+void CCMyMenuItemImage::unselected()
+{
+	MenuItemSprite::unselected();
 }
 
 

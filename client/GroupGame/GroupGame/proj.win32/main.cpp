@@ -1,6 +1,5 @@
 #include "main.h"
 #include "AppDelegate.h"
-#include "CCEGLView.h"
 #include "CommDef.h"
 
 USING_NS_CC;
@@ -25,9 +24,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
-    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
-	eglView->setFrameSize(WIN_SIZE_W, WIN_SIZE_H);
-
     int ret = CCApplication::sharedApplication()->run();
 
 #ifdef USE_WIN32_CONSOLE

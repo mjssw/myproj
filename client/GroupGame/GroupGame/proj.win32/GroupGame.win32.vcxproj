@@ -48,7 +48,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)GroupGame\Classes;$(SolutionDir)..\cocos2d-x\cocos2dx;$(SolutionDir)..\cocos2d-x\cocos2dx\include;$(SolutionDir)..\cocos2d-x\cocos2dx\kazmath\include;$(SolutionDir)..\cocos2d-x\cocos2dx\platform\win32;$(SolutionDir)..\cocos2d-x\cocos2dx\platform\third_party\win32;$(SolutionDir)..\cocos2d-x\cocos2dx\platform\third_party\win32\OGLES;$(SolutionDir)..\cocos2d-x\CocosDenshion\include;$(SolutionDir)..\..\sglib;$(SolutionDir)..\cocos2d-x\extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GroupGame\Classes;$(SolutionDir)..\..\sglib;$(SolutionDir)..\cocos2d-x;$(SolutionDir)..\cocos2d-x\cocos;$(SolutionDir)..\cocos2d-x\external;$(SolutionDir)..\cocos2d-x\extensions;$(SolutionDir)..\cocos2d-x\cocos\platform\win32;$(SolutionDir)..\cocos2d-x\cocos\platform\desktop;$(SolutionDir)..\cocos2d-x\external\glfw3\include\win32;$(SolutionDir)..\cocos2d-x\external\win32-specific\gles\include\OGLES;$(SolutionDir)..\cocos2d-x\external\win32-specific\icon\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -56,7 +56,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS_DEBUG;COCOS2D_DEBUG=1;_USE_WIN32;_ENABLE_EXIT_BTN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;COCOS2D_DEBUG=1;_USE_WIN32;_ENABLE_EXIT_BTN;_VARIADIC_MAX=10;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -64,7 +64,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcocos2d.lib;opengl32.lib;glew32.lib;libCocosDenshion.lib;libiconv.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcocos2d.lib;libchipmunk.lib;opengl32.lib;glew32.lib;libiconv.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;glfw3.lib;freetype250.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <Culture>0x0409</Culture>
@@ -156,11 +156,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\cocos2d-x\cocos2dx\proj.win32\cocos2d.vcxproj">
+    <ProjectReference Include="..\..\..\cocos2d-x\cocos\2d\cocos2d.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\cocos2d-x\CocosDenshion\proj.win32\CocosDenshion.vcxproj">
-      <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\cocos2d-x\extensions\proj.win32\libExtensions.vcxproj">
       <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>

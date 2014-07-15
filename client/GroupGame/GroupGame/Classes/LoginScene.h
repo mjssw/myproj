@@ -2,7 +2,6 @@
 #define _LOGIN_SCENE_H_
 
 #include "cocos2d.h"
-#include "SimpleAudioEngine.h"
 
 class CMyEditBox;
 class CMyLoadingItem;
@@ -12,12 +11,12 @@ public:
     virtual bool init();  
     static cocos2d::CCScene* scene();
 	void TestTimer(float t);
-    void menuTestCallback(CCObject *pSender);
-    void menuLoginCallback(CCObject *pSender);
-    void menuCloseCallback(CCObject *pSender);
-    void menuCancelCallback(CCObject *pSender);
-    void menuSavePwdCheckBoxCallback(CCObject *pSender);
-    void menuAutoLoginCheckBoxCallback(CCObject *pSender);
+    void menuTestCallback(cocos2d::Object *pSender);
+    void menuLoginCallback(cocos2d::Object *pSender);
+    void menuCloseCallback(cocos2d::Object *pSender);
+    void menuCancelCallback(cocos2d::Object *pSender);
+    void menuSavePwdCheckBoxCallback(cocos2d::Object *pSender);
+    void menuAutoLoginCheckBoxCallback(cocos2d::Object *pSender);
 
     CREATE_FUNC(CLoginScene);
 

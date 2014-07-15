@@ -2,7 +2,6 @@
 #define _MAIN_SCENE_H_
 
 #include "cocos2d.h"
-#include "SimpleAudioEngine.h"
 
 class CMyTableView;
 class CMyEditBox;
@@ -11,9 +10,9 @@ class CMainScene : public cocos2d::CCLayer
 public:
     virtual bool init();  
     static cocos2d::CCScene* scene();
-    void menuCloseCallback(CCObject *pSender);
-	void menuTestCallback(CCObject *pSender);
-	void menuRadioButtonCallback(CCObject *pSender);
+    void menuCloseCallback(cocos2d::Object *pSender);
+	void menuTestCallback(cocos2d::Object *pSender);
+	void menuRadioButtonCallback(cocos2d::Object *pSender);
 
     CREATE_FUNC(CMainScene);
 

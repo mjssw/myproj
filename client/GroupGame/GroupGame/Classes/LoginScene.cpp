@@ -143,7 +143,7 @@ void CLoginScene::menuLoginCallback(CCObject *pSender)
 
 void CLoginScene::menuCloseCallback(CCObject *pSender)
 {
-    CCDirector::sharedDirector()->end();
+    //CCDirector::sharedDirector()->end();
 }
 
 void CLoginScene::menuCancelCallback(CCObject *pSender)

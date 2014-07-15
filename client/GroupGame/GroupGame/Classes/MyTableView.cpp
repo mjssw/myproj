@@ -29,11 +29,11 @@ void _DrawBox(const CCPoint &pos, const CCSize &size, bool isCenter)
 		ccDrawPoly(vertices, 4, true);
 	}
 }
-class CTableView1 : public CCTableView
+class CTableView1 : public TableView
 {
 public:
 
-	static CTableView1* create(CCTableViewDataSource* dataSource, CCSize size, CCNode *container)
+	static CTableView1* create(TableViewDataSource* dataSource, CCSize size, CCNode *container)
 	{
 		CTableView1 *table = new CTableView1();
 		table->initWithViewSize(size, container);
@@ -45,12 +45,14 @@ public:
 		return table;
 	}
 
+	/*
 	virtual void draw()
 	{
-		CCTableView::draw();
+		TableView::draw();
 		CCSize sz = getViewSize();
 		//_DrawBox(CCPoint(0,0), sz, false);
 	}
+	//*/
 };
 
 CMyTableView::CMyTableView() : 
@@ -72,12 +74,12 @@ CMyTableView::~CMyTableView()
 {
 }
 
-void CMyTableView::SetAnchorPoint(cocos2d::CCPoint &pt)
+void CMyTableView::SetAnchorPoint(CCPoint &pt)
 {
 	setAnchorPoint( pt );
 }
 
-void CMyTableView::SetPosition(cocos2d::CCPoint &pt)
+void CMyTableView::SetPosition(CCPoint &pt)
 {
 	setPosition( pt );
 }
@@ -121,19 +123,20 @@ void CMyTableView::RemoveElementAtIndex(int idx)
 	m_tableView->reloadData();
 }
 
+/*
 void CMyTableView::draw()
 {
 	CCNode::draw();
-	/*
+	
 	// draw bounding box
- 	CCPoint pos = getPosition();
+ 	//CCPoint pos = getPosition();
 	//CCSize size = CCSizeMake(100, 100);
-	CCSize size = getContentSize();
+	//CCSize size = getContentSize();
 	//_DrawBox(CCPoint(0,0), size, false);
-	//*/
 }
+//*/
 
-CMyTableView* CMyTableView::create(CCSize &sz, CCSize &cellSz, std::vector<TableViewData> &viewData, const char *selectBgImage)
+CMyTableView* CMyTableView::create(CCSize &sz, CCSize &cellSz, vector<TableViewData> &viewData, const char *selectBgImage)
 {
 	if( viewData.size() == 0 || selectBgImage == NULL )
 	{
@@ -155,28 +158,28 @@ CMyTableView* CMyTableView::create(CCSize &sz, CCSize &cellSz, std::vector<Table
 	CCSize nodeSz = view->getContentSize();
 	//view->m_tableView = CCTableView::create( view, sz );
 	view->m_tableView = CTableView1::create( view, sz, NULL );
-	view->m_tableView->setDirection( kCCScrollViewDirectionVertical );
+	view->m_tableView->setDirection( ScrollView::Direction::VERTICAL );
 	view->m_tableView->setPosition( ccp((nodeSz.width - sz.width)/2, (nodeSz.height - sz.height)/2) );
 	view->m_tableView->setDelegate( view );
-	view->m_tableView->setVerticalFillOrder( kCCTableViewFillTopDown );
+	view->m_tableView->setVerticalFillOrder( TableView::VerticalFillOrder::TOP_DOWN );
 	view->addChild( view->m_tableView, 1 );
 	view->m_tableView->reloadData();
 
 	return view;
 }
 
-void CMyTableView::scrollViewDidScroll(CCScrollView *view)
+void CMyTableView::scrollViewDidScroll(ScrollView *view)
 {
 	m_scrollOffset = view->getContentOffset();
 	//CCLog( "CMyTableView::scrollViewDidScroll off(%d, %d)", (int)m_scrollOffset.x, (int)m_scrollOffset.y  );
 }
 
-void CMyTableView::scrollViewDidZoom(CCScrollView *view)
+void CMyTableView::scrollViewDidZoom(ScrollView *view)
 {
 	CCLog( "CMyTableView::scrollViewDidZoom" );
 }
 
-void CMyTableView::tableCellTouched(CCTableView *table, CCTableViewCell *cell)
+void CMyTableView::tableCellTouched(TableView *table, TableViewCell *cell)
 {
 	if( cell->getIdx() == m_lastTouchIdx )
 	{
@@ -196,20 +199,20 @@ void CMyTableView::tableCellTouched(CCTableView *table, CCTableViewCell *cell)
 	CCLog( "tableCellTouched %d", cell->getIdx() );
 }
 
-CCSize CMyTableView::cellSizeForTable(CCTableView *table)
+Size CMyTableView::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
 	return m_cellSz;
 }
 
-CCTableViewCell* CMyTableView::tableCellAtIndex(CCTableView *table, unsigned int idx)
+TableViewCell* CMyTableView::tableCellAtIndex(TableView *table, ssize_t idx)
 {
 	const int tagLabel = 666;
 	const int tagSprite = 777;
 	bool hasData = true;
-    CCTableViewCell *pCell = table->dequeueCell();
+    TableViewCell *pCell = table->dequeueCell();
     if( !pCell )
 	{
-        pCell = new CCTableViewCell();
+        pCell = new TableViewCell();
         pCell->autorelease();
 		hasData = false;
 	}
@@ -278,12 +281,12 @@ CCTableViewCell* CMyTableView::tableCellAtIndex(CCTableView *table, unsigned int
     return pCell;
 }
 
-unsigned int CMyTableView::numberOfCellsInTableView(CCTableView *table)
+ssize_t CMyTableView::numberOfCellsInTableView(TableView *table)
 {
 	return m_cellCount;
 }
 
-void CMyTableView::_AddSelectBg(cocos2d::extension::CCTableViewCell *cell)
+void CMyTableView::_AddSelectBg(TableViewCell *cell)
 {
 	CCAssert( cell, "_AddSelectBg param is NULL" );
 	CCSprite *selectBg = CCSprite::create( m_selectBg.c_str() );

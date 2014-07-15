@@ -1,7 +1,7 @@
 #include "utils.h"
 
 #ifdef _WINDOWS
-#include "iconv/iconv.h"
+#include "iconv.h"
 
 static int code_convert(const char *from_charset, const char *to_charset, const char *inbuf, size_t inlen, char *outbuf, size_t outlen)
 {
