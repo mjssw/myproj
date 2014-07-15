@@ -51,6 +51,7 @@ private:
 	int m_cellCount;
 	std::vector<TableViewData> m_viewData;
 	std::string m_selectBg;
+	cocos2d::CCPoint m_scrollOffset;
 };
 
 #endif

@@ -5,6 +5,7 @@
 #include "SimpleAudioEngine.h"
 
 class CMyTableView;
+class CMyEditBox;
 class CMainScene : public cocos2d::CCLayer
 {
 public:
@@ -31,6 +32,7 @@ private:
 	int m_titleHigh;
 	
 	CMyTableView *m_pGroupList;
+	CMyEditBox *m_chatHistory;
 };
 
 #endif

@@ -3,6 +3,7 @@ using namespace cocos2d;
 #include "CommDef.h"
 #include "MyTableView.h"
 #include "MyRadioButton.h"
+#include "MyEditBox.h"
 using namespace std;
 
 CCScene* CMainScene::scene()
@@ -82,7 +83,6 @@ void CMainScene::menuCloseCallback(CCObject *pSender)
 void CMainScene::menuTestCallback(CCObject *pSender)
 {
 	// add
-	/*
 	char icon[64] = {0};
 	char text[64] = {0};
 	sprintf( icon, "group1.png");
@@ -98,6 +98,7 @@ void CMainScene::menuTestCallback(CCObject *pSender)
 	//*/
 
 
+	/*
     CCMenuItemImage* pItem1 = CCMenuItemImage::create(
 		"friend_normal.png", "friend_hover.png", "friend_normal.png",  
         this, menu_selector(CMainScene::menuRadioButtonCallback));  
@@ -112,6 +113,12 @@ void CMainScene::menuTestCallback(CCObject *pSender)
 	pMenu->SetDefaultSelectItem( pItem2 );
 	pMenu->SetItemsHorizontally(0);
     this->addChild(pMenu,2);
+	//*/
+
+	if( m_chatHistory )
+	{
+		//m_chatHistory->
+	}
 }
 
 void CMainScene::menuRadioButtonCallback(CCObject *pSender)
@@ -170,7 +177,7 @@ void CMainScene::_AddTabButtons()
 	CCPoint pt = ccp( pMenu->GetMenuWidth()/2, m_ptTableView.y+m_listHigh/2 + pMenu->getContentSize().height/2 ); 
 	int y = m_ptTableView.y;
 	y += m_listHigh / 2;
-	y += (pMenu->GetMenuHeight()) / 2;
+	y += (pMenu->GetMenuHeight()) / 2 - 2;
 	pt.y = y;
     pMenu->SetPosition( pt );
 	
@@ -212,11 +219,26 @@ void CMainScene::_AddListView()
 	addChild( m_pGroupList, 1 );
 }
 
+
+static void TextChatChanged(const std::string &text)
+{
+}
+
 void CMainScene::_AddMainView()
 {
+	// TODO just test editbox
 	CCSprite *pSprite = CCSprite::create( "mainbg.png" );
     CCAssert( pSprite, "GetMainbg Failed" );
 	CCSize sz = pSprite->getContentSize();
-	pSprite->setPosition( ccp(sz.width/2 + m_mainViewOffX + 2*g_off, sz.height/2 + g_off) );
+	CCPoint pt = ccp(sz.width/2 + m_mainViewOffX + 2*g_off, sz.height/2 + g_off);
+	pSprite->setPosition( pt ); 
     addChild( pSprite, 0 );
+	
+	CCSize editSz = CCSize( sz.width-2*g_off, sz.height-2*g_off);
+	m_chatHistory = CMyEditBox::create(
+		editSz, ccp(m_mainViewOffX+2*g_off, 2*g_off),
+		"white_edit.png", "Paint Boy.ttf", 12, ccBLACK, 8 );
+	CCAssert( m_chatHistory, "GetchatEditBox Failed" );
+	m_chatHistory->SetEditChangedCallback( TextChatChanged );
+    addChild( m_chatHistory, 1 );
 }

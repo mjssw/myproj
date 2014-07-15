@@ -101,7 +101,9 @@ bool CMyTableView::InsertElement(TableViewData &data)
 	m_viewData.push_back( data );
 	++m_cellCount;
 
+	CCPoint cur = ccp(m_scrollOffset.x,  m_scrollOffset.y - m_cellSz.height); 
 	m_tableView->reloadData();
+	m_tableView->setContentOffset( cur );
 	return true;
 }
 
@@ -122,11 +124,13 @@ void CMyTableView::RemoveElementAtIndex(int idx)
 void CMyTableView::draw()
 {
 	CCNode::draw();
+	/*
 	// draw bounding box
  	CCPoint pos = getPosition();
 	//CCSize size = CCSizeMake(100, 100);
 	CCSize size = getContentSize();
 	//_DrawBox(CCPoint(0,0), size, false);
+	//*/
 }
 
 CMyTableView* CMyTableView::create(CCSize &sz, CCSize &cellSz, std::vector<TableViewData> &viewData, const char *selectBgImage)
@@ -163,6 +167,8 @@ CMyTableView* CMyTableView::create(CCSize &sz, CCSize &cellSz, std::vector<Table
 
 void CMyTableView::scrollViewDidScroll(CCScrollView *view)
 {
+	m_scrollOffset = view->getContentOffset();
+	//CCLog( "CMyTableView::scrollViewDidScroll off(%d, %d)", (int)m_scrollOffset.x, (int)m_scrollOffset.y  );
 }
 
 void CMyTableView::scrollViewDidZoom(CCScrollView *view)
