@@ -85,6 +85,9 @@
     <ClInclude Include="..\Classes\MyRadioButton.h">
       <Filter>view</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\ChatTableView.h">
+      <Filter>view</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -124,6 +127,9 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\MyRadioButton.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ChatTableView.cpp">
       <Filter>view</Filter>
     </ClCompile>
   </ItemGroup>
