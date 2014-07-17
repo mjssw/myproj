@@ -6,4 +6,7 @@
 
 #define RES_ROOT	".\\"
 
+#define CHAT_FONT_NAME	"arial"
+#define CHAT_FONT_SIZE	12
+
 #endif

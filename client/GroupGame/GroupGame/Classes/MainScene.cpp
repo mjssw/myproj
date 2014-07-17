@@ -9,6 +9,7 @@ USING_NS_CC_EXT;
 #include "MyEditBox.h"
 #include "MyMenuItemImage.h"
 #include "ChatTableView.h"
+#include "utils.h"
 using namespace std;
 
 // for test
@@ -194,23 +195,24 @@ void CMainScene::menuSendCallback(Object *pSender)
 
 	// for test
 	static bool user = true;
-	ChatTableViewData data;
 	if( user )
 	{
-		data.type = ChatTableViewData::E_DataType_User;
-		data.user = "我";
-		data.content = "2014-07-16 17:33:23";
+		ChatTableViewData data(
+			ChatTableViewData::E_DataType_User,
+			a2u("我"),
+			a2u("2014-07-16 17:33:23") );
 		g_chatData.push_back( data );
 		user = false;
 	}
 	else
 	{
-		data.type = ChatTableViewData::E_DataType_Text;
-		data.user = "我";
-		data.content = "来了来了来了来了来了来了来了来了来了来了来了来了来了来了来了来了";
+		ChatTableViewData data(
+			ChatTableViewData::E_DataType_Text,
+			a2u("我"),
+			a2u("来了1来了2来了3来了11来了22来了33来了111来了222来了333来了1111来了2222来了3333来了11111来了22222来了33333"));
 		g_chatData.push_back( data );
 	}
-	m_chatTableView->InsertUpdate( data.height() );
+	m_chatTableView->InsertUpdate();
 }
 
 void CMainScene::_AddSceneBg()
@@ -338,6 +340,7 @@ void CMainScene::_AddContentToMainView()
 	}
 }
 
+#define LongSentencesExample "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 void CMainScene::_AddChatViewToMain()
 {
 	Node *parent = getChildByTag( E_Tag_MainView );
@@ -404,35 +407,39 @@ void CMainScene::_AddChatViewToMain()
 	m_chatTableView->SetPosition( ccp(ptTitle.x, ptTitle.y+chatSz.height/2+szTitle.height/2) );
 	parent->addChild( m_chatTableView );
 	// test add data
-	ChatTableViewData data;
 	{
-		data.type = ChatTableViewData::E_DataType_User;
-		data.user = "小流";
-		data.content = "2014-07-16 17:32:23";
+		ChatTableViewData data(
+			ChatTableViewData::E_DataType_User,
+			a2u("小流"),
+			a2u("2014-07-16 17:32:23"));
 		g_chatData.push_back( data );
 	}
 	{
-		data.type = ChatTableViewData::E_DataType_Text;
-		data.user = "小流";
-		data.content = "斗地主房间101，速度";
+		ChatTableViewData data(
+			ChatTableViewData::E_DataType_Text,
+			a2u("小流"),
+			a2u("斗地主房间101，速度"));
 		g_chatData.push_back( data );
 	}
 	{
-		data.type = ChatTableViewData::E_DataType_User;
-		data.user = "大瞎";
-		data.content = "2014-07-16 17:32:56";
+		ChatTableViewData data(
+			ChatTableViewData::E_DataType_User,
+			a2u("大瞎"),
+			a2u("2014-07-16 17:32:56"));
 		g_chatData.push_back( data );
 	}
 	{
-		data.type = ChatTableViewData::E_DataType_Text;
-		data.user = "大瞎";
-		data.content = "三缺1，快";
+		ChatTableViewData data(
+			ChatTableViewData::E_DataType_Text,
+			a2u("大瞎"),
+			a2u("三缺1，快"));
 		g_chatData.push_back( data );
 	}
 	{
-		data.type = ChatTableViewData::E_DataType_Text;
-		data.user = "大瞎";
-		data.content = "五马，快来";
+		ChatTableViewData data(
+			ChatTableViewData::E_DataType_Text,
+			a2u("大瞎"),
+			a2u("五马，快来"));
 		g_chatData.push_back( data );
 	}
 	m_chatTableView->InitData( g_chatData );

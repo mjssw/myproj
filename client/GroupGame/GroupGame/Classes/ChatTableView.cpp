@@ -1,8 +1,11 @@
 #include "ChatTableView.h"
 #include "utils.h"
+#include "CommDef.h"
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace std;
+
+#define CHAT_CONTENT_CELL_OFF 20
 
 CChatTableView::CChatTableView() : 
 	m_tableView(NULL),
@@ -50,16 +53,26 @@ CCSize CChatTableView::GetSize()
 	return CCSize(0, 0);
 }
 
-bool CChatTableView::InsertUpdate(int elemH)
+bool CChatTableView::InsertUpdate()
 {
 	if( !m_tableView )
 	{
 		return false;
 	}
 
-	CCPoint cur = ccp(m_scrollOffset.x,  m_scrollOffset.y - elemH); 
+	// 调整最后一行的文字, 正常情况下最新加入的必然是聊天的内容
+	int idx = m_viewData->size() - 1;
+	if( idx < 0 )
+	{
+		return false;
+	}
+	_AdjustChatContent( m_viewData->at(idx) );
+
 	m_tableView->reloadData();
-	m_tableView->setContentOffset( cur );
+	if( m_scrollOffset.y < 0 )
+	{
+		m_tableView->setContentOffset( ccp(0, 0) );
+	}
 	return true;
 }
 
@@ -95,6 +108,14 @@ CChatTableView* CChatTableView::create(CCSize &sz)
 	view->addChild( view->m_tableView, 1 );
 	view->m_tableView->reloadData();
 
+	int off = 10; // 右侧留边
+	view->m_chineseSize = chineseSizeWithFont( CHAT_FONT_NAME, CHAT_FONT_SIZE );
+	view->m_asciiSize = asciiSizeWithFont( CHAT_FONT_NAME, CHAT_FONT_SIZE );
+	view->m_userCellWidth = sz.width - off;
+	view->m_chatCellWidth = sz.width - CHAT_CONTENT_CELL_OFF - off;
+	view->m_lineHeight= view->m_chineseSize.height > view->m_asciiSize.height ?  
+		view->m_chineseSize.height : view->m_asciiSize.height; 
+
 	return view;
 }
 
@@ -121,7 +142,11 @@ Size CChatTableView::tableCellSizeForIndex(TableView *table, ssize_t idx)
 		CCLog( "[CChatTableView::tableCellSizeForIndex] Error" );
 		return Size(0,0);
 	}
-	return Size( m_viewData->at(idx).width(), m_viewData->at(idx).height() );
+
+	ChatTableViewData &data = m_viewData->at( idx );
+	int w = (data.type==ChatTableViewData::E_DataType_User) ?
+		m_userCellWidth : m_chatCellWidth;
+	return Size( w, data.line * m_lineHeight );
 }
 
 TableViewCell* CChatTableView::tableCellAtIndex(TableView *table, ssize_t idx)
@@ -144,23 +169,34 @@ TableViewCell* CChatTableView::tableCellAtIndex(TableView *table, ssize_t idx)
 		return NULL;
 	}
 
-	int off = 5;
-	int x = off;
-
 	ChatTableViewData &data = m_viewData->at(idx);
-	string text = (data.type == ChatTableViewData::E_DataType_User) ?
-		(data.user + "  " + data.content) : ( "      " + data.content );
-	CCLabelTTF *pLabel = CCLabelTTF::create( a2u(text.c_str()), "Arial", 12.0 );
+	string text;
+	int off = 0;
+	Color3B color;
+	if( data.type == ChatTableViewData::E_DataType_User)
+	{
+		off = 0;
+		color = Color3B::BLUE;
+		text = (data.user + "  " + data.content);
+	}
+	else
+	{
+		off = CHAT_CONTENT_CELL_OFF;
+		color = Color3B::BLACK;
+		text = data.content;
+	}
+	Label *pLabel = Label::createWithSystemFont( text.c_str(), CHAT_FONT_NAME, CHAT_FONT_SIZE );
 	if( !pLabel )
 	{
 		return NULL;
 	}
 	Size labelSz = pLabel->getContentSize();
 
+	int h = data.line * m_lineHeight;
 	pLabel->setAnchorPoint( ccp(0.5, 0.5) );
-	pLabel->setPosition( ccp(labelSz.width/2 + 10, labelSz.height/2) );
+	pLabel->setPosition( ccp(labelSz.width/2 + 10 + off, h/2) );
 	pLabel->setTag( tagLabel );
-	pLabel->setColor( ccBLACK );
+	pLabel->setColor( color );
 	pCell->addChild( pLabel );
 
     return pCell;
@@ -169,4 +205,53 @@ TableViewCell* CChatTableView::tableCellAtIndex(TableView *table, ssize_t idx)
 ssize_t CChatTableView::numberOfCellsInTableView(TableView *table)
 {
 	return m_viewData ? m_viewData->size() : 0;
+}
+
+void CChatTableView::_AdjustChatContent(ChatTableViewData &data)
+{
+	if( data.type == ChatTableViewData::E_DataType_User )
+	{
+		// 发言者的当前行不需要调整(必然不超过1行)
+		return;
+	}
+
+	int maxW = m_chatCellWidth;
+	int curW = 0;
+	int line = 1;
+	string _u8str = data.content;
+	int len = _u8str.length();
+	string ret;
+    int i = 0;
+    while( i < len )
+	{
+		if( ~(_u8str.at(i) >> 8) == 0 )
+		{
+			if( curW + m_chineseSize.width > maxW )
+			{
+				ret.append( "\n" );
+				curW = 0;
+				++line;
+			}
+
+			ret.append( _u8str.substr(i, 3) );
+			i = i + 3;
+			curW += m_chineseSize.width; 
+		}
+		else
+		{
+			if( curW + m_asciiSize.width > maxW )
+			{
+				ret.append( "\n" );
+				curW = 0;
+				++line;
+			}
+
+			ret.append( _u8str.substr(i, 1) );
+			i = i + 1;
+			curW += m_asciiSize.width; 
+		}
+	}
+
+	data.content = ret;
+	data.line = line;
 }

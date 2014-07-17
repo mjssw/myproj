@@ -1,4 +1,5 @@
 #include "utils.h"
+using namespace cocos2d;
 
 #ifdef _WINDOWS
 #include "iconv.h"
@@ -64,3 +65,39 @@ std::string a2u(const char *inbuf)
 }
 
 #endif
+
+Size chineseSizeWithFont(const char *font, int size)
+{
+	if( !font || size<=0 )
+	{
+		return Size(0, 0);
+	}
+
+	Label *labelText = Label::createWithSystemFont( a2u("жа"), font, size );
+	if( !labelText )
+	{
+		return Size(0, 0);
+	}
+	Size sz = labelText->getContentSize();
+	// TODO
+
+	return sz;
+}
+
+Size asciiSizeWithFont(const char *font, int size)
+{
+	if( !font || size<=0 )
+	{
+		return Size(0, 0);
+	}
+
+	Label *labelText = Label::createWithSystemFont( "a", font, size );
+	if( !labelText )
+	{
+		return Size(0, 0);
+	}
+	Size sz = labelText->getContentSize();
+	// TODO
+
+	return sz;
+}
