@@ -88,6 +88,12 @@
     <ClInclude Include="..\Classes\ChatTableView.h">
       <Filter>view</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\PopLayerBase.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MemberListPopLayer.h">
+      <Filter>view</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -130,6 +136,12 @@
       <Filter>view</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ChatTableView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PopLayerBase.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MemberListPopLayer.cpp">
       <Filter>view</Filter>
     </ClCompile>
   </ItemGroup>

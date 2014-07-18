@@ -10,6 +10,7 @@ USING_NS_CC_EXT;
 #include "MyMenuItemImage.h"
 #include "ChatTableView.h"
 #include "utils.h"
+#include "MemberListPopLayer.h"
 using namespace std;
 
 // for test
@@ -92,6 +93,7 @@ void CMainScene::menuCloseCallback(Object *pSender)
     CCDirector::sharedDirector()->end();
 }
 
+
 void CMainScene::menuTestCallback(Object *pSender)
 {
 	/*
@@ -139,7 +141,13 @@ void CMainScene::menuTestCallback(Object *pSender)
 	parent->addChild( sp );
 	//*/
 
-	
+	// test pop layer
+	CMemberListPopLayer *pop = CMemberListPopLayer::create( "memberlistbg.png" ); 
+	if( pop )
+	{
+		pop->setPosition(ccp(0,0));
+		addChild( pop, 99999 );
+	}
 }
 
 void CMainScene::menuRadioButtonGroupCallback(Object *pSender)
@@ -477,7 +485,7 @@ void CMainScene::_AddGroupsToListView()
 	{
 		char icon[64] = {0};
 		char text[64] = {0};
-		sprintf( icon, "test\\g1 (%d).png", i+1 );
+		sprintf( icon, "group5.png", i+1 );
 		sprintf( text, "abc”Œœ∑»∫ %d", i+1 );
 		TableViewData data;
 		data.icon = icon;
