@@ -14,8 +14,8 @@ void CMemberListPopLayer::onEnter()
 		return;
 	}
 	CCMyMenuItemImage *closeItem = CCMyMenuItemImage::create(
-		"btncancel_normal.png",
-		"btncancel_hover.png",
+		"close_normal.png",
+		"close_hover.png",
 		this,
 		menu_selector(CMemberListPopLayer::menuCloseCallback) );
 	if( !closeItem )
@@ -26,7 +26,7 @@ void CMemberListPopLayer::onEnter()
 	Size szItem = closeItem->getContentSize();
 	Size szParent = parent->getContentSize();
 	closeItem->setAnchorPoint( ccp(0.5, 0.5) );
-	closeItem->setPosition( ccp( szParent.width/2, szItem.height/2 ) );
+	closeItem->setPosition( ccp( szParent.width-szItem.width, szParent.height-szItem.height ) );
 
 	CCMenu *menu = CCMenu::create( closeItem, NULL );
 	if( !menu )
