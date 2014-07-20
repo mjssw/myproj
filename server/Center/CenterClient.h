@@ -2,7 +2,7 @@
 #define _CENTER_CLIENT_H_
 
 #include "Client.h"
-#include "Message.h"
+#include "message.h"
 #include <map>
 
 class CCenterClient;

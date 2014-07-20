@@ -6,8 +6,8 @@
 #include <log4cxx/helpers/pool.h> 
 #include <log4cxx/helpers/transcoder.h>
 #include <log4cxx/basicconfigurator.h> 
-#include <log4cxx/PatternLayout.h> 
-#include <log4cxx/DailyRollingFileAppender.h>
+#include <log4cxx/patternlayout.h> 
+#include <log4cxx/dailyrollingfileappender.h>
 #include <log4cxx/consoleappender.h>
 #include <log4cxx/filter/levelrangefilter.h>
 #include <log4cxx/xml/domconfigurator.h>

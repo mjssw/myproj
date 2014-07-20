@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 DEPS_PATH="/usr/local/serverdeps"
 if [ ! -d "$DEPS_PATH" ]; then
