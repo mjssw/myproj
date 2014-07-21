@@ -1,0 +1,6 @@
+lrwxrwxrwx 1 root root      20 2014-04-21 10:43 libmysqlclient -> libmysqlclient.so.16
+lrwxrwxrwx 1 root root      26 2014-04-17 22:29 libmysqlclient_r.so.16 -> libmysqlclient_r.so.16.0.0
+-rw-r--r-- 1 root root 2164720 2014-01-17 21:34 libmysqlclient_r.so.16.0.0
+lrwxrwxrwx 1 root root      20 2014-04-21 10:44 libmysqlclient.so -> libmysqlclient.so.16
+lrwxrwxrwx 1 root root      24 2014-04-17 22:29 libmysqlclient.so.16 -> libmysqlclient.so.16.0.0
+-rw-r--r-- 1 root root 2156528 2014-01-17 21:34 libmysqlclient.so.16.0.0
