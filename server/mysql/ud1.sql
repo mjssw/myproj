@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50537
 File Encoding         : 65001
 
-Date: 2014-06-18 17:26:10
+Date: 2014-07-21 16:00:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,6 +24,11 @@ CREATE TABLE `user` (
   `User` varchar(64) NOT NULL,
   `Password` varchar(255) NOT NULL,
   `Name` varchar(64) NOT NULL DEFAULT '',
+  `Head` varchar(255) DEFAULT '',
+  `Exp` bigint(128) unsigned zerofill DEFAULT NULL,
+  `Level` bigint(128) unsigned zerofill DEFAULT NULL,
+  `Gold` bigint(128) unsigned zerofill DEFAULT NULL,
+  `Diamond` bigint(128) unsigned zerofill DEFAULT NULL,
   `Detail` blob,
   `Group` blob,
   `LastLoginTime` int(32) unsigned zerofill DEFAULT NULL,
