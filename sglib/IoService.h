@@ -11,7 +11,7 @@
 #include "Log.h"
 #include "StackTrace.h"
 #include "SetupSocket.h"
-#include "list.h"
+#include "List.h"
 #include "IoSocketManager.h"
 #include "EventDispatch.h"
 

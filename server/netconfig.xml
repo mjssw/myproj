@@ -2,22 +2,22 @@
 <config>
     <gate_cfg WorkThreadQuitTimeOut="8000"
 			IoTimeOut="1000"
-			MaxClientCount="20"
-			EventQueueSize="1024"
+			MaxClientCount="2000"
+			EventQueueSize="8192"
 			WaitEventTimeOut="1000"
 			MaxPackageLen="4096"
-			EventWorkerCount="2" 
+			EventWorkerCount="16" 
 			ConnectingQueueSize="16" 
 			SendBufferSize="65536" 
 			RecvBufferSize="65536"/>
 	<rpc_cfg WorkThreadQuitTimeOut="8000"
 			IoTimeOut="1000"
 			MaxClientCount="10"
-			EventQueueSize="1024"
+			EventQueueSize="8192"
 			WaitEventTimeOut="1000"
 			MaxPackageLen="4096"
 			EventWorkerCount="1" 
 			ConnectingQueueSize="16" 
-			SendBufferSize="65536" 
-			RecvBufferSize="65536" />
+			SendBufferSize="1048576" 
+			RecvBufferSize="1048576" />
 </config>

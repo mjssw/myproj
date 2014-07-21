@@ -3,7 +3,7 @@
 
 #include "Define.h"
 #include "Lock.h"
-#include "IoSocketBase.h"
+#include "iosocketbase.h"
 #include "Config.h"
 
 namespace SGLib
