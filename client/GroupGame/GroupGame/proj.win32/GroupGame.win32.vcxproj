@@ -48,7 +48,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)GroupGame\Classes;$(SolutionDir)..\..\sglib;$(SolutionDir)..\cocos2d-x;$(SolutionDir)..\cocos2d-x\cocos;$(SolutionDir)..\cocos2d-x\external;$(SolutionDir)..\cocos2d-x\extensions;$(SolutionDir)..\cocos2d-x\cocos\platform\win32;$(SolutionDir)..\cocos2d-x\cocos\platform\desktop;$(SolutionDir)..\cocos2d-x\external\glfw3\include\win32;$(SolutionDir)..\cocos2d-x\external\win32-specific\gles\include\OGLES;$(SolutionDir)..\cocos2d-x\external\win32-specific\icon\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GroupGame\Classes;$(SolutionDir)..\..\sglib;$(SolutionDir)..\cocos2d-x;$(SolutionDir)..\cocos2d-x\cocos;$(SolutionDir)..\cocos2d-x\external;$(SolutionDir)..\cocos2d-x\extensions;$(SolutionDir)..\cocos2d-x\cocos\platform\win32;$(SolutionDir)..\cocos2d-x\cocos\platform\desktop;$(SolutionDir)..\cocos2d-x\external\glfw3\include\win32;$(SolutionDir)..\cocos2d-x\external\win32-specific\gles\include\OGLES;$(SolutionDir)..\cocos2d-x\external\win32-specific\icon\include;$(SolutionDir)..\..\third_part\protobuf\include;$(SolutionDir)..\..\protomsg\msg;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -63,8 +63,8 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcocos2d.lib;libchipmunk.lib;opengl32.lib;glew32.lib;libiconv.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;glfw3.lib;freetype250.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)..\..\third_part\protobuf\lib\x86\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcocos2d.lib;libchipmunk.lib;opengl32.lib;glew32.lib;libiconv.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;glfw3.lib;freetype250.lib;libprotobuf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <Culture>0x0409</Culture>
@@ -124,41 +124,87 @@
     <ResourceCompile Include="GroupGame.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\protomsg\msg\center.pb.h" />
+    <ClInclude Include="..\..\..\..\protomsg\msg\client.pb.h" />
+    <ClInclude Include="..\..\..\..\protomsg\msg\common.pb.h" />
+    <ClInclude Include="..\..\..\..\protomsg\msg\errno.pb.h" />
+    <ClInclude Include="..\..\..\..\protomsg\msg\gamemanager.pb.h" />
+    <ClInclude Include="..\..\..\..\protomsg\msg\gate.pb.h" />
+    <ClInclude Include="..\..\..\..\protomsg\msg\group.pb.h" />
+    <ClInclude Include="..\..\..\..\protomsg\msg\login.pb.h" />
+    <ClInclude Include="..\..\..\..\protomsg\msg\msgid.pb.h" />
+    <ClInclude Include="..\..\..\..\protomsg\msg\public.pb.h" />
+    <ClInclude Include="..\..\..\..\protomsg\msg\tetris.pb.h" />
+    <ClInclude Include="..\..\..\..\sglib\ClientLib.h" />
+    <ClInclude Include="..\..\..\..\sglib\Define.h" />
+    <ClInclude Include="..\..\..\..\sglib\Event.h" />
+    <ClInclude Include="..\..\..\..\sglib\Lock.h" />
+    <ClInclude Include="..\..\..\..\sglib\Log.h" />
+    <ClInclude Include="..\..\..\..\sglib\StackTrace.h" />
+    <ClInclude Include="..\..\..\..\sglib\Thread.h" />
+    <ClInclude Include="..\..\..\..\sglib\Timer.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
-    <ClInclude Include="..\Classes\ChatTableView.h" />
+    <ClInclude Include="..\Classes\gamemsg\MsgBase.h" />
     <ClInclude Include="..\Classes\CommDef.h" />
-    <ClInclude Include="..\Classes\LoginScene.h" />
-    <ClInclude Include="..\Classes\MainScene.h" />
-    <ClInclude Include="..\Classes\MemberListPopLayer.h" />
-    <ClInclude Include="..\Classes\MyEditBox.h" />
-    <ClInclude Include="..\Classes\MyLoadingItem.h" />
-    <ClInclude Include="..\Classes\MyMenuItemImage.h" />
-    <ClInclude Include="..\Classes\MyRadioButton.h" />
-    <ClInclude Include="..\Classes\MyTableView.h" />
-    <ClInclude Include="..\Classes\NetManager.h" />
-    <ClInclude Include="..\Classes\PopLayerBase.h" />
-    <ClInclude Include="..\Classes\ResManager.h" />
-    <ClInclude Include="..\Classes\UserManager.h" />
+    <ClInclude Include="..\Classes\net\GameClient.h" />
+    <ClInclude Include="..\Classes\net\GroupClient.h" />
+    <ClInclude Include="..\Classes\net\LoginClient.h" />
+    <ClInclude Include="..\Classes\net\NetManager.h" />
+    <ClInclude Include="..\Classes\res\ResManager.h" />
+    <ClInclude Include="..\Classes\scene\LoginScene.h" />
+    <ClInclude Include="..\Classes\scene\MainScene.h" />
+    <ClInclude Include="..\Classes\user\Basic.h" />
+    <ClInclude Include="..\Classes\user\UserManager.h" />
+    <ClInclude Include="..\Classes\user\ViewData.h" />
     <ClInclude Include="..\Classes\utils.h" />
+    <ClInclude Include="..\Classes\view\ChatTableView.h" />
+    <ClInclude Include="..\Classes\view\MemberListPopLayer.h" />
+    <ClInclude Include="..\Classes\view\MyEditBox.h" />
+    <ClInclude Include="..\Classes\view\MyLoadingItem.h" />
+    <ClInclude Include="..\Classes\view\MyMenuItemImage.h" />
+    <ClInclude Include="..\Classes\view\MyRadioButton.h" />
+    <ClInclude Include="..\Classes\view\MyTableView.h" />
+    <ClInclude Include="..\Classes\view\PopLayerBase.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\protomsg\msg\center.pb.cc" />
+    <ClCompile Include="..\..\..\..\protomsg\msg\client.pb.cc" />
+    <ClCompile Include="..\..\..\..\protomsg\msg\common.pb.cc" />
+    <ClCompile Include="..\..\..\..\protomsg\msg\errno.pb.cc" />
+    <ClCompile Include="..\..\..\..\protomsg\msg\gamemanager.pb.cc" />
+    <ClCompile Include="..\..\..\..\protomsg\msg\gate.pb.cc" />
+    <ClCompile Include="..\..\..\..\protomsg\msg\group.pb.cc" />
+    <ClCompile Include="..\..\..\..\protomsg\msg\login.pb.cc" />
+    <ClCompile Include="..\..\..\..\protomsg\msg\msgid.pb.cc" />
+    <ClCompile Include="..\..\..\..\protomsg\msg\public.pb.cc" />
+    <ClCompile Include="..\..\..\..\protomsg\msg\tetris.pb.cc" />
+    <ClCompile Include="..\..\..\..\sglib\Event.cpp" />
+    <ClCompile Include="..\..\..\..\sglib\Lock.cpp" />
+    <ClCompile Include="..\..\..\..\sglib\Log.cpp" />
+    <ClCompile Include="..\..\..\..\sglib\StackTrace.cpp" />
+    <ClCompile Include="..\..\..\..\sglib\Thread.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\ChatTableView.cpp" />
-    <ClCompile Include="..\Classes\LoginScene.cpp" />
-    <ClCompile Include="..\Classes\MainScene.cpp" />
-    <ClCompile Include="..\Classes\MemberListPopLayer.cpp" />
-    <ClCompile Include="..\Classes\MyEditBox.cpp" />
-    <ClCompile Include="..\Classes\MyLoadingItem.cpp" />
-    <ClCompile Include="..\Classes\MyMenuItemImage.cpp" />
-    <ClCompile Include="..\Classes\MyRadioButton.cpp" />
-    <ClCompile Include="..\Classes\MyTableView.cpp" />
-    <ClCompile Include="..\Classes\NetManager.cpp" />
-    <ClCompile Include="..\Classes\PopLayerBase.cpp" />
-    <ClCompile Include="..\Classes\ResManager.cpp" />
-    <ClCompile Include="..\Classes\UserManager.cpp" />
+    <ClCompile Include="..\Classes\net\GameClient.cpp" />
+    <ClCompile Include="..\Classes\net\GroupClient.cpp" />
+    <ClCompile Include="..\Classes\net\LoginClient.cpp" />
+    <ClCompile Include="..\Classes\net\NetManager.cpp" />
+    <ClCompile Include="..\Classes\res\ResManager.cpp" />
+    <ClCompile Include="..\Classes\scene\LoginScene.cpp" />
+    <ClCompile Include="..\Classes\scene\MainScene.cpp" />
+    <ClCompile Include="..\Classes\user\Basic.cpp" />
+    <ClCompile Include="..\Classes\user\UserManager.cpp" />
+    <ClCompile Include="..\Classes\user\ViewData.cpp" />
     <ClCompile Include="..\Classes\utils.cpp" />
+    <ClCompile Include="..\Classes\view\ChatTableView.cpp" />
+    <ClCompile Include="..\Classes\view\MemberListPopLayer.cpp" />
+    <ClCompile Include="..\Classes\view\MyEditBox.cpp" />
+    <ClCompile Include="..\Classes\view\MyLoadingItem.cpp" />
+    <ClCompile Include="..\Classes\view\MyMenuItemImage.cpp" />
+    <ClCompile Include="..\Classes\view\MyRadioButton.cpp" />
+    <ClCompile Include="..\Classes\view\MyTableView.cpp" />
+    <ClCompile Include="..\Classes\view\PopLayerBase.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

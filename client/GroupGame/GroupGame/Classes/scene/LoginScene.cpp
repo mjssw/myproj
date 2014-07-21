@@ -1,29 +1,29 @@
-#include "LoginScene.h"
-#include "ResManager.h"
+#include "scene/LoginScene.h"
+#include "res/ResManager.h"
 #include "CommDef.h"
 #include "cocos-ext.h"
 using namespace cocos2d;
 using namespace cocos2d::extension;
-#include "MyMenuItemImage.h"
-#include "MyEditBox.h"
-#include "UserManager.h"
-#include "MyLoadingItem.h"
-#include "MainScene.h"
+#include "view/MyMenuItemImage.h"
+#include "view/MyEditBox.h"
+#include "user/UserManager.h"
+#include "view/MyLoadingItem.h"
+#include "scene/MainScene.h"
 
 static void TextUserChanged(const std::string &text)
 {
 	CCLog( "Text User changed, old:%s new:%s", 
-		CUserManager::Instance().GetUser().c_str(), 
+		CUserManager::Instance().GetBasic().GetUser().c_str(), 
 		text.c_str() );
-	CUserManager::Instance().SetUser( text );
+	CUserManager::Instance().GetBasic().SetUser( text );
 }
 
 static void TextPwdChanged(const std::string &text)
 {
 	CCLog( "Text Password changed, old:%s new:%s", 
-		CUserManager::Instance().GetPwd().c_str(), 
+		CUserManager::Instance().GetBasic().GetPwd().c_str(), 
 		text.c_str() );
-	CUserManager::Instance().SetPwd( text );
+	CUserManager::Instance().GetBasic().SetPwd( text );
 }
 
 CCScene* CLoginScene::scene()
@@ -59,8 +59,8 @@ bool CLoginScene::init()
 
 		_AddSceneBg();
 		_AddLoginView( 
-			CUserManager::Instance().GetSavePwd(),
-			CUserManager::Instance().GetAutoLogin() );
+			CUserManager::Instance().GetViewData().GetSavePwd(),
+			CUserManager::Instance().GetViewData().GetAutoLogin() );
 		m_loadView.m_loadItem = NULL;
         
 #ifdef _DEBUG
@@ -150,22 +150,22 @@ void CLoginScene::menuCancelCallback(CCObject *pSender)
 {
 	_RemoveLoadingView();
 	_AddLoginView( 
-		CUserManager::Instance().GetSavePwd(),
-		CUserManager::Instance().GetAutoLogin() );
+		CUserManager::Instance().GetViewData().GetSavePwd(),
+		CUserManager::Instance().GetViewData().GetAutoLogin() );
 }
 
 void CLoginScene::menuSavePwdCheckBoxCallback(CCObject *pSender)
 {
-	bool curState = CUserManager::Instance().GetSavePwd();
+	bool curState = CUserManager::Instance().GetViewData().GetSavePwd();
 	CCLog( "click save pwd checkbox, pre state:%d, new state:%d", curState?1:0, !curState?1:0 );
-	CUserManager::Instance().SetSavePwd( !curState );
+	CUserManager::Instance().GetViewData().SetSavePwd( !curState );
 }
 
 void CLoginScene::menuAutoLoginCheckBoxCallback(CCObject *pSender)
 {
-	bool curState = CUserManager::Instance().GetAutoLogin();
+	bool curState = CUserManager::Instance().GetViewData().GetAutoLogin();
 	CCLog( "click auto login checkbox, cur state:%d, new state:%d", curState?1:0, !curState?1:0 );
-	CUserManager::Instance().SetAutoLogin( !curState );
+	CUserManager::Instance().GetViewData().SetAutoLogin( !curState );
 }
 
 void CLoginScene::_AddSceneBg()

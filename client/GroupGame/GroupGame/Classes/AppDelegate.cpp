@@ -1,9 +1,9 @@
 #include "AppDelegate.h"
-#include "LoginScene.h"
+#include "scene/LoginScene.h"
 #include "CommDef.h"
-#include "ResManager.h"
-#include "NetManager.h"
-#include "UserManager.h"
+#include "res/ResManager.h"
+#include "net/NetManager.h"
+#include "user/UserManager.h"
 
 using namespace CocosDenshion;
 
@@ -38,7 +38,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
-	CUserManager::Instance().LoadFromConfig();
+	CUserManager::Instance().GetViewData().LoadFromConfig();
 	// 各组件初始化
 	if( !CResManager::Instance().Init( RES_ROOT ) ||
 		!CNetManager::Instance().Init() )

@@ -4,13 +4,13 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 
 #include "CommDef.h"
-#include "MyTableView.h"
-#include "MyRadioButton.h"
-#include "MyEditBox.h"
-#include "MyMenuItemImage.h"
-#include "ChatTableView.h"
+#include "view/MyTableView.h"
+#include "view/MyRadioButton.h"
+#include "view/MyEditBox.h"
+#include "view/MyMenuItemImage.h"
+#include "view/ChatTableView.h"
 #include "utils.h"
-#include "MemberListPopLayer.h"
+#include "view/MemberListPopLayer.h"
 using namespace std;
 
 // for test

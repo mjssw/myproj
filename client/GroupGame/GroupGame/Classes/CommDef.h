@@ -9,4 +9,9 @@
 #define CHAT_FONT_NAME	"arial"
 #define CHAT_FONT_SIZE	12
 
+typedef int				MsgHeadType;
+#define MSG_ID_LEN		sizeof(MsgHeadType)
+#define MSG_HEAD_LEN	MSG_ID_LEN
+#define MAX_MSG_LEN		4096
+
 #endif

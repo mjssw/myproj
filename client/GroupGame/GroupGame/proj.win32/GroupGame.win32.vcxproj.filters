@@ -28,6 +28,15 @@
     <Filter Include="view">
       <UniqueIdentifier>{5081631b-15c1-46f0-a50e-a40bd69036e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="netlib">
+      <UniqueIdentifier>{426455e7-833e-45a8-a51a-d7486d9aba90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="protomsg">
+      <UniqueIdentifier>{094a1411-8713-41da-99ac-0f3d6191f358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gamemsg">
+      <UniqueIdentifier>{24c4839f-2258-403f-85b3-41c272a5e5f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\GroupGame.ico">
@@ -52,46 +61,121 @@
     <ClInclude Include="..\Classes\CommDef.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\LoginScene.h">
-      <Filter>scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\MainScene.h">
-      <Filter>scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ResManager.h">
-      <Filter>res</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\NetManager.h">
-      <Filter>net</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\MyMenuItemImage.h">
-      <Filter>view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\MyEditBox.h">
-      <Filter>view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\UserManager.h">
-      <Filter>user</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\MyLoadingItem.h">
-      <Filter>view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\MyTableView.h">
-      <Filter>view</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\utils.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\MyRadioButton.h">
+    <ClInclude Include="..\..\..\..\protomsg\msg\center.pb.h">
+      <Filter>protomsg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\client.pb.h">
+      <Filter>protomsg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\common.pb.h">
+      <Filter>protomsg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\errno.pb.h">
+      <Filter>protomsg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\gamemanager.pb.h">
+      <Filter>protomsg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\gate.pb.h">
+      <Filter>protomsg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\group.pb.h">
+      <Filter>protomsg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\login.pb.h">
+      <Filter>protomsg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\msgid.pb.h">
+      <Filter>protomsg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\public.pb.h">
+      <Filter>protomsg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\protomsg\msg\tetris.pb.h">
+      <Filter>protomsg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\sglib\ClientLib.h">
+      <Filter>netlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\sglib\Define.h">
+      <Filter>netlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\sglib\Event.h">
+      <Filter>netlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\sglib\Lock.h">
+      <Filter>netlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\sglib\Thread.h">
+      <Filter>netlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\sglib\Timer.h">
+      <Filter>netlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\sglib\StackTrace.h">
+      <Filter>netlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\sglib\Log.h">
+      <Filter>netlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\gamemsg\MsgBase.h">
+      <Filter>gamemsg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\net\GameClient.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\net\GroupClient.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\net\LoginClient.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\net\NetManager.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\res\ResManager.h">
+      <Filter>res</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\scene\LoginScene.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\scene\MainScene.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\user\Basic.h">
+      <Filter>user</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\user\UserManager.h">
+      <Filter>user</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\user\ViewData.h">
+      <Filter>user</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\view\ChatTableView.h">
       <Filter>view</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ChatTableView.h">
+    <ClInclude Include="..\Classes\view\MemberListPopLayer.h">
       <Filter>view</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\PopLayerBase.h">
+    <ClInclude Include="..\Classes\view\MyEditBox.h">
       <Filter>view</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\MemberListPopLayer.h">
+    <ClInclude Include="..\Classes\view\MyLoadingItem.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\view\MyMenuItemImage.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\view\MyRadioButton.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\view\MyTableView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\view\PopLayerBase.h">
       <Filter>view</Filter>
     </ClInclude>
   </ItemGroup>
@@ -102,46 +186,109 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\LoginScene.cpp">
-      <Filter>scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\MainScene.cpp">
-      <Filter>scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ResManager.cpp">
-      <Filter>res</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\NetManager.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\MyMenuItemImage.cpp">
-      <Filter>view</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\MyEditBox.cpp">
-      <Filter>view</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\UserManager.cpp">
-      <Filter>user</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\MyLoadingItem.cpp">
-      <Filter>view</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\MyTableView.cpp">
-      <Filter>view</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\utils.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\MyRadioButton.cpp">
+    <ClCompile Include="..\..\..\..\protomsg\msg\center.pb.cc">
+      <Filter>protomsg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\client.pb.cc">
+      <Filter>protomsg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\common.pb.cc">
+      <Filter>protomsg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\errno.pb.cc">
+      <Filter>protomsg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\gamemanager.pb.cc">
+      <Filter>protomsg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\gate.pb.cc">
+      <Filter>protomsg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\group.pb.cc">
+      <Filter>protomsg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\login.pb.cc">
+      <Filter>protomsg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\msgid.pb.cc">
+      <Filter>protomsg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\public.pb.cc">
+      <Filter>protomsg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\protomsg\msg\tetris.pb.cc">
+      <Filter>protomsg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\sglib\Event.cpp">
+      <Filter>netlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\sglib\Lock.cpp">
+      <Filter>netlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\sglib\Thread.cpp">
+      <Filter>netlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\sglib\StackTrace.cpp">
+      <Filter>netlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\sglib\Log.cpp">
+      <Filter>netlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\net\GameClient.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\net\GroupClient.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\net\LoginClient.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\net\NetManager.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\res\ResManager.cpp">
+      <Filter>res</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\scene\LoginScene.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\scene\MainScene.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\user\Basic.cpp">
+      <Filter>user</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\user\UserManager.cpp">
+      <Filter>user</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\user\ViewData.cpp">
+      <Filter>user</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\view\ChatTableView.cpp">
       <Filter>view</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ChatTableView.cpp">
+    <ClCompile Include="..\Classes\view\MemberListPopLayer.cpp">
       <Filter>view</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PopLayerBase.cpp">
+    <ClCompile Include="..\Classes\view\MyEditBox.cpp">
       <Filter>view</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\MemberListPopLayer.cpp">
+    <ClCompile Include="..\Classes\view\MyLoadingItem.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\view\MyMenuItemImage.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\view\MyRadioButton.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\view\MyTableView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\view\PopLayerBase.cpp">
       <Filter>view</Filter>
     </ClCompile>
   </ItemGroup>
