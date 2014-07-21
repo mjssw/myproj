@@ -4,7 +4,7 @@
 #include "Define.h"
 #include "Runnable.h"
 #include "Queue.h"
-#include "event.h"
+#include "Event.h"
 #include "Config.h"
 
 namespace SGLib

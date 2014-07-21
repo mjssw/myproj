@@ -1,7 +1,7 @@
 #ifndef _SG_DB_POOL_H_
 #define _SG_DB_POOL_H_
 
-#include "executor.h"
+#include "Executor.h"
 #include "DBQuery.h"
 #include "DBCallbackFunctor.h"
 #include <string>

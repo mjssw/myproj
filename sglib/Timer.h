@@ -2,12 +2,12 @@
 #define _SG_TIMER_H_
 
 #include "Define.h"
-#include "List.h"
+#include "list.h"
 #include "Thread.h"
 #include "Lock.h"
 #include "SetupSocket.h"
-#include "stacktrace.h"
-#include "log.h"
+#include "StackTrace.h"
+#include "Log.h"
 
 namespace SGLib
 {
