@@ -38,6 +38,17 @@ message SCGroupGateNotify
 	required int32 port		= 2;
 }
 
+message SCUserBasicInfoNotify
+{
+	required string name	= 1;
+	required int32 sex		= 2;
+	required uint64 exp		= 3;
+	required uint64 level	= 4;
+	required uint64 gold	= 5;
+	required uint64 diamond = 6;
+	required string head	= 7;
+}
+
 // RPC message
 
 message LoginCenterUserLoginReq 

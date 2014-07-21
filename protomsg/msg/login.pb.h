@@ -41,6 +41,7 @@ class CSUserRegisterReq;
 class SCUserRegisterRsp;
 class SCGameInfoNotify;
 class SCGroupGateNotify;
+class SCUserBasicInfoNotify;
 class LoginCenterUserLoginReq;
 
 // ===================================================================
@@ -622,6 +623,158 @@ class SCGroupGateNotify : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static SCGroupGateNotify* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class SCUserBasicInfoNotify : public ::google::protobuf::Message {
+ public:
+  SCUserBasicInfoNotify();
+  virtual ~SCUserBasicInfoNotify();
+
+  SCUserBasicInfoNotify(const SCUserBasicInfoNotify& from);
+
+  inline SCUserBasicInfoNotify& operator=(const SCUserBasicInfoNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const SCUserBasicInfoNotify& default_instance();
+
+  void Swap(SCUserBasicInfoNotify* other);
+
+  // implements Message ----------------------------------------------
+
+  SCUserBasicInfoNotify* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const SCUserBasicInfoNotify& from);
+  void MergeFrom(const SCUserBasicInfoNotify& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 1;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // required int32 sex = 2;
+  inline bool has_sex() const;
+  inline void clear_sex();
+  static const int kSexFieldNumber = 2;
+  inline ::google::protobuf::int32 sex() const;
+  inline void set_sex(::google::protobuf::int32 value);
+
+  // required uint64 exp = 3;
+  inline bool has_exp() const;
+  inline void clear_exp();
+  static const int kExpFieldNumber = 3;
+  inline ::google::protobuf::uint64 exp() const;
+  inline void set_exp(::google::protobuf::uint64 value);
+
+  // required uint64 level = 4;
+  inline bool has_level() const;
+  inline void clear_level();
+  static const int kLevelFieldNumber = 4;
+  inline ::google::protobuf::uint64 level() const;
+  inline void set_level(::google::protobuf::uint64 value);
+
+  // required uint64 gold = 5;
+  inline bool has_gold() const;
+  inline void clear_gold();
+  static const int kGoldFieldNumber = 5;
+  inline ::google::protobuf::uint64 gold() const;
+  inline void set_gold(::google::protobuf::uint64 value);
+
+  // required uint64 diamond = 6;
+  inline bool has_diamond() const;
+  inline void clear_diamond();
+  static const int kDiamondFieldNumber = 6;
+  inline ::google::protobuf::uint64 diamond() const;
+  inline void set_diamond(::google::protobuf::uint64 value);
+
+  // required string head = 7;
+  inline bool has_head() const;
+  inline void clear_head();
+  static const int kHeadFieldNumber = 7;
+  inline const ::std::string& head() const;
+  inline void set_head(const ::std::string& value);
+  inline void set_head(const char* value);
+  inline void set_head(const char* value, size_t size);
+  inline ::std::string* mutable_head();
+  inline ::std::string* release_head();
+  inline void set_allocated_head(::std::string* head);
+
+  // @@protoc_insertion_point(class_scope:sglib.loginproto.SCUserBasicInfoNotify)
+ private:
+  inline void set_has_name();
+  inline void clear_has_name();
+  inline void set_has_sex();
+  inline void clear_has_sex();
+  inline void set_has_exp();
+  inline void clear_has_exp();
+  inline void set_has_level();
+  inline void clear_has_level();
+  inline void set_has_gold();
+  inline void clear_has_gold();
+  inline void set_has_diamond();
+  inline void clear_has_diamond();
+  inline void set_has_head();
+  inline void clear_has_head();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* name_;
+  ::google::protobuf::uint64 exp_;
+  ::google::protobuf::uint64 level_;
+  ::google::protobuf::uint64 gold_;
+  ::google::protobuf::uint64 diamond_;
+  ::std::string* head_;
+  ::google::protobuf::int32 sex_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+
+  friend void  protobuf_AddDesc_login_2eproto();
+  friend void protobuf_AssignDesc_login_2eproto();
+  friend void protobuf_ShutdownFile_login_2eproto();
+
+  void InitAsDefaultInstance();
+  static SCUserBasicInfoNotify* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1351,6 +1504,260 @@ inline ::google::protobuf::int32 SCGroupGateNotify::port() const {
 inline void SCGroupGateNotify::set_port(::google::protobuf::int32 value) {
   set_has_port();
   port_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// SCUserBasicInfoNotify
+
+// required string name = 1;
+inline bool SCUserBasicInfoNotify::has_name() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void SCUserBasicInfoNotify::set_has_name() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void SCUserBasicInfoNotify::clear_has_name() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void SCUserBasicInfoNotify::clear_name() {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    name_->clear();
+  }
+  clear_has_name();
+}
+inline const ::std::string& SCUserBasicInfoNotify::name() const {
+  return *name_;
+}
+inline void SCUserBasicInfoNotify::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void SCUserBasicInfoNotify::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void SCUserBasicInfoNotify::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* SCUserBasicInfoNotify::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+inline ::std::string* SCUserBasicInfoNotify::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void SCUserBasicInfoNotify::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    delete name_;
+  }
+  if (name) {
+    set_has_name();
+    name_ = name;
+  } else {
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 sex = 2;
+inline bool SCUserBasicInfoNotify::has_sex() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void SCUserBasicInfoNotify::set_has_sex() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void SCUserBasicInfoNotify::clear_has_sex() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void SCUserBasicInfoNotify::clear_sex() {
+  sex_ = 0;
+  clear_has_sex();
+}
+inline ::google::protobuf::int32 SCUserBasicInfoNotify::sex() const {
+  return sex_;
+}
+inline void SCUserBasicInfoNotify::set_sex(::google::protobuf::int32 value) {
+  set_has_sex();
+  sex_ = value;
+}
+
+// required uint64 exp = 3;
+inline bool SCUserBasicInfoNotify::has_exp() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void SCUserBasicInfoNotify::set_has_exp() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void SCUserBasicInfoNotify::clear_has_exp() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void SCUserBasicInfoNotify::clear_exp() {
+  exp_ = GOOGLE_ULONGLONG(0);
+  clear_has_exp();
+}
+inline ::google::protobuf::uint64 SCUserBasicInfoNotify::exp() const {
+  return exp_;
+}
+inline void SCUserBasicInfoNotify::set_exp(::google::protobuf::uint64 value) {
+  set_has_exp();
+  exp_ = value;
+}
+
+// required uint64 level = 4;
+inline bool SCUserBasicInfoNotify::has_level() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void SCUserBasicInfoNotify::set_has_level() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void SCUserBasicInfoNotify::clear_has_level() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void SCUserBasicInfoNotify::clear_level() {
+  level_ = GOOGLE_ULONGLONG(0);
+  clear_has_level();
+}
+inline ::google::protobuf::uint64 SCUserBasicInfoNotify::level() const {
+  return level_;
+}
+inline void SCUserBasicInfoNotify::set_level(::google::protobuf::uint64 value) {
+  set_has_level();
+  level_ = value;
+}
+
+// required uint64 gold = 5;
+inline bool SCUserBasicInfoNotify::has_gold() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void SCUserBasicInfoNotify::set_has_gold() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void SCUserBasicInfoNotify::clear_has_gold() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void SCUserBasicInfoNotify::clear_gold() {
+  gold_ = GOOGLE_ULONGLONG(0);
+  clear_has_gold();
+}
+inline ::google::protobuf::uint64 SCUserBasicInfoNotify::gold() const {
+  return gold_;
+}
+inline void SCUserBasicInfoNotify::set_gold(::google::protobuf::uint64 value) {
+  set_has_gold();
+  gold_ = value;
+}
+
+// required uint64 diamond = 6;
+inline bool SCUserBasicInfoNotify::has_diamond() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void SCUserBasicInfoNotify::set_has_diamond() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void SCUserBasicInfoNotify::clear_has_diamond() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void SCUserBasicInfoNotify::clear_diamond() {
+  diamond_ = GOOGLE_ULONGLONG(0);
+  clear_has_diamond();
+}
+inline ::google::protobuf::uint64 SCUserBasicInfoNotify::diamond() const {
+  return diamond_;
+}
+inline void SCUserBasicInfoNotify::set_diamond(::google::protobuf::uint64 value) {
+  set_has_diamond();
+  diamond_ = value;
+}
+
+// required string head = 7;
+inline bool SCUserBasicInfoNotify::has_head() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void SCUserBasicInfoNotify::set_has_head() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void SCUserBasicInfoNotify::clear_has_head() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void SCUserBasicInfoNotify::clear_head() {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    head_->clear();
+  }
+  clear_has_head();
+}
+inline const ::std::string& SCUserBasicInfoNotify::head() const {
+  return *head_;
+}
+inline void SCUserBasicInfoNotify::set_head(const ::std::string& value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void SCUserBasicInfoNotify::set_head(const char* value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void SCUserBasicInfoNotify::set_head(const char* value, size_t size) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* SCUserBasicInfoNotify::mutable_head() {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  return head_;
+}
+inline ::std::string* SCUserBasicInfoNotify::release_head() {
+  clear_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = head_;
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void SCUserBasicInfoNotify::set_allocated_head(::std::string* head) {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    delete head_;
+  }
+  if (head) {
+    set_has_head();
+    head_ = head;
+  } else {
+    clear_has_head();
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 // -------------------------------------------------------------------

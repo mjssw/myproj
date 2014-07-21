@@ -19,7 +19,11 @@ s32 CLoginManager::HashUser(const std::string &user)
 
 struct _LoginManagerDBParam
 {
-	CLoginClient *client;
+	union
+	{
+		CLoginClient *client;
+		u64 gateid;
+	} gate;
 	u64 clientid;
 };
 
@@ -220,6 +224,29 @@ void CLoginManager::_NotifyCenterUserLogout(const std::string &user)
 		ntf, sglib::msgid::SCT_USER_LOGOUT_NOTIFY );
 }
 
+void CLoginManager::_GetUserBasicInfo(const char *user, CLoginClient &client, u64 clientId)
+{
+	_LoginManagerDBParam _param = { &client, clientId };
+
+	s32 id = HashUser( user );
+	string sql = "select * from user where user='";
+	sql += user;
+	sql += "';";
+	bool ret = CServerManager::Instance().ExecSql( id, sql, this, &CLoginManager::_GetUserBasicInfoCallback, &_param, sizeof(_param) );
+	if( !ret )
+	{
+		SERVER_LOG_ERROR( "CLoginManager,_GetUserBasicInfo,ExecSql," << sql.c_str() );
+	}
+}
+
+void CLoginManager::_NotifyUserBasicInfo(CUser &user, CLoginClient &client, u64 clientId)
+{
+	sglib::loginproto::SCUserBasicInfoNotify ntf;
+	//ntf.set_name( user.g
+
+	client.SendMsgToClient( clientId, ntf, sglib::msgid::LC_USER_BASIC_INFO_NOTIFY );
+}
+
 void CLoginManager::_RegisterCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
 {
 	s32 result = sglib::errorcode::E_ErrorCode_Unknown;
@@ -241,8 +268,8 @@ void CLoginManager::_RegisterCallback(SGLib::IDBRecordSet *RecordSet, char *ErrM
 
 	SELF_ASSERT( param && len==sizeof(_LoginManagerDBParam), return; );
 	_LoginManagerDBParam *_param = (_LoginManagerDBParam*)param;
-	SELF_ASSERT( _param->client, return; );
-	_NotifyRegisterResult( *(_param->client), _param->clientid, result );
+	SELF_ASSERT( _param->gate.client, return; );
+	_NotifyRegisterResult( *(_param->gate.client), _param->clientid, result );
 }
 
 void CLoginManager::_UserLoginCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
@@ -264,12 +291,12 @@ void CLoginManager::_UserLoginCallback(SGLib::IDBRecordSet *RecordSet, char *Err
 
 	SELF_ASSERT( param && len==sizeof(_LoginManagerDBParam), return; );
 	_LoginManagerDBParam *_param = (_LoginManagerDBParam*)param;
-	SELF_ASSERT( _param->client, return; );
+	SELF_ASSERT( _param->gate.client, return; );
 
-	CUser *puser = _FindUser( _param->client->GetClientId(), _param->clientid );
+	CUser *puser = _FindUser( _param->gate.client->GetClientId(), _param->clientid );
 	if( !puser )
 	{
-		SERVER_LOG_ERROR( "CLoginManager,_UserLoginCallback," << _param->client->GetClientId() << "," \
+		SERVER_LOG_ERROR( "CLoginManager,_UserLoginCallback," << _param->gate.client->GetClientId() << "," \
 			<< _param->clientid << ",AleardyClose"  );
 		return;
 	}
@@ -281,12 +308,46 @@ void CLoginManager::_UserLoginCallback(SGLib::IDBRecordSet *RecordSet, char *Err
 	{
 		puser->SetState( CUser::E_State_LoginSuccess );
 		token = _BuildToken( puser->User(), puser->GetFlag() );
-		_NotifyCenterUserLogin( _param->clientid, _param->client->GetClientId(), puser->User(), puser->GetFlag() );
+		_NotifyCenterUserLogin( _param->clientid, _param->gate.client->GetClientId(), puser->User(), puser->GetFlag() );
 	}
 	else
 	{
 		puser->SetState( CUser::E_State_LoginFailed );
 	}
 	
-	_NotifyLoginResult( *_param->client, _param->clientid, result, token );
+	_NotifyLoginResult( *_param->gate.client, _param->clientid, result, token );
+	if( result == sglib::errorcode::E_ErrorCode_Success )
+	{
+		_GetUserBasicInfo( puser->User(), *_param->gate.client, _param->clientid );
+	}
+}
+
+void CLoginManager::_GetUserBasicInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
+{
+	SELF_ASSERT( param && len==sizeof(_LoginManagerDBParam), return; );
+	_LoginManagerDBParam *_param = (_LoginManagerDBParam*)param;
+	SELF_ASSERT( _param->gate.client, return; );
+
+	CUser *puser = _FindUser( _param->gate.client->GetClientId(), _param->clientid );
+	if( !puser )
+	{
+		SERVER_LOG_ERROR( "CLoginManager,_GetUserBasicInfoCallback," << _param->gate.client->GetClientId() << "," \
+			<< _param->clientid << ",AleardyClose"  );
+		return;
+	}
+
+	while( RecordSet && RecordSet->GetRecord() )
+	{
+		s32 count = (s32)RecordSet->GetRecordCount();
+		SELF_ASSERT( count == 1, break; );
+		const char *val = RecordSet->GetFieldValue( 1 );
+		if( atoi(val) == 1 )
+		{
+			
+		}
+
+		break;
+	}
+
+	_NotifyUserBasicInfo( *puser, *_param->gate.client, _param->clientid );
 }

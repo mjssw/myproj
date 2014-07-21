@@ -19,6 +19,7 @@ enum EMsgId
 	CL_USER_REGISTER_REQ		= 105;		// client->login 注册
 	LC_USER_REGISTER_RSP		= 106;		// login->client 注册结果
 	LC_GROUP_GATE_NOTIFY		= 107;		// login->client group的IP和端口通知
+	LC_USER_BASIC_INFO_NOTIFY	= 108;		// login->client user 基本信息
 	
 	// center msg
 	CTL_USER_LOGIN_RSP			= 301;		// center通知login玩家登录结果

@@ -66,10 +66,13 @@ private:
 	void _NotifyRegisterResult(CLoginClient &client, u64 clientId, s32 result);
 	CUser* _FindUser(u64 gateid, u64 clientid);
 	void _NotifyCenterUserLogout(const std::string &user);
+	void _GetUserBasicInfo(const char *user, CLoginClient &client, u64 clientId);
+	void _NotifyUserBasicInfo(CUser &user, CLoginClient &client, u64 clientId);
 
 private:
 	void _RegisterCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 	void _UserLoginCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
+	void _GetUserBasicInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 
 private:
 	std::map<std::string, CUser*> m_userLogin;
