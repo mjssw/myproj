@@ -1,14 +1,16 @@
 #include "scene/LoginScene.h"
 #include "res/ResManager.h"
+#include "net/NetManager.h"
 #include "CommDef.h"
 #include "cocos-ext.h"
-using namespace cocos2d;
-using namespace cocos2d::extension;
 #include "view/MyMenuItemImage.h"
 #include "view/MyEditBox.h"
 #include "user/UserManager.h"
 #include "view/MyLoadingItem.h"
-#include "scene/MainScene.h"
+#include "MainScene.h"
+#include "SceneManager.h"
+using namespace cocos2d;
+using namespace cocos2d::extension;
 
 static void TextUserChanged(const std::string &text)
 {
@@ -41,6 +43,36 @@ CCScene* CLoginScene::scene()
     } while( 0 );
 
     return scene;
+}
+
+void CLoginScene::UpdateView(int type)
+{
+	switch( type )
+	{
+	case CSceneManager::E_UpdateType_ConnectLogin:
+		{
+			_UpdateLoadingStep();
+			_UserLogin();
+		}
+		break;
+	case CSceneManager::E_UpdateType_LoadingProgress:
+		{
+			_UpdateLoadingStep();
+		}
+		break;
+	case CSceneManager::E_UpdateType_ConnectLoginError:
+	case CSceneManager::E_UpdateType_LoginFailed:
+		{
+			_RemoveLoadingView();
+			_AddLoginView( 
+				CUserManager::Instance().GetViewData().GetSavePwd(),
+				CUserManager::Instance().GetViewData().GetAutoLogin() );
+		}
+		break;
+	default:
+		CCLog( "[CLoginScene::UpdateView] unknown type:%d", type );
+		break;
+	};
 }
 
 bool CLoginScene::init()
@@ -100,8 +132,10 @@ bool CLoginScene::init()
 		//backgroundButton->setPosition( ccp( 100, 100 ) );
 		//this->addChild( backgroundButton, 1 );
 
-
 		ret = true;
+
+		CSceneManager::Instance().SetCurView( this );
+
     } while( 0 );
 
     return ret;
@@ -135,15 +169,24 @@ void CLoginScene::menuTestCallback(CCObject *pSender)
 #endif
 }
 
+const int g_loadingStep = 6;
 void CLoginScene::menuLoginCallback(CCObject *pSender)
 {
-	_RemoveLoginView();
-	_AddLoadingView( 4 );
+	if( CNetManager::Instance().StartLogin( LOGIN_IP, LOGIN_PORT ) )
+	{
+		_RemoveLoginView();
+		_AddLoadingView( g_loadingStep );
+	}
+	else
+	{
+		CCLog( "[CLoginScene::menuLoginCallback] start login (%s:%d) failed",
+			LOGIN_IP, LOGIN_PORT );
+	}
 }
 
 void CLoginScene::menuCloseCallback(CCObject *pSender)
 {
-    //CCDirector::sharedDirector()->end();
+    CCDirector::sharedDirector()->end();
 }
 
 void CLoginScene::menuCancelCallback(CCObject *pSender)
@@ -422,8 +465,8 @@ void CLoginScene::_AddLoadingView(int steps)
 
 #ifdef _DEBUG
 	// test
-	CCDirector::sharedDirector()->getScheduler()->scheduleSelector(
-		schedule_selector(CLoginScene::TestTimer), this, 1.0f, false);
+	//CCDirector::sharedDirector()->getScheduler()->scheduleSelector(
+	//	schedule_selector(CLoginScene::TestTimer), this, 1.0f, false);
 #endif
 }
 
@@ -487,6 +530,20 @@ void CLoginScene::_UpdateLoadingStep()
 	{
 		m_loadView.m_loadItem->UpdateProgress();
 	}
+}
+
+void CLoginScene::_UserLogin()
+{
+	CLoginClient *client = CNetManager::Instance().GetLoginClientInstance();
+	if( !client )
+	{
+		CCLog( "[CLoginScene::_UserLogin] login client instance NULL" );
+		return;
+	}
+
+	client->Login( 
+		CUserManager::Instance().GetBasic().GetUser(),
+		CUserManager::Instance().GetBasic().GetPwd() );
 }
 
 void CLoginScene::_RemoveLoadingView()

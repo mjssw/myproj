@@ -31,6 +31,7 @@ public:
 	bool StartGroup(const char *ip, int port);
 	bool StartGame(const char *ip, int port);
 	void CloseGameConn();
+	void CloseLoginConn();
 	void PushMessage(CMsgBase *msg);
 	void ProcessMessage();
 	void PauseProcessMessage();

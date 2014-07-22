@@ -1,9 +1,9 @@
 #ifndef _GROUP_CLIENT_H_
 #define _GROUP_CLIENT_H_
 
-#include "ClientLib.h"
+#include "ProtoClientBase.h"
 
-class CGroupClient : public SGLib::CClientBase
+class CGroupClient : public CProtoClientBase
 {
 public:
 	CGroupClient(s32 id);

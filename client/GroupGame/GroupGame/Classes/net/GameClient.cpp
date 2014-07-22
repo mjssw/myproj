@@ -3,7 +3,7 @@
 using namespace SGLib;
 
 CGameClient::CGameClient(s32 id) : 
-	CClientBase( id )
+	CProtoClientBase( id )
 {
 }
 

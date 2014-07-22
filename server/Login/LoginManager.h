@@ -3,6 +3,7 @@
 
 #include "Define.h"
 #include "DBQuery.h"
+#include "UserBasicInfo.h"
 #include <map>
 #include <string>
 #include "center.pb.h"
@@ -36,11 +37,15 @@ public:
 	void SetFlag(const std::string &flag) { m_flag = flag; }
 	const std::string& GetFlag() { return m_flag; }
 
+	CUserBasic& GetBasic(){ return m_basic; }
+
 private:
 	std::string m_user;
 	s32 m_state;
 	std::string m_token;
 	std::string m_flag;
+
+	CUserBasic m_basic;
 };
 
 class CLoginManager

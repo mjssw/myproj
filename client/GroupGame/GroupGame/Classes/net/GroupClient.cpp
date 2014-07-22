@@ -3,7 +3,7 @@
 using namespace SGLib;
 
 CGroupClient::CGroupClient(s32 id) : 
-	CClientBase( id )
+	CProtoClientBase( id )
 {
 }
 

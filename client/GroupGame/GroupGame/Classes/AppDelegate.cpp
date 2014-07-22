@@ -4,6 +4,7 @@
 #include "res/ResManager.h"
 #include "net/NetManager.h"
 #include "user/UserManager.h"
+#include "scene/SceneManager.h"
 
 using namespace CocosDenshion;
 
@@ -45,6 +46,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	{
 		return false;
 	}
+	CSceneManager::Instance();
 
     // create a scene. it's an autorelease object
 	CCScene *pScene = CLoginScene::scene();

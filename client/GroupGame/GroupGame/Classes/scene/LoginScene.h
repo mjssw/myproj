@@ -2,12 +2,15 @@
 #define _LOGIN_SCENE_H_
 
 #include "cocos2d.h"
+#include "ViewBase.h"
 
 class CMyEditBox;
 class CMyLoadingItem;
-class CLoginScene : public cocos2d::CCLayer
+class CLoginScene : public cocos2d::CCLayer, public CViewBase
 {
 public:
+	virtual void UpdateView(int type);
+
     virtual bool init();  
     static cocos2d::CCScene* scene();
 	void TestTimer(float t);
@@ -44,6 +47,7 @@ private:
 	void _RemoveLoginView();
 	void _UpdateLoadingStep();
 	void _RemoveLoadingView();
+	void _UserLogin();
 
 private:
 	struct

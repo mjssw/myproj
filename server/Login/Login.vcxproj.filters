@@ -80,6 +80,9 @@
     <ClCompile Include="..\..\protomsg\msg\tetris.pb.cc">
       <Filter>msg</Filter>
     </ClCompile>
+    <ClCompile Include="UserBasicInfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ServerBase\Client.h">
@@ -153,6 +156,9 @@
     </ClInclude>
     <ClInclude Include="..\..\protomsg\msg\tetris.pb.h">
       <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="UserBasicInfo.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

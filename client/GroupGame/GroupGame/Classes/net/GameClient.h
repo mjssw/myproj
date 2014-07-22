@@ -1,9 +1,9 @@
 #ifndef _GAME_CLIENT_H_
 #define _GAME_CLIENT_H_
 
-#include "ClientLib.h"
+#include "ProtoClientBase.h"
 
-class CGameClient : public SGLib::CClientBase
+class CGameClient : public CProtoClientBase
 {
 public:
 	CGameClient(s32 id);

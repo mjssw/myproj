@@ -19,11 +19,7 @@ s32 CLoginManager::HashUser(const std::string &user)
 
 struct _LoginManagerDBParam
 {
-	union
-	{
-		CLoginClient *client;
-		u64 gateid;
-	} gate;
+	CLoginClient *client;
 	u64 clientid;
 };
 
@@ -56,6 +52,8 @@ void CLoginManager::UserLogin(CLoginClient &client, u64 clientId, const std::str
 	}
 	puser->SetState( CUser::E_State_Logining );
 	puser->SetFlag( flag );
+
+	SERVER_LOG_DEBUG( "User:" << user << "Login now, check valid from db" );
 
 	_LoginManagerDBParam _param = { &client, clientId };
 	s32 id = HashUser( user );
@@ -226,10 +224,12 @@ void CLoginManager::_NotifyCenterUserLogout(const std::string &user)
 
 void CLoginManager::_GetUserBasicInfo(const char *user, CLoginClient &client, u64 clientId)
 {
+	SERVER_LOG_DEBUG( "User:" << user << "Login success, try get basic info from db" );
+
 	_LoginManagerDBParam _param = { &client, clientId };
 
 	s32 id = HashUser( user );
-	string sql = "select * from user where user='";
+	string sql = "select Name,Head,Sex,Exp,Level,Gold,Diamond from user where user='";
 	sql += user;
 	sql += "';";
 	bool ret = CServerManager::Instance().ExecSql( id, sql, this, &CLoginManager::_GetUserBasicInfoCallback, &_param, sizeof(_param) );
@@ -242,7 +242,13 @@ void CLoginManager::_GetUserBasicInfo(const char *user, CLoginClient &client, u6
 void CLoginManager::_NotifyUserBasicInfo(CUser &user, CLoginClient &client, u64 clientId)
 {
 	sglib::loginproto::SCUserBasicInfoNotify ntf;
-	//ntf.set_name( user.g
+	ntf.set_name( user.GetBasic().GetName() );
+	ntf.set_sex( user.GetBasic().GetSex() );
+	ntf.set_head( user.GetBasic().GetHead() );
+	ntf.set_exp( user.GetBasic().GetExp() );
+	ntf.set_level( user.GetBasic().GetLevel() );
+	ntf.set_gold( user.GetBasic().GetMoney( CUserBasic::E_Money_Gold ) );
+	ntf.set_diamond( user.GetBasic().GetMoney( CUserBasic::E_Money_Diamond ) );
 
 	client.SendMsgToClient( clientId, ntf, sglib::msgid::LC_USER_BASIC_INFO_NOTIFY );
 }
@@ -268,8 +274,8 @@ void CLoginManager::_RegisterCallback(SGLib::IDBRecordSet *RecordSet, char *ErrM
 
 	SELF_ASSERT( param && len==sizeof(_LoginManagerDBParam), return; );
 	_LoginManagerDBParam *_param = (_LoginManagerDBParam*)param;
-	SELF_ASSERT( _param->gate.client, return; );
-	_NotifyRegisterResult( *(_param->gate.client), _param->clientid, result );
+	SELF_ASSERT( _param->client, return; );
+	_NotifyRegisterResult( *(_param->client), _param->clientid, result );
 }
 
 void CLoginManager::_UserLoginCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
@@ -291,15 +297,17 @@ void CLoginManager::_UserLoginCallback(SGLib::IDBRecordSet *RecordSet, char *Err
 
 	SELF_ASSERT( param && len==sizeof(_LoginManagerDBParam), return; );
 	_LoginManagerDBParam *_param = (_LoginManagerDBParam*)param;
-	SELF_ASSERT( _param->gate.client, return; );
+	SELF_ASSERT( _param->client, return; );
 
-	CUser *puser = _FindUser( _param->gate.client->GetClientId(), _param->clientid );
+	CUser *puser = _FindUser( _param->client->GetClientId(), _param->clientid );
 	if( !puser )
 	{
-		SERVER_LOG_ERROR( "CLoginManager,_UserLoginCallback," << _param->gate.client->GetClientId() << "," \
+		SERVER_LOG_ERROR( "CLoginManager,_UserLoginCallback," << _param->client->GetClientId() << "," \
 			<< _param->clientid << ",AleardyClose"  );
 		return;
 	}
+	
+	SERVER_LOG_DEBUG( "User:" << puser->User() << "Login, check valid from db, result:" << result );
 
 	SELF_ASSERT( puser && puser->GetState() == CUser::E_State_Logining, return; );
 
@@ -308,17 +316,17 @@ void CLoginManager::_UserLoginCallback(SGLib::IDBRecordSet *RecordSet, char *Err
 	{
 		puser->SetState( CUser::E_State_LoginSuccess );
 		token = _BuildToken( puser->User(), puser->GetFlag() );
-		_NotifyCenterUserLogin( _param->clientid, _param->gate.client->GetClientId(), puser->User(), puser->GetFlag() );
+		_NotifyCenterUserLogin( _param->clientid, _param->client->GetClientId(), puser->User(), puser->GetFlag() );
 	}
 	else
 	{
 		puser->SetState( CUser::E_State_LoginFailed );
 	}
 	
-	_NotifyLoginResult( *_param->gate.client, _param->clientid, result, token );
+	_NotifyLoginResult( *_param->client, _param->clientid, result, token );
 	if( result == sglib::errorcode::E_ErrorCode_Success )
 	{
-		_GetUserBasicInfo( puser->User(), *_param->gate.client, _param->clientid );
+		_GetUserBasicInfo( puser->User(), *_param->client, _param->clientid );
 	}
 }
 
@@ -326,28 +334,76 @@ void CLoginManager::_GetUserBasicInfoCallback(SGLib::IDBRecordSet *RecordSet, ch
 {
 	SELF_ASSERT( param && len==sizeof(_LoginManagerDBParam), return; );
 	_LoginManagerDBParam *_param = (_LoginManagerDBParam*)param;
-	SELF_ASSERT( _param->gate.client, return; );
+	SELF_ASSERT( _param->client, return; );
 
-	CUser *puser = _FindUser( _param->gate.client->GetClientId(), _param->clientid );
+	CUser *puser = _FindUser( _param->client->GetClientId(), _param->clientid );
 	if( !puser )
 	{
-		SERVER_LOG_ERROR( "CLoginManager,_GetUserBasicInfoCallback," << _param->gate.client->GetClientId() << "," \
+		SERVER_LOG_ERROR( "CLoginManager,_GetUserBasicInfoCallback," << _param->client->GetClientId() << "," \
 			<< _param->clientid << ",AleardyClose"  );
 		return;
 	}
 
+	SERVER_LOG_DEBUG( "User:" << puser->User() << " get basic info from db" );
+
 	while( RecordSet && RecordSet->GetRecord() )
 	{
+		// Name,Head,Sex,Exp,Level,Gold,Diamond
 		s32 count = (s32)RecordSet->GetRecordCount();
 		SELF_ASSERT( count == 1, break; );
+
 		const char *val = RecordSet->GetFieldValue( 1 );
-		if( atoi(val) == 1 )
+		if( val )
 		{
-			
+			puser->GetBasic().SetName( val );
+		}
+
+		val = RecordSet->GetFieldValue( 2 );
+		if( val )
+		{
+			puser->GetBasic().SetHead( val );
+		}
+		
+		val = RecordSet->GetFieldValue( 3 );
+		if( val )
+		{
+			puser->GetBasic().SetSex( CUserBasic::ConvertSex(atoi(val)) );
+		}
+
+		val = RecordSet->GetFieldValue( 4 );
+		if( val )
+		{
+			u64 data = 0;
+			sscanf( val, "%llu", &data );
+			puser->GetBasic().SetExp( data );
+		}
+
+		val = RecordSet->GetFieldValue( 5 );
+		if( val )
+		{
+			u64 data = 0;
+			sscanf( val, "%llu", &data );
+			puser->GetBasic().SetLevel( data );
+		}
+
+		val = RecordSet->GetFieldValue( 6 );
+		if( val )
+		{
+			u64 data = 0;
+			sscanf( val, "%llu", &data );
+			puser->GetBasic().SetMoney( CUserBasic::E_Money_Gold, data );
+		}
+
+		val = RecordSet->GetFieldValue( 7 );
+		if( val )
+		{
+			u64 data = 0;
+			sscanf( val, "%llu", &data );
+			puser->GetBasic().SetMoney( CUserBasic::E_Money_Diamond, data );
 		}
 
 		break;
 	}
 
-	_NotifyUserBasicInfo( *puser, *_param->gate.client, _param->clientid );
+	_NotifyUserBasicInfo( *puser, *_param->client, _param->clientid );
 }

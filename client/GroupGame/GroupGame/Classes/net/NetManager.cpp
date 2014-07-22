@@ -81,6 +81,16 @@ void CNetManager::CloseGameConn()
 	}
 }
 
+void CNetManager::CloseLoginConn()
+{
+	if( m_loginConn )
+	{
+		m_loginClient = NULL;
+		m_loginConn->Stop();
+		SAFE_DELETE( m_loginConn );
+	}
+}
+
 void CNetManager::PushMessage(CMsgBase *msg)
 {
 	if( msg )

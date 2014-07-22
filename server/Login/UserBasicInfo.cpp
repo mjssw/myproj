@@ -1,11 +1,10 @@
-#include "Basic.h"
+#include "UserBasicInfo.h"
 using namespace std;
 
 CUserBasic::CUserBasic() : 
-	m_user( "" ),
-	m_pwd( "" ),
 	m_name( "" ),
 	m_head( "" ),
+	m_sex( E_Sex_Male ),
 	m_exp( 0 ),
 	m_level( 0 )
 {
@@ -16,24 +15,16 @@ CUserBasic::~CUserBasic()
 {
 }
 
-void CUserBasic::SetUser(const string &user)
+CUserBasic::ESex CUserBasic::ConvertSex(s32 sex)
 {
-	m_user = user;
-}
-
-const string& CUserBasic::GetUser()
-{
-	return m_user;
-}
-
-void CUserBasic::SetPwd(const string &pwd)
-{
-	m_pwd = pwd;
-}
-
-const string& CUserBasic::GetPwd()
-{
-	return m_pwd;
+	switch( sex )
+	{
+	case 0: return E_Sex_Male;
+	case 1: return E_Sex_Female;
+	default:
+		return E_Sex_Female;	
+		break;
+	};
 }
 
 void CUserBasic::SetName(const string &name)
@@ -46,16 +37,6 @@ const string& CUserBasic::GetName()
 	return m_name;
 }
 
-void CUserBasic::SetSex(s32 sex)
-{
-	m_sex = sex;
-}
-
-s32 CUserBasic::GetSex()
-{
-	return m_sex;
-}
-
 void CUserBasic::SetHead(const string &head)
 {
 	m_head = head;
@@ -64,6 +45,16 @@ void CUserBasic::SetHead(const string &head)
 const string& CUserBasic::GetHead()
 {
 	return m_head;
+}
+
+void CUserBasic::SetSex(ESex sex)
+{
+	m_sex = sex;
+}
+
+CUserBasic::ESex CUserBasic::GetSex()
+{
+	return m_sex;
 }
 
 void CUserBasic::SetExp(u64 exp)

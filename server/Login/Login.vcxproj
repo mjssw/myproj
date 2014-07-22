@@ -192,6 +192,7 @@ copy /Y $(SolutionDir)..\third_part\log4cxx\lib\Debug\log4cxx.dll $(ProjectDir)<
     <ClCompile Include="LoginManager.cpp" />
     <ClCompile Include="LoginRpcClient.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="UserBasicInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\protomsg\msg\center.pb.h" />
@@ -218,6 +219,7 @@ copy /Y $(SolutionDir)..\third_part\log4cxx\lib\Debug\log4cxx.dll $(ProjectDir)<
     <ClInclude Include="LoginClient.h" />
     <ClInclude Include="LoginManager.h" />
     <ClInclude Include="LoginRpcClient.h" />
+    <ClInclude Include="UserBasicInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\sglib\NetLib.vcxproj">
