@@ -9,6 +9,7 @@
 #include "view/MyLoadingItem.h"
 #include "MainScene.h"
 #include "SceneManager.h"
+#include "utils.h"
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
@@ -156,6 +157,13 @@ void CLoginScene::TestTimer(float t)
 void CLoginScene::menuTestCallback(CCObject *pSender)
 {
 #ifdef _DEBUG
+	CUserManager::Instance().GetBasic().SetName( a2u("´ó»¢") );
+	CUserManager::Instance().GetBasic().SetHead( "#1" );
+	CUserManager::Instance().GetBasic().SetSex( 0 );
+	CUserManager::Instance().GetBasic().SetExp( 12 );
+	CUserManager::Instance().GetBasic().SetLevel( 11 );
+	CUserManager::Instance().GetBasic().SetMoney( CUserBasic::E_Money_Gold, 1000 );
+	CUserManager::Instance().GetBasic().SetMoney( CUserBasic::E_Money_Diamond, 23 );
 	CCDirector::sharedDirector()->replaceScene( CMainScene::scene() );
 	/*
 	static int a = 1;

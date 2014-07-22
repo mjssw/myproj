@@ -7,6 +7,7 @@
 #include "center.pb.h"
 #include "msgid.pb.h"
 #include "common.pb.h"
+#include "Utils.h"
 using namespace std;
 
 SIGNLETON_CLASS_INIT(CLoginManager);
@@ -356,18 +357,23 @@ void CLoginManager::_GetUserBasicInfoCallback(SGLib::IDBRecordSet *RecordSet, ch
 		if( val )
 		{
 			puser->GetBasic().SetName( val );
+			SERVER_LOG_DEBUG( "\t" << "BasicInfo Name:" << val );
+			string gbkname = CUtils::utf82s( val );
+			SERVER_LOG_DEBUG( "\t" << "BasicInfo Name(gbk):" << gbkname.c_str() );
 		}
 
 		val = RecordSet->GetFieldValue( 2 );
 		if( val )
 		{
 			puser->GetBasic().SetHead( val );
+			SERVER_LOG_DEBUG( "\t" << "BasicInfo Head:" << val );
 		}
 		
 		val = RecordSet->GetFieldValue( 3 );
 		if( val )
 		{
 			puser->GetBasic().SetSex( CUserBasic::ConvertSex(atoi(val)) );
+			SERVER_LOG_DEBUG( "\t" << "BasicInfo Sex:" << puser->GetBasic().GetSex() );
 		}
 
 		val = RecordSet->GetFieldValue( 4 );
@@ -376,6 +382,7 @@ void CLoginManager::_GetUserBasicInfoCallback(SGLib::IDBRecordSet *RecordSet, ch
 			u64 data = 0;
 			sscanf( val, "%llu", &data );
 			puser->GetBasic().SetExp( data );
+			SERVER_LOG_DEBUG( "\t" << "BasicInfo Exp:" << puser->GetBasic().GetExp() );
 		}
 
 		val = RecordSet->GetFieldValue( 5 );
@@ -384,6 +391,7 @@ void CLoginManager::_GetUserBasicInfoCallback(SGLib::IDBRecordSet *RecordSet, ch
 			u64 data = 0;
 			sscanf( val, "%llu", &data );
 			puser->GetBasic().SetLevel( data );
+			SERVER_LOG_DEBUG( "\t" << "BasicInfo Level:" << puser->GetBasic().GetLevel() );
 		}
 
 		val = RecordSet->GetFieldValue( 6 );
@@ -392,6 +400,7 @@ void CLoginManager::_GetUserBasicInfoCallback(SGLib::IDBRecordSet *RecordSet, ch
 			u64 data = 0;
 			sscanf( val, "%llu", &data );
 			puser->GetBasic().SetMoney( CUserBasic::E_Money_Gold, data );
+			SERVER_LOG_DEBUG( "\t" << "BasicInfo Gold:" << data );
 		}
 
 		val = RecordSet->GetFieldValue( 7 );
@@ -400,6 +409,7 @@ void CLoginManager::_GetUserBasicInfoCallback(SGLib::IDBRecordSet *RecordSet, ch
 			u64 data = 0;
 			sscanf( val, "%llu", &data );
 			puser->GetBasic().SetMoney( CUserBasic::E_Money_Diamond, data );
+			SERVER_LOG_DEBUG( "\t" << "BasicInfo Diamond:" << data );
 		}
 
 		break;

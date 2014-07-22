@@ -44,6 +44,14 @@ private:
 	void _ClearMainView();
 	void _ClearContentOnListView();
 	void _ClearContentOnMainView();
+
+	cocos2d::Sprite* _GetHead();
+	int _AddHeadOnTitle(cocos2d::Node &parent);
+	int _AddNameOnTitle(cocos2d::Node &parent, int off);
+	int _AddLevelOnTitle(cocos2d::Node &parent, int off);
+	void _AddGoldOnTitle(cocos2d::Node &parent);
+	void _AddDiamondOnTitle(cocos2d::Node &parent);
+
 private:
 	int m_mainViewOffX;
 	cocos2d::CCPoint m_ptTableView;

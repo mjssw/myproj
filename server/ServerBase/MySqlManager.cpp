@@ -18,7 +18,7 @@ CMysqlManager::~CMysqlManager()
 bool CMysqlManager::Start(const char *addr, const char *dbname, const char *user, const char *pass, u32 port)
 {
 	MySqlDBInfo dbInfo( addr, dbname, user, pass, port );
-	return m_dbPool.Start( &dbInfo );
+	return m_dbPool.Start( &dbInfo, "utf8" );
 }
 
 void CMysqlManager::Stop()

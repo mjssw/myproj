@@ -11,6 +11,7 @@ USING_NS_CC_EXT;
 #include "view/ChatTableView.h"
 #include "utils.h"
 #include "view/MemberListPopLayer.h"
+#include "user/UserManager.h"
 using namespace std;
 
 // for test
@@ -248,6 +249,12 @@ void CMainScene::_AddTitle()
 	m_titleHigh = sz.height;
 
 	// TODO 根据userdata 显示内容
+	int off = _AddHeadOnTitle( *pSprite );
+	off = _AddNameOnTitle( *pSprite, off );
+	off = _AddLevelOnTitle( *pSprite, off );
+	_AddDiamondOnTitle( *pSprite );
+	_AddGoldOnTitle( *pSprite );
+
 }
 
 void CMainScene::_AddTabButtons()
@@ -530,4 +537,138 @@ void CMainScene::_ClearContentOnMainView()
 	}
 
 	node->removeAllChildrenWithCleanup( true );
+}
+
+Sprite* CMainScene::_GetHead()
+{
+	string head = CUserManager::Instance().GetBasic().GetHead();
+	if( head == "" )
+	{
+		// 没有头像使用默认的
+		if( CUserManager::Instance().GetBasic().GetSex() == CUserBasic::E_Sex_Male )
+		{
+			head = "boy.png";
+		}
+		else
+		{
+			head = "girl.png";
+		}
+		return Sprite::create( head );
+	}
+	else if( head.at(0) == '#' )
+	{
+		// 使用的系统头像
+		string real = head.substr( 1 );
+		int offset = atoi( real.c_str() );
+		int offx = (offset >> 16);
+		int offy = (offset & 0xFFFF );
+		Rect rt;
+		rt.origin = ccp( offx * SYS_HEAD_SIZE_W, offy * SYS_HEAD_SIZE_H );
+		rt.size = Size( SYS_HEAD_SIZE_W, SYS_HEAD_SIZE_H );
+		return Sprite::create( "syshead.png", rt );
+	}
+	else
+	{
+		// 使用自定义头像
+		CCAssert( head == CUserManager::Instance().GetBasic().GetUser(), "[_GetHead]selfdefine head is not same with user" );
+		return Sprite::create( head );
+	}
+}
+
+int CMainScene::_AddHeadOnTitle(cocos2d::Node &parent)
+{
+	Size sz = parent.getContentSize();
+	CCSprite *head = _GetHead();
+    CCAssert( head, "GetHead Failed" );
+	float scale = sz.height / head->getContentSize().height;
+	Size headSz = head->getContentSize() * scale;
+	head->setScale( scale );
+	head->setPosition( ccp( headSz.width/2, sz.height/2 ) );
+	parent.addChild( head );
+
+	return headSz.width;
+}
+
+static int GAP = 5;
+int CMainScene::_AddNameOnTitle(cocos2d::Node &parent, int off)
+{
+	//string u8name = a2u( CUserManager::Instance().GetBasic().GetName().c_str() );
+	string u8name = CUserManager::Instance().GetBasic().GetName();
+	Label *name = Label::createWithSystemFont( u8name.c_str(), "arial", 25 );
+	CCAssert( name, "create label name failed" );
+	name->setAnchorPoint( ccp( 0.5, 0.5 ) );
+	Size sz = name->getContentSize();
+	name->setPosition( ccp( off+GAP+sz.width/2, parent.getContentSize().height/2 ) );
+	parent.addChild( name );
+
+	return (off+GAP+sz.width);
+}
+
+int CMainScene::_AddLevelOnTitle(cocos2d::Node &parent, int off)
+{
+	char strLevel[32] = {0};
+	sprintf( strLevel, "%llu", CUserManager::Instance().GetBasic().GetLevel() );
+	string text = string("Lv.") + strLevel;
+	
+	int lgap = GAP * 5;
+	Label *level = Label::createWithSystemFont( text.c_str(), "arial", 25 );
+	CCAssert( level, "create label level failed" );
+	level->setAnchorPoint( ccp( 0.5, 0.5 ) );
+	Size sz = level->getContentSize();
+	level->setPosition( ccp( off+lgap+sz.width/2, parent.getContentSize().height/2 ) );
+	parent.addChild( level );
+
+	return (off+lgap+sz.width);
+}
+
+void CMainScene::_AddGoldOnTitle(cocos2d::Node &parent)
+{	
+	Size sz = parent.getContentSize();
+	
+	Sprite *icon = Sprite::create( "gold.png" );
+	CCAssert( icon, "create gold iocn failed" );
+	Size iconSz = icon->getContentSize();
+	float scale = sz.height / iconSz.height;
+	icon->setScale( scale );
+	iconSz = iconSz * scale;
+	int x = sz.width/4*3 + iconSz.width/2;
+	icon->setPosition( ccp( x, sz.height/2) );
+	parent.addChild( icon );
+
+	char strVal[32] = {0};
+	sprintf( strVal, "%llu", CUserManager::Instance().GetBasic().GetMoney(CUserBasic::E_Money_Gold) );
+	Label *val = Label::createWithSystemFont( strVal, "arial", 30 );
+	CCAssert( val, "create label gold failed" );
+	val->setColor( Color3B::YELLOW );
+	val->setAnchorPoint( ccp( 0.5, 0.5 ) );
+	Size szVal = val->getContentSize();
+	x += iconSz.width/2 + GAP + szVal.width/2;
+	val->setPosition( ccp( x, sz.height/2 ) );
+	parent.addChild( val );
+}
+
+void CMainScene::_AddDiamondOnTitle(cocos2d::Node &parent)
+{
+	Size sz = parent.getContentSize();
+	
+	Sprite *icon = Sprite::create( "diamond.png" );
+	CCAssert( icon, "create diamond iocn failed" );
+	Size iconSz = icon->getContentSize();
+	float scale = sz.height / iconSz.height;
+	icon->setScale( scale );
+	iconSz = iconSz * scale;
+	int x = sz.width/2 + iconSz.width/2;
+	icon->setPosition( ccp( x, sz.height/2) );
+	parent.addChild( icon );
+
+	char strVal[32] = {0};
+	sprintf( strVal, "%llu", CUserManager::Instance().GetBasic().GetMoney(CUserBasic::E_Money_Diamond) );
+	Label *val = Label::createWithSystemFont( strVal, "arial", 30 );
+	CCAssert( val, "create label diamond failed" );
+	val->setColor( Color3B::YELLOW );
+	val->setAnchorPoint( ccp( 0.5, 0.5 ) );
+	Size szVal = val->getContentSize();
+	x += iconSz.width/2 + GAP + szVal.width/2;
+	val->setPosition( ccp( x, sz.height/2 ) );
+	parent.addChild( val );
 }

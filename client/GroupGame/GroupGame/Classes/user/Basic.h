@@ -14,6 +14,12 @@ public:
 
 		E_Money_Type_Count,
 	};
+
+	enum ESex
+	{
+		E_Sex_Male,
+		E_Sex_Female,
+	};
 	
 	CUserBasic();
 	~CUserBasic();

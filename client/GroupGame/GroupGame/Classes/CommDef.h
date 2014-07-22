@@ -14,4 +14,7 @@ typedef int				MsgHeadType;
 #define MSG_HEAD_LEN	MSG_ID_LEN
 #define MAX_MSG_LEN		4096
 
+#define SYS_HEAD_SIZE_W	85
+#define SYS_HEAD_SIZE_H	85
+
 #endif
