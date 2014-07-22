@@ -15,6 +15,7 @@ public:
 		E_UpdateType_LoadingProgress,
 		E_UpdateType_LoginFailed, 
 		E_UpdateType_ConnectLoginError,
+		E_UpdateType_ConnectGroup,
 	};
 
 	void SetCurView(CViewBase *curView);

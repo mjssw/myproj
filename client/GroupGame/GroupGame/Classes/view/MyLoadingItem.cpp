@@ -66,6 +66,11 @@ bool CMyLoadingItem::UpdateProgress()
 	return true;
 }
 
+bool CMyLoadingItem::IsLoadingEnd()
+{
+	return ( m_curStep >= m_maxStep );
+}
+
 CMyLoadingItem* CMyLoadingItem::create(int steps)
 {
 	CMyLoadingItem *item = new CMyLoadingItem();

@@ -1,6 +1,9 @@
+#include "NetManager.h"
 #include "GroupClient.h"
 #include "CommDef.h"
+#include "gamemsg/MsgConnectGroup.h"
 using namespace SGLib;
+using namespace cocos2d;
 
 CGroupClient::CGroupClient(s32 id) : 
 	CProtoClientBase( id )
@@ -43,6 +46,16 @@ int CGroupClient::OnRecv(char *buf, int len)
 
 void CGroupClient::OnConnect()
 {
+	CNetManager::Instance().SetGroupClientInstance( this );
+	
+	CMsgBase *msg = new CMsgConnectGroup();
+	if( !msg )
+	{
+		CCLog( "[CGroupClient::OnConnect] new msg failed" );
+		return;
+	}
+
+	CNetManager::Instance().PushMessage( msg );
 }
 
 void CGroupClient::OnClose()

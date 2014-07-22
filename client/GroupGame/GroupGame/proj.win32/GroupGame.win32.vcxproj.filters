@@ -211,6 +211,9 @@
     <ClInclude Include="..\Classes\gamemsg\MsgUserBasicInfoNotify.h">
       <Filter>gamemsg</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\gamemsg\MsgConnectGroup.h">
+      <Filter>gamemsg</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -352,6 +355,9 @@
       <Filter>gamemsg</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\gamemsg\MsgUserBasicInfoNotify.cpp">
+      <Filter>gamemsg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\gamemsg\MsgConnectGroup.cpp">
       <Filter>gamemsg</Filter>
     </ClCompile>
   </ItemGroup>

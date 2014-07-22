@@ -16,6 +16,7 @@ public:
 	void SetAnchorPoint(cocos2d::CCPoint &pt);
 	void SetPosition(cocos2d::CCPoint &pt);
 	bool UpdateProgress();
+	bool IsLoadingEnd();
 	static CMyLoadingItem* create(int steps); 
 
 private:

@@ -49,6 +49,7 @@ private:
 	void _RemoveLoadingView();
 	void _UserLogin();
 
+	void JumpMainSceneCallback(float t);
 private:
 	struct
 	{

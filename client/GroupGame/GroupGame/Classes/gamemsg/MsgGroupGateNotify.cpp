@@ -25,4 +25,11 @@ void CMsgGroupGateNotify::Process()
 
 	CUserManager::Instance().SetGroupConnInfo( m_ip, m_port );
 	view->UpdateView( CSceneManager::E_UpdateType_LoadingProgress );
+	bool ret = CNetManager::Instance().StartGroup( m_ip.c_str(), m_port );
+	if( !ret )
+	{
+		CCLog( "[CMsgGroupGateNotify::Process] start group %s:%d FAILED",
+			m_ip.c_str(), m_port );
+		view->UpdateView( CSceneManager::E_UpdateType_LoginFailed );
+	}
 }

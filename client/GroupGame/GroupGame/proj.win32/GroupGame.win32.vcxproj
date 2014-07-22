@@ -147,6 +147,7 @@
     <ClInclude Include="..\Classes\gamemsg\MsgBase.h" />
     <ClInclude Include="..\Classes\CommDef.h" />
     <ClInclude Include="..\Classes\gamemsg\MsgCloseLogin.h" />
+    <ClInclude Include="..\Classes\gamemsg\MsgConnectGroup.h" />
     <ClInclude Include="..\Classes\gamemsg\MsgConnectLogin.h" />
     <ClInclude Include="..\Classes\gamemsg\MsgConnectLoginError.h" />
     <ClInclude Include="..\Classes\gamemsg\MsgGameInfoNotify.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="..\..\..\..\sglib\Thread.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\gamemsg\MsgCloseLogin.cpp" />
+    <ClCompile Include="..\Classes\gamemsg\MsgConnectGroup.cpp" />
     <ClCompile Include="..\Classes\gamemsg\MsgConnectLogin.cpp" />
     <ClCompile Include="..\Classes\gamemsg\MsgConnectLoginError.cpp" />
     <ClCompile Include="..\Classes\gamemsg\MsgGameInfoNotify.cpp" />

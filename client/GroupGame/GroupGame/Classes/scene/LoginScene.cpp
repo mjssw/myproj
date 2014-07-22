@@ -69,6 +69,11 @@ void CLoginScene::UpdateView(int type)
 				CUserManager::Instance().GetViewData().GetAutoLogin() );
 		}
 		break;
+	case CSceneManager::E_UpdateType_ConnectGroup:
+		{
+			_UpdateLoadingStep();
+		}
+		break;
 	default:
 		CCLog( "[CLoginScene::UpdateView] unknown type:%d", type );
 		break;
@@ -529,6 +534,15 @@ void CLoginScene::_UpdateLoadingStep()
 	if( m_loadView.m_loadItem )
 	{
 		m_loadView.m_loadItem->UpdateProgress();
+
+		if( m_loadView.m_loadItem->IsLoadingEnd() )
+		{
+			// 进度条走到头了, 说明登录成功并获取到了需要的所有用户数据
+			// 可以进入下一个scene
+			// 启动一个定时器,目的是为了保证最后的一格进度条也能显示
+			CCDirector::sharedDirector()->getScheduler()->scheduleSelector(
+				schedule_selector(CLoginScene::JumpMainSceneCallback), this, 0.3f, false);
+		}
 	}
 }
 
@@ -544,6 +558,14 @@ void CLoginScene::_UserLogin()
 	client->Login( 
 		CUserManager::Instance().GetBasic().GetUser(),
 		CUserManager::Instance().GetBasic().GetPwd() );
+}
+
+void CLoginScene::JumpMainSceneCallback(float t)
+{
+	CCDirector::sharedDirector()->getScheduler()->unscheduleSelector( 
+		schedule_selector(CLoginScene::JumpMainSceneCallback), this );
+	CNetManager::Instance().CloseLoginConn();
+	CCDirector::sharedDirector()->replaceScene( CMainScene::scene() );
 }
 
 void CLoginScene::_RemoveLoadingView()
