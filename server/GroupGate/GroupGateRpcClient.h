@@ -40,7 +40,6 @@ private:
 private:
 	std::map<int, ProtoProc> m_mapProtoProc;
 	s32 m_reportTimerId;
-	bool m_bHasReportIpPort;
 };
 
 #endif

@@ -1,0 +1,4 @@
+The user specified as a definer ('root'@'%') does not exist:
+Than:
+
+grant all on *.* to 'root'@'%' identified by 'password' with grant option;

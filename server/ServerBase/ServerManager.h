@@ -473,7 +473,7 @@ public:
 
 	s32 GetGroupDbId()
 	{
-		return GetMysqlManagerIdByDbName( "group" );
+		return GetMysqlManagerIdByDbName( "groups" );
 	}
 
 private:

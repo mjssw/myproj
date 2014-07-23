@@ -14,6 +14,8 @@ struct _groupManagerDBParam
 {
 	u64 groupid;
 	void *data;
+	s32 gateresid;
+	u64 clientid;
 };
 
 INIT_SIGNLETON_CLASS(CGroupManager);
@@ -597,11 +599,11 @@ void CGroupManager::LoadGroup(sglib::groupproto::GroupmanagerGroupLoadGroupNtf &
 		char *struser = new char[USER_MAX_LEN];
 		memset( struser, 0, USER_MAX_LEN );
 		strncpy( struser, ntf.user().c_str(), USER_MAX_LEN );
-		_groupManagerDBParam _param = { ntf.groupid(), struser };
+		_groupManagerDBParam _param = { ntf.groupid(), struser, ntf.gateresid(), ntf.clientid() };
 
 		char strid[128] = {0};
 		sprintf( strid, "%llu", ntf.groupid() );
-		string sql = string("select name,head from groups where id='") + strid + "';";
+		string sql = string("select name,head from groups where id=") + strid + ";";
 		s32 id = CServerManager::Instance().GetGroupDbId();
 		bool ret = CServerManager::Instance().ExecSql( 
 			id, sql, this, &CGroupManager::_GetGroupInfoCallback, &_param, sizeof(_param) );
@@ -1265,7 +1267,7 @@ void CGroupManager::_GetGroupInfoCallback(SGLib::IDBRecordSet *RecordSet, char *
 		return;
 	}
 
-	_groupManagerDBParam dbparam = { groupid, _param->data };
+	_groupManagerDBParam dbparam = { groupid, _param->data, _param->gateresid, _param->clientid };
 	string sql = string("select user,name,head,ismaster from ") +
 		CServerManager::Instance().BuildGroupTableName( groupid ) + ";";
 	s32 id = CServerManager::Instance().GetGroupDbId();
@@ -1293,17 +1295,15 @@ void CGroupManager::_GetGroupMemberCallback(SGLib::IDBRecordSet *RecordSet, char
 		if( group->MemberCount() > 0 )
 		{
 			_LoadGroupDone( groupid, user );
+			return;
 		}
+	}
+	else
+	{
+		SERVER_LOG_ERROR( "_GetGroupDataCallback,FindGroup," << groupid << "," << user.c_str() );
 		return;
 	}
 	
-	// Ìí¼ÓÈº TODO
-	group = CGroupManager::Instance().AddGroup( groupid, "", "" );
-	if( !group )
-	{
-		SERVER_LOG_ERROR( "_GetGroupDataCallback,AddGroup," << groupid << "," << user.c_str() );
-		return;
-	}
 	while( RecordSet && RecordSet->GetRecord() )
 	{
 		// user,name,head,ismaster
@@ -1339,6 +1339,10 @@ void CGroupManager::_GetGroupMemberCallback(SGLib::IDBRecordSet *RecordSet, char
 		SERVER_LOG_DEBUG( "_GetGroupDataCallback group:" << groupid << " add member:(" <<\
 			member.c_str() << "," << name.c_str() << "," << head.c_str() << "," << ismaster << ")" );
 	}
+
+	CGroupMember *member = group->FindMember( user.c_str() );
+	SELF_ASSERT( member, return; );
+	member->SetOnline( true, _param->gateresid, _param->clientid );
 		
 	_LoadGroupDone( groupid, user );
 }

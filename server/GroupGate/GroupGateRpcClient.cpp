@@ -9,8 +9,7 @@ using namespace std;
 
 CGateRpcClient::CGateRpcClient(int nId) : 
 	CRpcClient(nId), 
-	m_reportTimerId(INVALID_VAL),
-	m_bHasReportIpPort(false)
+	m_reportTimerId(INVALID_VAL)
 {
 	_Register( sglib::msgid::SG_CLOSE_CLIENT_REQ,	&CGateRpcClient::CloseClientReqProc );
 	_Register( sglib::msgid::SG_FORWARD_MSG_REQ,	&CGateRpcClient::ForwardMsgReqProc );
@@ -175,12 +174,10 @@ void CGateRpcClient::_ReportStatus()
 	req.set_gateid( CServerManager::Instance().ServerId() );
 	req.set_cur_conn( CServerManager::Instance().GetClientCount() );
 	req.set_max_conn( CServerManager::Instance().MaxConnectionCount() );
-	if( !m_bHasReportIpPort )
 	{
 		const CServerConfig *pCfg = CServerManager::Instance().GetServerConfig();
 		if( pCfg != NULL )
 		{
-			m_bHasReportIpPort = true;
 			req.set_ip( pCfg->GetServerConfig().m_Ip );
 			req.set_port( pCfg->GetServerConfig().m_Port );
 		}
