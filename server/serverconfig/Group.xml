@@ -8,5 +8,9 @@
 		<File Path="./Group.log" Enable="true" Layout="%d [%-2t] %-5p - %m%n" MinLevel="DEBUG" MaxLevel="FATAL" />
 		<Console Enable="true" Layout="%d [%-2t] %-5p - %m%n" MinLevel="DEBUG" MaxLevel="FATAL" />
 	</Log>
+	<Databases>
+		<Database Id="1" Type="user" Ip="172.18.5.55" Port="3306" User="root" Password="123456" Db="ud1" />
+		<Database Id="100" Type="group" Ip="172.18.5.55" Port="3306" User="root" Password="123456" Db="group" />
+	</Databases>
 	<Param IsDynamicStart="0" />
 </Configure>

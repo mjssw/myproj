@@ -222,6 +222,9 @@
     <ClInclude Include="..\ServerBase\MySqlManager.h">
       <Filter>ServerBase</Filter>
     </ClInclude>
+    <ClInclude Include="..\ServerBase\BasicConfig.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="msg">

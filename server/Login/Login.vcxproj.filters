@@ -160,5 +160,8 @@
     <ClInclude Include="UserBasicInfo.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\ServerBase\BasicConfig.h">
+      <Filter>ServerBase</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

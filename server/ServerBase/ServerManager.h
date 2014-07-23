@@ -425,6 +425,16 @@ public:
 		return NULL;
 	}
 
+	s32 GetMysqlManagerIdByDbName(const std::string &dbname)
+	{
+		std::map<std::string, s32>::iterator it = m_mysqlDbnameIndex.find( dbname );
+		if( it != m_mysqlDbnameIndex.end() )
+		{
+			return it->second;
+		}
+		return INVALID_VAL;
+	}
+
 	template<class ClassObj, class ClassMemFunc>
 	bool ExecSql(s32 id, const std::string &sql, const ClassObj &classObj, ClassMemFunc memCallbackFunc, void *param, s32 len)
 	{
@@ -436,8 +446,27 @@ public:
 
 		return sqlMgr->Execute( sql.c_str(), classObj, memCallbackFunc, param, len );
 	}
+	
+	s32 HashUser(const std::string &user)
+	{
+		// 注意user数据库始终是ud1 ... udN
+		// 这里由user值hash到某一个 ud?，然后根据ud?找到对应的id
+		const static string dbhead = "ud";
+		s32 dbid = _hashId( user );
+		char strdbid[32] = {0};
+		sprintf( strdbid, "%d", dbid );
+		string dbname = dbhead + strdbid;
+		return GetMysqlManagerIdByDbName( dbname );
+	}
 
 private:
+	
+	s32 _hashId(const string &user)
+	{
+		// TODO
+		return 1;
+	}
+
 	bool _SendRpcMsg(s32 serverId, const byte *pPkg, s32 pkgLen)
 	{
 		//SERVER_LOG_DEBUG( "CServerManager,SendRpcMsg," << serverId );
@@ -466,6 +495,8 @@ private:
 				return false;
 			}
 			m_mysqlMgr[ cfg->m_id ] = mysql;
+			m_mysqlTypeIndex[ cfg->m_type ][ cfg->m_id ] = mysql;
+			m_mysqlDbnameIndex[ cfg->m_db ] = cfg->m_id;
 		
 			SERVER_LOG_INFO( "Init mysqlmgr:" << cfg->m_id << " success!" );
 		}
@@ -519,6 +550,8 @@ private:
 			SAFE_DELETE( it->second );
 		}
 		m_mysqlMgr.clear();
+		m_mysqlTypeIndex.clear();
+		m_mysqlDbnameIndex.clear();
 	}
 
 private:
@@ -547,6 +580,8 @@ private:
 	u64 m_nextClientId;
 
 	std::map<s32, CMysqlManager*> m_mysqlMgr;
+	std::map<std::string, map<s32, CMysqlManager*> > m_mysqlTypeIndex;
+	std::map<std::string, s32> m_mysqlDbnameIndex;
 };
 
 #endif

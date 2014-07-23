@@ -88,6 +88,8 @@ namespace SGLib
 	
 		bool Execute(const char *sql, CDBCallbackFunctor *callback, void *param, s32 len);
 
+		IDBQuery* GetDBQuery(){ return m_pDBQuery; }
+
 	private:
 		bool _DoExecute(const char *sql, CDBCallbackFunctor *callback, void *param, s32 len);
 

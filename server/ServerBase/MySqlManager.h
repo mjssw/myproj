@@ -61,6 +61,8 @@ public:
 
 	virtual void HandleEvent(s32 paramLen, char *paramData);
 
+	SGLib::IDBQuery* GetDBQuery(){ return m_dbPool.GetDBQuery(); }
+
 private:
 	struct SDBParam
 	{

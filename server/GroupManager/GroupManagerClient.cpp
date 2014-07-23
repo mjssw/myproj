@@ -227,8 +227,8 @@ void CGroupManagerClient::_UserLoginGroupProc(const byte *pkg, s32 len)
 		// 这里的测试代码依然是同步的
 #if _DEBUG
 		_DebugLoadUserGroups( ntf.user() );
-		_DoLoadMemberGroups( ntf.user(), ntf.gateresid(), ntf.clientid() );
 #endif
+		_DoLoadMemberGroups( ntf.user(), ntf.gateresid(), ntf.clientid() );
 	}
 	else
 	{

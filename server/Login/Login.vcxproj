@@ -206,6 +206,7 @@ copy /Y $(SolutionDir)..\third_part\log4cxx\lib\Debug\log4cxx.dll $(ProjectDir)<
     <ClInclude Include="..\..\protomsg\msg\msgid.pb.h" />
     <ClInclude Include="..\..\protomsg\msg\public.pb.h" />
     <ClInclude Include="..\..\protomsg\msg\tetris.pb.h" />
+    <ClInclude Include="..\ServerBase\BasicConfig.h" />
     <ClInclude Include="..\ServerBase\Client.h" />
     <ClInclude Include="..\ServerBase\GateClientBase.h" />
     <ClInclude Include="..\ServerBase\GateClientManager.h" />

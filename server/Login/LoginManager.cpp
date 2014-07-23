@@ -12,12 +12,6 @@ using namespace std;
 
 SIGNLETON_CLASS_INIT(CLoginManager);
 
-s32 CLoginManager::HashUser(const std::string &user)
-{
-	// TODO 
-	return 1;
-}
-
 struct _LoginManagerDBParam
 {
 	CLoginClient *client;
@@ -57,7 +51,7 @@ void CLoginManager::UserLogin(CLoginClient &client, u64 clientId, const std::str
 	SERVER_LOG_DEBUG( "User:" << user << "Login now, check valid from db" );
 
 	_LoginManagerDBParam _param = { &client, clientId };
-	s32 id = HashUser( user );
+	s32 id = CServerManager::Instance().HashUser( user );
 	string sql = "call UserLogin('" + user + "','" + pwd + "');";
 	bool ret = CServerManager::Instance().ExecSql( id, sql, this, &CLoginManager::_UserLoginCallback, &_param, sizeof(_param) );
 	if( !ret )
@@ -70,7 +64,7 @@ void CLoginManager::UserRegister(CLoginClient &client, u64 clientId, const std::
 {
 	_LoginManagerDBParam _param = { &client, clientId };
 
-	s32 id = HashUser( user );
+	s32 id = CServerManager::Instance().HashUser( user );
 	string sql = "call UserRegister('" + user + "','" + pwd + "','abc');";
 	bool ret = CServerManager::Instance().ExecSql( id, sql, this, &CLoginManager::_RegisterCallback, &_param, sizeof(_param) );
 	if( !ret )
@@ -229,7 +223,7 @@ void CLoginManager::_GetUserBasicInfo(const char *user, CLoginClient &client, u6
 
 	_LoginManagerDBParam _param = { &client, clientId };
 
-	s32 id = HashUser( user );
+	s32 id = CServerManager::Instance().HashUser( user );
 	string sql = "select Name,Head,Sex,Exp,Level,Gold,Diamond from user where user='";
 	sql += user;
 	sql += "';";

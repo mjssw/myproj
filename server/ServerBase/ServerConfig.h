@@ -7,6 +7,10 @@
 #include <vector>
 #include "Log4cxxCreater.h"
 
+#define DB_TYPE_USER	"user"
+#define DB_TYPE_GROUP	"group"
+#define DB_TYPE_GAME	"game"
+
 struct ConnectConfig
 {
 	ConnectConfig():
@@ -27,6 +31,7 @@ struct ConnectConfig
 struct MysqlConfig
 {
 	s32 m_id;
+	std::string m_type;
 	std::string m_ip;
 	s32 m_port;
 	std::string m_db;
@@ -307,6 +312,12 @@ private:
 					if( val != NULL )
 					{
 						cfg.m_id = atoi( val );
+					}
+					
+					val = e->Attribute( "Type" );
+					if( val != NULL )
+					{
+						cfg.m_type = val;
 					}
 
 					val = e->Attribute( "Ip" );
