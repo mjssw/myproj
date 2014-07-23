@@ -13,6 +13,12 @@
 #include "gamemanager.pb.h"
 using namespace std;
 
+struct _GroupManagerDBParam
+{
+	s32 gateresid;
+	u64 clientid;
+};
+
 CGroupManagerClient::CGroupManagerClient(s32 nId) : CClient(nId)
 {
 	_RegisterProc( sglib::msgid::GPGM_REPORT_STATUS_INFO,	&CGroupManagerClient::_GroupServerReportInfo );
@@ -222,13 +228,25 @@ void CGroupManagerClient::_UserLoginGroupProc(const byte *pkg, s32 len)
 		CLoginMemberManager::Instance().MemberManager().SetMember(
 			ntf.gateresid(), ntf.clientid(), ntf.user().c_str() );
 		
+		_GroupManagerDBParam _param = { ntf.gateresid(), ntf.clientid() };
+		string sql = string("select groupid from ") + 
+			CServerManager::Instance().BuildUserGroupTableName(ntf.user()) + ";";
+		s32 id = CServerManager::Instance().HashUser( ntf.user() );
+		bool ret = CServerManager::Instance().ExecSql( 
+			id, sql, this, &CGroupManagerClient::_GetUserGroupsCallback, &_param, sizeof(_param) );
+		if( !ret )
+		{
+			SERVER_LOG_ERROR( "CGroupManagerClient,_UserLoginGroupProc,ExecSql," << sql.c_str() );
+		}
+		/*
 		// 下面是测试代码，加载登录玩家的所有group信息,
 		// 如果是从DB中获取，则是一个异步的过程,
 		// 这里的测试代码依然是同步的
 #if _DEBUG
 		_DebugLoadUserGroups( ntf.user() );
-#endif
 		_DoLoadMemberGroups( ntf.user(), ntf.gateresid(), ntf.clientid() );
+#endif
+		//*/
 	}
 	else
 	{
@@ -785,4 +803,32 @@ void CGroupManagerClient::_NotifyGameManagerCreateGameRoom(CGroupManagerClient *
 	req.set_gameid( gameid );
 	req.set_serverid( GetClientId() );
 	gameManager->SendMessageToClient( req, sglib::msgid::GMGM_ASK_CREATE_GAMEROOM_REQ );
+}
+
+void CGroupManagerClient::_GetUserGroupsCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
+{
+	SELF_ASSERT( param, return; );
+	SELF_ASSERT( len==sizeof(_GroupManagerDBParam), return; ); 
+	_GroupManagerDBParam *_param = (_GroupManagerDBParam*)param;
+	CGroupMemberPosition *member = CLoginMemberManager::Instance().MemberManager().FindMember( _param->gateresid, _param->clientid );
+	if( !member )
+	{
+		SERVER_LOG_ERROR( "CGroupManagerClient,_GetUserGroupsCallback,FindMember," << _param->gateresid << "," << _param->clientid );
+		return;
+	}
+
+	string user = member->User();
+	while( RecordSet && RecordSet->GetRecord() )
+	{
+		u64 groupid = 0;
+		const char *val = RecordSet->GetFieldValue( 1 );
+		if( val )
+		{
+			sscanf( val, "%llu", &groupid );
+			CLoginMemberManager::Instance().AddGroup( user, groupid );
+			SERVER_LOG_DEBUG( "_GetUserGroupsCallback user:" << user.c_str() << " in group:" << groupid );
+		}
+	}
+		
+	_DoLoadMemberGroups( user, _param->gateresid, _param->clientid );
 }

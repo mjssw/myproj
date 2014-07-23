@@ -6,8 +6,15 @@
 #include "group.pb.h"
 #include "msgid.pb.h"
 #include "errno.pb.h"
+#include "BasicConfig.h"
 using namespace std;
 using namespace SGLib;
+
+struct _groupManagerDBParam
+{
+	u64 groupid;
+	void *data;
+};
 
 INIT_SIGNLETON_CLASS(CGroupManager);
 
@@ -578,6 +585,37 @@ void CGroupManager::LoadGroup(sglib::groupproto::GroupmanagerGroupLoadGroupNtf &
 	SERVER_LOG_INFO( "LoadGroup," << ntf.gateresid() << "," <<\
 		ntf.clientid() << "," << ntf.groupid() << "," << ntf.user().c_str() );
 
+	// 检查是否已经加载此群
+	CGroupInfo *group = CGroupManager::Instance().FindGroup( ntf.groupid() );
+	if( group )
+	{
+		_LoadGroupDone( ntf.groupid(), ntf.user() );
+	}
+	else
+	{
+		// 从DB加载群信息
+		char *struser = new char[USER_MAX_LEN];
+		memset( struser, 0, USER_MAX_LEN );
+		strncpy( struser, ntf.user().c_str(), USER_MAX_LEN );
+		_groupManagerDBParam _param = { ntf.groupid(), struser };
+
+		char strid[128] = {0};
+		sprintf( strid, "%llu", ntf.groupid() );
+		string sql = string("select name,head from groups where id='") + strid + "';";
+		s32 id = CServerManager::Instance().GetGroupDbId();
+		bool ret = CServerManager::Instance().ExecSql( 
+			id, sql, this, &CGroupManager::_GetGroupInfoCallback, &_param, sizeof(_param) );
+		if( !ret )
+		{
+			SERVER_LOG_ERROR( "CGroupManager,LoadGroup,ExecSql," << ntf.user().c_str() << "," << sql.c_str() );
+		}
+		/*
+
+		*/
+	}
+
+	/*
+	// for debug
 	s32 result = _DoLoadGroup( ntf.groupid(), ntf.gateresid(), ntf.clientid(), ntf.user().c_str() );
 	_NotifyLoadGroupResult(
 		result, 
@@ -595,6 +633,7 @@ void CGroupManager::LoadGroup(sglib::groupproto::GroupmanagerGroupLoadGroupNtf &
 		CGroupManager::Instance().NotifyGroupInfoToMember(
 			ntf.groupid(), ntf.user() );
 	}
+	//*/
 }
 
 void CGroupManager::GroupMemberOnline(sglib::groupproto::GroupmanagerGroupMemberOnlineNtf &ntf)
@@ -1161,4 +1200,145 @@ void CGroupManager::_NotifyCreateGameRoomResult(s32 gateresid, u64 clientid, s32
 
 	CGroupManager::Instance().SendMsgToClient( 
 		gateresid, clientid, rsp, sglib::msgid::SC_GROUP_CREATE_GAMEROOM_RSP );
+}
+
+void CGroupManager::_LoadGroupDone(u64 groupid, const std::string &user)
+{
+	_NotifyLoadGroupResult(
+		sglib::errorcode::E_ErrorCode_Success, 
+		groupid,
+		CServerManager::Instance().ServerId(),
+		user.c_str() );
+
+	// 先通知所有的group gate更新信息
+	CGroupManager::Instance().NotifyAllGroupGateAddGroupInfo(
+		groupid, CServerManager::Instance().ServerId() );
+
+	// 到这里表示加载群成功了,通知client群信息更新
+	CGroupManager::Instance().NotifyGroupInfoToMember(
+		groupid, user );
+}
+
+void CGroupManager::_GetGroupInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
+{
+	SELF_ASSERT( param, return; );
+	SELF_ASSERT( sizeof(_groupManagerDBParam)==len, return; );
+	_groupManagerDBParam *_param = (_groupManagerDBParam*)param;
+	string user = string( ((char*)_param->data) );
+	u64 groupid = _param->groupid;
+	
+	string groupname="", grouphead="";
+	while( RecordSet && RecordSet->GetRecord() )
+	{
+		// user,name,head,ismaster
+		const char *val = RecordSet->GetFieldValue( 1 );
+		if( val )
+		{
+			groupname = val;
+		}
+
+		val = RecordSet->GetFieldValue( 2 );
+		if( val )
+		{
+			grouphead = val;
+		}
+		break;
+	}
+	
+	// 在找一下是否存在此群了
+	CGroupInfo *group = CGroupManager::Instance().FindGroup( groupid );
+	if( !group )
+	{
+		group = CGroupManager::Instance().AddGroup( groupid, groupname.c_str(), grouphead.c_str() );
+		if( !group )
+		{
+			SERVER_LOG_ERROR( "_GetGroupInfoCallback,AddGroup," << groupid << "," << user.c_str() );
+			return;
+		}
+	}
+	
+	// 如果此群已经存在了，可能有两种情况,一个是正在加载群成员列表，还一个是已经加载完了
+	if( group->MemberCount() > 0 )
+	{
+		SAFE_DELETE( _param->data );
+		_LoadGroupDone( groupid, user );
+		return;
+	}
+
+	_groupManagerDBParam dbparam = { groupid, _param->data };
+	string sql = string("select user,name,head,ismaster from ") +
+		CServerManager::Instance().BuildGroupTableName( groupid ) + ";";
+	s32 id = CServerManager::Instance().GetGroupDbId();
+	bool ret = CServerManager::Instance().ExecSql( 
+		id, sql, this, &CGroupManager::_GetGroupMemberCallback, &dbparam, sizeof(dbparam) );
+	if( !ret )
+	{
+		SERVER_LOG_ERROR( "CGroupManager,_GetGroupInfoCallback,ExecSql," << user.c_str() << "," << sql.c_str() );
+	}
+}
+
+void CGroupManager::_GetGroupMemberCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
+{
+	SELF_ASSERT( param, return; );
+	SELF_ASSERT( sizeof(_groupManagerDBParam)==len, return; );
+	_groupManagerDBParam *_param = (_groupManagerDBParam*)param;
+	string user = string( ((char*)_param->data) );
+	u64 groupid = _param->groupid;
+	SAFE_DELETE( _param->data );
+	
+	// 在找一下是否存在此群了
+	CGroupInfo *group = CGroupManager::Instance().FindGroup( groupid );
+	if( group )
+	{
+		if( group->MemberCount() > 0 )
+		{
+			_LoadGroupDone( groupid, user );
+		}
+		return;
+	}
+	
+	// 添加群 TODO
+	group = CGroupManager::Instance().AddGroup( groupid, "", "" );
+	if( !group )
+	{
+		SERVER_LOG_ERROR( "_GetGroupDataCallback,AddGroup," << groupid << "," << user.c_str() );
+		return;
+	}
+	while( RecordSet && RecordSet->GetRecord() )
+	{
+		// user,name,head,ismaster
+		string member = "";
+		const char *val = RecordSet->GetFieldValue( 1 );
+		if( val )
+		{
+			member = val;
+		}
+
+		string name = "";
+		val = RecordSet->GetFieldValue( 2 );
+		if( val )
+		{
+			name = val;
+		}
+
+		string head = "";
+		val = RecordSet->GetFieldValue( 3 );
+		if( val )
+		{
+			head = val;
+		}
+
+		s32 ismaster = 0;
+		val = RecordSet->GetFieldValue( 4 );
+		if( val )
+		{
+			ismaster = atoi( val );
+		}
+
+		group->AddMember( member.c_str(), name.c_str(), head.c_str(), false );
+		SERVER_LOG_DEBUG( "_GetGroupDataCallback group:" << groupid << " add member:(" <<\
+			member.c_str() << "," << name.c_str() << "," << head.c_str() << "," << ismaster << ")" );
+	}
+		
+	_LoadGroupDone( groupid, user );
 }

@@ -459,6 +459,23 @@ public:
 		return GetMysqlManagerIdByDbName( dbname );
 	}
 
+	std::string BuildUserGroupTableName(const std::string &user)
+	{
+		return (std::string("user_") + user + "_group");
+	}
+
+	std::string BuildGroupTableName(u64 groupid)
+	{
+		char table[128] = {0};
+		sprintf( table, "group_%llu", groupid );
+		return std::string(table);
+	}
+
+	s32 GetGroupDbId()
+	{
+		return GetMysqlManagerIdByDbName( "group" );
+	}
+
 private:
 	
 	s32 _hashId(const string &user)

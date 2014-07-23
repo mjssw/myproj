@@ -4,6 +4,7 @@
 #include "Client.h"
 #include <map>
 #include "google/protobuf/message.h"
+#include "DBQuery.h"
 
 class CGroupManagerClient;
 typedef void (CGroupManagerClient::*ProtoProc)(const byte *pkg, s32 len);
@@ -56,6 +57,9 @@ private:
 	void _NotifyMemberOffline(s32 groupServerId, const std::string &user, s32 gateresid, u64 clientid, u64 groupid);
 	void _NotifyCreateGameRoomResult(u64 serverId, s32 result, u64 groupid, s32 gateresid, u64 clientid, s32 game, const char *ip, s32 port, s32 roomid, const char *roompwd);
 	void _NotifyGameManagerCreateGameRoom(CGroupManagerClient *gameManager, u64 groupid, s32 gateresid, u64 clientid, s32 game, s32 gameid);
+
+private:
+	void _GetUserGroupsCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 
 private:
 	std::map<s32, ProtoProc> m_mapProtoProc;

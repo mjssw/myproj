@@ -5,6 +5,7 @@
 #include "Utils.h"
 #include "google/protobuf/message.h"
 #include "group.pb.h"
+#include "DBQuery.h"
 
 enum EGroupAskInfoAction
 {
@@ -97,6 +98,12 @@ private:
 	void _MemberOnline(u64 groupid, s32 gateresid, u64 clientid, const std::string &user);
 	void _MemberOffline(u64 groupid, s32 gateresid, u64 clientid, const std::string &user);
 	void _NotifyCreateGameRoomResult(s32 gateresid, u64 clientid, s32 result, u64 groupid, s32 game, const std::string &ip, s32 port, s32 roomid, const std::string &roompwd);
+
+	void _LoadGroupDone(u64 groupid, const std::string &user);
+
+private:
+	void _GetGroupInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
+	void _GetGroupMemberCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 
 private:
 	SGLib::CLock m_Lock;
