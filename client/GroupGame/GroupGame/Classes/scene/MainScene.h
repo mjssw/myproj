@@ -2,8 +2,8 @@
 #define _MAIN_SCENE_H_
 
 #include "cocos2d.h"
+#include "view/MyTableView.h"
 
-class CMyTableView;
 class CMyEditBox;
 class CChatTableView;
 class CMainScene : public cocos2d::CCLayer
@@ -51,6 +51,8 @@ private:
 	int _AddLevelOnTitle(cocos2d::Node &parent, int off);
 	void _AddGoldOnTitle(cocos2d::Node &parent);
 	void _AddDiamondOnTitle(cocos2d::Node &parent);
+
+	void _DumpGroupList(std::vector<TableViewData> &vecData);
 
 private:
 	int m_mainViewOffX;

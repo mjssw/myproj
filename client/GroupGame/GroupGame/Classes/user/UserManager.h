@@ -5,6 +5,7 @@
 #include "Basic.h"
 #include "ViewData.h"
 #include "GameInfo.h"
+#include "GroupManager.h"
 #include <string>
 
 class CUserManager
@@ -17,6 +18,7 @@ public:
 	CUserBasic& GetBasic();
 	CUserViewData& GetViewData(); 
 	CGameList& GetGameList();
+	CGroupManager& GetGroupManager();
 
 	void SetGroupConnInfo(const std::string &ip, s32 port);
 	const std::string& GetGroupGateIp();
@@ -29,6 +31,7 @@ private:
 	CGameList m_games;
 	std::string m_groupGateIp;
 	s32 m_groupGatePort;
+	CGroupManager m_groupManager;
 };
 
 #endif

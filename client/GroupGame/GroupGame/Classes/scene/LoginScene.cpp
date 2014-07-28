@@ -73,6 +73,7 @@ void CLoginScene::UpdateView(int type)
 	case CSceneManager::E_UpdateType_ConnectGroup:
 		{
 			_UpdateLoadingStep();
+			_UserLoginGroup();
 		}
 		break;
 	default:
@@ -182,7 +183,7 @@ void CLoginScene::menuTestCallback(CCObject *pSender)
 #endif
 }
 
-const int g_loadingStep = 6;
+const int g_loadingStep = 7;
 void CLoginScene::menuLoginCallback(CCObject *pSender)
 {
 	if( CNetManager::Instance().StartLogin( LOGIN_IP, LOGIN_PORT ) )
@@ -566,6 +567,20 @@ void CLoginScene::_UserLogin()
 	client->Login( 
 		CUserManager::Instance().GetBasic().GetUser(),
 		CUserManager::Instance().GetBasic().GetPwd() );
+}
+
+void CLoginScene::_UserLoginGroup()
+{
+	CGroupClient *client = CNetManager::Instance().GetGroupClientInstance();
+	if( !client )
+	{
+		CCLog( "[CLoginScene::_UserLoginGroup] group client instance NULL" );
+		return;
+	}
+
+	client->Login( 
+		CUserManager::Instance().GetBasic().GetUser(),
+		CUserManager::Instance().GetToken() );
 }
 
 void CLoginScene::JumpMainSceneCallback(float t)

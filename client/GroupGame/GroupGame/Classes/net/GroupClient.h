@@ -2,6 +2,8 @@
 #define _GROUP_CLIENT_H_
 
 #include "ProtoClientBase.h"
+#include "group.pb.h"
+#include <string>
 
 class CGroupClient : public CProtoClientBase
 {
@@ -11,6 +13,13 @@ public:
 	virtual void OnConnect();
 	virtual void OnClose();
 	virtual void OnConnectError();
+
+	void Login(const std::string &user, const std::string &token);
+
+private:
+	void _LoginGroupResult(sglib::groupproto::SCGroupUserLoginRsp &msg);
+	void _GroupListUpdate(sglib::groupproto::SCGroupListUpdate &msg);
+	void _GroupInfoUpdate(sglib::groupproto::SCGroupInfoUpdate &msg);
 };
 
 #endif

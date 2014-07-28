@@ -48,6 +48,7 @@ private:
 	void _UpdateLoadingStep();
 	void _RemoveLoadingView();
 	void _UserLogin();
+	void _UserLoginGroup();
 
 	void JumpMainSceneCallback(float t);
 private:

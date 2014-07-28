@@ -29,6 +29,11 @@ CGameList& CUserManager::GetGameList()
 	return m_games;
 }
 
+CGroupManager& CUserManager::GetGroupManager()
+{
+	return m_groupManager;
+}
+
 void CUserManager::SetGroupConnInfo(const string &ip, s32 port)
 {
 	m_groupGateIp = ip;

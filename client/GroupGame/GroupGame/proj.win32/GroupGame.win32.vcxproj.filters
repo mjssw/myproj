@@ -178,15 +178,6 @@
     <ClInclude Include="..\Classes\view\PopLayerBase.h">
       <Filter>view</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\gamemsg\MsgConnectLogin.h">
-      <Filter>gamemsg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\gamemsg\MsgConnectLoginError.h">
-      <Filter>gamemsg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\gamemsg\MsgCloseLogin.h">
-      <Filter>gamemsg</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\scene\SceneManager.h">
       <Filter>scene</Filter>
     </ClInclude>
@@ -196,23 +187,23 @@
     <ClInclude Include="..\Classes\net\ProtoClientBase.h">
       <Filter>net</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\gamemsg\MsgLoginResult.h">
-      <Filter>gamemsg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\gamemsg\MsgGameInfoNotify.h">
-      <Filter>gamemsg</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\user\GameInfo.h">
       <Filter>user</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\gamemsg\MsgGroupGateNotify.h">
+    <ClInclude Include="..\Classes\gamemsg\MsgGroupModule.h">
       <Filter>gamemsg</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\gamemsg\MsgUserBasicInfoNotify.h">
+    <ClInclude Include="..\Classes\gamemsg\MsgLoginModule.h">
       <Filter>gamemsg</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\gamemsg\MsgConnectGroup.h">
-      <Filter>gamemsg</Filter>
+    <ClInclude Include="..\Classes\user\Group.h">
+      <Filter>user</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\user\GroupManager.h">
+      <Filter>user</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\user\GroupMember.h">
+      <Filter>user</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -327,38 +318,29 @@
     <ClCompile Include="..\Classes\view\PopLayerBase.cpp">
       <Filter>view</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\gamemsg\MsgConnectLogin.cpp">
-      <Filter>gamemsg</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\gamemsg\MsgConnectLoginError.cpp">
-      <Filter>gamemsg</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\gamemsg\MsgCloseLogin.cpp">
-      <Filter>gamemsg</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\scene\SceneManager.cpp">
       <Filter>scene</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\net\ProtoClientBase.cpp">
       <Filter>net</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\gamemsg\MsgLoginResult.cpp">
-      <Filter>gamemsg</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\gamemsg\MsgGameInfoNotify.cpp">
-      <Filter>gamemsg</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\user\GameInfo.cpp">
       <Filter>user</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\gamemsg\MsgGroupGateNotify.cpp">
+    <ClCompile Include="..\Classes\gamemsg\MsgGroupModule.cpp">
       <Filter>gamemsg</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\gamemsg\MsgUserBasicInfoNotify.cpp">
+    <ClCompile Include="..\Classes\gamemsg\MsgLoginModule.cpp">
       <Filter>gamemsg</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\gamemsg\MsgConnectGroup.cpp">
-      <Filter>gamemsg</Filter>
+    <ClCompile Include="..\Classes\user\Group.cpp">
+      <Filter>user</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\user\GroupManager.cpp">
+      <Filter>user</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\user\GroupMember.cpp">
+      <Filter>user</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

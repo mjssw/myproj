@@ -488,6 +488,7 @@ void CMainScene::_AddGroupsToListView()
 
 	// test
 	vector<TableViewData> vecData;
+	//_DumpGroupList( vecData );
 	for( int i=0; i<12; ++i )
 	{
 		char icon[64] = {0};
@@ -499,6 +500,7 @@ void CMainScene::_AddGroupsToListView()
 		data.text = text;
 		vecData.push_back( data ); 
 	}
+	//*/
 	m_pGroupList = CMyTableView::create(m_szTableView, CCSize(264,58), vecData, "selectbg.png" );
     CCAssert( m_pGroupList, "GetTableView Failed" );
 	m_pGroupList->SetPosition( ccp(sz.width/2, sz.height/2) );
@@ -671,4 +673,8 @@ void CMainScene::_AddDiamondOnTitle(cocos2d::Node &parent)
 	x += iconSz.width/2 + GAP + szVal.width/2;
 	val->setPosition( ccp( x, sz.height/2 ) );
 	parent.addChild( val );
+}
+
+void CMainScene::_DumpGroupList(std::vector<TableViewData> &vecData)
+{
 }
