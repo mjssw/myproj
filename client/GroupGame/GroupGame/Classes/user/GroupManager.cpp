@@ -50,3 +50,12 @@ CGroup* CGroupManager::FindGroup(u64 id)
 	return it->second;
 }
 
+void CGroupManager::Dump(vector<u64> &vec)
+{
+	vec.clear();
+	map<u64, CGroup*>::iterator it = m_groups.begin();
+	for( ; it != m_groups.end(); ++it )
+	{
+		vec.push_back( it->first );
+	}
+}

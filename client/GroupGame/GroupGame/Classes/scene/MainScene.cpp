@@ -12,6 +12,10 @@ USING_NS_CC_EXT;
 #include "utils.h"
 #include "view/MemberListPopLayer.h"
 #include "user/UserManager.h"
+#include "net/NetManager.h"
+#include "scene/SceneManager.h"
+#include "user/GroupManager.h"
+#include "user/Group.h"
 using namespace std;
 
 // for test
@@ -32,6 +36,21 @@ CCScene* CMainScene::scene()
     } while( 0 );
 
     return scene;
+}
+
+void CMainScene::UpdateView(int type)
+{
+	switch( type )
+	{
+	case CSceneManager::E_UpdateType_UpdateGroupList:
+		{
+			_UpdateGroupList();
+		}
+		break;
+	default:
+		CCLog( "[CMainScene::UpdateView] unknown type:%d", type );
+		break;
+	};
 }
 
 bool CMainScene::init()
@@ -56,6 +75,9 @@ bool CMainScene::init()
 		_AddListView();
 		_AddTabButtons();
 		_AddMainView();
+
+		CSceneManager::Instance().SetCurView( this );
+		CNetManager::Instance().ResumeProcessMessage();
 
 #ifdef _DEBUG
         CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
@@ -486,8 +508,8 @@ void CMainScene::_AddGroupsToListView()
 	}
 	Size sz = parent->getContentSize();
 
-	// test
 	vector<TableViewData> vecData;
+	/*
 	//_DumpGroupList( vecData );
 	for( int i=0; i<12; ++i )
 	{
@@ -510,6 +532,7 @@ void CMainScene::_AddGroupsToListView()
 void CMainScene::_ClearListView()
 {
 	removeChildByTag( E_Tag_ListView );
+	m_pGroupList = NULL;
 }
 
 void CMainScene::_ClearMainView()
@@ -527,6 +550,7 @@ void CMainScene::_ClearContentOnListView()
 	}
 
 	node->removeAllChildrenWithCleanup( true );
+	m_pGroupList = NULL;
 }
 
 void CMainScene::_ClearContentOnMainView()
@@ -677,4 +701,29 @@ void CMainScene::_AddDiamondOnTitle(cocos2d::Node &parent)
 
 void CMainScene::_DumpGroupList(std::vector<TableViewData> &vecData)
 {
+	vecData.clear();
+	CGroupManager &mgr = CUserManager::Instance().GetGroupManager();
+	vector<u64> vecid;
+	mgr.Dump( vecid );
+	vector<u64>::iterator it = vecid.begin();
+	for( ; it != vecid.end(); ++it )
+	{
+		CGroup *group = mgr.FindGroup( *it );
+		CCAssert( group, "[CMainScene::_DumpGroupList] group is null" );
+
+		TableViewData data;
+		data.icon = group->GetHead();
+		data.text = group->GetName();
+		vecData.push_back( data ); 
+	}
+}
+
+void CMainScene::_UpdateGroupList()
+{
+	if( m_pGroupList )
+	{
+		vector<TableViewData> vecData;
+		_DumpGroupList( vecData );
+		m_pGroupList->UpdateElements( vecData );
+	}
 }

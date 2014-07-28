@@ -4,6 +4,7 @@
 #include "Define.h"
 #include <string>
 #include <map>
+#include <vector>
 
 class CGroup;
 class CGroupManager
@@ -15,6 +16,7 @@ public:
 	bool AddGroup(CGroup *group);
 	void RemoveGroup(u64 id);
 	CGroup* FindGroup(u64 id);
+	void Dump(std::vector<u64> &vec);
 
 private:
 	std::map<u64, CGroup*> m_groups;

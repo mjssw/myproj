@@ -27,6 +27,7 @@ public:
 	void SetPosition(cocos2d::CCPoint &pt);
 	cocos2d::CCSize GetSize();
 	bool InsertElement(TableViewData &data);
+	void UpdateElements(std::vector<TableViewData> &data);
 	void RemoveElementAtIndex(int idx);
 
 	//virtual void draw();

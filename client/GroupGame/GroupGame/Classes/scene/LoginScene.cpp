@@ -76,6 +76,11 @@ void CLoginScene::UpdateView(int type)
 			_UserLoginGroup();
 		}
 		break;
+	case CSceneManager::E_UpdateType_LoginGroup:
+		{
+			CNetManager::Instance().PauseProcessMessage();
+		}
+		break;
 	default:
 		CCLog( "[CLoginScene::UpdateView] unknown type:%d", type );
 		break;

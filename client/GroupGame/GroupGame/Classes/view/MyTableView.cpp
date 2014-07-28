@@ -109,6 +109,21 @@ bool CMyTableView::InsertElement(TableViewData &data)
 	return true;
 }
 
+void CMyTableView::UpdateElements(vector<TableViewData> &data)
+{
+	if( !m_tableView )
+	{
+		return;
+	}
+
+	m_viewData = data;
+	m_cellCount = (int)data.size();
+
+	CCPoint cur = ccp(m_scrollOffset.x,  m_scrollOffset.y - m_cellSz.height); 
+	m_tableView->reloadData();
+	m_tableView->setContentOffset( cur );
+}
+
 void CMyTableView::RemoveElementAtIndex(int idx)
 {
 	if( !m_tableView || m_viewData.size()==0 || idx<0 )

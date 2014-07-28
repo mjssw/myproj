@@ -44,6 +44,7 @@ void CMsgLoginGroupResult::Process()
 
 	if( m_result == sglib::errorcode::E_ErrorCode_Success )
 	{
+		view->UpdateView( CSceneManager::E_UpdateType_LoginGroup );
 		view->UpdateView( CSceneManager::E_UpdateType_LoadingProgress );
 	}
 	else
@@ -71,6 +72,14 @@ void CMsgGroupListUpdate::Process()
 			(*it)->GetId(), (*it)->GetName().c_str(), ret?1:0 );
 	}
 	SAFE_DELETE( m_groups );
+	
+	CViewBase *view = CSceneManager::Instance().GetCurView();
+	if( !view )
+	{
+		CCLog( "[CMsgGroupListUpdate::Process] cur view is NULL" );
+		return;
+	}
+	view->UpdateView( CSceneManager::E_UpdateType_UpdateGroupList );
 }
 
 CMsgGroupInfoUpdate::CMsgGroupInfoUpdate(u64 groupid, vector<CGroupMember*> *members) : 

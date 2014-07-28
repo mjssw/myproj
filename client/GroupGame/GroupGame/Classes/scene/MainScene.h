@@ -3,10 +3,11 @@
 
 #include "cocos2d.h"
 #include "view/MyTableView.h"
+#include "ViewBase.h"
 
 class CMyEditBox;
 class CChatTableView;
-class CMainScene : public cocos2d::CCLayer
+class CMainScene : public cocos2d::CCLayer, public CViewBase
 {
 public:
 	enum
@@ -14,6 +15,7 @@ public:
 		E_Tag_ListView = 201,
 		E_Tag_MainView,
 	};
+	virtual void UpdateView(int type);
 
     virtual bool init();  
     static cocos2d::CCScene* scene();
@@ -53,6 +55,7 @@ private:
 	void _AddDiamondOnTitle(cocos2d::Node &parent);
 
 	void _DumpGroupList(std::vector<TableViewData> &vecData);
+	void _UpdateGroupList();
 
 private:
 	int m_mainViewOffX;

@@ -16,6 +16,8 @@ public:
 		E_UpdateType_LoginFailed, 
 		E_UpdateType_ConnectLoginError,
 		E_UpdateType_ConnectGroup,
+		E_UpdateType_LoginGroup,
+		E_UpdateType_UpdateGroupList,
 	};
 
 	void SetCurView(CViewBase *curView);
