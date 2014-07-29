@@ -4,6 +4,7 @@
 #include "PopLayerBase.h"
 #include <string>
 
+class CMyTableView; 
 class CMemberListPopLayer : public CPopLayerBase
 {
 public:
@@ -15,6 +16,12 @@ public:
     virtual void onEnter();
 	void menuCloseCallback(cocos2d::Object *sender);
 	static CMemberListPopLayer* create(const char *bgimage);
+
+private:
+	void _AddMemberList();
+
+private:
+	CMyTableView *m_memberList;
 };
 
 #endif

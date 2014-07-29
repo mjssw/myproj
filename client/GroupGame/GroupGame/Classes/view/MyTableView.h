@@ -8,8 +8,17 @@
 
 struct TableViewData
 {
+	TableViewData() : 
+		iconRect(0,0,0,0), 
+		useRect(false),
+		data(NULL)
+	{}
+
 	std::string icon;
 	std::string text;
+	cocos2d::Rect iconRect;
+	bool useRect;
+	void *data;
 };
 
 class CMyTableView : public cocos2d::CCNode , public cocos2d::extension::TableViewDataSource, public cocos2d::extension::TableViewDelegate
@@ -40,6 +49,8 @@ public:
     virtual cocos2d::Size tableCellSizeForIndex(cocos2d::extension::TableView *table, ssize_t idx);
     virtual cocos2d::extension::TableViewCell* tableCellAtIndex(cocos2d::extension::TableView *table, ssize_t idx);
     virtual ssize_t numberOfCellsInTableView(cocos2d::extension::TableView *table);
+
+	void* GetTochCellData();
 
 private:
 	void _AddSelectBg(cocos2d::extension::TableViewCell *cell);

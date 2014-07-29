@@ -36,3 +36,13 @@ bool CUserViewData::GetAutoLogin()
 {
 	return m_isAutoLogin;
 }
+
+void CUserViewData::SetSelectGroup(CGroup *group)
+{
+	m_selectGroup = group;
+}
+
+CGroup* CUserViewData::GetSelectGroup()
+{
+	return m_selectGroup;
+}

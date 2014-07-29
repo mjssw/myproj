@@ -1,5 +1,7 @@
 #include "MemberListPopLayer.h"
 #include "MyMenuItemImage.h"
+#include "view/MyTableView.h"
+#include "utils.h"
 using namespace cocos2d;
 using namespace std;
 
@@ -36,6 +38,8 @@ void CMemberListPopLayer::onEnter()
 	}
 	menu->setPosition( CCPointZero );
 	parent->addChild( menu, 1 );
+
+	_AddMemberList();
 }
 
 void CMemberListPopLayer::menuCloseCallback(Object *sender)
@@ -64,4 +68,37 @@ CMemberListPopLayer* CMemberListPopLayer::create(const char *bgimage)
 	}
 	CC_SAFE_DELETE(layer);
 	return nullptr;
+}
+
+void CMemberListPopLayer::_AddMemberList()
+{
+	int bgTitleH = 75;
+	int bgBorderW = 16;
+	int headH = 40;
+
+	Node *bg = getChildByTag( E_Tag_Bg );
+	CCAssert( bg, "bg is null" );
+	Size szBg = bg->getContentSize();
+	Size szCell( szBg.width-2*bgBorderW, headH );
+	Size szList( szCell.width, szBg.height-bgTitleH-bgBorderW );
+
+	vector<TableViewData> vecData;
+	//Size sz(
+	for( int i=0; i<5; ++i )
+	{
+		char icon[64] = {0};
+		char text[64] = {0};
+		sprintf( icon, "syshead.png");
+		sprintf( text, "ºÃÓÑ %d", i+1 );
+		TableViewData data;
+		data.icon = icon;
+		data.text = a2u(text);
+		data.useRect = true;
+		data.iconRect = Rect(0, i*85, 85, 85);
+		vecData.push_back( data ); 
+	}
+	m_memberList = CMyTableView::create(szList, szCell, vecData, "selectbg.png" );
+    CCAssert( m_memberList, "CMemberListPopLayer GetTableView Failed" );
+	m_memberList->SetPosition( ccp(szBg.width/2, szList.height/2+bgBorderW) );
+	bg->addChild( m_memberList );
 }

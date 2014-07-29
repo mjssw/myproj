@@ -248,7 +248,15 @@ TableViewCell* CMyTableView::tableCellAtIndex(TableView *table, ssize_t idx)
 
 	int off = 5;
 	int x = off;
-	CCSprite *pSprite = CCSprite::create( m_viewData[idx].icon.c_str() );
+	CCSprite *pSprite = NULL;
+	if( m_viewData[idx].useRect )
+	{
+		pSprite = CCSprite::create( m_viewData[idx].icon.c_str(), m_viewData[idx].iconRect );
+	}
+	else
+	{
+		pSprite = CCSprite::create( m_viewData[idx].icon.c_str() );
+	}
 	if( pSprite )
 	{
 		CCSize sz = pSprite->getContentSize();
@@ -301,6 +309,15 @@ ssize_t CMyTableView::numberOfCellsInTableView(TableView *table)
 	return m_cellCount;
 }
 
+void* CMyTableView::GetTochCellData()
+{
+	if( m_lastTouchCell )
+	{
+		return m_lastTouchCell->getUserData();
+	}
+	return NULL;
+}
+
 void CMyTableView::_AddSelectBg(TableViewCell *cell)
 {
 	CCAssert( cell, "_AddSelectBg param is NULL" );
@@ -310,6 +327,8 @@ void CMyTableView::_AddSelectBg(TableViewCell *cell)
 		CCLog( "[CMyTableView::_AddSelectBg] create select bg Error " );
 		return;
 	}
+	float scale = m_cellSz.height / selectBg->getContentSize().height;
+	selectBg->setScaleY( scale );
 	selectBg->setAnchorPoint( ccp(0.5, 0.5) );
 	selectBg->setPosition( ccp(m_cellSz.width/2, m_cellSz.height/2) );
 	cell->addChild( selectBg, 0, E_Tag_SelectBg );
