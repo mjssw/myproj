@@ -60,8 +60,8 @@ public:
 	}
 
 	virtual void HandleEvent(s32 paramLen, char *paramData);
-
 	SGLib::IDBQuery* GetDBQuery(){ return m_dbPool.GetDBQuery(); }
+	void Ping();
 
 private:
 	struct SDBParam
@@ -78,6 +78,7 @@ private:
 private:
     SGLib::CEventWorkerExPool *m_eventWorkerPool;
 	SGLib::CDBPool<SGLib::MySqlDBQuery> m_dbPool;
+	SGLib::CLock m_connLock;
 };
 
 #endif

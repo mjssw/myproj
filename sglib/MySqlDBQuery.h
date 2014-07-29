@@ -41,6 +41,8 @@ public:
 	bool GetTableKeyInfo(const char *table_name, char *key_name, char *key_type);
 	unsigned int GetRecordCount(const char *table_name);
 
+	virtual int Ping();
+
 public:
 	MySqlDBQuery();
 

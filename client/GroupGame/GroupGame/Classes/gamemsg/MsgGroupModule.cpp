@@ -7,6 +7,7 @@
 #include "errno.pb.h"
 #include "user/Group.h"
 #include "user/GroupMember.h"
+#include "utils.h"
 using namespace std;
 using namespace cocos2d;
 
@@ -68,8 +69,8 @@ void CMsgGroupListUpdate::Process()
 	for( ; it != m_groups->end(); ++it )
 	{
 		bool ret = CUserManager::Instance().GetGroupManager().AddGroup( *it );
-		CCLog( "[CMsgGroupListUpdate::Process][DEBUG] add group:%llu:%s result:%d",
-			(*it)->GetId(), (*it)->GetName().c_str(), ret?1:0 );
+		CCLog( "[CMsgGroupListUpdate::Process][DEBUG] add group:%llu:%s result:%d name:%s",
+			(*it)->GetId(), (*it)->GetName().c_str(), ret?1:0, u2a((*it)->GetName().c_str()) );
 	}
 	SAFE_DELETE( m_groups );
 	

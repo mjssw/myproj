@@ -4,6 +4,11 @@
 using namespace SGLib;
 using namespace std;
 
+static void _MysqlPingCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
+{
+	SGDEBUG( "_MysqlPingCallback called\n" );
+}
+
 CMysqlManager::CMysqlManager(s32 execCount, s32 queueSize, SGLib::CEventWorkerExPool *eventWorkerPool) : 
 	m_eventWorkerPool( eventWorkerPool ),
 	m_dbPool( execCount, queueSize )
@@ -45,6 +50,12 @@ void CMysqlManager::HandleEvent(s32 paramLen, char *paramData)
 	(*func)( record, NULL, dbparam->param, dbparam->len );
 	SAFE_DELETE( func );
 	SAFE_DELETE( record );
+}
+
+void CMysqlManager::Ping()
+{
+	bool ret = Execute( "SELECT 1;", _MysqlPingCallback, NULL, 0 );
+	SGDEBUG( "CMysqlManager::Ping ret=%d\n", ret?1:0 );
 }
 
 bool CMysqlManager::_DoExecute(const char *sql, CDBCallbackFunctor *callback, void *param, s32 len)

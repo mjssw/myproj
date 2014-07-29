@@ -346,7 +346,10 @@ unsigned int MySqlDBQuery::GetRecordCount(const char *table_name)
 
 }
 
-
+int MySqlDBQuery::Ping()
+{
+	return mysql_ping( m_MySqlConnection );
+}
 
 /////////////////////////////////////////MySqlDBRecordSet//////////////////////////////////
 

@@ -153,7 +153,7 @@ void CMyTableView::draw()
 
 CMyTableView* CMyTableView::create(CCSize &sz, CCSize &cellSz, vector<TableViewData> &viewData, const char *selectBgImage)
 {
-	if( viewData.size() == 0 || selectBgImage == NULL )
+	if( selectBgImage == NULL )
 	{
 		return NULL;
 	}
@@ -270,11 +270,11 @@ TableViewCell* CMyTableView::tableCellAtIndex(TableView *table, ssize_t idx)
 	{
 		pLabel = (CCLabelTTF*)pCell->getChildByTag( tagLabel );
 		CCAssert( pLabel, "get label child error" ); 
-		pLabel->setString( a2u(m_viewData[idx].text.c_str()).c_str() );
+		pLabel->setString( m_viewData[idx].text.c_str() );
 	}
 	else
 	{
-		pLabel = CCLabelTTF::create( a2u(m_viewData[idx].text.c_str()).c_str(), "Arial", 20.0 );
+		pLabel = CCLabelTTF::create( m_viewData[idx].text.c_str(), "Arial", 20.0 );
 		pCell->addChild( pLabel, 1 );
 	}
 

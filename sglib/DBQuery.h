@@ -47,6 +47,7 @@ public:
 	 */
 	virtual unsigned int GetRecordCount(const char *table_name) = 0;
 
+	virtual int Ping() = 0;
 };
 
 class IDBRecordSet

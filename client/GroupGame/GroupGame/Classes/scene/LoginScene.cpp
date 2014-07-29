@@ -78,7 +78,7 @@ void CLoginScene::UpdateView(int type)
 		break;
 	case CSceneManager::E_UpdateType_LoginGroup:
 		{
-			CNetManager::Instance().PauseProcessMessage();
+			//CNetManager::Instance().PauseProcessMessage();
 		}
 		break;
 	default:
@@ -545,6 +545,7 @@ void CLoginScene::_RemoveLoginView()
 
 void CLoginScene::_UpdateLoadingStep()
 {
+	CCLog( "_UpdateLoadingStep" );
 	if( m_loadView.m_loadItem )
 	{
 		m_loadView.m_loadItem->UpdateProgress();

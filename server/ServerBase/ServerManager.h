@@ -19,6 +19,8 @@
 #define SERVER_LOG_WARN(msg)	LOG4CXX_WARN( CServerManager::Instance().GetLogger(), msg );
 #define SERVER_LOG_FATAL(msg)	LOG4CXX_FATAL( CServerManager::Instance().GetLogger(), msg );
 
+void MysqlPingTimerCall(void *pData, s32 nDataLen);
+
 class CServerManager
 {
 public:
@@ -476,6 +478,15 @@ public:
 		return GetMysqlManagerIdByDbName( "groups" );
 	}
 
+	void PingAllMysql()
+	{
+		std::map<s32, CMysqlManager*>::iterator it = m_mysqlMgr.begin();
+		for( ; it != m_mysqlMgr.end(); ++it )
+		{
+			it->second->Ping();
+		}
+	}
+
 private:
 	
 	s32 _hashId(const string &user)
@@ -523,6 +534,7 @@ private:
 
 	bool _StartMysqlMgr()
 	{
+		m_pingTimer = INVALID_VAL;
 		bool ret = true;
 		std::map<s32, CMysqlManager*>::iterator it = m_mysqlMgr.begin();
 		for( ; it != m_mysqlMgr.end(); ++it )
@@ -547,6 +559,13 @@ private:
 					cfg->m_ip.c_str() << ":" << cfg->m_port << ":" << cfg->m_db.c_str() << "] failed!" );
 			}
 		}
+
+		if( m_mysqlMgr.size() > 0 )
+		{
+			m_pingTimer = AddTimer( 1000*60*60*3, MysqlPingTimerCall, NULL, 0, true );
+			SERVER_LOG_INFO( "StartMysqlManager ret:" << ret << " PingTimer:" << m_pingTimer );
+		}
+
 		return ret;
 	}
 
@@ -599,6 +618,8 @@ private:
 	std::map<s32, CMysqlManager*> m_mysqlMgr;
 	std::map<std::string, map<s32, CMysqlManager*> > m_mysqlTypeIndex;
 	std::map<std::string, s32> m_mysqlDbnameIndex;
+	
+	s32 m_pingTimer;
 };
 
 #endif

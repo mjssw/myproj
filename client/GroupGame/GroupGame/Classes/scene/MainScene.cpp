@@ -77,7 +77,7 @@ bool CMainScene::init()
 		_AddMainView();
 
 		CSceneManager::Instance().SetCurView( this );
-		CNetManager::Instance().ResumeProcessMessage();
+		//CNetManager::Instance().ResumeProcessMessage();
 
 #ifdef _DEBUG
         CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
@@ -523,6 +523,7 @@ void CMainScene::_AddGroupsToListView()
 		vecData.push_back( data ); 
 	}
 	//*/
+	_DumpGroupList( vecData );
 	m_pGroupList = CMyTableView::create(m_szTableView, CCSize(264,58), vecData, "selectbg.png" );
     CCAssert( m_pGroupList, "GetTableView Failed" );
 	m_pGroupList->SetPosition( ccp(sz.width/2, sz.height/2) );
