@@ -50,6 +50,7 @@ public:
     virtual cocos2d::extension::TableViewCell* tableCellAtIndex(cocos2d::extension::TableView *table, ssize_t idx);
     virtual ssize_t numberOfCellsInTableView(cocos2d::extension::TableView *table);
 
+	void SetTouchCallback(cocos2d::SEL_CallFuncND callback, cocos2d::Ref *target);
 	void* GetTochCellData();
 
 private:
@@ -64,6 +65,8 @@ private:
 	std::vector<TableViewData> m_viewData;
 	std::string m_selectBg;
 	cocos2d::CCPoint m_scrollOffset;
+	cocos2d::SEL_CallFuncND m_touchCallback;
+	cocos2d::Ref *m_callbackTarget;
 };
 
 #endif

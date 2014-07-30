@@ -67,6 +67,16 @@ CGroupMember* CGroup::FindMember(const std::string &user)
 	return it->second;
 }
 
+void CGroup::Dump(vector<string> &vec)
+{
+	vec.clear();
+	map<string, CGroupMember*>::iterator it = m_members.begin();
+	for( ; it != m_members.end(); ++it )
+	{
+		vec.push_back( it->first );
+	}
+}
+
 void CGroup::_Destory()
 {
 	map<string, CGroupMember*>::iterator it = m_members.begin();

@@ -61,7 +61,9 @@ CMyTableView::CMyTableView() :
 	m_lastTouchIdx(-1),
 	m_cellSz(0, 0), 
 	m_cellCount(0),
-	m_selectBg("")
+	m_selectBg(""),
+	m_touchCallback(NULL),
+	m_callbackTarget(NULL)
 {
 	bool ret = init();
 	CCAssert( ret, "CMyTableView CCNode::init Error" );
@@ -212,6 +214,12 @@ void CMyTableView::tableCellTouched(TableView *table, TableViewCell *cell)
 	m_lastTouchCell = cell;
 
 	CCLog( "tableCellTouched %d", cell->getIdx() );
+
+	// »Øµ÷
+	if( m_callbackTarget && m_touchCallback )
+	{
+		(m_callbackTarget->*m_touchCallback)(cell, GetTochCellData());
+	}
 }
 
 Size CMyTableView::tableCellSizeForIndex(TableView *table, ssize_t idx)
@@ -301,6 +309,8 @@ TableViewCell* CMyTableView::tableCellAtIndex(TableView *table, ssize_t idx)
 		m_lastTouchCell = pCell;
 	}
 
+	pCell->setUserData( m_viewData[idx].data );
+
     return pCell;
 }
 
@@ -316,6 +326,12 @@ void* CMyTableView::GetTochCellData()
 		return m_lastTouchCell->getUserData();
 	}
 	return NULL;
+}
+	
+void CMyTableView::SetTouchCallback(SEL_CallFuncND callback, Ref *target)
+{
+	m_touchCallback = callback;
+	m_callbackTarget = target;
 }
 
 void CMyTableView::_AddSelectBg(TableViewCell *cell)

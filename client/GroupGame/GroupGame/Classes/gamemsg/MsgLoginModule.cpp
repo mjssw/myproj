@@ -4,6 +4,7 @@
 #include "scene/ViewBase.h"
 #include "scene/SceneManager.h"
 #include "user/UserManager.h"
+#include "CommDef.h"
 #include "errno.pb.h"
 using namespace cocos2d;
 using namespace std;
@@ -156,7 +157,7 @@ void CMsgUserBasicInfoNotify::Process()
 	CUserManager::Instance().GetBasic().SetSex( m_sex );
 	CUserManager::Instance().GetBasic().SetExp( m_exp );
 	CUserManager::Instance().GetBasic().SetLevel( m_level );
-	CUserManager::Instance().GetBasic().SetMoney( CUserBasic::E_Money_Gold, m_gold );
-	CUserManager::Instance().GetBasic().SetMoney( CUserBasic::E_Money_Diamond, m_diamond );
+	CUserManager::Instance().GetBasic().SetMoney( E_Money_Gold, m_gold );
+	CUserManager::Instance().GetBasic().SetMoney( E_Money_Diamond, m_diamond );
 	view->UpdateView( CSceneManager::E_UpdateType_LoadingProgress );
 }

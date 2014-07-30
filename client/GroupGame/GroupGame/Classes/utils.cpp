@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "CommDef.h"
 using namespace cocos2d;
 
 #ifdef _WINDOWS
@@ -100,4 +101,41 @@ Size asciiSizeWithFont(const char *font, int size)
 	// TODO
 
 	return sz;
+}
+
+void CalcUserHead(const std::string &head, int sex, std::string &realhead, cocos2d::Rect &rc, bool &useRc)
+{
+	if( head == "" )
+	{
+		// 没有头像使用默认的
+		rc = cocos2d::Rect(0, 0, 0, 0);
+		useRc = false;
+		if( sex == E_Sex_Male )
+		{
+			realhead = "boy.png";
+		}
+		else
+		{
+			realhead = "girl.png";
+		}
+	}
+	else if( head.at(0) == '#' )
+	{
+		// 使用的系统头像
+		std::string real = head.substr( 1 );
+		int offset = atoi( real.c_str() );
+		int offx = (offset >> 16);
+		int offy = (offset & 0xFFFF );
+		rc.origin = ccp( offx * SYS_HEAD_SIZE_W, offy * SYS_HEAD_SIZE_H );
+		rc.size = Size( SYS_HEAD_SIZE_W, SYS_HEAD_SIZE_H );
+		realhead = "syshead.png";
+		useRc = true;
+	}
+	else
+	{
+		// 使用自定义头像
+		rc = cocos2d::Rect(0, 0, 0, 0);
+		useRc = false;
+		realhead = head;
+	}
 }

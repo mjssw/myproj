@@ -246,6 +246,16 @@ void CMainScene::menuSendCallback(Object *pSender)
 	m_chatTableView->InsertUpdate();
 }
 
+void CMainScene::GroupListTouchedCallback(Node *pSender, void *data)
+{
+	if( data )
+	{
+		CGroup *group = (CGroup*)data;
+		CUserManager::Instance().GetViewData().SetSelectGroup( group );
+		CCLog( "group:%llu:%s is selected", group->GetId(), group->GetName().c_str() );
+	}
+}
+
 void CMainScene::_AddSceneBg()
 {
 	CCSize winSz = CCDirector::sharedDirector()->getWinSize();
@@ -527,6 +537,7 @@ void CMainScene::_AddGroupsToListView()
 	m_pGroupList = CMyTableView::create(m_szTableView, CCSize(264,58), vecData, "selectbg.png" );
     CCAssert( m_pGroupList, "GetTableView Failed" );
 	m_pGroupList->SetPosition( ccp(sz.width/2, sz.height/2) );
+	m_pGroupList->SetTouchCallback( callfuncND_selector(CMainScene::GroupListTouchedCallback), this );
 	parent->addChild( m_pGroupList );
 }
 
@@ -568,11 +579,27 @@ void CMainScene::_ClearContentOnMainView()
 
 Sprite* CMainScene::_GetHead()
 {
+	Rect rc;
+	bool useRc;
+	string realhead = "";
+	CalcUserHead( 
+		CUserManager::Instance().GetBasic().GetHead(),
+		CUserManager::Instance().GetBasic().GetSex(),
+		realhead, rc, useRc );
+	if( useRc )
+	{
+		return Sprite::create( realhead, rc );
+	}
+	else
+	{
+		return Sprite::create( realhead );
+	}
+	/*
 	string head = CUserManager::Instance().GetBasic().GetHead();
 	if( head == "" )
 	{
 		// 没有头像使用默认的
-		if( CUserManager::Instance().GetBasic().GetSex() == CUserBasic::E_Sex_Male )
+		if( CUserManager::Instance().GetBasic().GetSex() == E_Sex_Male )
 		{
 			head = "boy.png";
 		}
@@ -600,6 +627,7 @@ Sprite* CMainScene::_GetHead()
 		CCAssert( head == CUserManager::Instance().GetBasic().GetUser(), "[_GetHead]selfdefine head is not same with user" );
 		return Sprite::create( head );
 	}
+	//*/
 }
 
 int CMainScene::_AddHeadOnTitle(cocos2d::Node &parent)
@@ -663,7 +691,7 @@ void CMainScene::_AddGoldOnTitle(cocos2d::Node &parent)
 	parent.addChild( icon );
 
 	char strVal[32] = {0};
-	sprintf( strVal, "%llu", CUserManager::Instance().GetBasic().GetMoney(CUserBasic::E_Money_Gold) );
+	sprintf( strVal, "%llu", CUserManager::Instance().GetBasic().GetMoney(E_Money_Gold) );
 	Label *val = Label::createWithSystemFont( strVal, "arial", 30 );
 	CCAssert( val, "create label gold failed" );
 	val->setColor( Color3B::YELLOW );
@@ -689,7 +717,7 @@ void CMainScene::_AddDiamondOnTitle(cocos2d::Node &parent)
 	parent.addChild( icon );
 
 	char strVal[32] = {0};
-	sprintf( strVal, "%llu", CUserManager::Instance().GetBasic().GetMoney(CUserBasic::E_Money_Diamond) );
+	sprintf( strVal, "%llu", CUserManager::Instance().GetBasic().GetMoney(E_Money_Diamond) );
 	Label *val = Label::createWithSystemFont( strVal, "arial", 30 );
 	CCAssert( val, "create label diamond failed" );
 	val->setColor( Color3B::YELLOW );
@@ -715,6 +743,7 @@ void CMainScene::_DumpGroupList(std::vector<TableViewData> &vecData)
 		TableViewData data;
 		data.icon = group->GetHead();
 		data.text = group->GetName();
+		data.data = group;
 		vecData.push_back( data ); 
 	}
 }

@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : mysqlroot
 Source Server Version : 50537
 Source Host           : 172.18.5.55:3306
-Source Database       : group
+Source Database       : groups
 
 Target Server Type    : MYSQL
 Target Server Version : 50537
 File Encoding         : 65001
 
-Date: 2014-07-23 18:05:51
+Date: 2014-07-30 15:01:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -44,8 +44,8 @@ CREATE TABLE `groups` (
 -- ----------------------------
 -- Records of groups
 -- ----------------------------
-INSERT INTO `groups` VALUES ('1', 'gp1', 'group1.png');
-INSERT INTO `groups` VALUES ('2', 'gp2', 'group3.png');
+INSERT INTO `groups` VALUES ('1', '斗地主高中群', 'group1.png');
+INSERT INTO `groups` VALUES ('2', '麻将大学群', 'group3.png');
 
 -- ----------------------------
 -- Table structure for group_1
@@ -63,8 +63,8 @@ CREATE TABLE `group_1` (
 -- ----------------------------
 -- Records of group_1
 -- ----------------------------
-INSERT INTO `group_1` VALUES ('sjj1', 'abc1', '#7', '00000000000000000000000000000001');
-INSERT INTO `group_1` VALUES ('sjj2', 'abc2', '#9', '00000000000000000000000000000000');
+INSERT INTO `group_1` VALUES ('sjj1', '解析', '#7', '00000000000000000000000000000001');
+INSERT INTO `group_1` VALUES ('sjj2', '哈罗oo丕', '#9', '00000000000000000000000000000000');
 
 -- ----------------------------
 -- Table structure for group_2
@@ -82,8 +82,8 @@ CREATE TABLE `group_2` (
 -- ----------------------------
 -- Records of group_2
 -- ----------------------------
-INSERT INTO `group_2` VALUES ('sjj1', 'abc1', '#7', '00000000000000000000000000000000');
-INSERT INTO `group_2` VALUES ('sjj3', 'abc3', '#8', '00000000000000000000000000000001');
+INSERT INTO `group_2` VALUES ('sjj1', '解析', '#7', '00000000000000000000000000000000');
+INSERT INTO `group_2` VALUES ('sjj3', '大吉ho', '#8', '00000000000000000000000000000001');
 
 -- ----------------------------
 -- Procedure structure for GetNextGroupId

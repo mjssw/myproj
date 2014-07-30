@@ -168,8 +168,8 @@ void CLoginScene::menuTestCallback(CCObject *pSender)
 	CUserManager::Instance().GetBasic().SetSex( 0 );
 	CUserManager::Instance().GetBasic().SetExp( 12 );
 	CUserManager::Instance().GetBasic().SetLevel( 11 );
-	CUserManager::Instance().GetBasic().SetMoney( CUserBasic::E_Money_Gold, 1000 );
-	CUserManager::Instance().GetBasic().SetMoney( CUserBasic::E_Money_Diamond, 23 );
+	CUserManager::Instance().GetBasic().SetMoney( E_Money_Gold, 1000 );
+	CUserManager::Instance().GetBasic().SetMoney( E_Money_Diamond, 23 );
 	CCDirector::sharedDirector()->replaceScene( CMainScene::scene() );
 	/*
 	static int a = 1;

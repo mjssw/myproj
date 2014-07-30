@@ -3,6 +3,7 @@
 
 #include "Define.h"
 #include <map>
+#include <vector>
 
 class CGroupMember;
 class CGroup
@@ -16,6 +17,7 @@ public:
 	bool AddMember(CGroupMember *member);
 	void RemoveMember(const std::string &user);
 	CGroupMember* FindMember(const std::string &user);
+	void Dump(std::vector<std::string> &vec);
 
 private:
 	void _Destory();

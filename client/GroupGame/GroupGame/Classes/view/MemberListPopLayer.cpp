@@ -1,7 +1,12 @@
 #include "MemberListPopLayer.h"
 #include "MyMenuItemImage.h"
 #include "view/MyTableView.h"
+#include "user/UserManager.h"
+#include "user/ViewData.h"
+#include "user/Group.h"
+#include "user/GroupMember.h"
 #include "utils.h"
+#include "CommDef.h"
 using namespace cocos2d;
 using namespace std;
 
@@ -82,19 +87,27 @@ void CMemberListPopLayer::_AddMemberList()
 	Size szCell( szBg.width-2*bgBorderW, headH );
 	Size szList( szCell.width, szBg.height-bgTitleH-bgBorderW );
 
-	vector<TableViewData> vecData;
-	//Size sz(
-	for( int i=0; i<5; ++i )
+	CGroup *group = CUserManager::Instance().GetViewData().GetSelectGroup();
+	if( !group )
 	{
+		CCLog( "not found select group" );
+		return;
+	}
+
+	vector<string> vecMember;
+	group->Dump( vecMember );
+
+	vector<TableViewData> vecData;
+	vector<string>::iterator it = vecMember.begin();
+	for( ; it != vecMember.end(); ++it )
+	{
+		CGroupMember *member = group->FindMember( (*it) );
+		CCAssert( member, "can not believe it, member not found" );
 		char icon[64] = {0};
-		char text[64] = {0};
 		sprintf( icon, "syshead.png");
-		sprintf( text, "ºÃÓÑ %d", i+1 );
 		TableViewData data;
-		data.icon = icon;
-		data.text = a2u(text);
-		data.useRect = true;
-		data.iconRect = Rect(0, i*85, 85, 85);
+		data.text = member->GetName();
+		CalcUserHead( member->GetHead(), E_Sex_Male, data.icon, data.iconRect, data.useRect );
 		vecData.push_back( data ); 
 	}
 	m_memberList = CMyTableView::create(szList, szCell, vecData, "selectbg.png" );

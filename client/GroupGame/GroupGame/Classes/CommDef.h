@@ -16,5 +16,19 @@ typedef int				MsgHeadType;
 
 #define SYS_HEAD_SIZE_W	85
 #define SYS_HEAD_SIZE_H	85
+	
+enum ESex
+{
+	E_Sex_Male,
+	E_Sex_Female,
+};
+	
+enum EMoneyType
+{
+	E_Money_Gold,
+	E_Money_Diamond,
+
+	E_Money_Type_Count,
+};
 
 #endif

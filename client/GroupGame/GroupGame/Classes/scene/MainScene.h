@@ -27,6 +27,8 @@ public:
 	void menuFaceCallback(cocos2d::Object *pSender);
 	void menuSendCallback(cocos2d::Object *pSender);
 
+	void GroupListTouchedCallback(Node *pSender, void *data);
+
     CREATE_FUNC(CMainScene);
 
 private:

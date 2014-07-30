@@ -3,24 +3,12 @@
 
 #include "Define.h"
 #include <string>
+#include "CommDef.h"
 
 class CUserBasic
 {
 public:
-	enum EMoneyType
-	{
-		E_Money_Gold,
-		E_Money_Diamond,
 
-		E_Money_Type_Count,
-	};
-
-	enum ESex
-	{
-		E_Sex_Male,
-		E_Sex_Female,
-	};
-	
 	CUserBasic();
 	~CUserBasic();
 

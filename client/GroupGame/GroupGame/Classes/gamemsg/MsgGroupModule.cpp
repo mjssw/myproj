@@ -90,7 +90,7 @@ CMsgGroupInfoUpdate::CMsgGroupInfoUpdate(u64 groupid, vector<CGroupMember*> *mem
 }
 void CMsgGroupInfoUpdate::Process()
 {
-	if( m_members )
+	if( !m_members )
 	{
 		CCLog( "[CMsgGroupInfoUpdate::Process][ERROR] m_members is NULL" );
 		return;
