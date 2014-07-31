@@ -7,6 +7,7 @@
 #include "msgid.pb.h"
 #include "errno.pb.h"
 #include "BasicConfig.h"
+#include "GroupInfo.h"
 using namespace std;
 using namespace SGLib;
 
@@ -332,10 +333,10 @@ void CGroupManager::UserLogin(CGroupClient &client, s32 gateresid, u64 clientid,
 	_NotifyUserLoginResult( client, result, clientid );
 }
 
-void CGroupManager::CreateGroup(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, const std::string &groupName)
+void CGroupManager::CreateGroup(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, const std::string &groupName, const std::string &groupHead)
 {
-	SERVER_LOG_DEBUG( "CreateGroup,"<< gateresid << "," << gateid << "," << clientid << "," << groupName.c_str() );
-	_NotifyManagerCreateGroup( gateid, gateresid, clientid, groupName );
+	SERVER_LOG_DEBUG( "CreateGroup,"<< gateresid << "," << gateid << "," << clientid << "," << groupName.c_str() << "," << groupHead.c_str() );
+	_NotifyManagerCreateGroup( gateid, gateresid, clientid, groupName, groupHead );
 }
 
 void CGroupManager::AddGroupMembers(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, sglib::groupproto::CSGroupAddMemberReq &req)
@@ -455,44 +456,44 @@ void CGroupManager::CreateGroupGame(CGroupClient &client, s32 gateresid, u64 gat
 	_NotifyGroupManagerCreateGameRoom( gateresid, clientid, groupid, game );
 }
 
-void CGroupManager::TryCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const std::string &user, const std::string &name, u64 groupid, u64 groupserverid)
+void CGroupManager::TryCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const std::string &user, const std::string &name, u64 groupid, const std::string &head, u64 groupserverid)
 {
 	SERVER_LOG_INFO( "RpcCreateGroupResult," << gateid << "," <<\
 		gateresid << "," << clientid << "," << user.c_str() << "," <<\
-		name.c_str() << "," << groupid <<\
+		name.c_str() << "," << groupid << "," << head.c_str() <<\
 		"," << groupserverid );
 
-	s32 result = sglib::errorcode::E_ErrorCode_Success;
 	CGroupInfo *group = CGroupManager::Instance().AddGroup(
-		groupid, name.c_str(), "" );
+		groupid, name.c_str(), head.c_str() );
 	if( group == NULL )
 	{
-		result = sglib::errorcode::E_ErrorCode_CreateGroupError;
+		_NotifyGroupmanagerCreateGroupResult( 
+			sglib::errorcode::E_ErrorCode_CreateGroupError,
+			gateid, clientid, user.c_str(),
+			name.c_str(), groupid, head.c_str(), groupserverid );
 		SERVER_LOG_ERROR( "RpcCreateGroupResult," << groupid << "," << name.c_str() );
 	}
 	else
 	{
-		// TODO
-
 		CGroupMember *member = group->AddMember( 
 			user.c_str(), 
-			user.c_str(), 
+			"", 
 			"", 
 			true );
 		SG_ASSERT( member != NULL );
 		member->SetOnline( true, gateresid, clientid );
-	}
+		member->SetGateId( gateid );
+		member->m_tmp.param1 = groupserverid; // 此值暂记录在临时变量中 
 
-	_NotifyGroupmanagerCreateGroupResult( 
-		result,
-		gateid, clientid, user.c_str(),
-		name.c_str(), groupid, groupserverid );
+		// CreateGroup (1) 从ud库取玩家的基本信息
+		_TryGetUserBasicInfo( user, *group );
+	}
 }
 
-void CGroupManager::CreateGroupResult(s32 result, u64 gateid, u64 clientid, const std::string &name, u64 groupid, u64 groupserverid)
+void CGroupManager::CreateGroupResult(s32 result, u64 gateid, u64 clientid, const std::string &name, u64 groupid, const string &head, u64 groupserverid)
 {
 	SERVER_LOG_INFO( "CreateGroupResult," << result << "," << gateid << "," <<\
-		clientid << "," << name.c_str() << "," << groupid << "," << groupserverid );
+		clientid << "," << name.c_str() << "," << groupid << "," << head.c_str() << "," << groupserverid );
 
 	if( result == sglib::errorcode::E_ErrorCode_Success )
 	{
@@ -503,7 +504,7 @@ void CGroupManager::CreateGroupResult(s32 result, u64 gateid, u64 clientid, cons
 
 	_NotifyClientCreateGroupRsp(
 		result, gateid, clientid,
-		name.c_str(), groupid );
+		name.c_str(), groupid, head.c_str() );
 }
 
 void CGroupManager::AddGroupMemberRsp(sglib::groupproto::GroupmanagerGroupAddMemberToGroupRsp &rsp)
@@ -826,13 +827,14 @@ void CGroupManager::_NotifyUserLoginResult(CGroupClient &client, s32 result, u64
 	client.SendMsgToClient( clientid, rsp, sglib::msgid::SC_GROUP_LOGIN_RSP );
 }
 
-void CGroupManager::_NotifyManagerCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const string &name)
+void CGroupManager::_NotifyManagerCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const string &name, const string &head)
 {
 	sglib::groupproto::GroupGroupmanageCreateGroupReq req;
 	req.set_gateid( gateid );
 	req.set_gateresid( gateresid );
 	req.set_clientid( clientid );
 	req.set_name( name );
+	req.set_head( head );
 	
 	CServerManager::Instance().SendRpcMsg( 
         CServerManager::Instance().GetGroupManagerServerId(),
@@ -1040,7 +1042,7 @@ void CGroupManager::_NotifyGroupManagerCreateGameRoom(s32 gateResId, u64 clienti
 		req, sglib::msgid::GPGM_GROUP_CREATE_GAMEROOM_REQ );
 }
 
-void CGroupManager::_NotifyGroupmanagerCreateGroupResult(s32 result, u64 gateid, u64 clientid, const char *user, const char *name, u64 groupid, u64 serverid)
+void CGroupManager::_NotifyGroupmanagerCreateGroupResult(s32 result, u64 gateid, u64 clientid, const char *user, const char *name, u64 groupid, const char *head, u64 serverid)
 {
 	sglib::groupproto::GroupGroupmanagerCreateGroupResult ret;
 	ret.set_result( result );
@@ -1049,6 +1051,7 @@ void CGroupManager::_NotifyGroupmanagerCreateGroupResult(s32 result, u64 gateid,
 	ret.set_user( user );
 	ret.set_name( name );
 	ret.set_groupid( groupid );
+	ret.set_head( head );
 	ret.set_groupserverid( serverid );
 	ret.set_serverid( CServerManager::Instance().ServerId() );
 
@@ -1058,12 +1061,13 @@ void CGroupManager::_NotifyGroupmanagerCreateGroupResult(s32 result, u64 gateid,
 		sglib::msgid::GPGM_GROUP_CREATE_RESULT );
 }
 
-void CGroupManager::_NotifyClientCreateGroupRsp(s32 result, u64 gateid, u64 clientid, const char *name, u64 groupid)
+void CGroupManager::_NotifyClientCreateGroupRsp(s32 result, u64 gateid, u64 clientid, const char *name, u64 groupid, const char *head)
 {
 	sglib::groupproto::SCGroupCreateRsp rsp;
 	rsp.set_result( result );
 	rsp.set_name( name );
 	rsp.set_groupid( groupid );
+	rsp.set_head( head );
 
 	CGroupManager::Instance().SendMsgToClient(
 		gateid, clientid, rsp, sglib::msgid::SC_GROUP_CREATE_RSP );
@@ -1221,6 +1225,43 @@ void CGroupManager::_LoadGroupDone(u64 groupid, const std::string &user)
 		groupid, user );
 }
 
+void CGroupManager::_TryGetUserBasicInfo(const std::string &user, CGroupInfo &group)
+{
+	SERVER_LOG_INFO( "CGroupManager,_TryGetUserBasicInfo," << user.c_str() << "," << group.GetId() \
+		<< "," << group.GetName().c_str() );
+
+	_groupManagerDBParam _param = { group.GetId(), &group, 0, 0 };
+
+	s32 id = CServerManager::Instance().HashUser( user );
+	string sql = "select User,Name,Head from user where user='";
+	sql += user;
+	sql += "';";
+	bool ret = CServerManager::Instance().ExecSql( 
+		id, sql, this, &CGroupManager::_GetUserBasicInfoCallback, &_param, sizeof(_param) );
+	if( !ret )
+	{
+		SERVER_LOG_ERROR( "CGroupManager,_TryGetUserBasicInfo,ExecSql," << sql.c_str() );
+	}
+}
+
+void CGroupManager::_TryCreateGroup(CGroupInfo &group, CGroupMember &member)
+{
+	SERVER_LOG_INFO( "CGroupManager,_TryCreateGroupRecord," << group.GetId() );
+
+	_groupManagerDBParam _param = { group.GetId(), &group, 0, 0 };
+	s32 id = CServerManager::Instance().GetGroupDbId();
+	char strGroupId[128] = {0};
+	sprintf( strGroupId, "%llu", group.GetId() );
+	string sql = string("call CreateGroup('") + strGroupId + string("','") + \
+		group.GetName() + "','" + group.GetIcon() + "','" + \
+		member.GetUser() + "','" + member.GetNickName() + "','" + member.GetHead() + "');";
+	bool ret = CServerManager::Instance().ExecSql( id, sql, this, &CGroupManager::_CreateGroupCallback, &_param, sizeof(_param) );
+	if( !ret )
+	{
+		SERVER_LOG_ERROR( "CGroupManager,_TryCreateGroup,ExecSql," << sql.c_str() );
+	}
+}
+
 void CGroupManager::_GetGroupInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
 {
 	SELF_ASSERT( param, return; );
@@ -1345,4 +1386,79 @@ void CGroupManager::_GetGroupMemberCallback(SGLib::IDBRecordSet *RecordSet, char
 	member->SetOnline( true, _param->gateresid, _param->clientid );
 		
 	_LoadGroupDone( groupid, user );
+}
+
+void CGroupManager::_GetUserBasicInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
+{
+	SELF_ASSERT( param, return; );
+	SELF_ASSERT( sizeof(_groupManagerDBParam)==len, return; );
+	_groupManagerDBParam *_param = (_groupManagerDBParam*)param;
+	CGroupInfo *group = (CGroupInfo*)_param->data;
+	
+	string user(""), name(""), head("");
+	while( RecordSet && RecordSet->GetRecord() )
+	{
+		// User,Name,Head
+		const char *val = RecordSet->GetFieldValue( 1 );
+		if( val )
+		{
+			user = val;
+		}
+
+		val = RecordSet->GetFieldValue( 2 );
+		if( val )
+		{
+			name = val;
+		}
+	
+		val = RecordSet->GetFieldValue( 3 );
+		if( val )
+		{
+			head = val;
+		}
+
+		break;
+	}
+
+	CGroupMember *member = group->FindMember( user.c_str() );
+	SELF_ASSERT( member, return; );
+	member->SetNickName( name.c_str() );
+	member->SetHead( head.c_str() );
+
+	SERVER_LOG_INFO( "CGroupManager,_GetUserBasicInfoCallback,GroupCreaterInfo," << member->GetUser().c_str() \
+		<< "," << member->GetNickName().c_str() << "," << member->GetHead().c_str() );
+
+	// CreateGroup (2) 执行存储过程完成建群
+	_TryCreateGroup( *group, *member );
+}
+
+void CGroupManager::_CreateGroupCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
+{
+	SELF_ASSERT( param, return; );
+	SELF_ASSERT( sizeof(_groupManagerDBParam)==len, return; );
+	_groupManagerDBParam *_param = (_groupManagerDBParam*)param;
+	CGroupInfo *group = (CGroupInfo*)_param->data;
+	vector<string> vec;
+	group->Dump( vec );
+	SELF_ASSERT( vec.size()==1, return; );
+	CGroupMember *member = group->FindMember( vec[0].c_str() );
+
+	s32 result = sglib::errorcode::E_ErrorCode_CreateGroupError;
+	while( RecordSet && RecordSet->GetRecord() )
+	{
+		const char *val = RecordSet->GetFieldValue( 1 );
+		if( val && atoi(val)==1 )
+		{
+			result = sglib::errorcode::E_ErrorCode_Success;
+		}
+		break;
+	}
+
+	_NotifyGroupmanagerCreateGroupResult( 
+		result,
+		member->GetGateId(), member->GetClientId(), member->GetUser().c_str(),
+		group->GetName().c_str(), group->GetId(), group->GetIcon().c_str(), member->m_tmp.param1 );
+	
+	SERVER_LOG_INFO( "CGroupManager::_CreateGroupCallback," << group->GetId() << "," << \
+		member->GetUser().c_str() << "," << result );
 }

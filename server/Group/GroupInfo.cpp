@@ -228,3 +228,13 @@ void CGroupInfo::DisplayInfo()
 
 #endif
 }
+
+void CGroupInfo::Dump(std::vector<std::string> &vec)
+{
+	vec.clear();
+	std::map<std::string, CGroupMember*>::iterator it = m_Members.begin();
+	for( ; it != m_Members.end(); ++it )
+	{
+		vec.push_back( it->first );
+	}
+}

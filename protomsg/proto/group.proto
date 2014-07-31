@@ -28,13 +28,15 @@ message SCGroupInfoUpdate
 message CSGroupCreateReq
 {
 	required string name	= 1;
+	required string head	= 2;
 }
 
 message SCGroupCreateRsp
 {
 	required int32 result	= 1;
 	required string name	= 2;
-	optional uint64 groupid	= 3;
+	required string head	= 3;
+	optional uint64 groupid	= 4;
 }
 
 message CSGroupSearchReq
@@ -255,6 +257,7 @@ message GroupGroupmanageCreateGroupReq
 	required int32 gateresid	= 2;		// 请求建群的玩家所在的groupgate server id(xml中配置)
 	required uint64 clientid	= 3;		// 请求建群的玩家在此gate上的clientid
 	required string name		= 4;		// 群名
+	required string head		= 5;		// 群头像
 }
 
 message GroupmanageGroupCreateGroupNtf
@@ -265,7 +268,8 @@ message GroupmanageGroupCreateGroupNtf
 	required string user		= 4;		// 请求创建群的玩家
 	required string name		= 5;		// 群名
 	required uint64 groupid		= 6;		// 群id
-	required uint64 groupserverid = 7;		// 委托建群的group server 的 instance id
+	required string head		= 7;		// 群头像
+	required uint64 groupserverid = 8;		// 委托建群的group server 的 instance id
 }
 
 message GroupGroupmanagerCreateGroupResult
@@ -276,8 +280,9 @@ message GroupGroupmanagerCreateGroupResult
 	required string user		= 4;		// 请求创建群的玩家
 	required string name		= 5;		// 群名
 	required uint64 groupid		= 6;		// 群id
-	required uint64 groupserverid = 7;		// 委托建群的group server 的 instance id
-	optional int32 serverid		= 8;		// 被委托建群的group server 的 res id (xml 中配置的serverid)
+	required string head		= 7;		// 群ICON
+	required uint64 groupserverid = 8;		// 委托建群的group server 的 instance id
+	optional int32 serverid		= 9;		// 被委托建群的group server 的 res id (xml 中配置的serverid)
 }
 
 message GroupmanagerGroupCreateGroupRsp
@@ -287,7 +292,8 @@ message GroupmanagerGroupCreateGroupRsp
 	required uint64 clientid	= 3;		// 请求建群的玩家在此gate上的clientid
 	required string name		= 4;		// 群名
 	optional uint64 groupid		= 5;		// 群id
-	optional int32 serverid		= 6;		// 被委托建群的group server 的 res id (xml 中配置的serverid)
+	required string head		= 6;		// 群ICON
+	optional int32 serverid		= 7;		// 被委托建群的group server 的 res id (xml 中配置的serverid)
 }
 
 message GroupGroupmanagerAddMemberToGroupReq

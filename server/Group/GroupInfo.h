@@ -31,6 +31,9 @@ public:
 	s32 GetGateResId(){ return m_GateResId; }
 	u64 GetClientId(){ return m_ClientId; }
 
+	u64 GetGateId(){ return m_GateId; }
+	void SetGateId(u64 gateid){ m_GateId = gateid; }
+
 private:
 	std::string m_User;
 	std::string m_NickName;
@@ -39,6 +42,13 @@ private:
 	s32 m_GateResId;
 	u64 m_ClientId;
 	CGroupInfo &m_Group;
+	u64 m_GateId;
+
+public:
+	union TempData
+	{
+		u64 param1;
+	} m_tmp;
 };
 
 class CGroupInfo
@@ -63,6 +73,8 @@ public:
 	void DumpMemberInfo(std::map<s32, std::vector<u64> > &alluser, const std::string &excludeUser, std::vector<std::string> &vecUser);
 
 	void DisplayInfo();
+
+	void Dump(std::vector<std::string> &vec);
 
 private:
 	void _AddMemberIndex(CGroupMember *member);

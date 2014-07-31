@@ -48,8 +48,8 @@ private:
 	CGroupManagerClient* _FindUnDynamicServerClient(s32 serverid);
 	void _NotifyNewServerDynamicStart(CGroupManagerClient *client, s32 id, const char *ip, s32 port);
 	void _NotifyGroupServerClose(s32 serverid);
-	void _NotifyGroupServerCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const char *user, const char *name, u64 groupid);
-	void _NotifyGroupCreateResult(s32 result, u64 gateid, u64 clientid, const char *name, u64 groupid, s32 serverid, u64 instanceId);
+	void _NotifyGroupServerCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const char *user, const char *name, u64 groupid, const char *head);
+	void _NotifyGroupCreateResult(s32 result, u64 gateid, u64 clientid, const char *name, u64 groupid, const char *head, s32 serverid, u64 instanceId);
 	void _DoLoadMemberGroups(const std::string &user, s32 gateresid, u64 clientid);
 	void _NotifyLoadGroup(const std::string &user, s32 gateresid, u64 clientid, u64 groupid);
 	void _NotifyMemberOnline(s32 groupServerId, const std::string &user, s32 gateresid, u64 clientid, u64 groupid);

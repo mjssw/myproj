@@ -101,9 +101,14 @@ void ClientLogin(const char *ip, int port, int clientNum)
 		}
 		else if( vCmd[0] == "register" )
 		{
-			if( vCmd.size() == 3 )
+			if( vCmd.size() == 6 )
 			{
-				g_mapClient.begin()->second->Register( vCmd[1], vCmd[2] );
+				g_mapClient.begin()->second->Register( 
+					vCmd[1], 
+					vCmd[2],
+					vCmd[3],
+					atoi(vCmd[4].c_str()),
+					vCmd[5] );
 			}
 		}
 	}

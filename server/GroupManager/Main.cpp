@@ -66,6 +66,16 @@ int main(int argc, char *argv[])
 			argv[4] );
 		if( bInit && CServerManager::Instance().Start() )
 		{
+			bool ret = CServerManager::Instance().InitNextGroupId();
+			if( !ret )
+			{
+				printf( "CServerManager::Instance().InitNextGroupId failed\n" );
+				goto _EndProgress;
+			}
+			CServerManager::Instance().WaitInitGroupId();
+			CGroupIdManager::Instance().Init( CServerManager::Instance().GetNextGroupId() );
+			SERVER_LOG_INFO( "InitNextGroupIdDone," << CServerManager::Instance().GetNextGroupId() );
+
 			// 启动汇报游戏状态数据时钟
 			s32 _timerId = CServerManager::Instance().AddTimer(
 				10000,
@@ -98,7 +108,7 @@ int main(int argc, char *argv[])
 			printf("start failed\n");
 		}
 	}
-	
+_EndProgress:
 	CLuaModule::Instance().Fini();
 	google::protobuf::ShutdownProtobufLibrary();
 }

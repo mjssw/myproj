@@ -487,6 +487,44 @@ public:
 		}
 	}
 
+	bool InitNextGroupId()
+	{
+		s32 dbid = GetGroupDbId();
+		string sql = "call GetNextGroupId();";
+		bool ret = ExecSql( 
+			dbid, sql, this, &CServerManager::_GetNextGroupIdCallback, NULL, 0 );
+		if( !ret )
+		{
+			SERVER_LOG_ERROR( "InitNextGroupId," << dbid << "," << sql.c_str() );
+			return false;
+		}
+
+		return true;
+	}
+
+	void WaitInitGroupId()
+	{
+		m_evtInitGroupId.Wait();
+	}
+
+	u64 GetNextGroupId()
+	{
+		return m_nextGroupId;
+	}
+
+	void IncrementNextGroupId()
+	{
+		s32 dbid = GetGroupDbId();
+		string sql = "call IncrementNextGroupId();";
+		bool ret = ExecSql( 
+			dbid, sql, this, &CServerManager::_IncrementNextGroupIdCallback, NULL, 0 );
+		if( !ret )
+		{
+			SERVER_LOG_ERROR( "IncrementNextGroupId," << dbid << "," << sql.c_str() );
+		}
+		SERVER_LOG_INFO( "IncrementNextGroupId" );
+	}
+
 private:
 	
 	s32 _hashId(const string &user)
@@ -590,6 +628,31 @@ private:
 		m_mysqlDbnameIndex.clear();
 	}
 
+	void _GetNextGroupIdCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
+	{
+		while( RecordSet && RecordSet->GetRecord() )
+		{
+			const char *val = RecordSet->GetFieldValue( 1 );
+			if( !val )
+			{
+				break;
+			}
+
+			m_nextGroupId = 0;
+			sscanf( val, "%llu", &m_nextGroupId );
+			m_evtInitGroupId.SetEvent();
+			return;
+		}
+
+		SERVER_LOG_ERROR( "_GetNextGroupIdCallback" );
+		exit( 0 );
+	}
+	
+	void _IncrementNextGroupIdCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
+	{
+		SERVER_LOG_INFO( "_IncrementNextGroupIdCallback" );
+	}
+
 private:
 	CServerManager() : 
 		m_pServer(NULL),
@@ -620,6 +683,9 @@ private:
 	std::map<std::string, s32> m_mysqlDbnameIndex;
 	
 	s32 m_pingTimer;
+
+	u64 m_nextGroupId;
+	SGLib::CEvent m_evtInitGroupId;
 };
 
 #endif

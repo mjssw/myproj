@@ -1,4 +1,5 @@
 #include "GroupIdManager.h"
+#include "ServerManager.h"
 
 INIT_SIGNLETON_CLASS(CGroupIdManager);
 
@@ -18,6 +19,8 @@ u64 CGroupIdManager::GetNextGroupId()
 	SGLib::CGuardLock<SGLib::CLock> g(m_Lock);
 	id = m_NextId;
 	++m_NextId;
+
+	CServerManager::Instance().IncrementNextGroupId();
 
 	return id;
 }

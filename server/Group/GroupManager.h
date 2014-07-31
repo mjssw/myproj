@@ -47,7 +47,7 @@ public:
 
 	// group client interface
 	void UserLogin(CGroupClient &client, s32 gateresid, u64 clientid, const std::string &user, const std::string &token);
-	void CreateGroup(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, const std::string &groupName);
+	void CreateGroup(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, const std::string &groupName, const std::string &groupHead);
 	void AddGroupMembers(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, sglib::groupproto::CSGroupAddMemberReq &req);
 	void AgreeJoinGroup(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, u64 groupid);
 	void LeaveGroup(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, u64 groupid);
@@ -57,8 +57,8 @@ public:
 	void CreateGroupGame(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, u64 groupid, s32 game);
 
 	// group rpc client interface
-	void TryCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const std::string &user, const std::string &name, u64 groupid, u64 groupserverid);
-	void CreateGroupResult(s32 result, u64 gateid, u64 clientid, const std::string &name, u64 groupid, u64 groupserverid);
+	void TryCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const std::string &user, const std::string &name, u64 groupid, const std::string &head, u64 groupserverid);
+	void CreateGroupResult(s32 result, u64 gateid, u64 clientid, const std::string &name, u64 groupid, const std::string &head, u64 groupserverid);
 	void AddGroupMemberRsp(sglib::groupproto::GroupmanagerGroupAddMemberToGroupRsp &rsp);
 	void AgreeJoinGroupAskInfoRsp(sglib::groupproto::GroupmanagerGroupForAgreeJoinAskInfoRsp &rsp);
 	void LoadGroup(sglib::groupproto::GroupmanagerGroupLoadGroupNtf &ntf);
@@ -77,7 +77,7 @@ private:
 	void _NotifyManagerUserLogin(s32 gateResId, u64 clientid, const std::string &user);
 	void _NotifyGroupgateLoginSuccess(CGroupClient &client, u64 clientid);
 	void _NotifyUserLoginResult(CGroupClient &client, s32 result, u64 clientid);
-	void _NotifyManagerCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const std::string &name);
+	void _NotifyManagerCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const std::string &name, const std::string &head);
 	void _NotifyAddGroupMemberRsp(CGroupClient &client, u64 clientid, u64 groupid, s32 result);
 	void _NotifyManagerAddMemberToGroup(s32 gateresid, u64 gateid, u64 clientid, u64 groupid, std::vector<std::string> &vecUser);
 	void _AskManagerInfoToAgree(s32 gateResId, u64 clientid, u64 groupid);
@@ -91,8 +91,8 @@ private:
 	void _NotifyGroupManagerCreateGameRoom(s32 gateResId, u64 clientid, u64 groupid, s32 game);
 
 	// group rpc client
-	void _NotifyGroupmanagerCreateGroupResult(s32 result, u64 gateid, u64 clientid, const char *user, const char *name, u64 groupid, u64 serverid);
-	void _NotifyClientCreateGroupRsp(s32 result, u64 gateid, u64 clientid, const char *name, u64 groupid);
+	void _NotifyGroupmanagerCreateGroupResult(s32 result, u64 gateid, u64 clientid, const char *user, const char *name, u64 groupid, const char *head, u64 serverid);
+	void _NotifyClientCreateGroupRsp(s32 result, u64 gateid, u64 clientid, const char *name, u64 groupid, const char *head);
 	s32  _DoLoadGroup(u64 groupid, s32 gateresid, u64 clientid, const char *user);
 	void _NotifyLoadGroupResult(s32 result, u64 groupid, s32 serverid, const char *user);
 	void _MemberOnline(u64 groupid, s32 gateresid, u64 clientid, const std::string &user);
@@ -100,10 +100,14 @@ private:
 	void _NotifyCreateGameRoomResult(s32 gateresid, u64 clientid, s32 result, u64 groupid, s32 game, const std::string &ip, s32 port, s32 roomid, const std::string &roompwd);
 
 	void _LoadGroupDone(u64 groupid, const std::string &user);
+	void _TryGetUserBasicInfo(const std::string &user, CGroupInfo &group);
+	void _TryCreateGroup(CGroupInfo &group, CGroupMember &member);
 
 private:
 	void _GetGroupInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 	void _GetGroupMemberCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
+	void _GetUserBasicInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
+	void _CreateGroupCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 
 private:
 	SGLib::CLock m_Lock;

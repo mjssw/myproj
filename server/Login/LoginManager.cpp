@@ -60,12 +60,18 @@ void CLoginManager::UserLogin(CLoginClient &client, u64 clientId, const std::str
 	}
 }
 
-void CLoginManager::UserRegister(CLoginClient &client, u64 clientId, const std::string &user, const std::string &pwd)
+void CLoginManager::UserRegister(CLoginClient &client, u64 clientId, const std::string &user, const std::string &pwd, const std::string &name, s32 sex, const std::string &head)
 {
+	SERVER_LOG_INFO( "CLoginManager,UserRegister," << user.c_str() << "," << pwd.c_str() << "," << name.c_str() \
+		<< "," << sex << "," << head.c_str() );
+
 	_LoginManagerDBParam _param = { &client, clientId };
 
+	CUserBasic::ESex _sex = CUserBasic::ConvertSex( sex );
+	char strSex[8] = {0};
+	sprintf( strSex, "%d", (s32)_sex );
 	s32 id = CServerManager::Instance().HashUser( user );
-	string sql = "call UserRegister('" + user + "','" + pwd + "','abc');";
+	string sql = "call UserRegister('" + user + "','" + pwd + "','" + name + "'," + strSex + ",'" + head + "');";
 	bool ret = CServerManager::Instance().ExecSql( id, sql, this, &CLoginManager::_RegisterCallback, &_param, sizeof(_param) );
 	if( !ret )
 	{

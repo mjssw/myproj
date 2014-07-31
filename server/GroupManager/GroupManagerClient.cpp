@@ -291,7 +291,8 @@ void CGroupManagerClient::_CreateGroupProc(const byte *pkg, s32 len)
 		u64 gpid = CGroupIdManager::Instance().GetNextGroupId();
 
 		SERVER_LOG_INFO( "CreateGroup," << GetClientId() << "," << req.gateid() << ","\
-			<< req.gateresid() << "," << req.clientid() << "," << gpid << "," << req.name().c_str() );
+			<< req.gateresid() << "," << req.clientid() << "," << gpid << "," << req.name().c_str() << "," \
+			<< req.head().c_str() );
 		
 		CGroupMemberPosition *member = CLoginMemberManager::Instance().MemberManager().FindMember(
 			req.gateresid(), req.clientid() );
@@ -302,7 +303,8 @@ void CGroupManagerClient::_CreateGroupProc(const byte *pkg, s32 len)
 		}
 
 		_NotifyGroupServerCreateGroup(
-			req.gateid(), req.gateresid(), req.clientid(), member->User().c_str(), req.name().c_str(), gpid );
+			req.gateid(), req.gateresid(), req.clientid(), member->User().c_str(), 
+			req.name().c_str(), gpid, req.head().c_str() );
 	}
 	else
 	{
@@ -317,7 +319,7 @@ void CGroupManagerClient::_CreateGroupResultProc(const byte *pkg, s32 len)
 	{
 		SERVER_LOG_INFO( "CreateGroupResult," << ret.result() << "," << ret.gateid() << ","\
 			<< ret.clientid() << "," << ret.user().c_str() << "," << ret.name().c_str() << "," \
-			<< ret.groupid() << "," << ret.groupserverid() << "," << ret.serverid() );
+			<< ret.groupid() << "," << ret.head().c_str() << "," << ret.groupserverid() << "," << ret.serverid() );
 
 		if( ret.result() == sglib::errorcode::E_ErrorCode_Success )
 		{
@@ -326,7 +328,7 @@ void CGroupManagerClient::_CreateGroupResultProc(const byte *pkg, s32 len)
 
 		_NotifyGroupCreateResult(
 			ret.result(), ret.gateid(), ret.clientid(),
-			ret.name().c_str(), ret.groupid(), ret.serverid(),
+			ret.name().c_str(), ret.groupid(), ret.head().c_str(), ret.serverid(),
 			ret.groupserverid() );
 	}
 	else
@@ -593,7 +595,7 @@ void CGroupManagerClient::_NotifyGroupServerClose(s32 serverid)
 	_SendMsgToCenter( ntf, sglib::msgid::GMCT_GP_SERVER_CLOSE_NTF );
 }
 
-void CGroupManagerClient::_NotifyGroupServerCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const char *user, const char *name, u64 groupid)
+void CGroupManagerClient::_NotifyGroupServerCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const char *user, const char *name, u64 groupid, const char *head)
 {
 	u64 serverid = CGroupInfoManager::Instance().FindProperGroup();
 	CGroupManagerClient *client = (CGroupManagerClient*)CServerManager::Instance().FindClient( serverid );
@@ -605,6 +607,7 @@ void CGroupManagerClient::_NotifyGroupServerCreateGroup(u64 gateid, s32 gateresi
 		ntf.set_clientid( clientid );
 		ntf.set_user( user );
 		ntf.set_name( name );
+		ntf.set_head( head );
 		ntf.set_groupid( groupid );
 		ntf.set_groupserverid( GetClientId() );
 
@@ -651,7 +654,7 @@ void CGroupManagerClient::_DoLoadMemberGroups(const string &user, s32 gateresid,
 	}
 }
 
-void CGroupManagerClient::_NotifyGroupCreateResult(s32 result, u64 gateid, u64 clientid, const char *name, u64 groupid, s32 serverid, u64 instanceId)
+void CGroupManagerClient::_NotifyGroupCreateResult(s32 result, u64 gateid, u64 clientid, const char *name, u64 groupid, const char *head, s32 serverid, u64 instanceId)
 {
 	sglib::groupproto::GroupmanagerGroupCreateGroupRsp rsp;
 	rsp.set_result( result );
@@ -659,6 +662,7 @@ void CGroupManagerClient::_NotifyGroupCreateResult(s32 result, u64 gateid, u64 c
 	rsp.set_clientid( clientid );
 	rsp.set_name( name );
 	rsp.set_groupid( groupid );
+	rsp.set_head( head );
 	rsp.set_serverid( serverid );
 
 	CServerManager::Instance().SendClientMsg(

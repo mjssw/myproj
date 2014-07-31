@@ -20,6 +20,9 @@ message CSUserRegisterReq
 {
 	required string user		= 1;
 	required string password	= 2;
+	required int32 sex			= 3;
+	required string name		= 4;
+	required string head		= 5;
 }
 
 message SCUserRegisterRsp

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50537
 File Encoding         : 65001
 
-Date: 2014-07-30 15:01:29
+Date: 2014-07-31 17:12:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,7 +27,7 @@ CREATE TABLE `groupid` (
 -- ----------------------------
 -- Records of groupid
 -- ----------------------------
-INSERT INTO `groupid` VALUES ('0000000000000000000000000000000000000000000000000000000000000101');
+INSERT INTO `groupid` VALUES ('0000000000000000000000000000000000000000000000000000000000000102');
 
 -- ----------------------------
 -- Table structure for groups
@@ -86,6 +86,46 @@ INSERT INTO `group_2` VALUES ('sjj1', '解析', '#7', '0000000000000000000000000
 INSERT INTO `group_2` VALUES ('sjj3', '大吉ho', '#8', '00000000000000000000000000000001');
 
 -- ----------------------------
+-- Procedure structure for CreateGroup
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `CreateGroup`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `CreateGroup`(IN `groupid_` varchar(128),IN `groupname_` varchar(64),IN `grouphead_` varchar(64),IN `user_` varchar(64),IN `name_` varchar(64),IN `head_` varchar(64))
+BEGIN
+	DECLARE tablename_ varchar(128);
+	DECLARE result int;
+  SET tablename_=CONCAT("group_",groupid_);
+	#SELECT tablename_;
+	SET result=1;
+  INSERT INTO groups(id,name,head) values(groupid_,groupname_,grouphead_);
+	SELECT ROW_COUNT() into result;
+	IF(result>0) THEN
+		SET @STMT :=CONCAT("CREATE TABLE ",tablename_," (user varchar(64),name varchar(64),head varchar(64),ismaster int(32));"); 
+		PREPARE STMT FROM @STMT; 
+		EXECUTE STMT; 
+    IF EXISTS( select 1 from information_schema.tables where table_schema=DATABASE() and table_name=tablename_) THEN
+			SET @STMT2 :=CONCAT("INSERT INTO ",tablename_," (user,name,head,ismaster) values('",user_,"','",name_,"','",head_,"',1);");
+			PREPARE STMT2 FROM @STMT2;
+			EXECUTE STMT2; 
+			SELECT ROW_COUNT() into result;
+			IF(result>0) THEN
+				SET result=1;
+			ELSE
+				SET result=-3;
+			END IF;
+		ELSE
+			SET result=-2;
+		END IF;
+	ELSE
+		SET result=-1;
+	END IF;
+	SELECT result;
+
+END
+;;
+DELIMITER ;
+
+-- ----------------------------
 -- Procedure structure for GetNextGroupId
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `GetNextGroupId`;
@@ -96,9 +136,21 @@ BEGIN
 	SELECT nextid into nid from groupid;
 	IF(nid=0) THEN
 		SET nid=1;
+		UPDATE groupid set nextid=nid;
 	END IF;
-	UPDATE groupid set nextid=nid+1;
 	SELECT nid;
+END
+;;
+DELIMITER ;
+
+-- ----------------------------
+-- Procedure structure for IncrementNextGroupId
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `IncrementNextGroupId`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `IncrementNextGroupId`()
+BEGIN
+	UPDATE groupid set nextid=nextid+1;
 END
 ;;
 DELIMITER ;

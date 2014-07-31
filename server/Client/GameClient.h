@@ -470,11 +470,14 @@ public:
 		SendMsg( req, sglib::msgid::CS_TETRIS_CLEAR_BLOCK_REQ );
 	}
 
-	void Register(const string &user, const string &pwd)
+	void Register(const string &user, const string &pwd, const string &name, s32 sex, const string &head)
 	{
 		sglib::loginproto::CSUserRegisterReq req;
 		req.set_user( user );
 		req.set_password( pwd );
+		req.set_name( name ); // change to utf8
+		req.set_sex( sex );
+		req.set_head( head );
 		SendMsg( req, sglib::msgid::CL_USER_REGISTER_REQ );
 	}
 

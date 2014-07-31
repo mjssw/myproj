@@ -89,9 +89,12 @@ void protobuf_AssignDesc_login_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(SCUserLoginRsp));
   CSUserRegisterReq_descriptor_ = file->message_type(2);
-  static const int CSUserRegisterReq_offsets_[2] = {
+  static const int CSUserRegisterReq_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSUserRegisterReq, user_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSUserRegisterReq, password_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSUserRegisterReq, sex_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSUserRegisterReq, name_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSUserRegisterReq, head_),
   };
   CSUserRegisterReq_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -251,18 +254,19 @@ void protobuf_AddDesc_login_2eproto() {
     "\n\013login.proto\022\020sglib.loginproto\032\014public."
     "proto\">\n\016CSUserLoginReq\022\014\n\004user\030\001 \002(\t\022\020\n"
     "\010password\030\002 \002(\t\022\014\n\004flag\030\003 \001(\t\"/\n\016SCUserL"
-    "oginRsp\022\016\n\006result\030\001 \002(\005\022\r\n\005token\030\002 \001(\t\"3"
+    "oginRsp\022\016\n\006result\030\001 \002(\005\022\r\n\005token\030\002 \001(\t\"\\"
     "\n\021CSUserRegisterReq\022\014\n\004user\030\001 \002(\t\022\020\n\010pas"
-    "sword\030\002 \002(\t\"#\n\021SCUserRegisterRsp\022\016\n\006resu"
-    "lt\030\001 \002(\005\">\n\020SCGameInfoNotify\022*\n\005games\030\001 "
-    "\003(\0132\033.sglib.publicproto.GameInfo\"-\n\021SCGr"
-    "oupGateNotify\022\n\n\002ip\030\001 \002(\t\022\014\n\004port\030\002 \002(\005\""
-    "{\n\025SCUserBasicInfoNotify\022\014\n\004name\030\001 \002(\t\022\013"
-    "\n\003sex\030\002 \002(\005\022\013\n\003exp\030\003 \002(\004\022\r\n\005level\030\004 \002(\004\022"
-    "\014\n\004gold\030\005 \002(\004\022\017\n\007diamond\030\006 \002(\004\022\014\n\004head\030\007"
-    " \002(\t\"W\n\027LoginCenterUserLoginReq\022\016\n\006gatei"
-    "d\030\001 \002(\004\022\020\n\010clientid\030\002 \002(\004\022\014\n\004user\030\003 \002(\t\022"
-    "\014\n\004flag\030\004 \002(\t", 573);
+    "sword\030\002 \002(\t\022\013\n\003sex\030\003 \002(\005\022\014\n\004name\030\004 \002(\t\022\014"
+    "\n\004head\030\005 \002(\t\"#\n\021SCUserRegisterRsp\022\016\n\006res"
+    "ult\030\001 \002(\005\">\n\020SCGameInfoNotify\022*\n\005games\030\001"
+    " \003(\0132\033.sglib.publicproto.GameInfo\"-\n\021SCG"
+    "roupGateNotify\022\n\n\002ip\030\001 \002(\t\022\014\n\004port\030\002 \002(\005"
+    "\"{\n\025SCUserBasicInfoNotify\022\014\n\004name\030\001 \002(\t\022"
+    "\013\n\003sex\030\002 \002(\005\022\013\n\003exp\030\003 \002(\004\022\r\n\005level\030\004 \002(\004"
+    "\022\014\n\004gold\030\005 \002(\004\022\017\n\007diamond\030\006 \002(\004\022\014\n\004head\030"
+    "\007 \002(\t\"W\n\027LoginCenterUserLoginReq\022\016\n\006gate"
+    "id\030\001 \002(\004\022\020\n\010clientid\030\002 \002(\004\022\014\n\004user\030\003 \002(\t"
+    "\022\014\n\004flag\030\004 \002(\t", 614);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "login.proto", &protobuf_RegisterTypes);
   CSUserLoginReq::default_instance_ = new CSUserLoginReq();
@@ -902,6 +906,9 @@ void SCUserLoginRsp::Swap(SCUserLoginRsp* other) {
 #ifndef _MSC_VER
 const int CSUserRegisterReq::kUserFieldNumber;
 const int CSUserRegisterReq::kPasswordFieldNumber;
+const int CSUserRegisterReq::kSexFieldNumber;
+const int CSUserRegisterReq::kNameFieldNumber;
+const int CSUserRegisterReq::kHeadFieldNumber;
 #endif  // !_MSC_VER
 
 CSUserRegisterReq::CSUserRegisterReq()
@@ -922,6 +929,9 @@ void CSUserRegisterReq::SharedCtor() {
   _cached_size_ = 0;
   user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  sex_ = 0;
+  name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -935,6 +945,12 @@ void CSUserRegisterReq::SharedDtor() {
   }
   if (password_ != &::google::protobuf::internal::kEmptyString) {
     delete password_;
+  }
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    delete name_;
+  }
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    delete head_;
   }
   if (this != default_instance_) {
   }
@@ -973,6 +989,17 @@ void CSUserRegisterReq::Clear() {
         password_->clear();
       }
     }
+    sex_ = 0;
+    if (has_name()) {
+      if (name_ != &::google::protobuf::internal::kEmptyString) {
+        name_->clear();
+      }
+    }
+    if (has_head()) {
+      if (head_ != &::google::protobuf::internal::kEmptyString) {
+        head_->clear();
+      }
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -1009,6 +1036,56 @@ bool CSUserRegisterReq::MergePartialFromCodedStream(
                 input, this->mutable_password()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8String(
             this->password().data(), this->password().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(24)) goto parse_sex;
+        break;
+      }
+
+      // required int32 sex = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_sex:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &sex_)));
+          set_has_sex();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(34)) goto parse_name;
+        break;
+      }
+
+      // required string name = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_name:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_name()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->name().data(), this->name().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(42)) goto parse_head;
+        break;
+      }
+
+      // required string head = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_head:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_head()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->head().data(), this->head().length(),
             ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
@@ -1053,6 +1130,29 @@ void CSUserRegisterReq::SerializeWithCachedSizes(
       2, this->password(), output);
   }
 
+  // required int32 sex = 3;
+  if (has_sex()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->sex(), output);
+  }
+
+  // required string name = 4;
+  if (has_name()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      4, this->name(), output);
+  }
+
+  // required string head = 5;
+  if (has_head()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->head().data(), this->head().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      5, this->head(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -1081,6 +1181,31 @@ void CSUserRegisterReq::SerializeWithCachedSizes(
         2, this->password(), target);
   }
 
+  // required int32 sex = 3;
+  if (has_sex()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->sex(), target);
+  }
+
+  // required string name = 4;
+  if (has_name()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        4, this->name(), target);
+  }
+
+  // required string head = 5;
+  if (has_head()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->head().data(), this->head().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        5, this->head(), target);
+  }
+
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
@@ -1104,6 +1229,27 @@ int CSUserRegisterReq::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->password());
+    }
+
+    // required int32 sex = 3;
+    if (has_sex()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->sex());
+    }
+
+    // required string name = 4;
+    if (has_name()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->name());
+    }
+
+    // required string head = 5;
+    if (has_head()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->head());
     }
 
   }
@@ -1139,6 +1285,15 @@ void CSUserRegisterReq::MergeFrom(const CSUserRegisterReq& from) {
     if (from.has_password()) {
       set_password(from.password());
     }
+    if (from.has_sex()) {
+      set_sex(from.sex());
+    }
+    if (from.has_name()) {
+      set_name(from.name());
+    }
+    if (from.has_head()) {
+      set_head(from.head());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -1156,7 +1311,7 @@ void CSUserRegisterReq::CopyFrom(const CSUserRegisterReq& from) {
 }
 
 bool CSUserRegisterReq::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
 
   return true;
 }
@@ -1165,6 +1320,9 @@ void CSUserRegisterReq::Swap(CSUserRegisterReq* other) {
   if (other != this) {
     std::swap(user_, other->user_);
     std::swap(password_, other->password_);
+    std::swap(sex_, other->sex_);
+    std::swap(name_, other->name_);
+    std::swap(head_, other->head_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

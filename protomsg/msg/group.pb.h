@@ -526,17 +526,32 @@ class CSGroupCreateReq : public ::google::protobuf::Message {
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
+  // required string head = 2;
+  inline bool has_head() const;
+  inline void clear_head();
+  static const int kHeadFieldNumber = 2;
+  inline const ::std::string& head() const;
+  inline void set_head(const ::std::string& value);
+  inline void set_head(const char* value);
+  inline void set_head(const char* value, size_t size);
+  inline ::std::string* mutable_head();
+  inline ::std::string* release_head();
+  inline void set_allocated_head(::std::string* head);
+
   // @@protoc_insertion_point(class_scope:sglib.groupproto.CSGroupCreateReq)
  private:
   inline void set_has_name();
   inline void clear_has_name();
+  inline void set_has_head();
+  inline void clear_has_head();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* name_;
+  ::std::string* head_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void  protobuf_AddDesc_group_2eproto();
   friend void protobuf_AssignDesc_group_2eproto();
@@ -620,10 +635,22 @@ class SCGroupCreateRsp : public ::google::protobuf::Message {
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // optional uint64 groupid = 3;
+  // required string head = 3;
+  inline bool has_head() const;
+  inline void clear_head();
+  static const int kHeadFieldNumber = 3;
+  inline const ::std::string& head() const;
+  inline void set_head(const ::std::string& value);
+  inline void set_head(const char* value);
+  inline void set_head(const char* value, size_t size);
+  inline ::std::string* mutable_head();
+  inline ::std::string* release_head();
+  inline void set_allocated_head(::std::string* head);
+
+  // optional uint64 groupid = 4;
   inline bool has_groupid() const;
   inline void clear_groupid();
-  static const int kGroupidFieldNumber = 3;
+  static const int kGroupidFieldNumber = 4;
   inline ::google::protobuf::uint64 groupid() const;
   inline void set_groupid(::google::protobuf::uint64 value);
 
@@ -633,17 +660,20 @@ class SCGroupCreateRsp : public ::google::protobuf::Message {
   inline void clear_has_result();
   inline void set_has_name();
   inline void clear_has_name();
+  inline void set_has_head();
+  inline void clear_has_head();
   inline void set_has_groupid();
   inline void clear_has_groupid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* name_;
+  ::std::string* head_;
   ::google::protobuf::uint64 groupid_;
   ::google::protobuf::int32 result_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void  protobuf_AddDesc_group_2eproto();
   friend void protobuf_AssignDesc_group_2eproto();
@@ -3906,6 +3936,18 @@ class GroupGroupmanageCreateGroupReq : public ::google::protobuf::Message {
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
+  // required string head = 5;
+  inline bool has_head() const;
+  inline void clear_head();
+  static const int kHeadFieldNumber = 5;
+  inline const ::std::string& head() const;
+  inline void set_head(const ::std::string& value);
+  inline void set_head(const char* value);
+  inline void set_head(const char* value, size_t size);
+  inline ::std::string* mutable_head();
+  inline ::std::string* release_head();
+  inline void set_allocated_head(::std::string* head);
+
   // @@protoc_insertion_point(class_scope:sglib.groupproto.GroupGroupmanageCreateGroupReq)
  private:
   inline void set_has_gateid();
@@ -3916,16 +3958,19 @@ class GroupGroupmanageCreateGroupReq : public ::google::protobuf::Message {
   inline void clear_has_clientid();
   inline void set_has_name();
   inline void clear_has_name();
+  inline void set_has_head();
+  inline void clear_has_head();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint64 gateid_;
   ::google::protobuf::uint64 clientid_;
   ::std::string* name_;
+  ::std::string* head_;
   ::google::protobuf::int32 gateresid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void  protobuf_AddDesc_group_2eproto();
   friend void protobuf_AssignDesc_group_2eproto();
@@ -4042,10 +4087,22 @@ class GroupmanageGroupCreateGroupNtf : public ::google::protobuf::Message {
   inline ::google::protobuf::uint64 groupid() const;
   inline void set_groupid(::google::protobuf::uint64 value);
 
-  // required uint64 groupserverid = 7;
+  // required string head = 7;
+  inline bool has_head() const;
+  inline void clear_head();
+  static const int kHeadFieldNumber = 7;
+  inline const ::std::string& head() const;
+  inline void set_head(const ::std::string& value);
+  inline void set_head(const char* value);
+  inline void set_head(const char* value, size_t size);
+  inline ::std::string* mutable_head();
+  inline ::std::string* release_head();
+  inline void set_allocated_head(::std::string* head);
+
+  // required uint64 groupserverid = 8;
   inline bool has_groupserverid() const;
   inline void clear_groupserverid();
-  static const int kGroupserveridFieldNumber = 7;
+  static const int kGroupserveridFieldNumber = 8;
   inline ::google::protobuf::uint64 groupserverid() const;
   inline void set_groupserverid(::google::protobuf::uint64 value);
 
@@ -4063,6 +4120,8 @@ class GroupmanageGroupCreateGroupNtf : public ::google::protobuf::Message {
   inline void clear_has_name();
   inline void set_has_groupid();
   inline void clear_has_groupid();
+  inline void set_has_head();
+  inline void clear_has_head();
   inline void set_has_groupserverid();
   inline void clear_has_groupserverid();
 
@@ -4073,11 +4132,12 @@ class GroupmanageGroupCreateGroupNtf : public ::google::protobuf::Message {
   ::std::string* user_;
   ::std::string* name_;
   ::google::protobuf::uint64 groupid_;
+  ::std::string* head_;
   ::google::protobuf::uint64 groupserverid_;
   ::google::protobuf::int32 gateresid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
 
   friend void  protobuf_AddDesc_group_2eproto();
   friend void protobuf_AssignDesc_group_2eproto();
@@ -4194,17 +4254,29 @@ class GroupGroupmanagerCreateGroupResult : public ::google::protobuf::Message {
   inline ::google::protobuf::uint64 groupid() const;
   inline void set_groupid(::google::protobuf::uint64 value);
 
-  // required uint64 groupserverid = 7;
+  // required string head = 7;
+  inline bool has_head() const;
+  inline void clear_head();
+  static const int kHeadFieldNumber = 7;
+  inline const ::std::string& head() const;
+  inline void set_head(const ::std::string& value);
+  inline void set_head(const char* value);
+  inline void set_head(const char* value, size_t size);
+  inline ::std::string* mutable_head();
+  inline ::std::string* release_head();
+  inline void set_allocated_head(::std::string* head);
+
+  // required uint64 groupserverid = 8;
   inline bool has_groupserverid() const;
   inline void clear_groupserverid();
-  static const int kGroupserveridFieldNumber = 7;
+  static const int kGroupserveridFieldNumber = 8;
   inline ::google::protobuf::uint64 groupserverid() const;
   inline void set_groupserverid(::google::protobuf::uint64 value);
 
-  // optional int32 serverid = 8;
+  // optional int32 serverid = 9;
   inline bool has_serverid() const;
   inline void clear_serverid();
-  static const int kServeridFieldNumber = 8;
+  static const int kServeridFieldNumber = 9;
   inline ::google::protobuf::int32 serverid() const;
   inline void set_serverid(::google::protobuf::int32 value);
 
@@ -4222,6 +4294,8 @@ class GroupGroupmanagerCreateGroupResult : public ::google::protobuf::Message {
   inline void clear_has_name();
   inline void set_has_groupid();
   inline void clear_has_groupid();
+  inline void set_has_head();
+  inline void clear_has_head();
   inline void set_has_groupserverid();
   inline void clear_has_groupserverid();
   inline void set_has_serverid();
@@ -4232,14 +4306,15 @@ class GroupGroupmanagerCreateGroupResult : public ::google::protobuf::Message {
   ::google::protobuf::uint64 gateid_;
   ::google::protobuf::uint64 clientid_;
   ::std::string* user_;
+  ::std::string* name_;
   ::google::protobuf::int32 result_;
   ::google::protobuf::int32 serverid_;
-  ::std::string* name_;
   ::google::protobuf::uint64 groupid_;
+  ::std::string* head_;
   ::google::protobuf::uint64 groupserverid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
 
   friend void  protobuf_AddDesc_group_2eproto();
   friend void protobuf_AssignDesc_group_2eproto();
@@ -4344,10 +4419,22 @@ class GroupmanagerGroupCreateGroupRsp : public ::google::protobuf::Message {
   inline ::google::protobuf::uint64 groupid() const;
   inline void set_groupid(::google::protobuf::uint64 value);
 
-  // optional int32 serverid = 6;
+  // required string head = 6;
+  inline bool has_head() const;
+  inline void clear_head();
+  static const int kHeadFieldNumber = 6;
+  inline const ::std::string& head() const;
+  inline void set_head(const ::std::string& value);
+  inline void set_head(const char* value);
+  inline void set_head(const char* value, size_t size);
+  inline ::std::string* mutable_head();
+  inline ::std::string* release_head();
+  inline void set_allocated_head(::std::string* head);
+
+  // optional int32 serverid = 7;
   inline bool has_serverid() const;
   inline void clear_serverid();
-  static const int kServeridFieldNumber = 6;
+  static const int kServeridFieldNumber = 7;
   inline ::google::protobuf::int32 serverid() const;
   inline void set_serverid(::google::protobuf::int32 value);
 
@@ -4363,6 +4450,8 @@ class GroupmanagerGroupCreateGroupRsp : public ::google::protobuf::Message {
   inline void clear_has_name();
   inline void set_has_groupid();
   inline void clear_has_groupid();
+  inline void set_has_head();
+  inline void clear_has_head();
   inline void set_has_serverid();
   inline void clear_has_serverid();
 
@@ -4370,13 +4459,14 @@ class GroupmanagerGroupCreateGroupRsp : public ::google::protobuf::Message {
 
   ::google::protobuf::uint64 gateid_;
   ::google::protobuf::uint64 clientid_;
+  ::std::string* name_;
   ::google::protobuf::int32 result_;
   ::google::protobuf::int32 serverid_;
-  ::std::string* name_;
   ::google::protobuf::uint64 groupid_;
+  ::std::string* head_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
 
   friend void  protobuf_AddDesc_group_2eproto();
   friend void protobuf_AssignDesc_group_2eproto();
@@ -6544,6 +6634,76 @@ inline void CSGroupCreateReq::set_allocated_name(::std::string* name) {
   }
 }
 
+// required string head = 2;
+inline bool CSGroupCreateReq::has_head() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void CSGroupCreateReq::set_has_head() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void CSGroupCreateReq::clear_has_head() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void CSGroupCreateReq::clear_head() {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    head_->clear();
+  }
+  clear_has_head();
+}
+inline const ::std::string& CSGroupCreateReq::head() const {
+  return *head_;
+}
+inline void CSGroupCreateReq::set_head(const ::std::string& value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void CSGroupCreateReq::set_head(const char* value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void CSGroupCreateReq::set_head(const char* value, size_t size) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* CSGroupCreateReq::mutable_head() {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  return head_;
+}
+inline ::std::string* CSGroupCreateReq::release_head() {
+  clear_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = head_;
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void CSGroupCreateReq::set_allocated_head(::std::string* head) {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    delete head_;
+  }
+  if (head) {
+    set_has_head();
+    head_ = head;
+  } else {
+    clear_has_head();
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
 // -------------------------------------------------------------------
 
 // SCGroupCreateRsp
@@ -6640,15 +6800,85 @@ inline void SCGroupCreateRsp::set_allocated_name(::std::string* name) {
   }
 }
 
-// optional uint64 groupid = 3;
-inline bool SCGroupCreateRsp::has_groupid() const {
+// required string head = 3;
+inline bool SCGroupCreateRsp::has_head() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void SCGroupCreateRsp::set_has_groupid() {
+inline void SCGroupCreateRsp::set_has_head() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void SCGroupCreateRsp::clear_has_groupid() {
+inline void SCGroupCreateRsp::clear_has_head() {
   _has_bits_[0] &= ~0x00000004u;
+}
+inline void SCGroupCreateRsp::clear_head() {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    head_->clear();
+  }
+  clear_has_head();
+}
+inline const ::std::string& SCGroupCreateRsp::head() const {
+  return *head_;
+}
+inline void SCGroupCreateRsp::set_head(const ::std::string& value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void SCGroupCreateRsp::set_head(const char* value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void SCGroupCreateRsp::set_head(const char* value, size_t size) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* SCGroupCreateRsp::mutable_head() {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  return head_;
+}
+inline ::std::string* SCGroupCreateRsp::release_head() {
+  clear_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = head_;
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void SCGroupCreateRsp::set_allocated_head(::std::string* head) {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    delete head_;
+  }
+  if (head) {
+    set_has_head();
+    head_ = head;
+  } else {
+    clear_has_head();
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional uint64 groupid = 4;
+inline bool SCGroupCreateRsp::has_groupid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void SCGroupCreateRsp::set_has_groupid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void SCGroupCreateRsp::clear_has_groupid() {
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void SCGroupCreateRsp::clear_groupid() {
   groupid_ = GOOGLE_ULONGLONG(0);
@@ -9222,6 +9452,76 @@ inline void GroupGroupmanageCreateGroupReq::set_allocated_name(::std::string* na
   }
 }
 
+// required string head = 5;
+inline bool GroupGroupmanageCreateGroupReq::has_head() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void GroupGroupmanageCreateGroupReq::set_has_head() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void GroupGroupmanageCreateGroupReq::clear_has_head() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void GroupGroupmanageCreateGroupReq::clear_head() {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    head_->clear();
+  }
+  clear_has_head();
+}
+inline const ::std::string& GroupGroupmanageCreateGroupReq::head() const {
+  return *head_;
+}
+inline void GroupGroupmanageCreateGroupReq::set_head(const ::std::string& value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void GroupGroupmanageCreateGroupReq::set_head(const char* value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void GroupGroupmanageCreateGroupReq::set_head(const char* value, size_t size) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* GroupGroupmanageCreateGroupReq::mutable_head() {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  return head_;
+}
+inline ::std::string* GroupGroupmanageCreateGroupReq::release_head() {
+  clear_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = head_;
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void GroupGroupmanageCreateGroupReq::set_allocated_head(::std::string* head) {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    delete head_;
+  }
+  if (head) {
+    set_has_head();
+    head_ = head;
+  } else {
+    clear_has_head();
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
 // -------------------------------------------------------------------
 
 // GroupmanageGroupCreateGroupNtf
@@ -9454,15 +9754,85 @@ inline void GroupmanageGroupCreateGroupNtf::set_groupid(::google::protobuf::uint
   groupid_ = value;
 }
 
-// required uint64 groupserverid = 7;
-inline bool GroupmanageGroupCreateGroupNtf::has_groupserverid() const {
+// required string head = 7;
+inline bool GroupmanageGroupCreateGroupNtf::has_head() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
-inline void GroupmanageGroupCreateGroupNtf::set_has_groupserverid() {
+inline void GroupmanageGroupCreateGroupNtf::set_has_head() {
   _has_bits_[0] |= 0x00000040u;
 }
-inline void GroupmanageGroupCreateGroupNtf::clear_has_groupserverid() {
+inline void GroupmanageGroupCreateGroupNtf::clear_has_head() {
   _has_bits_[0] &= ~0x00000040u;
+}
+inline void GroupmanageGroupCreateGroupNtf::clear_head() {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    head_->clear();
+  }
+  clear_has_head();
+}
+inline const ::std::string& GroupmanageGroupCreateGroupNtf::head() const {
+  return *head_;
+}
+inline void GroupmanageGroupCreateGroupNtf::set_head(const ::std::string& value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void GroupmanageGroupCreateGroupNtf::set_head(const char* value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void GroupmanageGroupCreateGroupNtf::set_head(const char* value, size_t size) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* GroupmanageGroupCreateGroupNtf::mutable_head() {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  return head_;
+}
+inline ::std::string* GroupmanageGroupCreateGroupNtf::release_head() {
+  clear_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = head_;
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void GroupmanageGroupCreateGroupNtf::set_allocated_head(::std::string* head) {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    delete head_;
+  }
+  if (head) {
+    set_has_head();
+    head_ = head;
+  } else {
+    clear_has_head();
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required uint64 groupserverid = 8;
+inline bool GroupmanageGroupCreateGroupNtf::has_groupserverid() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void GroupmanageGroupCreateGroupNtf::set_has_groupserverid() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void GroupmanageGroupCreateGroupNtf::clear_has_groupserverid() {
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline void GroupmanageGroupCreateGroupNtf::clear_groupserverid() {
   groupserverid_ = GOOGLE_ULONGLONG(0);
@@ -9708,15 +10078,85 @@ inline void GroupGroupmanagerCreateGroupResult::set_groupid(::google::protobuf::
   groupid_ = value;
 }
 
-// required uint64 groupserverid = 7;
-inline bool GroupGroupmanagerCreateGroupResult::has_groupserverid() const {
+// required string head = 7;
+inline bool GroupGroupmanagerCreateGroupResult::has_head() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
-inline void GroupGroupmanagerCreateGroupResult::set_has_groupserverid() {
+inline void GroupGroupmanagerCreateGroupResult::set_has_head() {
   _has_bits_[0] |= 0x00000040u;
 }
-inline void GroupGroupmanagerCreateGroupResult::clear_has_groupserverid() {
+inline void GroupGroupmanagerCreateGroupResult::clear_has_head() {
   _has_bits_[0] &= ~0x00000040u;
+}
+inline void GroupGroupmanagerCreateGroupResult::clear_head() {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    head_->clear();
+  }
+  clear_has_head();
+}
+inline const ::std::string& GroupGroupmanagerCreateGroupResult::head() const {
+  return *head_;
+}
+inline void GroupGroupmanagerCreateGroupResult::set_head(const ::std::string& value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void GroupGroupmanagerCreateGroupResult::set_head(const char* value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void GroupGroupmanagerCreateGroupResult::set_head(const char* value, size_t size) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* GroupGroupmanagerCreateGroupResult::mutable_head() {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  return head_;
+}
+inline ::std::string* GroupGroupmanagerCreateGroupResult::release_head() {
+  clear_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = head_;
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void GroupGroupmanagerCreateGroupResult::set_allocated_head(::std::string* head) {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    delete head_;
+  }
+  if (head) {
+    set_has_head();
+    head_ = head;
+  } else {
+    clear_has_head();
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required uint64 groupserverid = 8;
+inline bool GroupGroupmanagerCreateGroupResult::has_groupserverid() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void GroupGroupmanagerCreateGroupResult::set_has_groupserverid() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void GroupGroupmanagerCreateGroupResult::clear_has_groupserverid() {
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline void GroupGroupmanagerCreateGroupResult::clear_groupserverid() {
   groupserverid_ = GOOGLE_ULONGLONG(0);
@@ -9730,15 +10170,15 @@ inline void GroupGroupmanagerCreateGroupResult::set_groupserverid(::google::prot
   groupserverid_ = value;
 }
 
-// optional int32 serverid = 8;
+// optional int32 serverid = 9;
 inline bool GroupGroupmanagerCreateGroupResult::has_serverid() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
+  return (_has_bits_[0] & 0x00000100u) != 0;
 }
 inline void GroupGroupmanagerCreateGroupResult::set_has_serverid() {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000100u;
 }
 inline void GroupGroupmanagerCreateGroupResult::clear_has_serverid() {
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000100u;
 }
 inline void GroupGroupmanagerCreateGroupResult::clear_serverid() {
   serverid_ = 0;
@@ -9914,15 +10354,85 @@ inline void GroupmanagerGroupCreateGroupRsp::set_groupid(::google::protobuf::uin
   groupid_ = value;
 }
 
-// optional int32 serverid = 6;
-inline bool GroupmanagerGroupCreateGroupRsp::has_serverid() const {
+// required string head = 6;
+inline bool GroupmanagerGroupCreateGroupRsp::has_head() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void GroupmanagerGroupCreateGroupRsp::set_has_serverid() {
+inline void GroupmanagerGroupCreateGroupRsp::set_has_head() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void GroupmanagerGroupCreateGroupRsp::clear_has_serverid() {
+inline void GroupmanagerGroupCreateGroupRsp::clear_has_head() {
   _has_bits_[0] &= ~0x00000020u;
+}
+inline void GroupmanagerGroupCreateGroupRsp::clear_head() {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    head_->clear();
+  }
+  clear_has_head();
+}
+inline const ::std::string& GroupmanagerGroupCreateGroupRsp::head() const {
+  return *head_;
+}
+inline void GroupmanagerGroupCreateGroupRsp::set_head(const ::std::string& value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void GroupmanagerGroupCreateGroupRsp::set_head(const char* value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void GroupmanagerGroupCreateGroupRsp::set_head(const char* value, size_t size) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* GroupmanagerGroupCreateGroupRsp::mutable_head() {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  return head_;
+}
+inline ::std::string* GroupmanagerGroupCreateGroupRsp::release_head() {
+  clear_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = head_;
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void GroupmanagerGroupCreateGroupRsp::set_allocated_head(::std::string* head) {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    delete head_;
+  }
+  if (head) {
+    set_has_head();
+    head_ = head;
+  } else {
+    clear_has_head();
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional int32 serverid = 7;
+inline bool GroupmanagerGroupCreateGroupRsp::has_serverid() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void GroupmanagerGroupCreateGroupRsp::set_has_serverid() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void GroupmanagerGroupCreateGroupRsp::clear_has_serverid() {
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void GroupmanagerGroupCreateGroupRsp::clear_serverid() {
   serverid_ = 0;

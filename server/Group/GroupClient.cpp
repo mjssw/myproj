@@ -88,7 +88,13 @@ void CGroupClient::_GroupCreateProc(u64 clientid, const byte *pkg, s32 len)
     sglib::groupproto::CSGroupCreateReq req;
 	if( req.ParseFromArray(pkg, len) )
 	{
-		CGroupManager::Instance().CreateGroup( *this, GateResId(), GetClientId(), clientid, req.name() );
+		CGroupManager::Instance().CreateGroup( 
+			*this, 
+			GateResId(), 
+			GetClientId(), 
+			clientid, 
+			req.name(),
+			req.head() );
 	}
 	else
 	{

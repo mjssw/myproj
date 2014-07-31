@@ -100,7 +100,8 @@ void CGroupRpcClient::_GroupmanagerGroupCreateProc(const byte *pkg, s32 len)
 	if( ntf.ParseFromArray(pkg, len) )
 	{
 		CGroupManager::Instance().TryCreateGroup(
-			ntf.gateid(), ntf.gateresid(), ntf.clientid(), ntf.user(), ntf.name(), ntf.groupid(), ntf.groupserverid() );
+			ntf.gateid(), ntf.gateresid(), ntf.clientid(), ntf.user(), 
+			ntf.name(), ntf.groupid(), ntf.head(), ntf.groupserverid() );
 	}
 	else
 	{
@@ -114,7 +115,8 @@ void CGroupRpcClient::_GroupmanagerGroupCreateRspProc(const byte *pkg, s32 len)
 	if( rsp.ParseFromArray(pkg, len) )
 	{
 		CGroupManager::Instance().CreateGroupResult(
-			rsp.result(), rsp.gateid(), rsp.clientid(), rsp.name(), rsp.groupid(), rsp.serverid() );
+			rsp.result(), rsp.gateid(), rsp.clientid(), rsp.name(), 
+			rsp.groupid(), rsp.head(), rsp.serverid() );
 	}
 	else
 	{

@@ -338,20 +338,60 @@ class CSUserRegisterReq : public ::google::protobuf::Message {
   inline ::std::string* release_password();
   inline void set_allocated_password(::std::string* password);
 
+  // required int32 sex = 3;
+  inline bool has_sex() const;
+  inline void clear_sex();
+  static const int kSexFieldNumber = 3;
+  inline ::google::protobuf::int32 sex() const;
+  inline void set_sex(::google::protobuf::int32 value);
+
+  // required string name = 4;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 4;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // required string head = 5;
+  inline bool has_head() const;
+  inline void clear_head();
+  static const int kHeadFieldNumber = 5;
+  inline const ::std::string& head() const;
+  inline void set_head(const ::std::string& value);
+  inline void set_head(const char* value);
+  inline void set_head(const char* value, size_t size);
+  inline ::std::string* mutable_head();
+  inline ::std::string* release_head();
+  inline void set_allocated_head(::std::string* head);
+
   // @@protoc_insertion_point(class_scope:sglib.loginproto.CSUserRegisterReq)
  private:
   inline void set_has_user();
   inline void clear_has_user();
   inline void set_has_password();
   inline void clear_has_password();
+  inline void set_has_sex();
+  inline void clear_has_sex();
+  inline void set_has_name();
+  inline void clear_has_name();
+  inline void set_has_head();
+  inline void clear_has_head();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* user_;
   ::std::string* password_;
+  ::std::string* name_;
+  ::std::string* head_;
+  ::google::protobuf::int32 sex_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void  protobuf_AddDesc_login_2eproto();
   friend void protobuf_AssignDesc_login_2eproto();
@@ -1352,6 +1392,168 @@ inline void CSUserRegisterReq::set_allocated_password(::std::string* password) {
   } else {
     clear_has_password();
     password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 sex = 3;
+inline bool CSUserRegisterReq::has_sex() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void CSUserRegisterReq::set_has_sex() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void CSUserRegisterReq::clear_has_sex() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void CSUserRegisterReq::clear_sex() {
+  sex_ = 0;
+  clear_has_sex();
+}
+inline ::google::protobuf::int32 CSUserRegisterReq::sex() const {
+  return sex_;
+}
+inline void CSUserRegisterReq::set_sex(::google::protobuf::int32 value) {
+  set_has_sex();
+  sex_ = value;
+}
+
+// required string name = 4;
+inline bool CSUserRegisterReq::has_name() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void CSUserRegisterReq::set_has_name() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void CSUserRegisterReq::clear_has_name() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void CSUserRegisterReq::clear_name() {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    name_->clear();
+  }
+  clear_has_name();
+}
+inline const ::std::string& CSUserRegisterReq::name() const {
+  return *name_;
+}
+inline void CSUserRegisterReq::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void CSUserRegisterReq::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void CSUserRegisterReq::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* CSUserRegisterReq::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+inline ::std::string* CSUserRegisterReq::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void CSUserRegisterReq::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    delete name_;
+  }
+  if (name) {
+    set_has_name();
+    name_ = name;
+  } else {
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string head = 5;
+inline bool CSUserRegisterReq::has_head() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void CSUserRegisterReq::set_has_head() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void CSUserRegisterReq::clear_has_head() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void CSUserRegisterReq::clear_head() {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    head_->clear();
+  }
+  clear_has_head();
+}
+inline const ::std::string& CSUserRegisterReq::head() const {
+  return *head_;
+}
+inline void CSUserRegisterReq::set_head(const ::std::string& value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void CSUserRegisterReq::set_head(const char* value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void CSUserRegisterReq::set_head(const char* value, size_t size) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* CSUserRegisterReq::mutable_head() {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  return head_;
+}
+inline ::std::string* CSUserRegisterReq::release_head() {
+  clear_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = head_;
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void CSUserRegisterReq::set_allocated_head(::std::string* head) {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    delete head_;
+  }
+  if (head) {
+    set_has_head();
+    head_ = head;
+  } else {
+    clear_has_head();
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 

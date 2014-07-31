@@ -54,7 +54,7 @@ class CLoginManager
 
 public:
 	void UserLogin(CLoginClient &client, u64 clientId, const std::string &user, const std::string &pwd, const std::string &flag);
-	void UserRegister(CLoginClient &client, u64 clientId, const std::string &user, const std::string &pwd);
+	void UserRegister(CLoginClient &client, u64 clientId, const std::string &user, const std::string &pwd, const std::string &name, s32 sex, const std::string &head);
 	void UserAskEnterGame(u64 clientid, u64 gateid, s32 gameid);
 	void UserClose(u64 clientid, u64 gateid);
 	void UserLogout(u64 gateid, u64 clientid, const std::string &user);
