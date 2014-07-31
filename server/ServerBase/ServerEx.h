@@ -138,6 +138,10 @@ public:
         }
 
 		m_log = CLog4cxxCreater::GetLogger( m_serverConfig->GetLogConfig(), "ServerLog" );
+		if( !m_log )
+		{
+			SGDEBUG( "CLog4cxxCreater::GetLogger ERROR\n" );
+		}
 
         // Try to connect servers
         s32 count = m_serverConfig->GetConnectCount();
@@ -410,7 +414,12 @@ protected:
             cbData->head.func( cbData->data, cbData->head.len );
         }
 
-        bool Start(){ return m_timer.Start(); }
+        bool Start()
+		{ 
+			bool ret = m_timer.Start(); 
+			SGLib::CLog::DebugLog( "CCallbackTimer Start %s ", ret?"success":"failed" );
+			return ret;
+		}
         void Stop(){ m_timer.Stop(); }
 
         s32 AddTimer(u32 elapse, CallBackFunc func, void *data, s32 len, bool isPersist)

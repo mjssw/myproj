@@ -75,7 +75,7 @@ void CEventWorkerEx::Stop()
 
 void CEventWorkerEx::Run()
 {
-	CLog::DebugLog("CEventWorker::Run Start");
+	CLog::DebugLog("CEventWorkerEx::Run Start");
 
 	while( !m_isStop )
 	{

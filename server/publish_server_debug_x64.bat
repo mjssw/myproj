@@ -4,7 +4,9 @@ xcopy /Y .\serverconfig .\publish\serverconfig /s
 mkdir .\publish\Scripts
 xcopy /Y .\Scripts .\publish\Scripts /s
 
-mkdir .\publish\server
-copy /Y ..\third_part\log4cxx\lib\Debug\log4cxx.dll .\publish\server\
-xcopy /Y .\x64\Debug .\publish\server /s
+xcopy /Y .\x64\Debug .\publish /s
+
+copy /Y .\run_all.bat .\publish\
+copy /Y .\run_only_login.bat .\publish\
+copy /Y .\run_only_login_group.bat .\publish\
 

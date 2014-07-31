@@ -18,7 +18,9 @@ CConnectorEx::~CConnectorEx()
 
 bool CConnectorEx::Start()
 {
-	return m_connectExecutor.Start();
+	bool ret = m_connectExecutor.Start();
+	CLog::DebugLog( "CConnectorEx::Start %s ", ret?"success":"failed" );
+	return ret;
 }
 
 void CConnectorEx::Stop()
@@ -28,6 +30,7 @@ void CConnectorEx::Stop()
 
 void CConnectorEx::Connect(const char *ip, s32 port)
 {
+	CLog::DebugLog( "CConnectorEx::Connect %s:%d ", ip, port );
 	CConnectObj *connObj;
 	if( !m_freeConnQueue.Pop( connObj ) )
 	{
