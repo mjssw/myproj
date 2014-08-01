@@ -2,7 +2,8 @@
 
 CUserViewData::CUserViewData() : 
 	m_isSavePwd( false ),
-	m_isAutoLogin( false )
+	m_isAutoLogin( false ),
+	m_selectGroup( 0 )
 {
 }
 
