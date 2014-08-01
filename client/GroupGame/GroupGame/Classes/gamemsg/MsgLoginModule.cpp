@@ -161,3 +161,37 @@ void CMsgUserBasicInfoNotify::Process()
 	CUserManager::Instance().GetBasic().SetMoney( E_Money_Diamond, m_diamond );
 	view->UpdateView( CSceneManager::E_UpdateType_LoadingProgress );
 }
+
+CMsgConnectRegister::CMsgConnectRegister()
+{
+}
+void CMsgConnectRegister::Process()
+{
+	CCLog( "[CMsgConnectRegister::Process] connect register(%s:%d) success", LOGIN_IP, LOGIN_PORT );
+	CViewBase *view = CSceneManager::Instance().GetCurView();
+	if( !view )
+	{
+		CCLog( "[CMsgConnectRegister::Process] cur view is NULL" );
+		return;
+	}
+
+	view->UpdateView( CSceneManager::E_UpdateType_ConnectRegister );
+}
+	
+
+CMsgResiterRsp::CMsgResiterRsp(s32 result) : m_result(result)
+{
+}
+void CMsgResiterRsp::Process()
+{
+	CCLog( "[CMsgResiterRsp::Process] register result:%d", m_result );
+	CViewBase *view = CSceneManager::Instance().GetCurView();
+	if( !view )
+	{
+		CCLog( "[CMsgResiterRsp::Process] cur view is NULL" );
+		return;
+	}
+
+	CUserManager::Instance().GetBasic().SetRegResult( m_result );
+	view->UpdateView( CSceneManager::E_UpdateType_RegisterResult );
+}

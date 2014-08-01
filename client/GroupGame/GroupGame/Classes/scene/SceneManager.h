@@ -18,6 +18,9 @@ public:
 		E_UpdateType_ConnectGroup,
 		E_UpdateType_LoginGroup,
 		E_UpdateType_UpdateGroupList,
+		E_UpdateType_CloseRegisterDialog,
+		E_UpdateType_ConnectRegister,
+		E_UpdateType_RegisterResult,
 	};
 
 	void SetCurView(CViewBase *curView);

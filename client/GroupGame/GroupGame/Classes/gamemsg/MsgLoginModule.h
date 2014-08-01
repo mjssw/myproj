@@ -76,4 +76,20 @@ private:
 	u64 m_diamond;
 };
 
+class CMsgConnectRegister : public CMsgBase
+{
+public:
+	CMsgConnectRegister();
+	virtual void Process();
+};
+
+class CMsgResiterRsp : public CMsgBase
+{
+public:
+	CMsgResiterRsp(s32 result);
+	virtual void Process();
+private:
+	s32 m_result;
+};
+
 #endif

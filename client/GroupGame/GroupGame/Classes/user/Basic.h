@@ -29,6 +29,13 @@ public:
 	void SetMoney(EMoneyType type, u64 money);
 	u64 GetMoney(EMoneyType type);
 
+	void SetRegUser(const std::string &user);
+	const std::string& GetRegUser();
+	void SetRegPwd(const std::string &pwd);
+	const std::string& GetRegPwd();
+	void SetRegResult(s32 regRet);
+	s32 GetRegResult();
+
 private:
 	std::string m_user;
 	std::string m_pwd;
@@ -38,6 +45,10 @@ private:
 	u64 m_exp;
 	u64 m_level;
 	u64 m_money[E_Money_Type_Count];
+
+	std::string m_regUser;
+	std::string m_regPwd;
+	s32 m_regResult;
 };
 
 #endif

@@ -205,6 +205,12 @@
     <ClInclude Include="..\Classes\user\GroupMember.h">
       <Filter>user</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\view\RegisterPopLayer.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\net\RegisterClient.h">
+      <Filter>net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -341,6 +347,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\user\GroupMember.cpp">
       <Filter>user</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\view\RegisterPopLayer.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\net\RegisterClient.cpp">
+      <Filter>net</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

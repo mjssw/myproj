@@ -6,6 +6,7 @@
 #include "LoginClient.h"
 #include "GroupClient.h"
 #include "GameClient.h"
+#include "RegisterClient.h"
 #include "Timer.h"
 #include <deque>
 
@@ -30,8 +31,10 @@ public:
 	bool StartLogin(const char *ip, int port);
 	bool StartGroup(const char *ip, int port);
 	bool StartGame(const char *ip, int port);
+	bool StartRegister(const char *ip, int port);
 	void CloseGameConn();
 	void CloseLoginConn();
+	void CloseRegisterConn();
 	void PushMessage(CMsgBase *msg);
 	void ProcessMessage();
 	void PauseProcessMessage();
@@ -42,6 +45,8 @@ public:
 	CGroupClient* GetGroupClientInstance();
 	void SetGameClientInstance(CGameClient *client);
 	CGameClient* GetGameClientInstance();
+	void SetRegClientInstance(CRegisterClient *client);
+	CRegisterClient* GetRegClientInstance();
 
 private:
 	void _CloseAll();
@@ -50,10 +55,12 @@ private:
 	CLoginClient *m_loginClient;
 	CGroupClient *m_groupClient;
 	CGameClient  *m_gameClient;
+	CRegisterClient *m_registerClient;
 
 	SGLib::CClientManager<CLoginClient> *m_loginConn;
 	SGLib::CClientManager<CGroupClient> *m_groupConn;
 	SGLib::CClientManager<CGameClient> *m_gameConn;
+	SGLib::CClientManager<CRegisterClient> *m_regConn;
 
 	SGLib::CTimer<E_Max_Timer_Count>  m_timer;
 

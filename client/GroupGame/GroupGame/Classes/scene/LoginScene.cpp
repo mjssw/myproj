@@ -10,6 +10,7 @@
 #include "MainScene.h"
 #include "SceneManager.h"
 #include "utils.h"
+#include "view/RegisterPopLayer.h"
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
@@ -79,6 +80,23 @@ void CLoginScene::UpdateView(int type)
 	case CSceneManager::E_UpdateType_LoginGroup:
 		{
 			//CNetManager::Instance().PauseProcessMessage();
+		}
+		break;
+	case CSceneManager::E_UpdateType_CloseRegisterDialog:
+		{
+			_AddLoginView( 
+				CUserManager::Instance().GetViewData().GetSavePwd(),
+				CUserManager::Instance().GetViewData().GetAutoLogin() );
+		}
+		break;
+	case CSceneManager::E_UpdateType_ConnectRegister:
+		{
+			_DoRegister();
+		}
+		break;
+	case CSceneManager::E_UpdateType_RegisterResult:
+		{
+			_RegisterResult();
 		}
 		break;
 	default:
@@ -230,6 +248,20 @@ void CLoginScene::menuAutoLoginCheckBoxCallback(CCObject *pSender)
 	CUserManager::Instance().GetViewData().SetAutoLogin( !curState );
 }
 
+void CLoginScene::menuRegisterCallback(cocos2d::Object *pSender)
+{
+	CCLog( "menuRegisterCallback" );
+	CRegisterPopLayer *pop = CRegisterPopLayer::create( "commonbg.png" ); 
+	if( pop )
+	{
+		pop->SetView( this );
+		_RemoveLoginView();
+		pop->setPosition(ccp(0,0));
+		addChild( pop, 99999 );
+		m_regPopLayer = pop;
+	}
+}
+
 void CLoginScene::_AddSceneBg()
 {
 	CCSprite *pSprite = CResManager::Instance().GetSpriteBg();
@@ -257,6 +289,7 @@ void CLoginScene::_AddLoginView(bool isSavePwdSelect, bool isAutoLoginSelect)
 	_AddCheckBoxAuthLogin( *loginBg, isAutoLoginSelect );
 	_AddBtnLogin( *loginBg );
 	_AddBtnExit( *loginBg );
+	_AddRegisterBnt( *loginBg );
 }
 
 void CLoginScene::_AddEditBox(CCSprite &loginBg)
@@ -538,6 +571,25 @@ void CLoginScene::_AddLoadingCancelBtn(cocos2d::CCNode &loadingNode)
 	loadingNode.addChild( menu, 0 );
 }
 
+void CLoginScene::_AddRegisterBnt(cocos2d::CCSprite &loginBg)
+{
+	Size sz = loginBg.getContentSize();
+	
+	CCMyMenuItemImage *regItem = CCMyMenuItemImage::create(
+		"register_normal.png",
+		"register_down.png",
+		this,
+		menu_selector(CLoginScene::menuRegisterCallback));
+	CCAssert( regItem, "CreateRegItem Failed" );
+	Size regSz = regItem->getContentSize();
+	regItem->setPosition( ccp(sz.width/2, sz.height/2) );
+
+	CCMenu *menu = CCMenu::create( regItem, NULL );
+	menu->setPosition( CCPointZero );
+	CCAssert( menu, "CreateRegMenu Failed" );
+	loginBg.addChild( menu, 0 );
+}
+
 void CLoginScene::_RemoveLoginView()
 {
 	removeChildByTag( E_Tag_LoginBg );
@@ -607,4 +659,22 @@ void CLoginScene::_RemoveLoadingView()
 
 	removeChildByTag( E_Tag_Loading );
 	m_loadView.m_loadItem = NULL;
+}
+
+void CLoginScene::_DoRegister()
+{
+	CRegisterPopLayer *popLayer = (CRegisterPopLayer*)m_regPopLayer;
+	if( popLayer )
+	{
+		popLayer->Register();
+	}
+}
+
+void CLoginScene::_RegisterResult()
+{
+	CRegisterPopLayer *popLayer = (CRegisterPopLayer*)m_regPopLayer;
+	if( popLayer )
+	{
+		popLayer->RegisterResult();
+	}
 }

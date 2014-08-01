@@ -153,6 +153,7 @@
     <ClInclude Include="..\Classes\net\LoginClient.h" />
     <ClInclude Include="..\Classes\net\NetManager.h" />
     <ClInclude Include="..\Classes\net\ProtoClientBase.h" />
+    <ClInclude Include="..\Classes\net\RegisterClient.h" />
     <ClInclude Include="..\Classes\res\ResManager.h" />
     <ClInclude Include="..\Classes\scene\LoginScene.h" />
     <ClInclude Include="..\Classes\scene\MainScene.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="..\Classes\view\MyRadioButton.h" />
     <ClInclude Include="..\Classes\view\MyTableView.h" />
     <ClInclude Include="..\Classes\view\PopLayerBase.h" />
+    <ClInclude Include="..\Classes\view\RegisterPopLayer.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
@@ -202,6 +204,7 @@
     <ClCompile Include="..\Classes\net\LoginClient.cpp" />
     <ClCompile Include="..\Classes\net\NetManager.cpp" />
     <ClCompile Include="..\Classes\net\ProtoClientBase.cpp" />
+    <ClCompile Include="..\Classes\net\RegisterClient.cpp" />
     <ClCompile Include="..\Classes\res\ResManager.cpp" />
     <ClCompile Include="..\Classes\scene\LoginScene.cpp" />
     <ClCompile Include="..\Classes\scene\MainScene.cpp" />
@@ -222,6 +225,7 @@
     <ClCompile Include="..\Classes\view\MyRadioButton.cpp" />
     <ClCompile Include="..\Classes\view\MyTableView.cpp" />
     <ClCompile Include="..\Classes\view\PopLayerBase.cpp" />
+    <ClCompile Include="..\Classes\view\RegisterPopLayer.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

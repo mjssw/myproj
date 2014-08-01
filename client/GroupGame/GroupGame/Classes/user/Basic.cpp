@@ -102,3 +102,33 @@ u64 CUserBasic::GetMoney(EMoneyType type)
 	}
 	return 0;
 }
+
+void CUserBasic::SetRegUser(const string &user)
+{
+	m_regUser = user;
+}
+
+const string& CUserBasic::GetRegUser()
+{
+	return m_regUser;
+}
+
+void CUserBasic::SetRegPwd(const string &pwd)
+{
+	m_regPwd = pwd;
+}
+
+const string& CUserBasic::GetRegPwd()
+{
+	return m_regPwd;
+}
+
+void CUserBasic::SetRegResult(s32 regRet)
+{
+	m_regResult = regRet;
+}
+
+s32 CUserBasic::GetRegResult()
+{
+	return m_regResult;
+}

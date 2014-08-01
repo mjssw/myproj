@@ -11,10 +11,12 @@ bool CNetManager::Init()
 	m_loginClient = NULL;
 	m_groupClient = NULL;
 	m_gameClient = NULL;
+	m_registerClient = NULL;
 
 	m_loginConn = NULL;
 	m_groupConn = NULL;
 	m_gameConn = NULL;
+	m_regConn = NULL;
 
 	m_isPauseProcessMessage = false;
 
@@ -71,6 +73,19 @@ bool CNetManager::StartGame(const char *ip, int port)
 	return m_gameConn->Start( ip, port );
 }
 
+bool CNetManager::StartRegister(const char *ip, int port)
+{
+	CloseRegisterConn();
+
+	m_regConn = new SGLib::CClientManager<CRegisterClient>( 1 );
+	if( !m_regConn )
+	{
+		return false;
+	}
+
+	return m_regConn->Start( ip, port );
+}
+
 void CNetManager::CloseGameConn()
 {
 	if( m_gameConn )
@@ -88,6 +103,16 @@ void CNetManager::CloseLoginConn()
 		m_loginClient = NULL;
 		m_loginConn->Stop();
 		SAFE_DELETE( m_loginConn );
+	}
+}
+
+void CNetManager::CloseRegisterConn()
+{
+	if( m_regConn )
+	{
+		m_registerClient = NULL;
+		m_regConn->Stop();
+		SAFE_DELETE( m_regConn );
 	}
 }
 
@@ -163,6 +188,16 @@ void CNetManager::SetGameClientInstance(CGameClient *client)
 CGameClient* CNetManager::GetGameClientInstance()
 {
 	return m_gameClient;
+}
+
+void CNetManager::SetRegClientInstance(CRegisterClient *client)
+{
+	m_registerClient = client;
+}
+
+CRegisterClient* CNetManager::GetRegClientInstance()
+{
+	return m_registerClient;
 }
 
 void CNetManager::_CloseAll()

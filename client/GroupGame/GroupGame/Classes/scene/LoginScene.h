@@ -20,6 +20,7 @@ public:
     void menuCancelCallback(cocos2d::Object *pSender);
     void menuSavePwdCheckBoxCallback(cocos2d::Object *pSender);
     void menuAutoLoginCheckBoxCallback(cocos2d::Object *pSender);
+	void menuRegisterCallback(cocos2d::Object *pSender);
 
     CREATE_FUNC(CLoginScene);
 
@@ -43,12 +44,16 @@ private:
 	void _AddLoadingText(cocos2d::CCNode &loadingNode);
 	void _AddLoadingProgress(cocos2d::CCNode &loadingNode, int steps);
 	void _AddLoadingCancelBtn(cocos2d::CCNode &loadingNode);
+	void _AddRegisterBnt(cocos2d::CCSprite &loginBg);
 
 	void _RemoveLoginView();
 	void _UpdateLoadingStep();
 	void _RemoveLoadingView();
 	void _UserLogin();
 	void _UserLoginGroup();
+			
+	void _DoRegister();
+	void _RegisterResult();
 
 	void JumpMainSceneCallback(float t);
 private:
@@ -56,6 +61,8 @@ private:
 	{
 		CMyLoadingItem *m_loadItem;
 	} m_loadView;
+
+	cocos2d::Node *m_regPopLayer;
 };
 
 #endif
