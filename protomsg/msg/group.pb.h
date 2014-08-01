@@ -4106,6 +4106,30 @@ class GroupmanageGroupCreateGroupNtf : public ::google::protobuf::Message {
   inline ::google::protobuf::uint64 groupserverid() const;
   inline void set_groupserverid(::google::protobuf::uint64 value);
 
+  // required string username = 9;
+  inline bool has_username() const;
+  inline void clear_username();
+  static const int kUsernameFieldNumber = 9;
+  inline const ::std::string& username() const;
+  inline void set_username(const ::std::string& value);
+  inline void set_username(const char* value);
+  inline void set_username(const char* value, size_t size);
+  inline ::std::string* mutable_username();
+  inline ::std::string* release_username();
+  inline void set_allocated_username(::std::string* username);
+
+  // required string userhead = 10;
+  inline bool has_userhead() const;
+  inline void clear_userhead();
+  static const int kUserheadFieldNumber = 10;
+  inline const ::std::string& userhead() const;
+  inline void set_userhead(const ::std::string& value);
+  inline void set_userhead(const char* value);
+  inline void set_userhead(const char* value, size_t size);
+  inline ::std::string* mutable_userhead();
+  inline ::std::string* release_userhead();
+  inline void set_allocated_userhead(::std::string* userhead);
+
   // @@protoc_insertion_point(class_scope:sglib.groupproto.GroupmanageGroupCreateGroupNtf)
  private:
   inline void set_has_gateid();
@@ -4124,6 +4148,10 @@ class GroupmanageGroupCreateGroupNtf : public ::google::protobuf::Message {
   inline void clear_has_head();
   inline void set_has_groupserverid();
   inline void clear_has_groupserverid();
+  inline void set_has_username();
+  inline void clear_has_username();
+  inline void set_has_userhead();
+  inline void clear_has_userhead();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -4134,10 +4162,12 @@ class GroupmanageGroupCreateGroupNtf : public ::google::protobuf::Message {
   ::google::protobuf::uint64 groupid_;
   ::std::string* head_;
   ::google::protobuf::uint64 groupserverid_;
+  ::std::string* username_;
+  ::std::string* userhead_;
   ::google::protobuf::int32 gateresid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(10 + 31) / 32];
 
   friend void  protobuf_AddDesc_group_2eproto();
   friend void protobuf_AssignDesc_group_2eproto();
@@ -4927,6 +4957,30 @@ class GroupmanagerGroupForAgreeJoinAskInfoRsp : public ::google::protobuf::Messa
   inline ::std::string* release_user();
   inline void set_allocated_user(::std::string* user);
 
+  // optional string name = 6;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 6;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // optional string head = 7;
+  inline bool has_head() const;
+  inline void clear_head();
+  static const int kHeadFieldNumber = 7;
+  inline const ::std::string& head() const;
+  inline void set_head(const ::std::string& value);
+  inline void set_head(const char* value);
+  inline void set_head(const char* value, size_t size);
+  inline ::std::string* mutable_head();
+  inline ::std::string* release_head();
+  inline void set_allocated_head(::std::string* head);
+
   // @@protoc_insertion_point(class_scope:sglib.groupproto.GroupmanagerGroupForAgreeJoinAskInfoRsp)
  private:
   inline void set_has_result();
@@ -4939,6 +4993,10 @@ class GroupmanagerGroupForAgreeJoinAskInfoRsp : public ::google::protobuf::Messa
   inline void clear_has_groupid();
   inline void set_has_user();
   inline void clear_has_user();
+  inline void set_has_name();
+  inline void clear_has_name();
+  inline void set_has_head();
+  inline void clear_has_head();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -4947,9 +5005,11 @@ class GroupmanagerGroupForAgreeJoinAskInfoRsp : public ::google::protobuf::Messa
   ::google::protobuf::uint64 clientid_;
   ::google::protobuf::uint64 groupid_;
   ::std::string* user_;
+  ::std::string* name_;
+  ::std::string* head_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
 
   friend void  protobuf_AddDesc_group_2eproto();
   friend void protobuf_AssignDesc_group_2eproto();
@@ -9846,6 +9906,146 @@ inline void GroupmanageGroupCreateGroupNtf::set_groupserverid(::google::protobuf
   groupserverid_ = value;
 }
 
+// required string username = 9;
+inline bool GroupmanageGroupCreateGroupNtf::has_username() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void GroupmanageGroupCreateGroupNtf::set_has_username() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void GroupmanageGroupCreateGroupNtf::clear_has_username() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void GroupmanageGroupCreateGroupNtf::clear_username() {
+  if (username_ != &::google::protobuf::internal::kEmptyString) {
+    username_->clear();
+  }
+  clear_has_username();
+}
+inline const ::std::string& GroupmanageGroupCreateGroupNtf::username() const {
+  return *username_;
+}
+inline void GroupmanageGroupCreateGroupNtf::set_username(const ::std::string& value) {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  username_->assign(value);
+}
+inline void GroupmanageGroupCreateGroupNtf::set_username(const char* value) {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  username_->assign(value);
+}
+inline void GroupmanageGroupCreateGroupNtf::set_username(const char* value, size_t size) {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  username_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* GroupmanageGroupCreateGroupNtf::mutable_username() {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  return username_;
+}
+inline ::std::string* GroupmanageGroupCreateGroupNtf::release_username() {
+  clear_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = username_;
+    username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void GroupmanageGroupCreateGroupNtf::set_allocated_username(::std::string* username) {
+  if (username_ != &::google::protobuf::internal::kEmptyString) {
+    delete username_;
+  }
+  if (username) {
+    set_has_username();
+    username_ = username;
+  } else {
+    clear_has_username();
+    username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string userhead = 10;
+inline bool GroupmanageGroupCreateGroupNtf::has_userhead() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+inline void GroupmanageGroupCreateGroupNtf::set_has_userhead() {
+  _has_bits_[0] |= 0x00000200u;
+}
+inline void GroupmanageGroupCreateGroupNtf::clear_has_userhead() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+inline void GroupmanageGroupCreateGroupNtf::clear_userhead() {
+  if (userhead_ != &::google::protobuf::internal::kEmptyString) {
+    userhead_->clear();
+  }
+  clear_has_userhead();
+}
+inline const ::std::string& GroupmanageGroupCreateGroupNtf::userhead() const {
+  return *userhead_;
+}
+inline void GroupmanageGroupCreateGroupNtf::set_userhead(const ::std::string& value) {
+  set_has_userhead();
+  if (userhead_ == &::google::protobuf::internal::kEmptyString) {
+    userhead_ = new ::std::string;
+  }
+  userhead_->assign(value);
+}
+inline void GroupmanageGroupCreateGroupNtf::set_userhead(const char* value) {
+  set_has_userhead();
+  if (userhead_ == &::google::protobuf::internal::kEmptyString) {
+    userhead_ = new ::std::string;
+  }
+  userhead_->assign(value);
+}
+inline void GroupmanageGroupCreateGroupNtf::set_userhead(const char* value, size_t size) {
+  set_has_userhead();
+  if (userhead_ == &::google::protobuf::internal::kEmptyString) {
+    userhead_ = new ::std::string;
+  }
+  userhead_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* GroupmanageGroupCreateGroupNtf::mutable_userhead() {
+  set_has_userhead();
+  if (userhead_ == &::google::protobuf::internal::kEmptyString) {
+    userhead_ = new ::std::string;
+  }
+  return userhead_;
+}
+inline ::std::string* GroupmanageGroupCreateGroupNtf::release_userhead() {
+  clear_has_userhead();
+  if (userhead_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = userhead_;
+    userhead_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void GroupmanageGroupCreateGroupNtf::set_allocated_userhead(::std::string* userhead) {
+  if (userhead_ != &::google::protobuf::internal::kEmptyString) {
+    delete userhead_;
+  }
+  if (userhead) {
+    set_has_userhead();
+    userhead_ = userhead;
+  } else {
+    clear_has_userhead();
+    userhead_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
 // -------------------------------------------------------------------
 
 // GroupGroupmanagerCreateGroupResult
@@ -10928,6 +11128,146 @@ inline void GroupmanagerGroupForAgreeJoinAskInfoRsp::set_allocated_user(::std::s
   } else {
     clear_has_user();
     user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional string name = 6;
+inline bool GroupmanagerGroupForAgreeJoinAskInfoRsp::has_name() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void GroupmanagerGroupForAgreeJoinAskInfoRsp::set_has_name() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void GroupmanagerGroupForAgreeJoinAskInfoRsp::clear_has_name() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void GroupmanagerGroupForAgreeJoinAskInfoRsp::clear_name() {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    name_->clear();
+  }
+  clear_has_name();
+}
+inline const ::std::string& GroupmanagerGroupForAgreeJoinAskInfoRsp::name() const {
+  return *name_;
+}
+inline void GroupmanagerGroupForAgreeJoinAskInfoRsp::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void GroupmanagerGroupForAgreeJoinAskInfoRsp::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void GroupmanagerGroupForAgreeJoinAskInfoRsp::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* GroupmanagerGroupForAgreeJoinAskInfoRsp::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+inline ::std::string* GroupmanagerGroupForAgreeJoinAskInfoRsp::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void GroupmanagerGroupForAgreeJoinAskInfoRsp::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    delete name_;
+  }
+  if (name) {
+    set_has_name();
+    name_ = name;
+  } else {
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional string head = 7;
+inline bool GroupmanagerGroupForAgreeJoinAskInfoRsp::has_head() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void GroupmanagerGroupForAgreeJoinAskInfoRsp::set_has_head() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void GroupmanagerGroupForAgreeJoinAskInfoRsp::clear_has_head() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void GroupmanagerGroupForAgreeJoinAskInfoRsp::clear_head() {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    head_->clear();
+  }
+  clear_has_head();
+}
+inline const ::std::string& GroupmanagerGroupForAgreeJoinAskInfoRsp::head() const {
+  return *head_;
+}
+inline void GroupmanagerGroupForAgreeJoinAskInfoRsp::set_head(const ::std::string& value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void GroupmanagerGroupForAgreeJoinAskInfoRsp::set_head(const char* value) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(value);
+}
+inline void GroupmanagerGroupForAgreeJoinAskInfoRsp::set_head(const char* value, size_t size) {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  head_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* GroupmanagerGroupForAgreeJoinAskInfoRsp::mutable_head() {
+  set_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    head_ = new ::std::string;
+  }
+  return head_;
+}
+inline ::std::string* GroupmanagerGroupForAgreeJoinAskInfoRsp::release_head() {
+  clear_has_head();
+  if (head_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = head_;
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void GroupmanagerGroupForAgreeJoinAskInfoRsp::set_allocated_head(::std::string* head) {
+  if (head_ != &::google::protobuf::internal::kEmptyString) {
+    delete head_;
+  }
+  if (head) {
+    set_has_head();
+    head_ = head;
+  } else {
+    clear_has_head();
+    head_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 

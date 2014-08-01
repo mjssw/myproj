@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50537
 File Encoding         : 65001
 
-Date: 2014-07-31 17:12:50
+Date: 2014-08-01 11:48:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -86,11 +86,49 @@ INSERT INTO `group_2` VALUES ('sjj1', '解析', '#7', '0000000000000000000000000
 INSERT INTO `group_2` VALUES ('sjj3', '大吉ho', '#8', '00000000000000000000000000000001');
 
 -- ----------------------------
+-- Procedure structure for AddMemberToGroup
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `AddMemberToGroup`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `AddMemberToGroup`(IN `user_` varchar(64),IN `name_` varchar(64),IN `head_` varchar(64),IN `groupid_` bigint(128),IN `dbname_` varchar(64))
+BEGIN
+	DECLARE result int;
+	SET result=1;
+
+	SET @insertsql :=CONCAT("INSERT INTO group_",groupid_," (user,name,head,ismaster) values('",user_,"','",name_,"','",head_,"',0);");
+	PREPARE insertsql FROM @insertsql; 
+	EXECUTE insertsql; 
+
+	SELECT ROW_COUNT() into result;
+	IF(result>0) THEN
+		SET @STMT5 :=CONCAT("INSERT INTO ",dbname_,".user_",user_,"_group(groupid) values(",groupid_,");");
+		PREPARE STMT5 FROM @STMT5;
+		EXECUTE STMT5;
+
+		SELECT ROW_COUNT() into result;
+		IF(result>0) THEN
+			SET result=1;
+		ELSE
+			SET @delsql :=CONCAT("DELETE FROM group_",groupid_," WHERE user='",user_,"';");
+			PREPARE delsql FROM @delsql; 
+			EXECUTE delsql; 
+			SET result=-2;
+		END IF;
+	ELSE
+		SET result=-1;
+	END IF;
+
+	SELECT result;
+END
+;;
+DELIMITER ;
+
+-- ----------------------------
 -- Procedure structure for CreateGroup
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `CreateGroup`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `CreateGroup`(IN `groupid_` varchar(128),IN `groupname_` varchar(64),IN `grouphead_` varchar(64),IN `user_` varchar(64),IN `name_` varchar(64),IN `head_` varchar(64))
+CREATE DEFINER=`root`@`%` PROCEDURE `CreateGroup`(IN `groupid_` varchar(128),IN `groupname_` varchar(64),IN `grouphead_` varchar(64),IN `user_` varchar(64),IN `name_` varchar(64),IN `head_` varchar(64),IN `udname_` varchar(64))
 BEGIN
 	DECLARE tablename_ varchar(128);
 	DECLARE result int;
@@ -109,11 +147,28 @@ BEGIN
 			EXECUTE STMT2; 
 			SELECT ROW_COUNT() into result;
 			IF(result>0) THEN
-				SET result=1;
+				SET @STMT5 :=CONCAT("INSERT INTO ",udname_,".user_",user_,"_group(groupid) values(",groupid_,");");
+				PREPARE STMT5 FROM @STMT5;
+				EXECUTE STMT5;
+				SELECT ROW_COUNT() into result;
+				IF(result>0) THEN
+					SET result=1;
+				ELSE
+					DELETE FROM groups where id=groupid_;
+					SET @STMT6 :=CONCAT("DROP TABLE ",tablename_,";");
+					PREPARE STMT6 FROM @STMT6;
+					EXECUTE STMT6;
+					SET result=-4;
+				END IF;
 			ELSE
+				DELETE FROM groups where id=groupid_;
+				SET @STMT3 :=CONCAT("DROP TABLE ",tablename_,";");
+				PREPARE STMT3 FROM @STMT3;
+				EXECUTE STMT3;
 				SET result=-3;
 			END IF;
 		ELSE
+			DELETE FROM groups where id=groupid_;
 			SET result=-2;
 		END IF;
 	ELSE

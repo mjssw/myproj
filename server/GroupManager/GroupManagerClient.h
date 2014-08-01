@@ -9,6 +9,7 @@
 class CGroupManagerClient;
 typedef void (CGroupManagerClient::*ProtoProc)(const byte *pkg, s32 len);
 
+class CGroupMemberPosition;
 class CGroupManagerClient : public CClient 
 {
 public:
@@ -48,7 +49,7 @@ private:
 	CGroupManagerClient* _FindUnDynamicServerClient(s32 serverid);
 	void _NotifyNewServerDynamicStart(CGroupManagerClient *client, s32 id, const char *ip, s32 port);
 	void _NotifyGroupServerClose(s32 serverid);
-	void _NotifyGroupServerCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const char *user, const char *name, u64 groupid, const char *head);
+	void _NotifyGroupServerCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const char *user, const char *username, const char *userhead, const char *name, u64 groupid, const char *head);
 	void _NotifyGroupCreateResult(s32 result, u64 gateid, u64 clientid, const char *name, u64 groupid, const char *head, s32 serverid, u64 instanceId);
 	void _DoLoadMemberGroups(const std::string &user, s32 gateresid, u64 clientid);
 	void _NotifyLoadGroup(const std::string &user, s32 gateresid, u64 clientid, u64 groupid);
@@ -57,9 +58,13 @@ private:
 	void _NotifyMemberOffline(s32 groupServerId, const std::string &user, s32 gateresid, u64 clientid, u64 groupid);
 	void _NotifyCreateGameRoomResult(u64 serverId, s32 result, u64 groupid, s32 gateresid, u64 clientid, s32 game, const char *ip, s32 port, s32 roomid, const char *roompwd);
 	void _NotifyGameManagerCreateGameRoom(CGroupManagerClient *gameManager, u64 groupid, s32 gateresid, u64 clientid, s32 game, s32 gameid);
+	void _DoLoadUserBasicInfo(const std::string &user);
+	void _TryAddMemberToGroup(google::protobuf::Message &msg, CGroupMemberPosition &member, u64 groupid);
 
 private:
 	void _GetUserGroupsCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
+	void _GetUserBasicInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
+	void _AddMemberToGroupCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 
 private:
 	std::map<s32, ProtoProc> m_mapProtoProc;

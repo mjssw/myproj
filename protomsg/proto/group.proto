@@ -270,6 +270,8 @@ message GroupmanageGroupCreateGroupNtf
 	required uint64 groupid		= 6;		// 群id
 	required string head		= 7;		// 群头像
 	required uint64 groupserverid = 8;		// 委托建群的group server 的 instance id
+	required string username	= 9;		// 用户的昵称
+	required string userhead	= 10;		// 用户的头像
 }
 
 message GroupGroupmanagerCreateGroupResult
@@ -328,6 +330,8 @@ message GroupmanagerGroupForAgreeJoinAskInfoRsp
 	required uint64 clientid	= 3;
 	required uint64 groupid		= 4;
 	optional string user		= 5;
+	optional string name		= 6;
+	optional string head		= 7;
 }
 
 message GroupmanagerGroupLoadGroupNtf

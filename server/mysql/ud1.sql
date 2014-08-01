@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50537
 File Encoding         : 65001
 
-Date: 2014-07-31 17:12:36
+Date: 2014-08-01 11:48:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,7 +36,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`Idx`,`User`),
   KEY `UserIndex` (`User`) USING BTREE,
   KEY `IdxIndex` (`Idx`) USING HASH
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
@@ -131,13 +131,29 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`%` PROCEDURE `UserRegister`(IN `user_` varchar(64),IN `password_` varchar(255),IN `name_` varchar(64),IN `sex_` int(8),IN `head_` varchar(64))
 BEGIN
 	DECLARE num,result int;
-	set num=0;
-	set result=1;
+	DECLARE tablename_ varchar(128);
+	SET num=0;
+	SET result=1;
+  SET tablename_=CONCAT("user_",user_,"_group");
 	SELECT count(*) into num from user where User=user_;
 	IF(num>0) THEN
-		SET result=0;
+		SET result=-1;
 	ELSE
-		INSERT INTO User(User,Password,Name,Head,Sex) values(user_,password_,name_,head_,sex_);
+		INSERT INTO user(User,Password,Name,Head,Sex) values(user_,password_,name_,head_,sex_);
+		SELECT ROW_COUNT() into num;
+		IF(num>0) THEN
+			SET @STMT :=CONCAT("CREATE TABLE ",tablename_,"(groupid bigint(128));"); 
+			PREPARE STMT FROM @STMT; 
+			EXECUTE STMT;
+			IF EXISTS( select 1 from information_schema.tables where table_schema=DATABASE() and table_name=tablename_) THEN
+				SET result=1;
+			ELSE
+				DELETE FROM user where User=user_;
+				SET result=-3;
+			END IF;
+		ELSE
+			SET result=-2;
+		END IF;
 	END IF;
 	SELECT result;
 END

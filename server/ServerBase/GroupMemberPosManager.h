@@ -23,10 +23,39 @@ public:
 	void SetClientId(u64 id){ m_ClientId = id; }
 	u64  GetClientId(){ return m_ClientId; } 
 
+	void AddInviteGroup(u64 groupid){ m_invitedGroups[groupid] = 1; }
+	void DelInviteGroup(u64 groupid)
+	{
+		std::map<u64, s32>::iterator it = m_invitedGroups.find( groupid );
+		if( it != m_invitedGroups.end() )
+		{
+			m_invitedGroups.erase( it );
+		}
+	}
+	bool IsInvited(u64 groupid)
+	{
+		std::map<u64, s32>::iterator it = m_invitedGroups.find( groupid );
+		if( it != m_invitedGroups.end() )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	void SetHead(const std::string &head){ m_head = head; }
+	std::string& GetHead(){ return m_head; }
+	void SetName(const std::string &name){ m_name = name; }
+	std::string& GetName(){ return m_name; }
+
 private:
 	std::string m_User;
 	s32 m_GateResId;
 	u64 m_ClientId;
+
+	std::string m_name;
+	std::string m_head;
+
+	std::map<u64, s32> m_invitedGroups;
 };
 
 class CGroupMemberPositionManager

@@ -27,6 +27,8 @@ enum EErrorCode
 	E_ErrorCode_NotInThisGroup		= -304;	// 不在此群
 	E_ErrorCode_NoThisGroupGame		= -305;	// 没有此游戏
 	E_ErrorCode_NotEnoughRoom		= -306;	// 没有足够的房间 
+	E_ErrorCode_NotInvitedJoinGroup	= -307;	// 没有被邀请加入群
+	E_ErrorCode_JoinGroupFailed		= -308;	// 加入群失败
 	
 	
 	// -------------------------------------------------------

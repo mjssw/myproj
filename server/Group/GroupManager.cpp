@@ -456,7 +456,7 @@ void CGroupManager::CreateGroupGame(CGroupClient &client, s32 gateresid, u64 gat
 	_NotifyGroupManagerCreateGameRoom( gateresid, clientid, groupid, game );
 }
 
-void CGroupManager::TryCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const std::string &user, const std::string &name, u64 groupid, const std::string &head, u64 groupserverid)
+void CGroupManager::TryCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const string &user, const string &username, const string &userhead, const string &name, u64 groupid, const string &head, u64 groupserverid)
 {
 	SERVER_LOG_INFO( "RpcCreateGroupResult," << gateid << "," <<\
 		gateresid << "," << clientid << "," << user.c_str() << "," <<\
@@ -477,16 +477,15 @@ void CGroupManager::TryCreateGroup(u64 gateid, s32 gateresid, u64 clientid, cons
 	{
 		CGroupMember *member = group->AddMember( 
 			user.c_str(), 
-			"", 
-			"", 
+			username.c_str(), 
+			userhead.c_str(), 
 			true );
 		SG_ASSERT( member != NULL );
 		member->SetOnline( true, gateresid, clientid );
 		member->SetGateId( gateid );
 		member->m_tmp.param1 = groupserverid; // 此值暂记录在临时变量中 
 
-		// CreateGroup (1) 从ud库取玩家的基本信息
-		_TryGetUserBasicInfo( user, *group );
+		_TryCreateGroup( *group, *member );
 	}
 }
 
@@ -526,7 +525,7 @@ void CGroupManager::AddGroupMemberRsp(sglib::groupproto::GroupmanagerGroupAddMem
 	pInfo->set_id( groupInfo->GetId() );
 	pInfo->set_name( groupInfo->GetName() );
 	pInfo->set_count( groupInfo->MemberCount() );
-	pInfo->set_icon( "icon" );
+	pInfo->set_icon( groupInfo->GetIcon() );
 
 	map<s32, vector<u64> > alluser;
 	for( s32 i=0; i<(s32)rsp.users_size(); ++i )
@@ -557,7 +556,8 @@ void CGroupManager::AddGroupMemberRsp(sglib::groupproto::GroupmanagerGroupAddMem
 void CGroupManager::AgreeJoinGroupAskInfoRsp(sglib::groupproto::GroupmanagerGroupForAgreeJoinAskInfoRsp &rsp)
 {
 	SERVER_LOG_INFO( "AgreeJoinAskInfoRsp," << rsp.result() << "," << rsp.gateresid() << "," <<\
-		rsp.clientid() << "," << rsp.groupid() << "," << rsp.user().c_str() );
+		rsp.clientid() << "," << rsp.groupid() << "," << rsp.user().c_str() <<\
+		rsp.name().c_str() << "," << rsp.head().c_str() );
 
 	CGroupInfo *group = CGroupManager::Instance().FindGroup( rsp.groupid() );
 	if( !group )
@@ -570,8 +570,8 @@ void CGroupManager::AgreeJoinGroupAskInfoRsp(sglib::groupproto::GroupmanagerGrou
 	{
 		CGroupMember *member = group->AddMember( 
 			rsp.user().c_str(), 
-			rsp.user().c_str(), 
-			"", 
+			rsp.name().c_str(), 
+			rsp.head().c_str(), 
 			true );
 		SG_ASSERT( member != NULL );
 		member->SetOnline( true, rsp.gateresid(), rsp.clientid() );
@@ -1250,11 +1250,13 @@ void CGroupManager::_TryCreateGroup(CGroupInfo &group, CGroupMember &member)
 
 	_groupManagerDBParam _param = { group.GetId(), &group, 0, 0 };
 	s32 id = CServerManager::Instance().GetGroupDbId();
+	string dbname = CServerManager::Instance().HashUserDBName( member.GetUser() );
 	char strGroupId[128] = {0};
 	sprintf( strGroupId, "%llu", group.GetId() );
 	string sql = string("call CreateGroup('") + strGroupId + string("','") + \
 		group.GetName() + "','" + group.GetIcon() + "','" + \
-		member.GetUser() + "','" + member.GetNickName() + "','" + member.GetHead() + "');";
+		member.GetUser() + "','" + member.GetNickName() + "','" + member.GetHead() + "','" +\
+		dbname + "');";
 	bool ret = CServerManager::Instance().ExecSql( id, sql, this, &CGroupManager::_CreateGroupCallback, &_param, sizeof(_param) );
 	if( !ret )
 	{

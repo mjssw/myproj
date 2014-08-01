@@ -100,7 +100,7 @@ void CGroupRpcClient::_GroupmanagerGroupCreateProc(const byte *pkg, s32 len)
 	if( ntf.ParseFromArray(pkg, len) )
 	{
 		CGroupManager::Instance().TryCreateGroup(
-			ntf.gateid(), ntf.gateresid(), ntf.clientid(), ntf.user(), 
+			ntf.gateid(), ntf.gateresid(), ntf.clientid(), ntf.user(), ntf.username(), ntf.userhead(),
 			ntf.name(), ntf.groupid(), ntf.head(), ntf.groupserverid() );
 	}
 	else

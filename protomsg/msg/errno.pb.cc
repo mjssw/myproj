@@ -59,7 +59,7 @@ void protobuf_AddDesc_errno_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\013errno.proto\022\017sglib.errorcode*\221\006\n\nEErro"
+    "\n\013errno.proto\022\017sglib.errorcode*\351\006\n\nEErro"
     "rCode\022\027\n\023E_ErrorCode_Success\020\000\022 \n\023E_Erro"
     "rCode_Unknown\020\377\377\377\377\377\377\377\377\377\001\022#\n\026E_ErrorCode_"
     "StateError\020\376\377\377\377\377\377\377\377\377\001\022!\n\024E_ErrorCode_Reg"
@@ -78,8 +78,10 @@ void protobuf_AddDesc_errno_2eproto() {
     "p\020\321\375\377\377\377\377\377\377\377\001\022\'\n\032E_ErrorCode_NotInThisGro"
     "up\020\320\375\377\377\377\377\377\377\377\001\022(\n\033E_ErrorCode_NoThisGroup"
     "Game\020\317\375\377\377\377\377\377\377\377\001\022&\n\031E_ErrorCode_NotEnough"
-    "Room\020\316\375\377\377\377\377\377\377\377\001\022)\n\034E_ErrorCode_Tetris_No"
-    "tInRoom\020\357\261\377\377\377\377\377\377\377\001", 818);
+    "Room\020\316\375\377\377\377\377\377\377\377\001\022,\n\037E_ErrorCode_NotInvite"
+    "dJoinGroup\020\315\375\377\377\377\377\377\377\377\001\022(\n\033E_ErrorCode_Joi"
+    "nGroupFailed\020\314\375\377\377\377\377\377\377\377\001\022)\n\034E_ErrorCode_T"
+    "etris_NotInRoom\020\357\261\377\377\377\377\377\377\377\001", 906);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "errno.proto", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_errno_2eproto);
@@ -98,6 +100,8 @@ const ::google::protobuf::EnumDescriptor* EErrorCode_descriptor() {
 bool EErrorCode_IsValid(int value) {
   switch(value) {
     case -10001:
+    case -308:
+    case -307:
     case -306:
     case -305:
     case -304:

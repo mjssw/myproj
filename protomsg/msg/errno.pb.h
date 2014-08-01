@@ -54,6 +54,8 @@ enum EErrorCode {
   E_ErrorCode_NotInThisGroup = -304,
   E_ErrorCode_NoThisGroupGame = -305,
   E_ErrorCode_NotEnoughRoom = -306,
+  E_ErrorCode_NotInvitedJoinGroup = -307,
+  E_ErrorCode_JoinGroupFailed = -308,
   E_ErrorCode_Tetris_NotInRoom = -10001
 };
 bool EErrorCode_IsValid(int value);

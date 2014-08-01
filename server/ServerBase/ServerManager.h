@@ -448,8 +448,8 @@ public:
 
 		return sqlMgr->Execute( sql.c_str(), classObj, memCallbackFunc, param, len );
 	}
-	
-	s32 HashUser(const std::string &user)
+
+	std::string HashUserDBName(const std::string &user)
 	{
 		// 注意user数据库始终是ud1 ... udN
 		// 这里由user值hash到某一个 ud?，然后根据ud?找到对应的id
@@ -458,7 +458,12 @@ public:
 		char strdbid[32] = {0};
 		sprintf( strdbid, "%d", dbid );
 		string dbname = dbhead + strdbid;
-		return GetMysqlManagerIdByDbName( dbname );
+		return dbname;
+	}
+	
+	s32 HashUser(const std::string &user)
+	{
+		return GetMysqlManagerIdByDbName( HashUserDBName(user) );
 	}
 
 	std::string BuildUserGroupTableName(const std::string &user)
