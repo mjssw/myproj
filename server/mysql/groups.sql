@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50537
 File Encoding         : 65001
 
-Date: 2014-08-01 11:48:15
+Date: 2014-08-01 13:48:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -206,6 +206,30 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`%` PROCEDURE `IncrementNextGroupId`()
 BEGIN
 	UPDATE groupid set nextid=nextid+1;
+END
+;;
+DELIMITER ;
+
+-- ----------------------------
+-- Procedure structure for MemberLeaveGroup
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `MemberLeaveGroup`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `MemberLeaveGroup`(IN `user_` varchar(64),IN `group_` bigint(128),IN `udname_` varchar(64))
+BEGIN
+	DECLARE result int;
+	SET result=1;
+
+	SET @delsql :=CONCAT("DELETE FROM group_",groupid_," WHERE user='",user_,"';");
+	PREPARE delsql FROM @delsql; 
+	EXECUTE delsql;
+
+	SET @delsql2 :=CONCAT("DELETE FROM ",udname_,".user_",user_,"group WHERE groupid=",groupid_,";");
+	PREPARE delsql2 FROM @delsql2; 
+	EXECUTE delsql2;
+
+	SELECT result;
+
 END
 ;;
 DELIMITER ;

@@ -153,6 +153,8 @@ void CGroupClient::_GroupLeaveProc(u64 clientid, const byte *pkg, s32 len)
 
 void CGroupClient::_GroupDeleteProc(u64 clientid, const byte *pkg, s32 len)
 {
+	// TODO not support
+	return;
 	sglib::groupproto::CSGroupDeleteReq req;
 	if( req.ParseFromArray(pkg, len) )
 	{

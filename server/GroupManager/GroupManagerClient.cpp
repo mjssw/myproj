@@ -483,6 +483,7 @@ void CGroupManagerClient::_GroupMemberLeaveProc(const byte *pkg, s32 len)
 				<< ntf.user(i).c_str() );
 
 			CLoginMemberManager::Instance().DelGroup( ntf.user(i), ntf.groupid() );	
+			_MemberLeaveGroup( ntf.user(i), ntf.groupid() );
 		}
 	}
 	else
@@ -875,6 +876,27 @@ void CGroupManagerClient::_TryAddMemberToGroup(google::protobuf::Message &msg, C
 	}
 }
 
+void CGroupManagerClient::_MemberLeaveGroup(const string &user, u64 groupid)
+{
+	SERVER_LOG_INFO( "CGroupManagerClient,_MemberLeaveGroup," << groupid << "," << user.c_str() );
+
+	CGroupMemberPosition *member = CLoginMemberManager::Instance().MemberManager().FindMember( user );
+	SELF_ASSERT( member, return; );
+	_GroupManagerDBParam _param = { 0, groupid, member };
+
+	s32 id = CServerManager::Instance().GetGroupDbId();
+	char strId[128] = {0};
+	sprintf( strId, "%llu", groupid );
+	string udname = CServerManager::Instance().HashUserDBName( user );
+	string sql = string("call MemberLeaveGroup('") + user + "'," + string(strId) + ",'" + udname + "');";
+	bool ret = CServerManager::Instance().ExecSql( 
+		id, sql, this, &CGroupManagerClient::_MemberLeaveGroupCallback, &_param, sizeof(_param) );
+	if( !ret )
+	{
+		SERVER_LOG_ERROR( "CGroupManagerClient,_MemberLeaveGroup,ExecSql," << sql.c_str() );
+	}
+}
+
 void CGroupManagerClient::_GetUserGroupsCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
 {
 	SELF_ASSERT( param, return; );
@@ -980,9 +1002,31 @@ void CGroupManagerClient::_AddMemberToGroupCallback(SGLib::IDBRecordSet *RecordS
 		rsp->set_result( sglib::errorcode::E_ErrorCode_JoinGroupFailed );
 	}
 
-	SERVER_LOG_INFO( "CGroupManagerClient,_AddMemberToGroupCallback," << rsp->groupid() << "," << 
-		rsp->user().c_str() << "," << rsp->result() );
+	SERVER_LOG_INFO( "CGroupManagerClient,_AddMemberToGroupCallback," << rsp->groupid() << "," << rsp->user().c_str() << "," << rsp->result() );
 
 	SendMessageToGroupServer( *rsp, sglib::msgid::GMGP_AGREE_ASK_MEMBER_INFO_RSP );
 	SAFE_DELETE( rsp );
+}
+
+void CGroupManagerClient::_MemberLeaveGroupCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
+{
+	SELF_ASSERT( param, return; );
+	SELF_ASSERT( len==sizeof(_GroupManagerDBParam), return; ); 
+	_GroupManagerDBParam *_param = (_GroupManagerDBParam*)param;
+	CGroupMemberPosition *member = (CGroupMemberPosition*)_param->data;
+	SELF_ASSERT( member, return; );
+	u64 groupid = _param->clientid;
+
+	bool flag = false;
+	while( RecordSet && RecordSet->GetRecord() )
+	{
+		const char *val = RecordSet->GetFieldValue( 1 );
+		if( val && atoi(val) == 1 )
+		{
+			flag = true;
+		}
+		break;
+	}
+
+	SERVER_LOG_INFO( "CGroupManagerClient,_MemberLeaveGroupCallback," << member->User().c_str() << "," << groupid << "," << flag );
 }

@@ -13,6 +13,50 @@
 #include "msgid.pb.h"
 using namespace std;
 
+#include "mysql.h"
+static void ProcessRecord(MYSQL_RES *res)
+{		
+	MYSQL_ROW row = NULL;
+	while( row = mysql_fetch_row( res ) )
+	{
+		const char *val = row[0];
+		if( val )
+		{
+			printf( "val:%s\n", val );
+		}
+	}
+
+	mysql_free_result( res );
+}
+static void TestMysqlQueryResult()
+{
+	MYSQL *conn = mysql_init(NULL);
+	MYSQL *mCnn = mysql_real_connect( conn, 
+		"172.18.5.55", "root", "123456", "ud1", 3306, NULL, CLIENT_MULTI_STATEMENTS );
+	if( conn )
+	{
+		int ret = mysql_query(conn, "SET NAMES 'utf8';");
+		printf( "query result:%d\n", ret );
+
+		string sql = "call TestProc()";
+		ret = mysql_query(conn, sql.c_str());
+		if( ret == 0 )
+		{
+			MYSQL_RES *res = mysql_store_result( conn );
+			ProcessRecord( res );
+			while( !mysql_next_result( conn ) )
+			{
+				res = mysql_store_result( conn );
+				if( res != NULL )
+				{
+					ProcessRecord( res );
+				}
+			}
+		}
+
+		mysql_close( conn );
+	}
+}
 
 static void ReportGroupInforCallBack(void *pData, s32 nDataLen)
 {
@@ -46,6 +90,8 @@ static void ReportGroupInforCallBack(void *pData, s32 nDataLen)
 
 int main(int argc, char *argv[])
 {
+	//TestMysqlQueryResult();return 0;
+
 	CLuaModule::Instance().Init();
 	CLuaModule::Instance().LoadScripts( "../Scripts/GetGameById.lua" );
 

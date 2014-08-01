@@ -60,11 +60,13 @@ private:
 	void _NotifyGameManagerCreateGameRoom(CGroupManagerClient *gameManager, u64 groupid, s32 gateresid, u64 clientid, s32 game, s32 gameid);
 	void _DoLoadUserBasicInfo(const std::string &user);
 	void _TryAddMemberToGroup(google::protobuf::Message &msg, CGroupMemberPosition &member, u64 groupid);
+	void _MemberLeaveGroup(const std::string &user, u64 groupid);
 
 private:
 	void _GetUserGroupsCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 	void _GetUserBasicInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 	void _AddMemberToGroupCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
+	void _MemberLeaveGroupCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 
 private:
 	std::map<s32, ProtoProc> m_mapProtoProc;

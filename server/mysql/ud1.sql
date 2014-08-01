@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50537
 File Encoding         : 65001
 
-Date: 2014-08-01 11:48:28
+Date: 2014-08-01 13:47:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -97,6 +97,8 @@ CREATE DEFINER=`root`@`%` PROCEDURE `TestProc`()
 BEGIN
 	DECLARE num int;
 	select count(*) into num from User;
+	select num;
+	SET num=123;
 	select num;
 END
 ;;
