@@ -246,6 +246,10 @@ void CMainScene::menuSendCallback(Object *pSender)
 	m_chatTableView->InsertUpdate();
 }
 
+void CMainScene::menuCreateGroupCallback(cocos2d::Object *pSender)
+{
+}
+
 void CMainScene::GroupListTouchedCallback(Node *pSender, void *data)
 {
 	if( data )
@@ -490,6 +494,8 @@ void CMainScene::_AddChatViewToMain()
 		g_chatData.push_back( data );
 	}
 	m_chatTableView->InitData( g_chatData );
+
+	_AddGroupFuncBtns( *parent );
 }
 
 void CMainScene::_AddContentToListView()
@@ -539,6 +545,8 @@ void CMainScene::_AddGroupsToListView()
 	m_pGroupList->SetPosition( ccp(sz.width/2, sz.height/2) );
 	m_pGroupList->SetTouchCallback( callfuncND_selector(CMainScene::GroupListTouchedCallback), this );
 	parent->addChild( m_pGroupList );
+	
+	_AddCreateGroupBtn( *parent, sz );
 }
 
 void CMainScene::_ClearListView()
@@ -756,4 +764,33 @@ void CMainScene::_UpdateGroupList()
 		_DumpGroupList( vecData );
 		m_pGroupList->UpdateElements( vecData );
 	}
+}
+
+void CMainScene::_AddCreateGroupBtn(Node &parent, Size &sz)
+{
+	CCMyMenuItemImage *item = CCMyMenuItemImage::create(
+		"creategroup_normal.png",
+		"creategroup_hover.png",
+		this,
+		menu_selector(CMainScene::menuCreateGroupCallback));
+	if( !item )
+	{
+		CCLog( "[ERROR] _AddCreateGroupBtn item NULL" );
+		return;
+	}
+	Size itemSz = item->getContentSize();
+	item->setPosition(
+		ccp(sz.width - itemSz.width/2, itemSz.height/2));
+	CCMenu *menu = CCMenu::create( item, NULL );
+	if( !menu )
+	{
+		CCLog( "[ERROR] _AddCreateGroupBtn menu NULL" );
+		return;
+	}
+	menu->setPosition( CCPointZero );
+	parent.addChild( menu, 1 );
+}
+
+void CMainScene::_AddGroupFuncBtns(cocos2d::Node &parent)
+{
 }

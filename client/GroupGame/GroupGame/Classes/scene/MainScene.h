@@ -26,6 +26,7 @@ public:
 	void menuRadioButtonHomeCallback(cocos2d::Object *pSender);
 	void menuFaceCallback(cocos2d::Object *pSender);
 	void menuSendCallback(cocos2d::Object *pSender);
+	void menuCreateGroupCallback(cocos2d::Object *pSender);
 
 	void GroupListTouchedCallback(Node *pSender, void *data);
 
@@ -58,6 +59,9 @@ private:
 
 	void _DumpGroupList(std::vector<TableViewData> &vecData);
 	void _UpdateGroupList();
+
+	void _AddCreateGroupBtn(cocos2d::Node &parent, cocos2d::Size &sz);
+	void _AddGroupFuncBtns(cocos2d::Node &parent);
 
 private:
 	int m_mainViewOffX;
