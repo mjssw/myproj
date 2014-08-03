@@ -10,7 +10,11 @@
 #include "Timer.h"
 #include <deque>
 
+#ifdef _LOCAL_SERVER
+#define LOGIN_IP	"127.0.0.1"
+#else
 #define LOGIN_IP	"172.18.5.55"
+#endif
 #define LOGIN_PORT	10003
 
 class CMsgBase;

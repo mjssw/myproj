@@ -27,6 +27,10 @@ public:
 	void menuFaceCallback(cocos2d::Object *pSender);
 	void menuSendCallback(cocos2d::Object *pSender);
 	void menuCreateGroupCallback(cocos2d::Object *pSender);
+	void menuCreateGameCallback(cocos2d::Object *pSender);
+	void menuInviteMemberCallback(cocos2d::Object *pSender);
+	void menuMemberListCallback(cocos2d::Object *pSender);
+	void menuLeaveGroupCallback(cocos2d::Object *pSender);
 
 	void GroupListTouchedCallback(Node *pSender, void *data);
 

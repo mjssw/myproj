@@ -248,6 +248,39 @@ void CMainScene::menuSendCallback(Object *pSender)
 
 void CMainScene::menuCreateGroupCallback(cocos2d::Object *pSender)
 {
+	CGroupClient *client = CNetManager::Instance().GetGroupClientInstance();
+	if( !client )
+	{
+		CCLog( "[ERROR] menuCreateGroupCallback group client null" );
+		return;
+	}
+
+	client->CreateGroup( a2u("LOLȺ1"), "group4.png" );
+}
+
+void CMainScene::menuCreateGameCallback(cocos2d::Object *pSender)
+{
+	CCLog( "menuCreateGameCallback" );
+}
+
+void CMainScene::menuInviteMemberCallback(cocos2d::Object *pSender)
+{
+	CCLog( "menuInviteMemberCallback" );
+}
+
+void CMainScene::menuMemberListCallback(cocos2d::Object *pSender)
+{
+	CMemberListPopLayer *pop = CMemberListPopLayer::create( "memberlistbg.png" ); 
+	if( pop )
+	{
+		pop->setPosition( ccp(0, 0) );
+		addChild( pop, 99999 );
+	}
+}
+
+void CMainScene::menuLeaveGroupCallback(cocos2d::Object *pSender)
+{
+	CCLog( "menuLeaveGroupCallback" );
 }
 
 void CMainScene::GroupListTouchedCallback(Node *pSender, void *data)
@@ -768,6 +801,7 @@ void CMainScene::_UpdateGroupList()
 
 void CMainScene::_AddCreateGroupBtn(Node &parent, Size &sz)
 {
+	int x = 5, y = 5;
 	CCMyMenuItemImage *item = CCMyMenuItemImage::create(
 		"creategroup_normal.png",
 		"creategroup_hover.png",
@@ -780,7 +814,7 @@ void CMainScene::_AddCreateGroupBtn(Node &parent, Size &sz)
 	}
 	Size itemSz = item->getContentSize();
 	item->setPosition(
-		ccp(sz.width - itemSz.width/2, itemSz.height/2));
+		ccp(sz.width - itemSz.width/2 - x, itemSz.height/2 + y));
 	CCMenu *menu = CCMenu::create( item, NULL );
 	if( !menu )
 	{
@@ -793,4 +827,50 @@ void CMainScene::_AddCreateGroupBtn(Node &parent, Size &sz)
 
 void CMainScene::_AddGroupFuncBtns(cocos2d::Node &parent)
 {
+	char *png[] = {
+		"creategame_normal.png",
+		"creategame_hover.png",
+		"addmember_normal.png",
+		"addmember_hover.png",
+		"memberlist_normal.png",
+		"memberlist_hover.png",
+		"leavegroup_normal.png",
+		"leavegroup_hover.png",
+	};
+
+	SEL_MenuHandler handle[] = {
+		menu_selector(CMainScene::menuCreateGameCallback),
+		menu_selector(CMainScene::menuInviteMemberCallback),
+		menu_selector(CMainScene::menuMemberListCallback),
+		menu_selector(CMainScene::menuLeaveGroupCallback),
+	};
+
+	int len = sizeof(handle) / sizeof(SEL_MenuHandler);
+	int x = 5, y = 5, off = 13;
+	for( int i=0; i<len; ++i )
+	{
+		CCMyMenuItemImage *item = CCMyMenuItemImage::create(
+			png[2*i],
+			png[2*i+1],
+			this,
+			(handle[i]));
+		if( !item )
+		{
+			CCLog( "[ERROR] _AddCreateGroupBtn item NULL" );
+			return;
+		}
+		Size itemSz = item->getContentSize();
+		item->setPosition(
+			ccp(x + itemSz.width/2, y + itemSz.height/2));
+		CCMenu *menu = CCMenu::create( item, NULL );
+		if( !menu )
+		{
+			CCLog( "[ERROR] _AddCreateGroupBtn menu NULL" );
+			return;
+		}
+		menu->setPosition( CCPointZero );
+		parent.addChild( menu, 1 );
+
+		x += itemSz.width + off;
+	}
 }

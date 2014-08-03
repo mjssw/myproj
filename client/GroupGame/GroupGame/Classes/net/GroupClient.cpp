@@ -48,7 +48,7 @@ int CGroupClient::OnRecv(char *buf, int len)
 				sglib::groupproto::SCGroupCreateRsp msg;
 				if( msg.ParseFromArray(pbuf+MSG_ID_LEN+MSG_HEAD_LEN, pkgLen-MSG_ID_LEN-MSG_HEAD_LEN) )
 				{
-					//_CreateGroupRsp(rsp);
+					_CreateGroupRsp( msg );
 				}
 			}break;
 		case sglib::msgid::SC_GROUP_ADD_MEMBER_RSP:
@@ -207,12 +207,36 @@ void CGroupClient::Login(const string &user, const string &token)
 	SendMsg( req, sglib::msgid::CS_GROUP_LOGIN_REQ );
 }
  
+void CGroupClient::CreateGroup(const std::string &name, const std::string &head)
+{
+	sglib::groupproto::CSGroupCreateReq req;
+	req.set_name( name );
+	req.set_head( head );
+
+	SendMsg( req, sglib::msgid::CS_GROUP_CREATE_REQ );
+}
+
 void CGroupClient::_LoginGroupResult(sglib::groupproto::SCGroupUserLoginRsp &msg)
 {
 	CMsgBase *gamemsg = new CMsgLoginGroupResult( msg.result() ); 
 	if( !gamemsg )
 	{
 		CCLog( "[CGroupClient::_LoginGroupResult] new msg failed" );
+		return;
+	}
+
+	CNetManager::Instance().PushMessage( gamemsg );
+}
+
+void CGroupClient::_CreateGroupRsp(sglib::groupproto::SCGroupCreateRsp &msg)
+{
+	CCLog( "CGroupClient::_CreateGroupRsp result:%d groupid:%llu",
+		msg.result(), msg.groupid() );
+
+	CMsgBase *gamemsg = new CMsgCreateGroupResult( msg.result(), msg.name(), msg.head(), msg.groupid() ); 
+	if( !gamemsg )
+	{
+		CCLog( "[CGroupClient::_CreateGroupRsp] new msg failed" );
 		return;
 	}
 

@@ -114,4 +114,14 @@ void CMsgGroupInfoUpdate::Process()
 	SAFE_DELETE( m_members );
 }
 
-
+CMsgCreateGroupResult::CMsgCreateGroupResult(s32 result, const std::string &name, const std::string &head, u64 groupid) :
+	m_result( result ),
+	m_name( name ),
+	m_head( head ),
+	m_groupid( groupid )
+{
+}
+void CMsgCreateGroupResult::Process()
+{
+	CCLog( "[CMsgCreateGroupResult::Process] result:%d", m_result );
+}

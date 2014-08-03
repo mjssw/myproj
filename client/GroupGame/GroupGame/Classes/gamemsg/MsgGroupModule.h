@@ -34,7 +34,7 @@ private:
 	std::vector<CGroup*> *m_groups;
 };
 
-class CMsgGroupInfoUpdate: public CMsgBase
+class CMsgGroupInfoUpdate : public CMsgBase
 {
 public:
 	CMsgGroupInfoUpdate(u64 groupid, std::vector<CGroupMember*> *members); 
@@ -42,6 +42,18 @@ public:
 private:
 	u64 m_groupid;
 	std::vector<CGroupMember*> *m_members;
+};
+
+class CMsgCreateGroupResult : public CMsgBase
+{
+public:
+	CMsgCreateGroupResult(s32 result, const std::string &name, const std::string &head, u64 groupid);
+	virtual void Process();
+private:
+	u64 m_groupid;
+	s32 m_result;
+	std::string m_name;
+	std::string m_head;
 };
 
 #endif
