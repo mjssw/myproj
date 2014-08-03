@@ -1,4 +1,5 @@
 #include "ViewData.h"
+using namespace std;
 
 CUserViewData::CUserViewData() : 
 	m_isSavePwd( false ),
@@ -46,4 +47,24 @@ void CUserViewData::SetSelectGroup(CGroup *group)
 CGroup* CUserViewData::GetSelectGroup()
 {
 	return m_selectGroup;
+}
+
+void CUserViewData::SetNewGroupName(const string &name)
+{
+	m_newGroupName = name;	
+}
+
+const string& CUserViewData::GetNewGroupName()
+{
+	return m_newGroupName;
+}
+
+void CUserViewData::SetNewGroupDone(bool done)
+{
+	m_isNewGroupDone = done;
+}
+
+bool CUserViewData::IsNewGroupDone()
+{
+	return m_isNewGroupDone;
 }

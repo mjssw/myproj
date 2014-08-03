@@ -168,6 +168,7 @@
     <ClInclude Include="..\Classes\user\ViewData.h" />
     <ClInclude Include="..\Classes\utils.h" />
     <ClInclude Include="..\Classes\view\ChatTableView.h" />
+    <ClInclude Include="..\Classes\view\CreateGroupPopLayer.h" />
     <ClInclude Include="..\Classes\view\MemberListPopLayer.h" />
     <ClInclude Include="..\Classes\view\MyEditBox.h" />
     <ClInclude Include="..\Classes\view\MyLoadingItem.h" />
@@ -218,6 +219,7 @@
     <ClCompile Include="..\Classes\user\ViewData.cpp" />
     <ClCompile Include="..\Classes\utils.cpp" />
     <ClCompile Include="..\Classes\view\ChatTableView.cpp" />
+    <ClCompile Include="..\Classes\view\CreateGroupPopLayer.cpp" />
     <ClCompile Include="..\Classes\view\MemberListPopLayer.cpp" />
     <ClCompile Include="..\Classes\view\MyEditBox.cpp" />
     <ClCompile Include="..\Classes\view\MyLoadingItem.cpp" />

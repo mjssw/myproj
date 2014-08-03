@@ -16,6 +16,7 @@ USING_NS_CC_EXT;
 #include "scene/SceneManager.h"
 #include "user/GroupManager.h"
 #include "user/Group.h"
+#include "view/CreateGroupPopLayer.h"
 using namespace std;
 
 // for test
@@ -248,14 +249,13 @@ void CMainScene::menuSendCallback(Object *pSender)
 
 void CMainScene::menuCreateGroupCallback(cocos2d::Object *pSender)
 {
-	CGroupClient *client = CNetManager::Instance().GetGroupClientInstance();
-	if( !client )
+	CCreateGroupPopLayer *pop = CCreateGroupPopLayer::create( "commonbg.png" ); 
+	if( pop )
 	{
-		CCLog( "[ERROR] menuCreateGroupCallback group client null" );
-		return;
+		pop->SetView( this );
+		pop->setPosition( ccp(0, 0) );
+		addChild( pop, 99999 );
 	}
-
-	client->CreateGroup( a2u("LOLȺ1"), "group4.png" );
 }
 
 void CMainScene::menuCreateGameCallback(cocos2d::Object *pSender)

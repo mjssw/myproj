@@ -211,6 +211,9 @@
     <ClInclude Include="..\Classes\net\RegisterClient.h">
       <Filter>net</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\view\CreateGroupPopLayer.h">
+      <Filter>view</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -353,6 +356,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\net\RegisterClient.cpp">
       <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\view\CreateGroupPopLayer.cpp">
+      <Filter>view</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
