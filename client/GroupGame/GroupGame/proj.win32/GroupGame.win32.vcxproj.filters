@@ -214,6 +214,12 @@
     <ClInclude Include="..\Classes\view\CreateGroupPopLayer.h">
       <Filter>view</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\view\InviteMemberPopLayer.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\view\AskJoinGroupPopLayer.h">
+      <Filter>view</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -358,6 +364,12 @@
       <Filter>net</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\view\CreateGroupPopLayer.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\view\InviteMemberPopLayer.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\view\AskJoinGroupPopLayer.cpp">
       <Filter>view</Filter>
     </ClCompile>
   </ItemGroup>

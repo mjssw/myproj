@@ -68,6 +68,7 @@ private:
 	void _AddGroupFuncBtns(cocos2d::Node &parent);
 
 	void _LeaveGroup();
+	void _AskJoinGroup();
 
 private:
 	int m_mainViewOffX;

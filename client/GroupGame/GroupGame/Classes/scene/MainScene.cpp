@@ -17,6 +17,8 @@ USING_NS_CC_EXT;
 #include "user/GroupManager.h"
 #include "user/Group.h"
 #include "view/CreateGroupPopLayer.h"
+#include "view/InviteMemberPopLayer.h"
+#include "view/AskJoinGroupPopLayer.h"
 using namespace std;
 
 // for test
@@ -46,6 +48,11 @@ void CMainScene::UpdateView(int type)
 	case CSceneManager::E_UpdateType_UpdateGroupList:
 		{
 			_UpdateGroupList();
+		}
+		break;
+	case CSceneManager::E_UpdateType_AskJoinGroup:
+		{
+			_AskJoinGroup();
 		}
 		break;
 	default:
@@ -265,7 +272,19 @@ void CMainScene::menuCreateGameCallback(cocos2d::Object *pSender)
 
 void CMainScene::menuInviteMemberCallback(cocos2d::Object *pSender)
 {
-	CCLog( "menuInviteMemberCallback" );
+	if( !CUserManager::Instance().GetViewData().GetSelectGroup() )
+	{
+		CCLog( "menuInviteMemberCallback select group null" );
+		return;
+	}
+
+	CInviteMemberPopLayer *pop = CInviteMemberPopLayer::create( "commonbg.png" ); 
+	if( pop )
+	{
+		pop->SetView( this );
+		pop->setPosition( ccp(0, 0) );
+		addChild( pop, 99999 );
+	}
 }
 
 void CMainScene::menuMemberListCallback(cocos2d::Object *pSender)
@@ -785,6 +804,7 @@ void CMainScene::_DumpGroupList(std::vector<TableViewData> &vecData)
 		TableViewData data;
 		data.icon = group->GetHead();
 		data.text = group->GetName();
+
 		data.data = group;
 		vecData.push_back( data ); 
 	}
@@ -893,4 +913,15 @@ void CMainScene::_LeaveGroup()
 		return;
 	}
 	client->LeaveGroup( curGroup->GetId() );
+}
+
+void CMainScene::_AskJoinGroup()
+{
+	CAskJoinGroupPopLayer *pop = CAskJoinGroupPopLayer::create( "commonbg.png" ); 
+	if( pop )
+	{
+		pop->SetView( this );
+		pop->setPosition( ccp(0, 0) );
+		addChild( pop, 99999 );
+	}
 }

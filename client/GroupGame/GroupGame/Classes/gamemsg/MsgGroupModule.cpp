@@ -200,3 +200,65 @@ void CMsgMemberLeaveGroupNotify::Process()
 
 	group->RemoveMember( m_leaveuser );
 }
+
+CMsgAddMemberRsp::CMsgAddMemberRsp(u64 groupid, s32 result) :
+	m_groupid( groupid ),
+	m_result( result )
+{
+}
+void CMsgAddMemberRsp::Process()
+{
+	CCLog( "[CMsgAddMemberRsp::Process] groupid:%llu result:%d", 
+		m_groupid, m_result );
+}
+
+CMsgAskJoinGroup::CMsgAskJoinGroup(u64 groupid, const std::string &name) : 
+	m_groupid( groupid ),
+	m_name( name )
+{
+}
+void CMsgAskJoinGroup::Process()
+{
+	CCLog( "[CMsgAskJoinGroup::Process] groupid:%llu groupname:%s", 
+		m_groupid, u2a(m_name.c_str()));
+	CUserManager::Instance().GetViewData().SetJoinGroupInfo( m_groupid, m_name );
+	CViewBase *view = CSceneManager::Instance().GetCurView();
+	if( !view )
+	{
+		CCLog( "[CMsgAskJoinGroup::Process] cur view is NULL" );
+		return;
+	}
+	view->UpdateView( CSceneManager::E_UpdateType_AskJoinGroup );
+}
+
+CMsgMemberJoinGroup::CMsgMemberJoinGroup(u64 groupid, const std::string &user, const std::string &name, const std::string &head) : 
+	m_groupid( groupid ),
+	m_user( user ),
+	m_name( name ),
+	m_head( head )
+{
+}
+void CMsgMemberJoinGroup::Process()
+{
+	CCLog( "[CMsgMemberJoinGroup::Process] groupid:%llu user:%s name:%s", 
+		m_groupid, m_user.c_str(), u2a(m_name.c_str()));
+
+	CGroup *group = CUserManager::Instance().GetGroupManager().FindGroup( m_groupid );
+	if( !group )
+	{
+		CCLog( "[CMsgMemberJoinGroup::Process] [ERROR] not found group:%llu", m_groupid );
+		return;
+	}
+
+	CGroupMember *member = new CGroupMember( m_user );
+	if( !member )
+	{
+		CCLog( "[CMsgMemberJoinGroup::Process] [ERROR] new member failed, group:%llu user:%s", 
+			m_groupid, m_user.c_str() );
+		return;
+	}
+	member->SetName( m_name );
+	member->SetHead( m_head );
+	member->SetOnline( true );
+	group->AddMember( member );
+}

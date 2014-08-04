@@ -68,3 +68,29 @@ bool CUserViewData::IsNewGroupDone()
 {
 	return m_isNewGroupDone;
 }
+
+void CUserViewData::SetInviteUser(const string &user)
+{
+	m_inviteUser = user;
+}
+
+const string& CUserViewData::GetInviteUser()
+{
+	return m_inviteUser;
+}
+
+void CUserViewData::SetJoinGroupInfo(u64 id, const string &name)
+{
+	m_joinGroupId = id;
+	m_joinGroupName = name;
+}
+
+u64 CUserViewData::GetJoinGroupId()
+{
+	return m_joinGroupId;
+}
+
+const string& CUserViewData::GetJoinGroupName()
+{
+	return m_joinGroupName;
+}

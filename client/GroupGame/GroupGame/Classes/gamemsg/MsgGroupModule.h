@@ -75,4 +75,37 @@ private:
 	u64 m_groupid;
 	std::string m_leaveuser;
 };
+
+class CMsgAddMemberRsp : public CMsgBase
+{
+public:
+	CMsgAddMemberRsp(u64 groupid, s32 result);
+	virtual void Process();
+private:
+	u64 m_groupid;
+	s32 m_result;
+};
+
+class CMsgAskJoinGroup : public CMsgBase
+{
+public:
+	CMsgAskJoinGroup(u64 groupid, const std::string &name);
+	virtual void Process();
+private:
+	u64 m_groupid;
+	std::string m_name;
+};
+
+class CMsgMemberJoinGroup : public CMsgBase
+{
+public:
+	CMsgMemberJoinGroup(u64 groupid, const std::string &user, const std::string &name, const std::string &head);
+	virtual void Process();
+private:
+	u64 m_groupid;
+	std::string m_user;
+	std::string m_name;
+	std::string m_head;
+};
+
 #endif
