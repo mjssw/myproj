@@ -220,11 +220,11 @@ BEGIN
 	DECLARE result int;
 	SET result=1;
 
-	SET @delsql :=CONCAT("DELETE FROM group_",groupid_," WHERE user='",user_,"';");
+	SET @delsql :=CONCAT("DELETE FROM group_",group_," WHERE user='",user_,"';");
 	PREPARE delsql FROM @delsql; 
 	EXECUTE delsql;
 
-	SET @delsql2 :=CONCAT("DELETE FROM ",udname_,".user_",user_,"group WHERE groupid=",groupid_,";");
+	SET @delsql2 :=CONCAT("DELETE FROM ",udname_,".user_",user_,"_group WHERE groupid=",group_,";");
 	PREPARE delsql2 FROM @delsql2; 
 	EXECUTE delsql2;
 
