@@ -281,6 +281,7 @@ void CMainScene::menuMemberListCallback(cocos2d::Object *pSender)
 void CMainScene::menuLeaveGroupCallback(cocos2d::Object *pSender)
 {
 	CCLog( "menuLeaveGroupCallback" );
+	_LeaveGroup();
 }
 
 void CMainScene::GroupListTouchedCallback(Node *pSender, void *data)
@@ -874,4 +875,22 @@ void CMainScene::_AddGroupFuncBtns(cocos2d::Node &parent)
 
 		x += itemSz.width + off;
 	}
+}
+
+void CMainScene::_LeaveGroup()
+{
+	CGroup *curGroup = CUserManager::Instance().GetViewData().GetSelectGroup();
+	if( !curGroup )
+	{
+		CCLog( "[CMainScene::_LeaveGroup] not select group" );
+		return;
+	}
+	CCLog( "[CMainScene::_LeaveGroup] try leave group:%llu:%s", curGroup->GetId(), curGroup->GetName().c_str() );
+	CGroupClient *client = CNetManager::Instance().GetGroupClientInstance();
+	if( !client )
+	{
+		CCLog( "[CMainScene::_LeaveGroup] [ERROR] group client null" );
+		return;
+	}
+	client->LeaveGroup( curGroup->GetId() );
 }

@@ -56,4 +56,23 @@ private:
 	std::string m_head;
 };
 
+class CMsgLeaveGroupResult : public CMsgBase
+{
+public:
+	CMsgLeaveGroupResult(s32 result, u64 groupid);
+	virtual void Process();
+private:
+	u64 m_groupid;
+	s32 m_result;
+};
+
+class CMsgMemberLeaveGroupNotify : public CMsgBase
+{
+public:
+	CMsgMemberLeaveGroupNotify(u64 groupid, const std::string &user);
+	virtual void Process();
+private:
+	u64 m_groupid;
+	std::string m_leaveuser;
+};
 #endif

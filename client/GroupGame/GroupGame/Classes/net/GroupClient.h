@@ -16,12 +16,15 @@ public:
 
 	void Login(const std::string &user, const std::string &token);
 	void CreateGroup(const std::string &name, const std::string &head);
+	void LeaveGroup(u64 groupid);
 
 private:
 	void _LoginGroupResult(sglib::groupproto::SCGroupUserLoginRsp &msg);
 	void _GroupListUpdate(sglib::groupproto::SCGroupListUpdate &msg);
 	void _GroupInfoUpdate(sglib::groupproto::SCGroupInfoUpdate &msg);
 	void _CreateGroupRsp(sglib::groupproto::SCGroupCreateRsp &msg);
+	void _LeaveGroupRsp(sglib::groupproto::SCGroupLeaveRsp &msg);
+	void _MemberLeaveGroupNtf(sglib::groupproto::SCGroupMemberLeaveNtf &msg);
 };
 
 #endif

@@ -67,6 +67,8 @@ private:
 	void _AddCreateGroupBtn(cocos2d::Node &parent, cocos2d::Size &sz);
 	void _AddGroupFuncBtns(cocos2d::Node &parent);
 
+	void _LeaveGroup();
+
 private:
 	int m_mainViewOffX;
 	cocos2d::CCPoint m_ptTableView;

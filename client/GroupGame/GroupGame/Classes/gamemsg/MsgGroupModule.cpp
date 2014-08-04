@@ -158,3 +158,45 @@ void CMsgCreateGroupResult::Process()
 		CCLog( "[CMsgCreateGroupResult::Process] Create Group ERROR errorcode:%d", m_result );
 	}
 }
+
+CMsgLeaveGroupResult::CMsgLeaveGroupResult(s32 result, u64 groupid) : 
+	m_result( result ),
+	m_groupid( groupid )
+{
+}
+void CMsgLeaveGroupResult::Process()
+{
+	CCLog( "[CMsgLeaveGroupResult::Process] result:%d groupid:%llu", 
+		m_result, m_groupid );
+	if( m_result == sglib::errorcode::E_ErrorCode_Success )
+	{
+		CUserManager::Instance().GetGroupManager().RemoveGroup( m_groupid );
+		CUserManager::Instance().GetViewData().SetSelectGroup( NULL );
+		CViewBase *view = CSceneManager::Instance().GetCurView();
+		if( !view )
+		{
+			CCLog( "[CMsgLeaveGroupResult::Process] cur view is NULL" );
+			return;
+		}
+		view->UpdateView( CSceneManager::E_UpdateType_UpdateGroupList );
+	}
+}
+
+CMsgMemberLeaveGroupNotify::CMsgMemberLeaveGroupNotify(u64 groupid, const std::string &user) :
+	m_groupid( groupid ),
+	m_leaveuser( user )
+{
+}
+void CMsgMemberLeaveGroupNotify::Process()
+{
+	CCLog( "[CMsgMemberLeaveGroupNotify::Process] groupid:%llu member:%s", 
+		m_groupid, m_leaveuser.c_str() );
+	CGroup *group = CUserManager::Instance().GetGroupManager().FindGroup( m_groupid );
+	if( !group )
+	{
+		CCLog( "[CMsgMemberLeaveGroupNotify::Process] [ERROR] not found group:%llu", m_groupid );
+		return;
+	}
+
+	group->RemoveMember( m_leaveuser );
+}

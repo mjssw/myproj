@@ -104,7 +104,7 @@ int CGroupClient::OnRecv(char *buf, int len)
 				sglib::groupproto::SCGroupLeaveRsp msg;
 				if( msg.ParseFromArray(pbuf+MSG_ID_LEN+MSG_HEAD_LEN, pkgLen-MSG_ID_LEN-MSG_HEAD_LEN) )
 				{
-					//_LeaveGroupRsp(rsp);
+					_LeaveGroupRsp( msg );
 				}
 			}break;
 		case sglib::msgid::SC_GROUP_MEMBER_LEAVE_NTF:
@@ -112,7 +112,7 @@ int CGroupClient::OnRecv(char *buf, int len)
 				sglib::groupproto::SCGroupMemberLeaveNtf msg;
 				if( msg.ParseFromArray(pbuf+MSG_ID_LEN+MSG_HEAD_LEN, pkgLen-MSG_ID_LEN-MSG_HEAD_LEN) )
 				{
-					//_MemberLeaveGroupNtf(ntf);
+					_MemberLeaveGroupNtf( msg );
 				}
 			}break;
 		case sglib::msgid::SC_GROUP_DELETE_RSP:
@@ -216,6 +216,14 @@ void CGroupClient::CreateGroup(const std::string &name, const std::string &head)
 	SendMsg( req, sglib::msgid::CS_GROUP_CREATE_REQ );
 }
 
+void CGroupClient::LeaveGroup(u64 groupid)
+{
+	sglib::groupproto::CSGroupLeaveReq req;
+	req.set_groupid( groupid );
+	
+	SendMsg( req, sglib::msgid::CS_GROUP_LEAVE_REQ );
+}
+
 void CGroupClient::_LoginGroupResult(sglib::groupproto::SCGroupUserLoginRsp &msg)
 {
 	CMsgBase *gamemsg = new CMsgLoginGroupResult( msg.result() ); 
@@ -237,6 +245,36 @@ void CGroupClient::_CreateGroupRsp(sglib::groupproto::SCGroupCreateRsp &msg)
 	if( !gamemsg )
 	{
 		CCLog( "[CGroupClient::_CreateGroupRsp] new msg failed" );
+		return;
+	}
+
+	CNetManager::Instance().PushMessage( gamemsg );
+}
+
+void CGroupClient::_LeaveGroupRsp(sglib::groupproto::SCGroupLeaveRsp &msg)
+{
+	CCLog( "CGroupClient::_LeaveGroupRsp result:%d groupid:%llu",
+		msg.result(), msg.groupid() );
+
+	CMsgBase *gamemsg = new CMsgLeaveGroupResult( msg.result(), msg.groupid() ); 
+	if( !gamemsg )
+	{
+		CCLog( "[CGroupClient::_LeaveGroupRsp] new msg failed" );
+		return;
+	}
+
+	CNetManager::Instance().PushMessage( gamemsg );
+}
+
+void CGroupClient::_MemberLeaveGroupNtf(sglib::groupproto::SCGroupMemberLeaveNtf &msg)
+{
+	CCLog( "CGroupClient::_MemberLeaveGroupNtf member:%s in groupid:%llu leave",
+		msg.user().c_str(), msg.groupid() );
+
+	CMsgBase *gamemsg = new CMsgMemberLeaveGroupNotify( msg.groupid(), msg.user() ); 
+	if( !gamemsg )
+	{
+		CCLog( "[CGroupClient::_MemberLeaveGroupNtf] new msg failed" );
 		return;
 	}
 

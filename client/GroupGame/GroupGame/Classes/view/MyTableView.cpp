@@ -118,10 +118,30 @@ void CMyTableView::UpdateElements(vector<TableViewData> &data)
 		return;
 	}
 
+	CCPoint cur;
+	if( data.size() > m_viewData.size() )
+	{
+		cur = ccp(m_scrollOffset.x,  m_scrollOffset.y - m_cellSz.height); 
+	}
+	else if( data.size() < m_viewData.size() )
+	{
+		if( m_scrollOffset.y < 0 )
+		{
+			cur = ccp(m_scrollOffset.x,  m_scrollOffset.y + m_cellSz.height); 
+		}
+		else
+		{
+			cur = m_scrollOffset;
+		}
+	}
+	else
+	{
+		cur = m_scrollOffset;
+	}
+
 	m_viewData = data;
 	m_cellCount = (int)data.size();
 
-	CCPoint cur = ccp(m_scrollOffset.x,  m_scrollOffset.y - m_cellSz.height); 
 	m_tableView->reloadData();
 	m_tableView->setContentOffset( cur );
 }
@@ -188,7 +208,7 @@ CMyTableView* CMyTableView::create(CCSize &sz, CCSize &cellSz, vector<TableViewD
 void CMyTableView::scrollViewDidScroll(ScrollView *view)
 {
 	m_scrollOffset = view->getContentOffset();
-	//CCLog( "CMyTableView::scrollViewDidScroll off(%d, %d)", (int)m_scrollOffset.x, (int)m_scrollOffset.y  );
+	CCLog( "CMyTableView::scrollViewDidScroll off(%d, %d)", (int)m_scrollOffset.x, (int)m_scrollOffset.y  );
 }
 
 void CMyTableView::scrollViewDidZoom(ScrollView *view)
