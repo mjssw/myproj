@@ -31,6 +31,7 @@ private:
 	void _AddRegisterBtn();
 	void _AddCloseBtn(bool isCenter);
 	void _AddRegisterResult();
+	void _AddTitle();
 
 private:
 	CViewBase *m_scene;

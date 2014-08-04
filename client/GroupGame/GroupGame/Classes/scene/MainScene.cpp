@@ -791,6 +791,7 @@ void CMainScene::_DumpGroupList(std::vector<TableViewData> &vecData)
 
 void CMainScene::_UpdateGroupList()
 {
+	CCLog( "CMainScene::_UpdateGroupList" );
 	if( m_pGroupList )
 	{
 		vector<TableViewData> vecData;

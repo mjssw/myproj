@@ -24,6 +24,7 @@ bool CGroupManager::AddGroup(CGroup *group)
 	}
 
 	m_groups[ group->GetId() ] = group;
+	return true;
 }
 
 void CGroupManager::RemoveGroup(u64 id)

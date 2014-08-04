@@ -28,6 +28,7 @@ private:
 	void _AddEditBox();
 	void _AddCreateBtn();
 	void _AddCloseBtn(bool isCenter);
+	void _AddTitle();
 
 private:
 	CViewBase *m_scene;

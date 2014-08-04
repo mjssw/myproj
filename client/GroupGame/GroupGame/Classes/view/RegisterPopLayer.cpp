@@ -38,6 +38,7 @@ void CRegisterPopLayer::onEnter()
 	_AddEditBox();
 	_AddRegisterBtn();
 	_AddCloseBtn( false );
+	_AddTitle();
 }
 
 void CRegisterPopLayer::menuCloseCallback(Object *sender)
@@ -106,7 +107,7 @@ void CRegisterPopLayer::_AddEditBox()
 	CCSize sz = editboxBg->getContentSize();
 	editboxBg->setAnchorPoint( ccp(0, 0) );
 	editboxBg->setPosition( 
-		ccp((bgSz.width-sz.width)/2, (bgSz.height/2)) );
+		ccp((bgSz.width-sz.width)/2, (bgSz.height/2-30)) );
     parent->addChild( editboxBg, 1, E_Tag_Edit );
 
 	int x = 10;
@@ -242,6 +243,23 @@ void CRegisterPopLayer::_AddRegisterResult()
 	Label *text = Label::createWithSystemFont( a2u(strRet), "arial", 25 );
 	CCAssert( text, "text result failed" );
 	text->setPosition( ccp(sz.width/2, sz.height/2) );
+	parent->addChild( text );
+}
+
+void CRegisterPopLayer::_AddTitle()
+{
+	Node *parent = getChildByTag( E_Tag_Bg );
+	if( !parent )
+	{
+		CCLog( "[CRegisterPopLayer::_AddTitle] get parent null" );
+		return;
+	}
+	Size sz = parent->getContentSize();
+
+	Label *text = Label::createWithSystemFont( a2u("×¢²áÐÂÓÃ»§"), "arial", 25 );
+	CCAssert( text, "text close failed" );
+	Size textSz = text->getContentSize();
+	text->setPosition( ccp(sz.width/2, sz.height-textSz.height/2-10) );
 	parent->addChild( text );
 }
 

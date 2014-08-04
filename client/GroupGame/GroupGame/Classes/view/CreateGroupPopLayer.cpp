@@ -30,6 +30,7 @@ void CCreateGroupPopLayer::onEnter()
 	_AddEditBox();
 	_AddCreateBtn();
 	_AddCloseBtn( false );
+	_AddTitle();
 }
 
 void CCreateGroupPopLayer::menuCloseCallback(Object *sender)
@@ -39,6 +40,13 @@ void CCreateGroupPopLayer::menuCloseCallback(Object *sender)
 
 void CCreateGroupPopLayer::menuCreateGroupCallback(cocos2d::Object *sender)
 {
+	string name = CUserManager::Instance().GetViewData().GetNewGroupName();
+	if( name == "" )
+	{
+		CCLog( "create group , name is null" );
+		return;
+	}
+
 	CGroupClient *client = CNetManager::Instance().GetGroupClientInstance();
 	if( !client )
 	{
@@ -93,26 +101,21 @@ void CCreateGroupPopLayer::_AddEditBox()
 	CCSize sz = editboxBg->getContentSize();
 	editboxBg->setAnchorPoint( ccp(0, 0) );
 	editboxBg->setPosition( 
-		ccp((bgSz.width-sz.width)/2, (bgSz.height/2)) );
+		ccp((bgSz.width-sz.width)/2, (bgSz.height/2)-30) );
     parent->addChild( editboxBg, 1, E_Tag_Edit );
 
 	int x = 10;
 	CCSprite *wordUser = CResManager::Instance().GetSpriteWordUser();
 	CCAssert( wordUser, "GetResWordUser Failed" );
-	CCSize wsz = wordUser->getContentSize();
-	/*
+	
+	Label *text = Label::createWithSystemFont( a2u("群名:"), "arial", 25 );
+	CCAssert( text, "text group name failed" );
+	CCSize wsz = text->getContentSize();
 	int userY = (sz.height/2-wsz.height)/2 + (sz.height/2);
-	wordUser->setAnchorPoint( ccp(0, 0) );
-	wordUser->setPosition( ccp(x, userY) );
-	editboxBg->addChild( wordUser, 0 );
-
-	CCSprite *wordPwd = CResManager::Instance().GetSpriteWordPwd();
-	CCAssert( wordPwd, "GetResWordPwd Failed" );
-	wsz = wordPwd->getContentSize();
-	wordPwd->setAnchorPoint( ccp(0, 0) );
-	wordPwd->setPosition( ccp(x, (sz.height/2-wsz.height)/2) );
-	editboxBg->addChild( wordPwd, 0 );
-	//*/
+	text->setColor( Color3B::BLACK );
+	text->setAnchorPoint( ccp(0, 0) );
+	text->setPosition( ccp(x, userY) );
+	editboxBg->addChild( text, 3 );
 
 	CCSize editSz = CCSize( sz.width - 3*x - wsz.width, sz.height/3);
 	CMyEditBox *editUser = CMyEditBox::create(
@@ -206,6 +209,23 @@ void CCreateGroupPopLayer::_AddCloseBtn(bool isCenter)
 	CCAssert( text, "text close failed" );
 	text->setPosition( ccp(szItem.width/2, szItem.height/2) );
 	closeItem->addChild( text );
+}
+
+void CCreateGroupPopLayer::_AddTitle()
+{
+	Node *parent = getChildByTag( E_Tag_Bg );
+	if( !parent )
+	{
+		CCLog( "[CCreateGroupPopLayer::_AddTitle] get parent null" );
+		return;
+	}
+	Size sz = parent->getContentSize();
+
+	Label *text = Label::createWithSystemFont( a2u("创建新群"), "arial", 25 );
+	CCAssert( text, "text close failed" );
+	Size textSz = text->getContentSize();
+	text->setPosition( ccp(sz.width/2, sz.height-textSz.height/2-10) );
+	parent->addChild( text );
 }
 
 void CCreateGroupPopLayer::SetView(CViewBase *view)

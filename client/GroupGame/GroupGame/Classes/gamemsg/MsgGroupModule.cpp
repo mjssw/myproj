@@ -124,4 +124,37 @@ CMsgCreateGroupResult::CMsgCreateGroupResult(s32 result, const std::string &name
 void CMsgCreateGroupResult::Process()
 {
 	CCLog( "[CMsgCreateGroupResult::Process] result:%d", m_result );
+	if( m_result == sglib::errorcode::E_ErrorCode_Success )
+	{
+		CGroup *group = new CGroup( m_groupid, m_name, m_head );
+		if( !group )
+		{
+			CCLog( "[CMsgCreateGroupResult::Process] [ERROR] new group failed" );
+			return;
+		}
+		
+		bool ret = CUserManager::Instance().GetGroupManager().AddGroup( group );
+		CCLog( "[CMsgCreateGroupResult::Process][DEBUG] add group:%llu:%s ret:%d",
+			m_groupid, m_name.c_str(), ret?1:0 );
+		if( ret )
+		{
+			CGroupMember *self = new CGroupMember(
+				CUserManager::Instance().GetBasic().GetUser() );
+			CCAssert( self, "CMsgCreateGroupResult::Process new group member" );
+			self->SetName( CUserManager::Instance().GetBasic().GetName() );
+			self->SetHead( CUserManager::Instance().GetBasic().GetHead() );
+			group->AddMember( self );
+			CViewBase *view = CSceneManager::Instance().GetCurView();
+			if( !view )
+			{
+				CCLog( "[CMsgCreateGroupResult::Process] cur view is NULL" );
+				return;
+			}
+			view->UpdateView( CSceneManager::E_UpdateType_UpdateGroupList );
+		}
+	}
+	else
+	{
+		CCLog( "[CMsgCreateGroupResult::Process] Create Group ERROR errorcode:%d", m_result );
+	}
 }
