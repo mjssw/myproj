@@ -110,6 +110,40 @@ public:
 		std::wstring uniStr = UTF8toUnicode( utf8Str );
 		return ws2s( uniStr );
 	}
+
+	static std::string GetCurYear()
+	{
+		time_t now;
+		time( &now );
+		char strtime[64] = {0};
+		strftime( strtime, sizeof(strtime), "%Y",localtime(&now) );
+		return std::string( strtime );
+	}
+
+	static std::string GetCurMonth()
+	{
+		time_t now;
+		time( &now );
+		char strtime[64] = {0};
+		strftime( strtime, sizeof(strtime), "%m",localtime(&now) );
+		return std::string( strtime );
+	}
+
+	static std::string GetCurDay()
+	{
+		time_t now;
+		time( &now );
+		char strtime[64] = {0};
+		strftime( strtime, sizeof(strtime), "%d",localtime(&now) );
+		return std::string( strtime );
+	}
+
+	static s32 GetTimeNow()
+	{
+		time_t now;
+		time( &now );
+		return (s32)(now);
+	}
 };
 
 #endif

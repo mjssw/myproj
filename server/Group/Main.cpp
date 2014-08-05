@@ -5,8 +5,18 @@
 #include "GroupManager.h"
 #include "GroupConfig.h"
 
+void test()
+{
+	time_t now;
+	time( &now );
+	char strtime[64] = {0};
+	strftime( strtime, sizeof(strtime), "%Y-%m-%d",localtime(&now) );
+	printf( "%s\n", strtime );
+}
+
 int main(int argc, char *argv[])
 {
+	test();
 	if( argc >= 5 )
 	{
 		CServerManager::Instance();

@@ -428,6 +428,9 @@ void CGroupManager::GroupMessage(s32 gateresid, u64 gateid, u64 clientid, u64 gr
 	}
 
 	BroadcastGroupMessage( groupid, member->GetUser(), content );
+
+	// 将msg写入数据库
+	_TryStoreGroupMessage( *group, member->GetUser(), content );
 }
 
 void CGroupManager::UserLogout(s32 gateresid, u64 clientid)
@@ -1264,6 +1267,31 @@ void CGroupManager::_TryCreateGroup(CGroupInfo &group, CGroupMember &member)
 	}
 }
 
+void CGroupManager::_TryStoreGroupMessage(CGroupInfo &group, const string &user, const string &msg)
+{
+	string check = "0";
+	if( CUtils::GetCurDay() == "01" )
+	{
+		string checktime = ( CUtils::GetCurYear() + CUtils::GetCurMonth() );
+		if( checktime != group.GetLastCheckTime() )
+		{
+			check = "1";
+			group.SetLastCheckTime( checktime );
+		}
+	}
+
+	char strGroupId[128] = {0};
+	sprintf( strGroupId, "%llu", group.GetId() );
+	string sql = string("call GroupMessage(") + string(strGroupId) + ",'" +
+		user + "','" + msg + "'," + check + ");";
+	s32 id = CServerManager::Instance().GetGroupMessageDbId();
+	bool ret = CServerManager::Instance().ExecSql( id, sql, this, &CGroupManager::_GroupMessageCallback, NULL, 0 );
+	if( !ret )
+	{
+		SERVER_LOG_ERROR( "CGroupManager,_TryStoreGroupMessage,ExecSql," << sql.c_str() );
+	}
+}
+
 void CGroupManager::_GetGroupInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
 {
 	SELF_ASSERT( param, return; );
@@ -1463,4 +1491,8 @@ void CGroupManager::_CreateGroupCallback(SGLib::IDBRecordSet *RecordSet, char *E
 	
 	SERVER_LOG_INFO( "CGroupManager::_CreateGroupCallback," << group->GetId() << "," << \
 		member->GetUser().c_str() << "," << result );
+}
+
+void CGroupManager::_GroupMessageCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
+{
 }

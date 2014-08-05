@@ -76,6 +76,9 @@ public:
 
 	void Dump(std::vector<std::string> &vec);
 
+	const std::string& GetLastCheckTime();
+	void SetLastCheckTime(const std::string &t);
+
 private:
 	void _AddMemberIndex(CGroupMember *member);
 	void _DelMemberIndex(CGroupMember *member);
@@ -89,6 +92,11 @@ private:
 	std::map<std::string, CGroupMember*> m_Members;
 
 	std::map<s32, std::map<u64, CGroupMember*> > m_MemberIndex;
+
+	// 此变量是一个年月值,形如 201407 
+	// 收到聊天消息时如果当前日期是1号，且当前年月与m_lastCheckTime不一致，
+	// 则需要重新建新的group_message表,形如 group_123_201408
+	std::string m_lastCheckTime;
 };
 
 #endif

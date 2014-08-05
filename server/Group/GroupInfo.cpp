@@ -1,5 +1,6 @@
 #include "GroupInfo.h"
 #include "ServerManager.h"
+#include "Utils.h"
 
 using namespace std;
 using namespace SGLib;
@@ -27,6 +28,8 @@ CGroupInfo::CGroupInfo(u64 id, const char *name, const char *icon) :
 	m_Name(name),
 	m_Icon(icon)
 {
+	string lastcheck = CUtils::GetCurYear() + CUtils::GetCurMonth();
+	SetLastCheckTime( lastcheck );
 }
 
 CGroupInfo::~CGroupInfo()
@@ -237,4 +240,14 @@ void CGroupInfo::Dump(std::vector<std::string> &vec)
 	{
 		vec.push_back( it->first );
 	}
+}
+
+const std::string& CGroupInfo::GetLastCheckTime()
+{
+	return m_lastCheckTime;
+}
+
+void CGroupInfo::SetLastCheckTime(const std::string &t)
+{
+	m_lastCheckTime = t;
 }

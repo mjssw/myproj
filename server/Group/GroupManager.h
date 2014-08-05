@@ -102,12 +102,14 @@ private:
 	void _LoadGroupDone(u64 groupid, const std::string &user);
 	void _TryGetUserBasicInfo(const std::string &user, CGroupInfo &group);
 	void _TryCreateGroup(CGroupInfo &group, CGroupMember &member);
+	void _TryStoreGroupMessage(CGroupInfo &group, const std::string &user, const std::string &msg);
 
 private:
 	void _GetGroupInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 	void _GetGroupMemberCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 	void _GetUserBasicInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 	void _CreateGroupCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
+	void _GroupMessageCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 
 private:
 	SGLib::CLock m_Lock;

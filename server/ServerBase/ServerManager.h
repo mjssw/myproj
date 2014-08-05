@@ -483,6 +483,12 @@ public:
 		return GetMysqlManagerIdByDbName( "groups" );
 	}
 
+	s32 GetGroupMessageDbId()
+	{
+		// TODO
+		return -1;
+	}
+
 	void PingAllMysql()
 	{
 		std::map<s32, CMysqlManager*>::iterator it = m_mysqlMgr.begin();
