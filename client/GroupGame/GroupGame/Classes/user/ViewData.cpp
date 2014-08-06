@@ -94,3 +94,18 @@ const string& CUserViewData::GetJoinGroupName()
 {
 	return m_joinGroupName;
 }
+
+void CUserViewData::SetChatText(const string &text)
+{
+	m_chatText = text;
+}
+
+const string& CUserViewData::GetChatText()
+{
+	return m_chatText;
+}
+
+vector<ChatTableViewData>& CUserViewData::GetChatHistory()
+{
+	return m_chatHistory; 
+}

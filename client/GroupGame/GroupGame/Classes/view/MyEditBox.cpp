@@ -78,13 +78,19 @@ CMyEditBox* CMyEditBox::create(CCSize &sz, CCPoint &pos, const char *bgImage, co
 	}
 	editBox->m_pEdit->setAnchorPoint( ccp(0, 0) );
 	editBox->m_pEdit->setPosition( pos );
-	editBox->m_pEdit->setFont( font, fontSize );
+	if( font )
+	{
+		editBox->m_pEdit->setFont( font, fontSize );
+	}
+	editBox->m_pEdit->setFontSize( fontSize );
     editBox->m_pEdit->setFontColor( color );
     editBox->m_pEdit->setPlaceHolder( "" );
     editBox->m_pEdit->setPlaceholderFontColor( ccWHITE );
     editBox->m_pEdit->setMaxLength( maxLen );
 	editBox->m_pEdit->setReturnType( EditBox::KeyboardReturnType::DONE );
+	editBox->m_pEdit->setInputMode( EditBox::InputMode::ANY );
     editBox->m_pEdit->setDelegate( editBox );
+
 
 	editBox->addChild( editBox->m_pEdit, 0 );
 	return editBox;

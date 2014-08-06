@@ -2,7 +2,9 @@
 #define _USER_VIEW_DATA_H_
 
 #include <string>
+#include <vector>
 #include "Define.h"
+#include "view/ChatTableViewData.h"
 
 // 玩家一些界面操作的暂存信息
 class CGroup;
@@ -34,6 +36,11 @@ public:
 	u64 GetJoinGroupId();
 	const std::string& GetJoinGroupName();
 
+	void SetChatText(const std::string &text);
+	const std::string& GetChatText();
+
+	std::vector<ChatTableViewData>& GetChatHistory();
+
 private:
 	bool m_isSavePwd;
 	bool m_isAutoLogin;
@@ -46,6 +53,10 @@ private:
 
 	u64 m_joinGroupId;
 	std::string m_joinGroupName;
+
+	std::string m_chatText;
+	
+	std::vector<ChatTableViewData> m_chatHistory;
 };
 
 #endif

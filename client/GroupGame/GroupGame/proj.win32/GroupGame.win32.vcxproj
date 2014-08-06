@@ -169,6 +169,7 @@
     <ClInclude Include="..\Classes\utils.h" />
     <ClInclude Include="..\Classes\view\AskJoinGroupPopLayer.h" />
     <ClInclude Include="..\Classes\view\ChatTableView.h" />
+    <ClInclude Include="..\Classes\view\ChatTableViewData.h" />
     <ClInclude Include="..\Classes\view\CreateGroupPopLayer.h" />
     <ClInclude Include="..\Classes\view\InviteMemberPopLayer.h" />
     <ClInclude Include="..\Classes\view\MemberListPopLayer.h" />

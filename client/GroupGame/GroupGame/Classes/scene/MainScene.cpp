@@ -24,6 +24,12 @@ using namespace std;
 // for test
 vector<ChatTableViewData> g_chatData;
 
+static void TextChatChanged(const std::string &text)
+{
+	CCLog( "Text chat changed" );
+	CUserManager::Instance().GetViewData().SetChatText( text );
+}
+
 CCScene* CMainScene::scene()
 {
     CCScene *scene = NULL;
@@ -232,24 +238,19 @@ void CMainScene::menuSendCallback(Object *pSender)
 {
 	CCLog( "menuSendCallback" );
 
-	// for test
-	static bool user = true;
-	if( user )
 	{
 		ChatTableViewData data(
 			ChatTableViewData::E_DataType_User,
 			a2u("我"),
 			a2u("2014-07-16 17:33:23") );
-		g_chatData.push_back( data );
-		user = false;
+		CUserManager::Instance().GetViewData().GetChatHistory().push_back( data );
 	}
-	else
 	{
 		ChatTableViewData data(
 			ChatTableViewData::E_DataType_Text,
 			a2u("我"),
-			a2u("来了1来了2来了3来了11来了22来了33来了111来了222来了333来了1111来了2222来了3333来了11111来了22222来了33333"));
-		g_chatData.push_back( data );
+			a2u( CUserManager::Instance().GetViewData().GetChatText().c_str() ) );
+		CUserManager::Instance().GetViewData().GetChatHistory().push_back( data );
 	}
 	m_chatTableView->InsertUpdate();
 }
@@ -412,11 +413,6 @@ void CMainScene::_AddListView()
 
 }
 
-
-static void TextChatChanged(const std::string &text)
-{
-}
-
 void CMainScene::_AddMainView()
 {
 	CCSprite *pSprite = CCSprite::create( "mainbg.png" );
@@ -509,8 +505,10 @@ void CMainScene::_AddChatViewToMain()
 	m_chatTableView = CChatTableView::create( chatSz );
     CCAssert( m_chatTableView, "GetChatTableView Failed" );
 	m_chatTableView->SetPosition( ccp(ptTitle.x, ptTitle.y+chatSz.height/2+szTitle.height/2) );
+	m_chatTableView->InitData( CUserManager::Instance().GetViewData().GetChatHistory() );
 	parent->addChild( m_chatTableView );
 	// test add data
+	/*
 	{
 		ChatTableViewData data(
 			ChatTableViewData::E_DataType_User,
@@ -547,6 +545,20 @@ void CMainScene::_AddChatViewToMain()
 		g_chatData.push_back( data );
 	}
 	m_chatTableView->InitData( g_chatData );
+	//*/
+
+	// add edit view
+	{
+		Size editSz = Size(szTitle.width-szSplite.width/2, ptTitle.y-szTitle.height/2);
+		CMyEditBox *editChat = CMyEditBox::create(
+			editSz, ccp(ptTitle.x-szTitle.width/2+szSplite.width/2, 0), 
+			"white_edit.png", NULL, 10, ccBLACK, 100 );
+		CCAssert( editChat, "GetChatEditBox Failed" );
+		editChat->SetEditChangedCallback( TextChatChanged );
+		editChat->GetEditBox()->setFontName("arial");
+		editChat->GetEditBox()->setFontSize(20);
+		parent->addChild( editChat, 1 );
+	}
 
 	_AddGroupFuncBtns( *parent );
 }
