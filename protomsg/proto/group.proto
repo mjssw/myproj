@@ -175,6 +175,25 @@ message SCGroupCreateGameRoomNtf
 	required uint64 groupid		= 7;
 }
 
+message CSGroupMessageHistoryReq
+{
+	required uint64 groupid		= 1;
+	required int64 idxfrom		= 2;	// 对应group_xx_201408 表中的Idx字段,如果为0表示从最新开始取
+	required int32 limit		= 3;	// 一次取的消息条数
+}
+
+message GroupMessage
+{
+	required string user		= 1;	// 发言者
+	required string msg			= 2;	// 发言内容
+	required int32 time			= 3;	// 时间
+	required int64 idx			= 4;	// 消息idx
+}
+message SCGroupMessageHistoryRsp
+{
+	repeated GroupMessage messages	= 1;// 消息记录
+}
+
 
 // RPC message
 

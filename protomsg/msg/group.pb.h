@@ -63,6 +63,9 @@ class SCGroupMemberOfflineNtf;
 class CSGroupCreateGameRoomReq;
 class SCGroupCreateGameRoomRsp;
 class SCGroupCreateGameRoomNtf;
+class CSGroupMessageHistoryReq;
+class GroupMessage;
+class SCGroupMessageHistoryRsp;
 class GroupGateAddGroupNtf;
 class GroupGateDelGroupNtf;
 class GroupGroupmanagerGateCloseNtf;
@@ -2813,6 +2816,315 @@ class SCGroupCreateGameRoomNtf : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static SCGroupCreateGameRoomNtf* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class CSGroupMessageHistoryReq : public ::google::protobuf::Message {
+ public:
+  CSGroupMessageHistoryReq();
+  virtual ~CSGroupMessageHistoryReq();
+
+  CSGroupMessageHistoryReq(const CSGroupMessageHistoryReq& from);
+
+  inline CSGroupMessageHistoryReq& operator=(const CSGroupMessageHistoryReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CSGroupMessageHistoryReq& default_instance();
+
+  void Swap(CSGroupMessageHistoryReq* other);
+
+  // implements Message ----------------------------------------------
+
+  CSGroupMessageHistoryReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CSGroupMessageHistoryReq& from);
+  void MergeFrom(const CSGroupMessageHistoryReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint64 groupid = 1;
+  inline bool has_groupid() const;
+  inline void clear_groupid();
+  static const int kGroupidFieldNumber = 1;
+  inline ::google::protobuf::uint64 groupid() const;
+  inline void set_groupid(::google::protobuf::uint64 value);
+
+  // required int64 idxfrom = 2;
+  inline bool has_idxfrom() const;
+  inline void clear_idxfrom();
+  static const int kIdxfromFieldNumber = 2;
+  inline ::google::protobuf::int64 idxfrom() const;
+  inline void set_idxfrom(::google::protobuf::int64 value);
+
+  // required int32 limit = 3;
+  inline bool has_limit() const;
+  inline void clear_limit();
+  static const int kLimitFieldNumber = 3;
+  inline ::google::protobuf::int32 limit() const;
+  inline void set_limit(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:sglib.groupproto.CSGroupMessageHistoryReq)
+ private:
+  inline void set_has_groupid();
+  inline void clear_has_groupid();
+  inline void set_has_idxfrom();
+  inline void clear_has_idxfrom();
+  inline void set_has_limit();
+  inline void clear_has_limit();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint64 groupid_;
+  ::google::protobuf::int64 idxfrom_;
+  ::google::protobuf::int32 limit_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_group_2eproto();
+  friend void protobuf_AssignDesc_group_2eproto();
+  friend void protobuf_ShutdownFile_group_2eproto();
+
+  void InitAsDefaultInstance();
+  static CSGroupMessageHistoryReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class GroupMessage : public ::google::protobuf::Message {
+ public:
+  GroupMessage();
+  virtual ~GroupMessage();
+
+  GroupMessage(const GroupMessage& from);
+
+  inline GroupMessage& operator=(const GroupMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GroupMessage& default_instance();
+
+  void Swap(GroupMessage* other);
+
+  // implements Message ----------------------------------------------
+
+  GroupMessage* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const GroupMessage& from);
+  void MergeFrom(const GroupMessage& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string user = 1;
+  inline bool has_user() const;
+  inline void clear_user();
+  static const int kUserFieldNumber = 1;
+  inline const ::std::string& user() const;
+  inline void set_user(const ::std::string& value);
+  inline void set_user(const char* value);
+  inline void set_user(const char* value, size_t size);
+  inline ::std::string* mutable_user();
+  inline ::std::string* release_user();
+  inline void set_allocated_user(::std::string* user);
+
+  // required string msg = 2;
+  inline bool has_msg() const;
+  inline void clear_msg();
+  static const int kMsgFieldNumber = 2;
+  inline const ::std::string& msg() const;
+  inline void set_msg(const ::std::string& value);
+  inline void set_msg(const char* value);
+  inline void set_msg(const char* value, size_t size);
+  inline ::std::string* mutable_msg();
+  inline ::std::string* release_msg();
+  inline void set_allocated_msg(::std::string* msg);
+
+  // required int32 time = 3;
+  inline bool has_time() const;
+  inline void clear_time();
+  static const int kTimeFieldNumber = 3;
+  inline ::google::protobuf::int32 time() const;
+  inline void set_time(::google::protobuf::int32 value);
+
+  // required int64 idx = 4;
+  inline bool has_idx() const;
+  inline void clear_idx();
+  static const int kIdxFieldNumber = 4;
+  inline ::google::protobuf::int64 idx() const;
+  inline void set_idx(::google::protobuf::int64 value);
+
+  // @@protoc_insertion_point(class_scope:sglib.groupproto.GroupMessage)
+ private:
+  inline void set_has_user();
+  inline void clear_has_user();
+  inline void set_has_msg();
+  inline void clear_has_msg();
+  inline void set_has_time();
+  inline void clear_has_time();
+  inline void set_has_idx();
+  inline void clear_has_idx();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* user_;
+  ::std::string* msg_;
+  ::google::protobuf::int64 idx_;
+  ::google::protobuf::int32 time_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+
+  friend void  protobuf_AddDesc_group_2eproto();
+  friend void protobuf_AssignDesc_group_2eproto();
+  friend void protobuf_ShutdownFile_group_2eproto();
+
+  void InitAsDefaultInstance();
+  static GroupMessage* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class SCGroupMessageHistoryRsp : public ::google::protobuf::Message {
+ public:
+  SCGroupMessageHistoryRsp();
+  virtual ~SCGroupMessageHistoryRsp();
+
+  SCGroupMessageHistoryRsp(const SCGroupMessageHistoryRsp& from);
+
+  inline SCGroupMessageHistoryRsp& operator=(const SCGroupMessageHistoryRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const SCGroupMessageHistoryRsp& default_instance();
+
+  void Swap(SCGroupMessageHistoryRsp* other);
+
+  // implements Message ----------------------------------------------
+
+  SCGroupMessageHistoryRsp* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const SCGroupMessageHistoryRsp& from);
+  void MergeFrom(const SCGroupMessageHistoryRsp& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .sglib.groupproto.GroupMessage messages = 1;
+  inline int messages_size() const;
+  inline void clear_messages();
+  static const int kMessagesFieldNumber = 1;
+  inline const ::sglib::groupproto::GroupMessage& messages(int index) const;
+  inline ::sglib::groupproto::GroupMessage* mutable_messages(int index);
+  inline ::sglib::groupproto::GroupMessage* add_messages();
+  inline const ::google::protobuf::RepeatedPtrField< ::sglib::groupproto::GroupMessage >&
+      messages() const;
+  inline ::google::protobuf::RepeatedPtrField< ::sglib::groupproto::GroupMessage >*
+      mutable_messages();
+
+  // @@protoc_insertion_point(class_scope:sglib.groupproto.SCGroupMessageHistoryRsp)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedPtrField< ::sglib::groupproto::GroupMessage > messages_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_group_2eproto();
+  friend void protobuf_AssignDesc_group_2eproto();
+  friend void protobuf_ShutdownFile_group_2eproto();
+
+  void InitAsDefaultInstance();
+  static SCGroupMessageHistoryRsp* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -8692,6 +9004,293 @@ inline ::google::protobuf::uint64 SCGroupCreateGameRoomNtf::groupid() const {
 inline void SCGroupCreateGameRoomNtf::set_groupid(::google::protobuf::uint64 value) {
   set_has_groupid();
   groupid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// CSGroupMessageHistoryReq
+
+// required uint64 groupid = 1;
+inline bool CSGroupMessageHistoryReq::has_groupid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void CSGroupMessageHistoryReq::set_has_groupid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void CSGroupMessageHistoryReq::clear_has_groupid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void CSGroupMessageHistoryReq::clear_groupid() {
+  groupid_ = GOOGLE_ULONGLONG(0);
+  clear_has_groupid();
+}
+inline ::google::protobuf::uint64 CSGroupMessageHistoryReq::groupid() const {
+  return groupid_;
+}
+inline void CSGroupMessageHistoryReq::set_groupid(::google::protobuf::uint64 value) {
+  set_has_groupid();
+  groupid_ = value;
+}
+
+// required int64 idxfrom = 2;
+inline bool CSGroupMessageHistoryReq::has_idxfrom() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void CSGroupMessageHistoryReq::set_has_idxfrom() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void CSGroupMessageHistoryReq::clear_has_idxfrom() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void CSGroupMessageHistoryReq::clear_idxfrom() {
+  idxfrom_ = GOOGLE_LONGLONG(0);
+  clear_has_idxfrom();
+}
+inline ::google::protobuf::int64 CSGroupMessageHistoryReq::idxfrom() const {
+  return idxfrom_;
+}
+inline void CSGroupMessageHistoryReq::set_idxfrom(::google::protobuf::int64 value) {
+  set_has_idxfrom();
+  idxfrom_ = value;
+}
+
+// required int32 limit = 3;
+inline bool CSGroupMessageHistoryReq::has_limit() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void CSGroupMessageHistoryReq::set_has_limit() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void CSGroupMessageHistoryReq::clear_has_limit() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void CSGroupMessageHistoryReq::clear_limit() {
+  limit_ = 0;
+  clear_has_limit();
+}
+inline ::google::protobuf::int32 CSGroupMessageHistoryReq::limit() const {
+  return limit_;
+}
+inline void CSGroupMessageHistoryReq::set_limit(::google::protobuf::int32 value) {
+  set_has_limit();
+  limit_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// GroupMessage
+
+// required string user = 1;
+inline bool GroupMessage::has_user() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void GroupMessage::set_has_user() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void GroupMessage::clear_has_user() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void GroupMessage::clear_user() {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    user_->clear();
+  }
+  clear_has_user();
+}
+inline const ::std::string& GroupMessage::user() const {
+  return *user_;
+}
+inline void GroupMessage::set_user(const ::std::string& value) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(value);
+}
+inline void GroupMessage::set_user(const char* value) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(value);
+}
+inline void GroupMessage::set_user(const char* value, size_t size) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* GroupMessage::mutable_user() {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  return user_;
+}
+inline ::std::string* GroupMessage::release_user() {
+  clear_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = user_;
+    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void GroupMessage::set_allocated_user(::std::string* user) {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    delete user_;
+  }
+  if (user) {
+    set_has_user();
+    user_ = user;
+  } else {
+    clear_has_user();
+    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required string msg = 2;
+inline bool GroupMessage::has_msg() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void GroupMessage::set_has_msg() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void GroupMessage::clear_has_msg() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void GroupMessage::clear_msg() {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    msg_->clear();
+  }
+  clear_has_msg();
+}
+inline const ::std::string& GroupMessage::msg() const {
+  return *msg_;
+}
+inline void GroupMessage::set_msg(const ::std::string& value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(value);
+}
+inline void GroupMessage::set_msg(const char* value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(value);
+}
+inline void GroupMessage::set_msg(const char* value, size_t size) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* GroupMessage::mutable_msg() {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  return msg_;
+}
+inline ::std::string* GroupMessage::release_msg() {
+  clear_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = msg_;
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void GroupMessage::set_allocated_msg(::std::string* msg) {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    delete msg_;
+  }
+  if (msg) {
+    set_has_msg();
+    msg_ = msg;
+  } else {
+    clear_has_msg();
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required int32 time = 3;
+inline bool GroupMessage::has_time() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void GroupMessage::set_has_time() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void GroupMessage::clear_has_time() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void GroupMessage::clear_time() {
+  time_ = 0;
+  clear_has_time();
+}
+inline ::google::protobuf::int32 GroupMessage::time() const {
+  return time_;
+}
+inline void GroupMessage::set_time(::google::protobuf::int32 value) {
+  set_has_time();
+  time_ = value;
+}
+
+// required int64 idx = 4;
+inline bool GroupMessage::has_idx() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void GroupMessage::set_has_idx() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void GroupMessage::clear_has_idx() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void GroupMessage::clear_idx() {
+  idx_ = GOOGLE_LONGLONG(0);
+  clear_has_idx();
+}
+inline ::google::protobuf::int64 GroupMessage::idx() const {
+  return idx_;
+}
+inline void GroupMessage::set_idx(::google::protobuf::int64 value) {
+  set_has_idx();
+  idx_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// SCGroupMessageHistoryRsp
+
+// repeated .sglib.groupproto.GroupMessage messages = 1;
+inline int SCGroupMessageHistoryRsp::messages_size() const {
+  return messages_.size();
+}
+inline void SCGroupMessageHistoryRsp::clear_messages() {
+  messages_.Clear();
+}
+inline const ::sglib::groupproto::GroupMessage& SCGroupMessageHistoryRsp::messages(int index) const {
+  return messages_.Get(index);
+}
+inline ::sglib::groupproto::GroupMessage* SCGroupMessageHistoryRsp::mutable_messages(int index) {
+  return messages_.Mutable(index);
+}
+inline ::sglib::groupproto::GroupMessage* SCGroupMessageHistoryRsp::add_messages() {
+  return messages_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::sglib::groupproto::GroupMessage >&
+SCGroupMessageHistoryRsp::messages() const {
+  return messages_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::sglib::groupproto::GroupMessage >*
+SCGroupMessageHistoryRsp::mutable_messages() {
+  return &messages_;
 }
 
 // -------------------------------------------------------------------

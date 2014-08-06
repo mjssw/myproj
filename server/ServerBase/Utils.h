@@ -144,6 +144,14 @@ public:
 		time( &now );
 		return (s32)(now);
 	}
+
+	static std::string GetStrTimeNow()
+	{
+		s32 _now = GetTimeNow();
+		char str[64] = {0};
+		sprintf( str, "%d", _now );
+		return std::string( str );
+	}
 };
 
 #endif

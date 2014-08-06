@@ -279,6 +279,9 @@ void CGroupManager::NotifyGroupInfoToMember(u64 groupid, const std::string &memb
 
 	// 通知新玩家新的群详细信息 
 	_NotifyGroupInfoToMember( *group, vecUser, *pMember );
+
+	// 加载当前群的聊天记录
+	_LoadGroupMessageHistory( *group );
 }
 
 void CGroupManager::NotifyAllGroupGateAddGroupInfo(u64 groupid, s32 serverid)
@@ -1270,26 +1273,38 @@ void CGroupManager::_TryCreateGroup(CGroupInfo &group, CGroupMember &member)
 void CGroupManager::_TryStoreGroupMessage(CGroupInfo &group, const string &user, const string &msg)
 {
 	string check = "0";
+	string checktime = ( CUtils::GetCurYear() + CUtils::GetCurMonth() );
 	if( CUtils::GetCurDay() == "01" )
 	{
-		string checktime = ( CUtils::GetCurYear() + CUtils::GetCurMonth() );
 		if( checktime != group.GetLastCheckTime() )
 		{
 			check = "1";
 			group.SetLastCheckTime( checktime );
 		}
 	}
+	if( group.NeedForceCheck() )
+	{
+		check = "1";
+		group.SetLastCheckTime( checktime );
+		group.SetNeedForceCheck( false );
+	}
 
 	char strGroupId[128] = {0};
 	sprintf( strGroupId, "%llu", group.GetId() );
-	string sql = string("call GroupMessage(") + string(strGroupId) + ",'" +
-		user + "','" + msg + "'," + check + ");";
+	string tablename = string("group_") + strGroupId + "_" + checktime;
+	string sql = string("call GroupMessage('") + tablename + "','" +
+		user + "','" + msg + "'," + CUtils::GetStrTimeNow() + "," + check + ");";
 	s32 id = CServerManager::Instance().GetGroupMessageDbId();
 	bool ret = CServerManager::Instance().ExecSql( id, sql, this, &CGroupManager::_GroupMessageCallback, NULL, 0 );
 	if( !ret )
 	{
 		SERVER_LOG_ERROR( "CGroupManager,_TryStoreGroupMessage,ExecSql," << sql.c_str() );
 	}
+}
+
+void CGroupManager::_LoadGroupMessageHistory(CGroupInfo &group)
+{
+	// TODO
 }
 
 void CGroupManager::_GetGroupInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)

@@ -105,6 +105,15 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* SCGroupCreateGameRoomNtf_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   SCGroupCreateGameRoomNtf_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CSGroupMessageHistoryReq_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CSGroupMessageHistoryReq_reflection_ = NULL;
+const ::google::protobuf::Descriptor* GroupMessage_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  GroupMessage_reflection_ = NULL;
+const ::google::protobuf::Descriptor* SCGroupMessageHistoryRsp_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  SCGroupMessageHistoryRsp_reflection_ = NULL;
 const ::google::protobuf::Descriptor* GroupGateAddGroupNtf_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   GroupGateAddGroupNtf_reflection_ = NULL;
@@ -657,7 +666,57 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(SCGroupCreateGameRoomNtf));
-  GroupGateAddGroupNtf_descriptor_ = file->message_type(28);
+  CSGroupMessageHistoryReq_descriptor_ = file->message_type(28);
+  static const int CSGroupMessageHistoryReq_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSGroupMessageHistoryReq, groupid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSGroupMessageHistoryReq, idxfrom_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSGroupMessageHistoryReq, limit_),
+  };
+  CSGroupMessageHistoryReq_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      CSGroupMessageHistoryReq_descriptor_,
+      CSGroupMessageHistoryReq::default_instance_,
+      CSGroupMessageHistoryReq_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSGroupMessageHistoryReq, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSGroupMessageHistoryReq, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(CSGroupMessageHistoryReq));
+  GroupMessage_descriptor_ = file->message_type(29);
+  static const int GroupMessage_offsets_[4] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupMessage, user_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupMessage, msg_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupMessage, time_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupMessage, idx_),
+  };
+  GroupMessage_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      GroupMessage_descriptor_,
+      GroupMessage::default_instance_,
+      GroupMessage_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupMessage, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupMessage, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(GroupMessage));
+  SCGroupMessageHistoryRsp_descriptor_ = file->message_type(30);
+  static const int SCGroupMessageHistoryRsp_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SCGroupMessageHistoryRsp, messages_),
+  };
+  SCGroupMessageHistoryRsp_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      SCGroupMessageHistoryRsp_descriptor_,
+      SCGroupMessageHistoryRsp::default_instance_,
+      SCGroupMessageHistoryRsp_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SCGroupMessageHistoryRsp, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SCGroupMessageHistoryRsp, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(SCGroupMessageHistoryRsp));
+  GroupGateAddGroupNtf_descriptor_ = file->message_type(31);
   static const int GroupGateAddGroupNtf_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGateAddGroupNtf, groupid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGateAddGroupNtf, serverid_),
@@ -673,7 +732,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupGateAddGroupNtf));
-  GroupGateDelGroupNtf_descriptor_ = file->message_type(29);
+  GroupGateDelGroupNtf_descriptor_ = file->message_type(32);
   static const int GroupGateDelGroupNtf_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGateDelGroupNtf, groupid_),
   };
@@ -688,7 +747,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupGateDelGroupNtf));
-  GroupGroupmanagerGateCloseNtf_descriptor_ = file->message_type(30);
+  GroupGroupmanagerGateCloseNtf_descriptor_ = file->message_type(33);
   static const int GroupGroupmanagerGateCloseNtf_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerGateCloseNtf, gateid_),
   };
@@ -703,7 +762,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupGroupmanagerGateCloseNtf));
-  GroupmanagerCenterGateCloseNtf_descriptor_ = file->message_type(31);
+  GroupmanagerCenterGateCloseNtf_descriptor_ = file->message_type(34);
   static const int GroupmanagerCenterGateCloseNtf_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerCenterGateCloseNtf, gateid_),
   };
@@ -718,7 +777,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupmanagerCenterGateCloseNtf));
-  GroupGroupmanagerDynamicStartNtf_descriptor_ = file->message_type(32);
+  GroupGroupmanagerDynamicStartNtf_descriptor_ = file->message_type(35);
   static const int GroupGroupmanagerDynamicStartNtf_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerDynamicStartNtf, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerDynamicStartNtf, ip_),
@@ -735,7 +794,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupGroupmanagerDynamicStartNtf));
-  GroupmanagerGroupDynamicServerStartNtf_descriptor_ = file->message_type(33);
+  GroupmanagerGroupDynamicServerStartNtf_descriptor_ = file->message_type(36);
   static const int GroupmanagerGroupDynamicServerStartNtf_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupDynamicServerStartNtf, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupDynamicServerStartNtf, ip_),
@@ -752,7 +811,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupmanagerGroupDynamicServerStartNtf));
-  GroupmanagerCenterGroupCloseNtf_descriptor_ = file->message_type(34);
+  GroupmanagerCenterGroupCloseNtf_descriptor_ = file->message_type(37);
   static const int GroupmanagerCenterGroupCloseNtf_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerCenterGroupCloseNtf, serverid_),
   };
@@ -767,7 +826,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupmanagerCenterGroupCloseNtf));
-  GroupGroupmanagerReportStatusInfo_descriptor_ = file->message_type(35);
+  GroupGroupmanagerReportStatusInfo_descriptor_ = file->message_type(38);
   static const int GroupGroupmanagerReportStatusInfo_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerReportStatusInfo, serverid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerReportStatusInfo, totalgroup_),
@@ -785,7 +844,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupGroupmanagerReportStatusInfo));
-  GroupmanagerCenterReportGroupGateInfo_descriptor_ = file->message_type(36);
+  GroupmanagerCenterReportGroupGateInfo_descriptor_ = file->message_type(39);
   static const int GroupmanagerCenterReportGroupGateInfo_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerCenterReportGroupGateInfo, gateservers_),
   };
@@ -800,7 +859,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupmanagerCenterReportGroupGateInfo));
-  GroupGroupmanagerUserLoginNtf_descriptor_ = file->message_type(37);
+  GroupGroupmanagerUserLoginNtf_descriptor_ = file->message_type(40);
   static const int GroupGroupmanagerUserLoginNtf_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerUserLoginNtf, gateresid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerUserLoginNtf, clientid_),
@@ -817,7 +876,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupGroupmanagerUserLoginNtf));
-  GroupGroupmanagerUserLogoutNtf_descriptor_ = file->message_type(38);
+  GroupGroupmanagerUserLogoutNtf_descriptor_ = file->message_type(41);
   static const int GroupGroupmanagerUserLogoutNtf_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerUserLogoutNtf, gateresid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerUserLogoutNtf, clientid_),
@@ -833,7 +892,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupGroupmanagerUserLogoutNtf));
-  GroupGroupmanageCreateGroupReq_descriptor_ = file->message_type(39);
+  GroupGroupmanageCreateGroupReq_descriptor_ = file->message_type(42);
   static const int GroupGroupmanageCreateGroupReq_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanageCreateGroupReq, gateid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanageCreateGroupReq, gateresid_),
@@ -852,7 +911,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupGroupmanageCreateGroupReq));
-  GroupmanageGroupCreateGroupNtf_descriptor_ = file->message_type(40);
+  GroupmanageGroupCreateGroupNtf_descriptor_ = file->message_type(43);
   static const int GroupmanageGroupCreateGroupNtf_offsets_[10] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanageGroupCreateGroupNtf, gateid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanageGroupCreateGroupNtf, gateresid_),
@@ -876,7 +935,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupmanageGroupCreateGroupNtf));
-  GroupGroupmanagerCreateGroupResult_descriptor_ = file->message_type(41);
+  GroupGroupmanagerCreateGroupResult_descriptor_ = file->message_type(44);
   static const int GroupGroupmanagerCreateGroupResult_offsets_[9] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerCreateGroupResult, result_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerCreateGroupResult, gateid_),
@@ -899,7 +958,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupGroupmanagerCreateGroupResult));
-  GroupmanagerGroupCreateGroupRsp_descriptor_ = file->message_type(42);
+  GroupmanagerGroupCreateGroupRsp_descriptor_ = file->message_type(45);
   static const int GroupmanagerGroupCreateGroupRsp_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupCreateGroupRsp, result_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupCreateGroupRsp, gateid_),
@@ -920,7 +979,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupmanagerGroupCreateGroupRsp));
-  GroupGroupmanagerAddMemberToGroupReq_descriptor_ = file->message_type(43);
+  GroupGroupmanagerAddMemberToGroupReq_descriptor_ = file->message_type(46);
   static const int GroupGroupmanagerAddMemberToGroupReq_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerAddMemberToGroupReq, gateid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerAddMemberToGroupReq, gateresid_),
@@ -939,7 +998,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupGroupmanagerAddMemberToGroupReq));
-  GroupmanagerGroupAddMemberToGroupRsp_descriptor_ = file->message_type(44);
+  GroupmanagerGroupAddMemberToGroupRsp_descriptor_ = file->message_type(47);
   static const int GroupmanagerGroupAddMemberToGroupRsp_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupAddMemberToGroupRsp, gateid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupAddMemberToGroupRsp, gateresid_),
@@ -958,7 +1017,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupmanagerGroupAddMemberToGroupRsp));
-  GroupGroupmanagerForAgreeJoinAskInfoReq_descriptor_ = file->message_type(45);
+  GroupGroupmanagerForAgreeJoinAskInfoReq_descriptor_ = file->message_type(48);
   static const int GroupGroupmanagerForAgreeJoinAskInfoReq_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerForAgreeJoinAskInfoReq, gateresid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerForAgreeJoinAskInfoReq, clientid_),
@@ -975,7 +1034,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupGroupmanagerForAgreeJoinAskInfoReq));
-  GroupmanagerGroupForAgreeJoinAskInfoRsp_descriptor_ = file->message_type(46);
+  GroupmanagerGroupForAgreeJoinAskInfoRsp_descriptor_ = file->message_type(49);
   static const int GroupmanagerGroupForAgreeJoinAskInfoRsp_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupForAgreeJoinAskInfoRsp, result_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupForAgreeJoinAskInfoRsp, gateresid_),
@@ -996,7 +1055,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupmanagerGroupForAgreeJoinAskInfoRsp));
-  GroupmanagerGroupLoadGroupNtf_descriptor_ = file->message_type(47);
+  GroupmanagerGroupLoadGroupNtf_descriptor_ = file->message_type(50);
   static const int GroupmanagerGroupLoadGroupNtf_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupLoadGroupNtf, groupid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupLoadGroupNtf, gateresid_),
@@ -1014,7 +1073,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupmanagerGroupLoadGroupNtf));
-  GroupGroupmanagerLoadGroupResult_descriptor_ = file->message_type(48);
+  GroupGroupmanagerLoadGroupResult_descriptor_ = file->message_type(51);
   static const int GroupGroupmanagerLoadGroupResult_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerLoadGroupResult, result_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerLoadGroupResult, groupid_),
@@ -1034,7 +1093,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupGroupmanagerLoadGroupResult));
-  GroupmanagerGroupMemberOnlineNtf_descriptor_ = file->message_type(49);
+  GroupmanagerGroupMemberOnlineNtf_descriptor_ = file->message_type(52);
   static const int GroupmanagerGroupMemberOnlineNtf_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupMemberOnlineNtf, groupid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupMemberOnlineNtf, gateresid_),
@@ -1052,7 +1111,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupmanagerGroupMemberOnlineNtf));
-  GroupmanagerGroupMemberOfflineNtf_descriptor_ = file->message_type(50);
+  GroupmanagerGroupMemberOfflineNtf_descriptor_ = file->message_type(53);
   static const int GroupmanagerGroupMemberOfflineNtf_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupMemberOfflineNtf, groupid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupMemberOfflineNtf, gateresid_),
@@ -1070,7 +1129,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupmanagerGroupMemberOfflineNtf));
-  GroupGroupmanagerMemberLeaveNtf_descriptor_ = file->message_type(51);
+  GroupGroupmanagerMemberLeaveNtf_descriptor_ = file->message_type(54);
   static const int GroupGroupmanagerMemberLeaveNtf_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerMemberLeaveNtf, groupid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerMemberLeaveNtf, user_),
@@ -1086,7 +1145,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupGroupmanagerMemberLeaveNtf));
-  GroupGroupmanagerGroupDeleteNtf_descriptor_ = file->message_type(52);
+  GroupGroupmanagerGroupDeleteNtf_descriptor_ = file->message_type(55);
   static const int GroupGroupmanagerGroupDeleteNtf_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerGroupDeleteNtf, groupid_),
   };
@@ -1101,7 +1160,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupGroupmanagerGroupDeleteNtf));
-  GroupGroupmanagerCreateGameRoomReq_descriptor_ = file->message_type(53);
+  GroupGroupmanagerCreateGameRoomReq_descriptor_ = file->message_type(56);
   static const int GroupGroupmanagerCreateGameRoomReq_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerCreateGameRoomReq, groupid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerCreateGameRoomReq, gateresid_),
@@ -1119,7 +1178,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupGroupmanagerCreateGameRoomReq));
-  GroupmanagerGroupCreateGameRoomRsp_descriptor_ = file->message_type(54);
+  GroupmanagerGroupCreateGameRoomRsp_descriptor_ = file->message_type(57);
   static const int GroupmanagerGroupCreateGameRoomRsp_offsets_[9] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupCreateGameRoomRsp, result_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupCreateGameRoomRsp, groupid_),
@@ -1142,7 +1201,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupmanagerGroupCreateGameRoomRsp));
-  GroupmanagerGamemanagerCreateGameRoomReq_descriptor_ = file->message_type(55);
+  GroupmanagerGamemanagerCreateGameRoomReq_descriptor_ = file->message_type(58);
   static const int GroupmanagerGamemanagerCreateGameRoomReq_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGamemanagerCreateGameRoomReq, groupid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGamemanagerCreateGameRoomReq, gateresid_),
@@ -1162,7 +1221,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupmanagerGamemanagerCreateGameRoomReq));
-  GamemanagerGroupmanagerCreateGameRoomRsp_descriptor_ = file->message_type(56);
+  GamemanagerGroupmanagerCreateGameRoomRsp_descriptor_ = file->message_type(59);
   static const int GamemanagerGroupmanagerCreateGameRoomRsp_offsets_[10] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GamemanagerGroupmanagerCreateGameRoomRsp, result_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GamemanagerGroupmanagerCreateGameRoomRsp, groupid_),
@@ -1186,7 +1245,7 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GamemanagerGroupmanagerCreateGameRoomRsp));
-  GroupGateLoginSuccessNtf_descriptor_ = file->message_type(57);
+  GroupGateLoginSuccessNtf_descriptor_ = file->message_type(60);
   static const int GroupGateLoginSuccessNtf_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGateLoginSuccessNtf, clientid_),
   };
@@ -1269,6 +1328,12 @@ void protobuf_RegisterTypes(const ::std::string&) {
     SCGroupCreateGameRoomRsp_descriptor_, &SCGroupCreateGameRoomRsp::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     SCGroupCreateGameRoomNtf_descriptor_, &SCGroupCreateGameRoomNtf::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    CSGroupMessageHistoryReq_descriptor_, &CSGroupMessageHistoryReq::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    GroupMessage_descriptor_, &GroupMessage::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    SCGroupMessageHistoryRsp_descriptor_, &SCGroupMessageHistoryRsp::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GroupGateAddGroupNtf_descriptor_, &GroupGateAddGroupNtf::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -1390,6 +1455,12 @@ void protobuf_ShutdownFile_group_2eproto() {
   delete SCGroupCreateGameRoomRsp_reflection_;
   delete SCGroupCreateGameRoomNtf::default_instance_;
   delete SCGroupCreateGameRoomNtf_reflection_;
+  delete CSGroupMessageHistoryReq::default_instance_;
+  delete CSGroupMessageHistoryReq_reflection_;
+  delete GroupMessage::default_instance_;
+  delete GroupMessage_reflection_;
+  delete SCGroupMessageHistoryRsp::default_instance_;
+  delete SCGroupMessageHistoryRsp_reflection_;
   delete GroupGateAddGroupNtf::default_instance_;
   delete GroupGateAddGroupNtf_reflection_;
   delete GroupGateDelGroupNtf::default_instance_;
@@ -1504,89 +1575,94 @@ void protobuf_AddDesc_group_2eproto() {
     "\206\001\n\030SCGroupCreateGameRoomNtf\022\017\n\007creater\030"
     "\001 \002(\t\022\014\n\004game\030\002 \002(\005\022\n\n\002ip\030\003 \001(\t\022\014\n\004port\030"
     "\004 \001(\005\022\016\n\006roomid\030\005 \001(\005\022\020\n\010password\030\006 \001(\t\022"
-    "\017\n\007groupid\030\007 \002(\004\"9\n\024GroupGateAddGroupNtf"
-    "\022\017\n\007groupid\030\001 \002(\004\022\020\n\010serverid\030\002 \002(\005\"\'\n\024G"
-    "roupGateDelGroupNtf\022\017\n\007groupid\030\001 \002(\004\"/\n\035"
-    "GroupGroupmanagerGateCloseNtf\022\016\n\006gateid\030"
-    "\001 \002(\005\"0\n\036GroupmanagerCenterGateCloseNtf\022"
-    "\016\n\006gateid\030\001 \002(\005\"H\n GroupGroupmanagerDyna"
-    "micStartNtf\022\n\n\002id\030\001 \002(\005\022\n\n\002ip\030\002 \002(\t\022\014\n\004p"
-    "ort\030\003 \002(\005\"N\n&GroupmanagerGroupDynamicSer"
-    "verStartNtf\022\n\n\002id\030\001 \002(\005\022\n\n\002ip\030\002 \002(\t\022\014\n\004p"
-    "ort\030\003 \002(\005\"3\n\037GroupmanagerCenterGroupClos"
-    "eNtf\022\020\n\010serverid\030\001 \002(\005\"\226\001\n!GroupGroupman"
-    "agerReportStatusInfo\022\020\n\010serverid\030\001 \002(\005\022\022"
-    "\n\ntotalgroup\030\002 \002(\005\022\023\n\013totalmember\030\003 \002(\005\022"
-    "6\n\013gateservers\030\004 \003(\0132!.sglib.publicproto"
-    ".GateServerInfo\"_\n%GroupmanagerCenterRep"
-    "ortGroupGateInfo\0226\n\013gateservers\030\001 \003(\0132!."
-    "sglib.publicproto.GateServerInfo\"R\n\035Grou"
-    "pGroupmanagerUserLoginNtf\022\021\n\tgateresid\030\001"
-    " \002(\005\022\020\n\010clientid\030\002 \002(\004\022\014\n\004user\030\003 \002(\t\"E\n\036"
-    "GroupGroupmanagerUserLogoutNtf\022\021\n\tgatere"
-    "sid\030\001 \002(\005\022\020\n\010clientid\030\002 \002(\004\"q\n\036GroupGrou"
-    "pmanageCreateGroupReq\022\016\n\006gateid\030\001 \002(\004\022\021\n"
-    "\tgateresid\030\002 \002(\005\022\020\n\010clientid\030\003 \002(\004\022\014\n\004na"
-    "me\030\004 \002(\t\022\014\n\004head\030\005 \002(\t\"\313\001\n\036GroupmanageGr"
-    "oupCreateGroupNtf\022\016\n\006gateid\030\001 \002(\004\022\021\n\tgat"
-    "eresid\030\002 \002(\005\022\020\n\010clientid\030\003 \002(\004\022\014\n\004user\030\004"
-    " \002(\t\022\014\n\004name\030\005 \002(\t\022\017\n\007groupid\030\006 \002(\004\022\014\n\004h"
-    "ead\030\007 \002(\t\022\025\n\rgroupserverid\030\010 \002(\004\022\020\n\010user"
-    "name\030\t \002(\t\022\020\n\010userhead\030\n \002(\t\"\272\001\n\"GroupGr"
-    "oupmanagerCreateGroupResult\022\016\n\006result\030\001 "
-    "\002(\005\022\016\n\006gateid\030\002 \002(\004\022\020\n\010clientid\030\003 \002(\004\022\014\n"
-    "\004user\030\004 \002(\t\022\014\n\004name\030\005 \002(\t\022\017\n\007groupid\030\006 \002"
-    "(\004\022\014\n\004head\030\007 \002(\t\022\025\n\rgroupserverid\030\010 \002(\004\022"
-    "\020\n\010serverid\030\t \001(\005\"\222\001\n\037GroupmanagerGroupC"
-    "reateGroupRsp\022\016\n\006result\030\001 \002(\005\022\016\n\006gateid\030"
-    "\002 \002(\004\022\020\n\010clientid\030\003 \002(\004\022\014\n\004name\030\004 \002(\t\022\017\n"
-    "\007groupid\030\005 \001(\004\022\014\n\004head\030\006 \002(\t\022\020\n\010serverid"
-    "\030\007 \001(\005\"{\n$GroupGroupmanagerAddMemberToGr"
+    "\017\n\007groupid\030\007 \002(\004\"K\n\030CSGroupMessageHistor"
+    "yReq\022\017\n\007groupid\030\001 \002(\004\022\017\n\007idxfrom\030\002 \002(\003\022\r"
+    "\n\005limit\030\003 \002(\005\"D\n\014GroupMessage\022\014\n\004user\030\001 "
+    "\002(\t\022\013\n\003msg\030\002 \002(\t\022\014\n\004time\030\003 \002(\005\022\013\n\003idx\030\004 "
+    "\002(\003\"L\n\030SCGroupMessageHistoryRsp\0220\n\010messa"
+    "ges\030\001 \003(\0132\036.sglib.groupproto.GroupMessag"
+    "e\"9\n\024GroupGateAddGroupNtf\022\017\n\007groupid\030\001 \002"
+    "(\004\022\020\n\010serverid\030\002 \002(\005\"\'\n\024GroupGateDelGrou"
+    "pNtf\022\017\n\007groupid\030\001 \002(\004\"/\n\035GroupGroupmanag"
+    "erGateCloseNtf\022\016\n\006gateid\030\001 \002(\005\"0\n\036Groupm"
+    "anagerCenterGateCloseNtf\022\016\n\006gateid\030\001 \002(\005"
+    "\"H\n GroupGroupmanagerDynamicStartNtf\022\n\n\002"
+    "id\030\001 \002(\005\022\n\n\002ip\030\002 \002(\t\022\014\n\004port\030\003 \002(\005\"N\n&Gr"
+    "oupmanagerGroupDynamicServerStartNtf\022\n\n\002"
+    "id\030\001 \002(\005\022\n\n\002ip\030\002 \002(\t\022\014\n\004port\030\003 \002(\005\"3\n\037Gr"
+    "oupmanagerCenterGroupCloseNtf\022\020\n\010serveri"
+    "d\030\001 \002(\005\"\226\001\n!GroupGroupmanagerReportStatu"
+    "sInfo\022\020\n\010serverid\030\001 \002(\005\022\022\n\ntotalgroup\030\002 "
+    "\002(\005\022\023\n\013totalmember\030\003 \002(\005\0226\n\013gateservers\030"
+    "\004 \003(\0132!.sglib.publicproto.GateServerInfo"
+    "\"_\n%GroupmanagerCenterReportGroupGateInf"
+    "o\0226\n\013gateservers\030\001 \003(\0132!.sglib.publicpro"
+    "to.GateServerInfo\"R\n\035GroupGroupmanagerUs"
+    "erLoginNtf\022\021\n\tgateresid\030\001 \002(\005\022\020\n\010clienti"
+    "d\030\002 \002(\004\022\014\n\004user\030\003 \002(\t\"E\n\036GroupGroupmanag"
+    "erUserLogoutNtf\022\021\n\tgateresid\030\001 \002(\005\022\020\n\010cl"
+    "ientid\030\002 \002(\004\"q\n\036GroupGroupmanageCreateGr"
     "oupReq\022\016\n\006gateid\030\001 \002(\004\022\021\n\tgateresid\030\002 \002("
-    "\005\022\020\n\010clientid\030\003 \002(\004\022\017\n\007groupid\030\004 \002(\004\022\r\n\005"
-    "users\030\005 \003(\t\"\242\001\n$GroupmanagerGroupAddMemb"
-    "erToGroupRsp\022\016\n\006gateid\030\001 \002(\004\022\021\n\tgateresi"
-    "d\030\002 \002(\005\022\020\n\010clientid\030\003 \002(\004\022\017\n\007groupid\030\004 \002"
-    "(\004\0224\n\005users\030\005 \003(\0132%.sglib.publicproto.Gr"
-    "oupMemberPosInfo\"_\n\'GroupGroupmanagerFor"
-    "AgreeJoinAskInfoReq\022\021\n\tgateresid\030\001 \002(\005\022\020"
-    "\n\010clientid\030\002 \002(\004\022\017\n\007groupid\030\003 \002(\004\"\231\001\n\'Gr"
-    "oupmanagerGroupForAgreeJoinAskInfoRsp\022\016\n"
-    "\006result\030\001 \002(\005\022\021\n\tgateresid\030\002 \002(\005\022\020\n\010clie"
-    "ntid\030\003 \002(\004\022\017\n\007groupid\030\004 \002(\004\022\014\n\004user\030\005 \001("
-    "\t\022\014\n\004name\030\006 \001(\t\022\014\n\004head\030\007 \001(\t\"c\n\035Groupma"
-    "nagerGroupLoadGroupNtf\022\017\n\007groupid\030\001 \002(\004\022"
-    "\021\n\tgateresid\030\002 \002(\005\022\020\n\010clientid\030\003 \002(\004\022\014\n\004"
-    "user\030\004 \002(\t\"\214\001\n GroupGroupmanagerLoadGrou"
-    "pResult\022\016\n\006result\030\001 \002(\005\022\017\n\007groupid\030\002 \002(\004"
-    "\022\020\n\010serverid\030\003 \001(\005\022\014\n\004user\030\004 \002(\t\022\022\n\ntota"
-    "lgroup\030\005 \002(\005\022\023\n\013totalmember\030\006 \002(\005\"f\n Gro"
-    "upmanagerGroupMemberOnlineNtf\022\017\n\007groupid"
-    "\030\001 \002(\004\022\021\n\tgateresid\030\002 \002(\005\022\020\n\010clientid\030\003 "
-    "\002(\004\022\014\n\004user\030\004 \002(\t\"g\n!GroupmanagerGroupMe"
-    "mberOfflineNtf\022\017\n\007groupid\030\001 \002(\004\022\021\n\tgater"
+    "\005\022\020\n\010clientid\030\003 \002(\004\022\014\n\004name\030\004 \002(\t\022\014\n\004hea"
+    "d\030\005 \002(\t\"\313\001\n\036GroupmanageGroupCreateGroupN"
+    "tf\022\016\n\006gateid\030\001 \002(\004\022\021\n\tgateresid\030\002 \002(\005\022\020\n"
+    "\010clientid\030\003 \002(\004\022\014\n\004user\030\004 \002(\t\022\014\n\004name\030\005 "
+    "\002(\t\022\017\n\007groupid\030\006 \002(\004\022\014\n\004head\030\007 \002(\t\022\025\n\rgr"
+    "oupserverid\030\010 \002(\004\022\020\n\010username\030\t \002(\t\022\020\n\010u"
+    "serhead\030\n \002(\t\"\272\001\n\"GroupGroupmanagerCreat"
+    "eGroupResult\022\016\n\006result\030\001 \002(\005\022\016\n\006gateid\030\002"
+    " \002(\004\022\020\n\010clientid\030\003 \002(\004\022\014\n\004user\030\004 \002(\t\022\014\n\004"
+    "name\030\005 \002(\t\022\017\n\007groupid\030\006 \002(\004\022\014\n\004head\030\007 \002("
+    "\t\022\025\n\rgroupserverid\030\010 \002(\004\022\020\n\010serverid\030\t \001"
+    "(\005\"\222\001\n\037GroupmanagerGroupCreateGroupRsp\022\016"
+    "\n\006result\030\001 \002(\005\022\016\n\006gateid\030\002 \002(\004\022\020\n\010client"
+    "id\030\003 \002(\004\022\014\n\004name\030\004 \002(\t\022\017\n\007groupid\030\005 \001(\004\022"
+    "\014\n\004head\030\006 \002(\t\022\020\n\010serverid\030\007 \001(\005\"{\n$Group"
+    "GroupmanagerAddMemberToGroupReq\022\016\n\006gatei"
+    "d\030\001 \002(\004\022\021\n\tgateresid\030\002 \002(\005\022\020\n\010clientid\030\003"
+    " \002(\004\022\017\n\007groupid\030\004 \002(\004\022\r\n\005users\030\005 \003(\t\"\242\001\n"
+    "$GroupmanagerGroupAddMemberToGroupRsp\022\016\n"
+    "\006gateid\030\001 \002(\004\022\021\n\tgateresid\030\002 \002(\005\022\020\n\010clie"
+    "ntid\030\003 \002(\004\022\017\n\007groupid\030\004 \002(\004\0224\n\005users\030\005 \003"
+    "(\0132%.sglib.publicproto.GroupMemberPosInf"
+    "o\"_\n\'GroupGroupmanagerForAgreeJoinAskInf"
+    "oReq\022\021\n\tgateresid\030\001 \002(\005\022\020\n\010clientid\030\002 \002("
+    "\004\022\017\n\007groupid\030\003 \002(\004\"\231\001\n\'GroupmanagerGroup"
+    "ForAgreeJoinAskInfoRsp\022\016\n\006result\030\001 \002(\005\022\021"
+    "\n\tgateresid\030\002 \002(\005\022\020\n\010clientid\030\003 \002(\004\022\017\n\007g"
+    "roupid\030\004 \002(\004\022\014\n\004user\030\005 \001(\t\022\014\n\004name\030\006 \001(\t"
+    "\022\014\n\004head\030\007 \001(\t\"c\n\035GroupmanagerGroupLoadG"
+    "roupNtf\022\017\n\007groupid\030\001 \002(\004\022\021\n\tgateresid\030\002 "
+    "\002(\005\022\020\n\010clientid\030\003 \002(\004\022\014\n\004user\030\004 \002(\t\"\214\001\n "
+    "GroupGroupmanagerLoadGroupResult\022\016\n\006resu"
+    "lt\030\001 \002(\005\022\017\n\007groupid\030\002 \002(\004\022\020\n\010serverid\030\003 "
+    "\001(\005\022\014\n\004user\030\004 \002(\t\022\022\n\ntotalgroup\030\005 \002(\005\022\023\n"
+    "\013totalmember\030\006 \002(\005\"f\n GroupmanagerGroupM"
+    "emberOnlineNtf\022\017\n\007groupid\030\001 \002(\004\022\021\n\tgater"
     "esid\030\002 \002(\005\022\020\n\010clientid\030\003 \002(\004\022\014\n\004user\030\004 \002"
-    "(\t\"@\n\037GroupGroupmanagerMemberLeaveNtf\022\017\n"
-    "\007groupid\030\001 \002(\004\022\014\n\004user\030\002 \003(\t\"2\n\037GroupGro"
-    "upmanagerGroupDeleteNtf\022\017\n\007groupid\030\001 \002(\004"
-    "\"h\n\"GroupGroupmanagerCreateGameRoomReq\022\017"
-    "\n\007groupid\030\001 \002(\004\022\021\n\tgateresid\030\002 \002(\005\022\020\n\010cl"
-    "ientid\030\003 \002(\004\022\014\n\004game\030\004 \002(\005\"\264\001\n\"Groupmana"
-    "gerGroupCreateGameRoomRsp\022\016\n\006result\030\001 \002("
-    "\005\022\017\n\007groupid\030\002 \002(\004\022\021\n\tgateresid\030\003 \002(\005\022\020\n"
-    "\010clientid\030\004 \002(\004\022\014\n\004game\030\005 \002(\005\022\n\n\002ip\030\006 \001("
-    "\t\022\014\n\004port\030\007 \001(\005\022\016\n\006roomid\030\010 \001(\005\022\020\n\010passw"
-    "ord\030\t \001(\t\"\220\001\n(GroupmanagerGamemanagerCre"
-    "ateGameRoomReq\022\017\n\007groupid\030\001 \002(\004\022\021\n\tgater"
-    "esid\030\002 \002(\005\022\020\n\010clientid\030\003 \002(\004\022\014\n\004game\030\004 \002"
-    "(\005\022\016\n\006gameid\030\005 \002(\005\022\020\n\010serverid\030\006 \002(\004\"\314\001\n"
-    "(GamemanagerGroupmanagerCreateGameRoomRs"
-    "p\022\016\n\006result\030\001 \002(\005\022\017\n\007groupid\030\002 \002(\004\022\021\n\tga"
-    "teresid\030\003 \002(\005\022\020\n\010clientid\030\004 \002(\004\022\014\n\004game\030"
-    "\005 \002(\005\022\020\n\010serverid\030\006 \002(\004\022\n\n\002ip\030\007 \001(\t\022\014\n\004p"
-    "ort\030\010 \001(\005\022\016\n\006roomid\030\t \001(\005\022\020\n\010password\030\n "
-    "\001(\t\",\n\030GroupGateLoginSuccessNtf\022\020\n\010clien"
-    "tid\030\001 \002(\004", 5049);
+    "(\t\"g\n!GroupmanagerGroupMemberOfflineNtf\022"
+    "\017\n\007groupid\030\001 \002(\004\022\021\n\tgateresid\030\002 \002(\005\022\020\n\010c"
+    "lientid\030\003 \002(\004\022\014\n\004user\030\004 \002(\t\"@\n\037GroupGrou"
+    "pmanagerMemberLeaveNtf\022\017\n\007groupid\030\001 \002(\004\022"
+    "\014\n\004user\030\002 \003(\t\"2\n\037GroupGroupmanagerGroupD"
+    "eleteNtf\022\017\n\007groupid\030\001 \002(\004\"h\n\"GroupGroupm"
+    "anagerCreateGameRoomReq\022\017\n\007groupid\030\001 \002(\004"
+    "\022\021\n\tgateresid\030\002 \002(\005\022\020\n\010clientid\030\003 \002(\004\022\014\n"
+    "\004game\030\004 \002(\005\"\264\001\n\"GroupmanagerGroupCreateG"
+    "ameRoomRsp\022\016\n\006result\030\001 \002(\005\022\017\n\007groupid\030\002 "
+    "\002(\004\022\021\n\tgateresid\030\003 \002(\005\022\020\n\010clientid\030\004 \002(\004"
+    "\022\014\n\004game\030\005 \002(\005\022\n\n\002ip\030\006 \001(\t\022\014\n\004port\030\007 \001(\005"
+    "\022\016\n\006roomid\030\010 \001(\005\022\020\n\010password\030\t \001(\t\"\220\001\n(G"
+    "roupmanagerGamemanagerCreateGameRoomReq\022"
+    "\017\n\007groupid\030\001 \002(\004\022\021\n\tgateresid\030\002 \002(\005\022\020\n\010c"
+    "lientid\030\003 \002(\004\022\014\n\004game\030\004 \002(\005\022\016\n\006gameid\030\005 "
+    "\002(\005\022\020\n\010serverid\030\006 \002(\004\"\314\001\n(GamemanagerGro"
+    "upmanagerCreateGameRoomRsp\022\016\n\006result\030\001 \002"
+    "(\005\022\017\n\007groupid\030\002 \002(\004\022\021\n\tgateresid\030\003 \002(\005\022\020"
+    "\n\010clientid\030\004 \002(\004\022\014\n\004game\030\005 \002(\005\022\020\n\010server"
+    "id\030\006 \002(\004\022\n\n\002ip\030\007 \001(\t\022\014\n\004port\030\010 \001(\005\022\016\n\006ro"
+    "omid\030\t \001(\005\022\020\n\010password\030\n \001(\t\",\n\030GroupGat"
+    "eLoginSuccessNtf\022\020\n\010clientid\030\001 \002(\004", 5274);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "group.proto", &protobuf_RegisterTypes);
   CSGroupUserLoginReq::default_instance_ = new CSGroupUserLoginReq();
@@ -1617,6 +1693,9 @@ void protobuf_AddDesc_group_2eproto() {
   CSGroupCreateGameRoomReq::default_instance_ = new CSGroupCreateGameRoomReq();
   SCGroupCreateGameRoomRsp::default_instance_ = new SCGroupCreateGameRoomRsp();
   SCGroupCreateGameRoomNtf::default_instance_ = new SCGroupCreateGameRoomNtf();
+  CSGroupMessageHistoryReq::default_instance_ = new CSGroupMessageHistoryReq();
+  GroupMessage::default_instance_ = new GroupMessage();
+  SCGroupMessageHistoryRsp::default_instance_ = new SCGroupMessageHistoryRsp();
   GroupGateAddGroupNtf::default_instance_ = new GroupGateAddGroupNtf();
   GroupGateDelGroupNtf::default_instance_ = new GroupGateDelGroupNtf();
   GroupGroupmanagerGateCloseNtf::default_instance_ = new GroupGroupmanagerGateCloseNtf();
@@ -1675,6 +1754,9 @@ void protobuf_AddDesc_group_2eproto() {
   CSGroupCreateGameRoomReq::default_instance_->InitAsDefaultInstance();
   SCGroupCreateGameRoomRsp::default_instance_->InitAsDefaultInstance();
   SCGroupCreateGameRoomNtf::default_instance_->InitAsDefaultInstance();
+  CSGroupMessageHistoryReq::default_instance_->InitAsDefaultInstance();
+  GroupMessage::default_instance_->InitAsDefaultInstance();
+  SCGroupMessageHistoryRsp::default_instance_->InitAsDefaultInstance();
   GroupGateAddGroupNtf::default_instance_->InitAsDefaultInstance();
   GroupGateDelGroupNtf::default_instance_->InitAsDefaultInstance();
   GroupGroupmanagerGateCloseNtf::default_instance_->InitAsDefaultInstance();
@@ -9164,6 +9246,864 @@ void SCGroupCreateGameRoomNtf::Swap(SCGroupCreateGameRoomNtf* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = SCGroupCreateGameRoomNtf_descriptor_;
   metadata.reflection = SCGroupCreateGameRoomNtf_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int CSGroupMessageHistoryReq::kGroupidFieldNumber;
+const int CSGroupMessageHistoryReq::kIdxfromFieldNumber;
+const int CSGroupMessageHistoryReq::kLimitFieldNumber;
+#endif  // !_MSC_VER
+
+CSGroupMessageHistoryReq::CSGroupMessageHistoryReq()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void CSGroupMessageHistoryReq::InitAsDefaultInstance() {
+}
+
+CSGroupMessageHistoryReq::CSGroupMessageHistoryReq(const CSGroupMessageHistoryReq& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void CSGroupMessageHistoryReq::SharedCtor() {
+  _cached_size_ = 0;
+  groupid_ = GOOGLE_ULONGLONG(0);
+  idxfrom_ = GOOGLE_LONGLONG(0);
+  limit_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+CSGroupMessageHistoryReq::~CSGroupMessageHistoryReq() {
+  SharedDtor();
+}
+
+void CSGroupMessageHistoryReq::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void CSGroupMessageHistoryReq::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CSGroupMessageHistoryReq::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CSGroupMessageHistoryReq_descriptor_;
+}
+
+const CSGroupMessageHistoryReq& CSGroupMessageHistoryReq::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_group_2eproto();
+  return *default_instance_;
+}
+
+CSGroupMessageHistoryReq* CSGroupMessageHistoryReq::default_instance_ = NULL;
+
+CSGroupMessageHistoryReq* CSGroupMessageHistoryReq::New() const {
+  return new CSGroupMessageHistoryReq;
+}
+
+void CSGroupMessageHistoryReq::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    groupid_ = GOOGLE_ULONGLONG(0);
+    idxfrom_ = GOOGLE_LONGLONG(0);
+    limit_ = 0;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool CSGroupMessageHistoryReq::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint64 groupid = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &groupid_)));
+          set_has_groupid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(16)) goto parse_idxfrom;
+        break;
+      }
+
+      // required int64 idxfrom = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_idxfrom:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &idxfrom_)));
+          set_has_idxfrom();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(24)) goto parse_limit;
+        break;
+      }
+
+      // required int32 limit = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_limit:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &limit_)));
+          set_has_limit();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void CSGroupMessageHistoryReq::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required uint64 groupid = 1;
+  if (has_groupid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->groupid(), output);
+  }
+
+  // required int64 idxfrom = 2;
+  if (has_idxfrom()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(2, this->idxfrom(), output);
+  }
+
+  // required int32 limit = 3;
+  if (has_limit()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->limit(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* CSGroupMessageHistoryReq::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required uint64 groupid = 1;
+  if (has_groupid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->groupid(), target);
+  }
+
+  // required int64 idxfrom = 2;
+  if (has_idxfrom()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(2, this->idxfrom(), target);
+  }
+
+  // required int32 limit = 3;
+  if (has_limit()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->limit(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int CSGroupMessageHistoryReq::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint64 groupid = 1;
+    if (has_groupid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->groupid());
+    }
+
+    // required int64 idxfrom = 2;
+    if (has_idxfrom()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->idxfrom());
+    }
+
+    // required int32 limit = 3;
+    if (has_limit()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->limit());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CSGroupMessageHistoryReq::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const CSGroupMessageHistoryReq* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const CSGroupMessageHistoryReq*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void CSGroupMessageHistoryReq::MergeFrom(const CSGroupMessageHistoryReq& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_groupid()) {
+      set_groupid(from.groupid());
+    }
+    if (from.has_idxfrom()) {
+      set_idxfrom(from.idxfrom());
+    }
+    if (from.has_limit()) {
+      set_limit(from.limit());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void CSGroupMessageHistoryReq::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CSGroupMessageHistoryReq::CopyFrom(const CSGroupMessageHistoryReq& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool CSGroupMessageHistoryReq::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+
+  return true;
+}
+
+void CSGroupMessageHistoryReq::Swap(CSGroupMessageHistoryReq* other) {
+  if (other != this) {
+    std::swap(groupid_, other->groupid_);
+    std::swap(idxfrom_, other->idxfrom_);
+    std::swap(limit_, other->limit_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata CSGroupMessageHistoryReq::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CSGroupMessageHistoryReq_descriptor_;
+  metadata.reflection = CSGroupMessageHistoryReq_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int GroupMessage::kUserFieldNumber;
+const int GroupMessage::kMsgFieldNumber;
+const int GroupMessage::kTimeFieldNumber;
+const int GroupMessage::kIdxFieldNumber;
+#endif  // !_MSC_VER
+
+GroupMessage::GroupMessage()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void GroupMessage::InitAsDefaultInstance() {
+}
+
+GroupMessage::GroupMessage(const GroupMessage& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void GroupMessage::SharedCtor() {
+  _cached_size_ = 0;
+  user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  time_ = 0;
+  idx_ = GOOGLE_LONGLONG(0);
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+GroupMessage::~GroupMessage() {
+  SharedDtor();
+}
+
+void GroupMessage::SharedDtor() {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    delete user_;
+  }
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    delete msg_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+void GroupMessage::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* GroupMessage::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return GroupMessage_descriptor_;
+}
+
+const GroupMessage& GroupMessage::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_group_2eproto();
+  return *default_instance_;
+}
+
+GroupMessage* GroupMessage::default_instance_ = NULL;
+
+GroupMessage* GroupMessage::New() const {
+  return new GroupMessage;
+}
+
+void GroupMessage::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_user()) {
+      if (user_ != &::google::protobuf::internal::kEmptyString) {
+        user_->clear();
+      }
+    }
+    if (has_msg()) {
+      if (msg_ != &::google::protobuf::internal::kEmptyString) {
+        msg_->clear();
+      }
+    }
+    time_ = 0;
+    idx_ = GOOGLE_LONGLONG(0);
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool GroupMessage::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required string user = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_user()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->user().data(), this->user().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_msg;
+        break;
+      }
+
+      // required string msg = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_msg:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_msg()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->msg().data(), this->msg().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(24)) goto parse_time;
+        break;
+      }
+
+      // required int32 time = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_time:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &time_)));
+          set_has_time();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(32)) goto parse_idx;
+        break;
+      }
+
+      // required int64 idx = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_idx:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &idx_)));
+          set_has_idx();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void GroupMessage::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required string user = 1;
+  if (has_user()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->user().data(), this->user().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      1, this->user(), output);
+  }
+
+  // required string msg = 2;
+  if (has_msg()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->msg().data(), this->msg().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      2, this->msg(), output);
+  }
+
+  // required int32 time = 3;
+  if (has_time()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->time(), output);
+  }
+
+  // required int64 idx = 4;
+  if (has_idx()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->idx(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* GroupMessage::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required string user = 1;
+  if (has_user()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->user().data(), this->user().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->user(), target);
+  }
+
+  // required string msg = 2;
+  if (has_msg()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->msg().data(), this->msg().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->msg(), target);
+  }
+
+  // required int32 time = 3;
+  if (has_time()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->time(), target);
+  }
+
+  // required int64 idx = 4;
+  if (has_idx()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(4, this->idx(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int GroupMessage::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required string user = 1;
+    if (has_user()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->user());
+    }
+
+    // required string msg = 2;
+    if (has_msg()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->msg());
+    }
+
+    // required int32 time = 3;
+    if (has_time()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->time());
+    }
+
+    // required int64 idx = 4;
+    if (has_idx()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->idx());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void GroupMessage::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const GroupMessage* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const GroupMessage*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void GroupMessage::MergeFrom(const GroupMessage& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_user()) {
+      set_user(from.user());
+    }
+    if (from.has_msg()) {
+      set_msg(from.msg());
+    }
+    if (from.has_time()) {
+      set_time(from.time());
+    }
+    if (from.has_idx()) {
+      set_idx(from.idx());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void GroupMessage::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GroupMessage::CopyFrom(const GroupMessage& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GroupMessage::IsInitialized() const {
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
+
+  return true;
+}
+
+void GroupMessage::Swap(GroupMessage* other) {
+  if (other != this) {
+    std::swap(user_, other->user_);
+    std::swap(msg_, other->msg_);
+    std::swap(time_, other->time_);
+    std::swap(idx_, other->idx_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata GroupMessage::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = GroupMessage_descriptor_;
+  metadata.reflection = GroupMessage_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int SCGroupMessageHistoryRsp::kMessagesFieldNumber;
+#endif  // !_MSC_VER
+
+SCGroupMessageHistoryRsp::SCGroupMessageHistoryRsp()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void SCGroupMessageHistoryRsp::InitAsDefaultInstance() {
+}
+
+SCGroupMessageHistoryRsp::SCGroupMessageHistoryRsp(const SCGroupMessageHistoryRsp& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void SCGroupMessageHistoryRsp::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+SCGroupMessageHistoryRsp::~SCGroupMessageHistoryRsp() {
+  SharedDtor();
+}
+
+void SCGroupMessageHistoryRsp::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void SCGroupMessageHistoryRsp::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* SCGroupMessageHistoryRsp::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return SCGroupMessageHistoryRsp_descriptor_;
+}
+
+const SCGroupMessageHistoryRsp& SCGroupMessageHistoryRsp::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_group_2eproto();
+  return *default_instance_;
+}
+
+SCGroupMessageHistoryRsp* SCGroupMessageHistoryRsp::default_instance_ = NULL;
+
+SCGroupMessageHistoryRsp* SCGroupMessageHistoryRsp::New() const {
+  return new SCGroupMessageHistoryRsp;
+}
+
+void SCGroupMessageHistoryRsp::Clear() {
+  messages_.Clear();
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool SCGroupMessageHistoryRsp::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .sglib.groupproto.GroupMessage messages = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_messages:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_messages()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(10)) goto parse_messages;
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void SCGroupMessageHistoryRsp::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // repeated .sglib.groupproto.GroupMessage messages = 1;
+  for (int i = 0; i < this->messages_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->messages(i), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* SCGroupMessageHistoryRsp::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // repeated .sglib.groupproto.GroupMessage messages = 1;
+  for (int i = 0; i < this->messages_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->messages(i), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int SCGroupMessageHistoryRsp::ByteSize() const {
+  int total_size = 0;
+
+  // repeated .sglib.groupproto.GroupMessage messages = 1;
+  total_size += 1 * this->messages_size();
+  for (int i = 0; i < this->messages_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->messages(i));
+  }
+
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void SCGroupMessageHistoryRsp::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const SCGroupMessageHistoryRsp* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const SCGroupMessageHistoryRsp*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void SCGroupMessageHistoryRsp::MergeFrom(const SCGroupMessageHistoryRsp& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  messages_.MergeFrom(from.messages_);
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void SCGroupMessageHistoryRsp::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void SCGroupMessageHistoryRsp::CopyFrom(const SCGroupMessageHistoryRsp& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SCGroupMessageHistoryRsp::IsInitialized() const {
+
+  for (int i = 0; i < messages_size(); i++) {
+    if (!this->messages(i).IsInitialized()) return false;
+  }
+  return true;
+}
+
+void SCGroupMessageHistoryRsp::Swap(SCGroupMessageHistoryRsp* other) {
+  if (other != this) {
+    messages_.Swap(&other->messages_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata SCGroupMessageHistoryRsp::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = SCGroupMessageHistoryRsp_descriptor_;
+  metadata.reflection = SCGroupMessageHistoryRsp_reflection_;
   return metadata;
 }
 

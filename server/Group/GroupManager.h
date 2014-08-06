@@ -103,6 +103,7 @@ private:
 	void _TryGetUserBasicInfo(const std::string &user, CGroupInfo &group);
 	void _TryCreateGroup(CGroupInfo &group, CGroupMember &member);
 	void _TryStoreGroupMessage(CGroupInfo &group, const std::string &user, const std::string &msg);
+	void _LoadGroupMessageHistory(CGroupInfo &group);
 
 private:
 	void _GetGroupInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);

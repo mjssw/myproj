@@ -78,6 +78,8 @@ public:
 
 	const std::string& GetLastCheckTime();
 	void SetLastCheckTime(const std::string &t);
+	bool NeedForceCheck();
+	void SetNeedForceCheck(bool val);
 
 private:
 	void _AddMemberIndex(CGroupMember *member);
@@ -97,6 +99,7 @@ private:
 	// 收到聊天消息时如果当前日期是1号，且当前年月与m_lastCheckTime不一致，
 	// 则需要重新建新的group_message表,形如 group_123_201408
 	std::string m_lastCheckTime;
+	bool m_needForceCheck;	// 刚启动后第一次写message需要强制检测
 };
 
 #endif

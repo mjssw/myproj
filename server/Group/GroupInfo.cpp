@@ -30,6 +30,7 @@ CGroupInfo::CGroupInfo(u64 id, const char *name, const char *icon) :
 {
 	string lastcheck = CUtils::GetCurYear() + CUtils::GetCurMonth();
 	SetLastCheckTime( lastcheck );
+	SetNeedForceCheck( true );
 }
 
 CGroupInfo::~CGroupInfo()
@@ -250,4 +251,14 @@ const std::string& CGroupInfo::GetLastCheckTime()
 void CGroupInfo::SetLastCheckTime(const std::string &t)
 {
 	m_lastCheckTime = t;
+}
+
+bool CGroupInfo::NeedForceCheck()
+{
+	return m_needForceCheck;
+}
+
+void CGroupInfo::SetNeedForceCheck(bool val)
+{
+	m_needForceCheck = val;
 }
