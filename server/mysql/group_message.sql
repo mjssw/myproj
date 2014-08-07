@@ -10,10 +10,22 @@ Target Server Type    : MYSQL
 Target Server Version : 50537
 File Encoding         : 65001
 
-Date: 2014-08-06 14:26:23
+Date: 2014-08-07 11:33:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for group_108_201408
+-- ----------------------------
+DROP TABLE IF EXISTS `group_108_201408`;
+CREATE TABLE `group_108_201408` (
+  `Idx` int(64) NOT NULL AUTO_INCREMENT,
+  `User` varchar(64) DEFAULT NULL,
+  `Message` varchar(1024) DEFAULT NULL,
+  `Time` int(32) DEFAULT NULL,
+  PRIMARY KEY (`Idx`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Procedure structure for GroupMessage
@@ -53,6 +65,26 @@ BEGIN
 
 	SELECT result;
 
+END
+;;
+DELIMITER ;
+
+-- ----------------------------
+-- Procedure structure for GroupMessageHistory
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `GroupMessageHistory`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `GroupMessageHistory`(IN `tablename_` varchar(64),IN `idxfrom_` bigint(128),IN `limit_` int(32))
+BEGIN
+	IF(idxfrom_>0) THEN
+		SET @STMT :=CONCAT("select Idx,User,Message,Time from ",tablename_," where Idx<",idxfrom_," ORDER BY Idx desc limit ",limit_,";"); 
+		PREPARE STMT FROM @STMT; 
+		EXECUTE STMT; 
+	ELSE
+		SET @STMT :=CONCAT("select Idx,User,Message,Time from ",tablename_," ORDER BY Idx desc limit ",limit_,";"); 
+		PREPARE STMT FROM @STMT; 
+		EXECUTE STMT;
+	END IF;
 END
 ;;
 DELIMITER ;
