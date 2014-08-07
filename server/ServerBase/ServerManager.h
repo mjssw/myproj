@@ -485,8 +485,7 @@ public:
 
 	s32 GetGroupMessageDbId()
 	{
-		// TODO
-		return -1;
+		return GetMysqlManagerIdByDbName( "group_message" );
 	}
 
 	void PingAllMysql()

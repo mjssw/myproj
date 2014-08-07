@@ -108,4 +108,15 @@ private:
 	std::string m_head;
 };
 
+class CMsgGroupMessage : public CMsgBase
+{
+public:
+	CMsgGroupMessage(u64 groupid, const std::string &sender, const std::string &content);
+	virtual void Process();
+private:
+	u64 m_groupid;
+	std::string m_sender;
+	std::string m_content;
+};
+
 #endif

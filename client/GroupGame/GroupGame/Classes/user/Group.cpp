@@ -77,6 +77,19 @@ void CGroup::Dump(vector<string> &vec)
 	}
 }
 
+vector<ChatTableViewData>& CGroup::GetChatHistory()
+{
+	return m_chatHistory; 
+}
+
+void CGroup::CheckChatHistoryLimit()
+{
+	if( m_chatHistory.size() >= 30 )
+	{
+		m_chatHistory.erase( m_chatHistory.begin(), m_chatHistory.begin()+2 );
+	}
+}
+
 void CGroup::_Destory()
 {
 	map<string, CGroupMember*>::iterator it = m_members.begin();

@@ -11,6 +11,7 @@
 	<Databases>
 		<Database Id="1" Type="user" Ip="172.18.5.55" Port="3306" User="root" Password="123456" Db="ud1" />
 		<Database Id="100" Type="group" Ip="172.18.5.55" Port="3306" User="root" Password="123456" Db="groups" />
+		<Database Id="200" Type="groupmessage" Ip="172.18.5.55" Port="3306" User="root" Password="123456" Db="group_message" />
 	</Databases>
 	<Param IsDynamicStart="0" />
 </Configure>

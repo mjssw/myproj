@@ -15,12 +15,17 @@ public:
 		E_DataType_Text,
 	};
 
-	ChatTableViewData(EChatDataType type_, const std::string &user_, const std::string &content_) : 
+	ChatTableViewData(EChatDataType type_, const std::string &name_, const std::string &content_) : 
 		type(type_),
-		user(user_),
+		name(name_),
 		content(content_),
 		line(1)
 	{}
+
+	void SetUser(const std::string &user_)
+	{
+		user = user_;
+	}
 
 private:
 	EChatDataType type;

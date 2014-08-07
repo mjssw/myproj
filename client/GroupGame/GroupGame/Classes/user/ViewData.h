@@ -3,8 +3,21 @@
 
 #include <string>
 #include <vector>
+#include <deque>
 #include "Define.h"
-#include "view/ChatTableViewData.h"
+
+struct Chatmsg
+{
+	Chatmsg(u64 id, const std::string &sender_, const std::string &text) : 
+		groupid(id),
+		sender(sender_),
+		context(text)
+	{
+	}
+	u64 groupid;
+	std::string sender;
+	std::string context;	
+};
 
 // 玩家一些界面操作的暂存信息
 class CGroup;
@@ -39,7 +52,10 @@ public:
 	void SetChatText(const std::string &text);
 	const std::string& GetChatText();
 
-	std::vector<ChatTableViewData>& GetChatHistory();
+
+	void PushChatMsg(u64 groupid, const std::string &sender, const std::string &content);
+	Chatmsg* GetTopChatMsg();
+	void PopChatMsg();
 
 private:
 	bool m_isSavePwd;
@@ -56,7 +72,8 @@ private:
 
 	std::string m_chatText;
 	
-	std::vector<ChatTableViewData> m_chatHistory;
+
+	std::deque<Chatmsg> m_chatmsg;
 };
 
 #endif

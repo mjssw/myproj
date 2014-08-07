@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "view/MyTableView.h"
 #include "ViewBase.h"
+#include "Define.h"
 
 class CMyEditBox;
 class CChatTableView;
@@ -69,6 +70,9 @@ private:
 
 	void _LeaveGroup();
 	void _AskJoinGroup();
+	void _GroupMessageNotify();
+
+	void _AddChatContent(u64 groupid, const std::string &user, const std::string &text, bool isSelf);
 
 private:
 	int m_mainViewOffX;

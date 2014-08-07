@@ -22,6 +22,7 @@ public:
 		E_UpdateType_ConnectRegister,
 		E_UpdateType_RegisterResult,
 		E_UpdateType_AskJoinGroup,
+		E_UpdateType_GroupMessage,
 	};
 
 	void SetCurView(CViewBase *curView);

@@ -16,13 +16,11 @@ USING_NS_CC_EXT;
 #include "scene/SceneManager.h"
 #include "user/GroupManager.h"
 #include "user/Group.h"
+#include "user/GroupMember.h"
 #include "view/CreateGroupPopLayer.h"
 #include "view/InviteMemberPopLayer.h"
 #include "view/AskJoinGroupPopLayer.h"
 using namespace std;
-
-// for test
-vector<ChatTableViewData> g_chatData;
 
 static void TextChatChanged(const std::string &text)
 {
@@ -59,6 +57,11 @@ void CMainScene::UpdateView(int type)
 	case CSceneManager::E_UpdateType_AskJoinGroup:
 		{
 			_AskJoinGroup();
+		}
+		break;
+	case CSceneManager::E_UpdateType_GroupMessage:
+		{
+			_GroupMessageNotify();
 		}
 		break;
 	default:
@@ -238,21 +241,28 @@ void CMainScene::menuSendCallback(Object *pSender)
 {
 	CCLog( "menuSendCallback" );
 
+	CGroupClient *client = CNetManager::Instance().GetGroupClientInstance();
+	if( client )
 	{
-		ChatTableViewData data(
-			ChatTableViewData::E_DataType_User,
-			a2u("我"),
-			a2u("2014-07-16 17:33:23") );
-		CUserManager::Instance().GetViewData().GetChatHistory().push_back( data );
+		CGroup *group = CUserManager::Instance().GetViewData().GetSelectGroup();
+		if( !group )
+		{
+			CCLog( "[CMainScene::menuSendCallback] ERROR select group is null" );
+			return;
+		}
+
+		/*
+		_AddChatContent(
+			group->GetId(),
+			CUserManager::Instance().GetBasic().GetUser(),
+			CUserManager::Instance().GetViewData().GetChatText(),
+			true );
+		//*/
+
+		client->ChatMessage(
+			group->GetId(),
+			CUserManager::Instance().GetViewData().GetChatText() );
 	}
-	{
-		ChatTableViewData data(
-			ChatTableViewData::E_DataType_Text,
-			a2u("我"),
-			a2u( CUserManager::Instance().GetViewData().GetChatText().c_str() ) );
-		CUserManager::Instance().GetViewData().GetChatHistory().push_back( data );
-	}
-	m_chatTableView->InsertUpdate();
 }
 
 void CMainScene::menuCreateGroupCallback(cocos2d::Object *pSender)
@@ -311,6 +321,13 @@ void CMainScene::GroupListTouchedCallback(Node *pSender, void *data)
 		CGroup *group = (CGroup*)data;
 		CUserManager::Instance().GetViewData().SetSelectGroup( group );
 		CCLog( "group:%llu:%s is selected", group->GetId(), group->GetName().c_str() );
+	
+		if( m_chatTableView )
+		{
+			m_chatTableView->InitData( 
+				group->GetChatHistory() );
+			m_chatTableView->InsertUpdate();
+		}
 	}
 }
 
@@ -505,47 +522,7 @@ void CMainScene::_AddChatViewToMain()
 	m_chatTableView = CChatTableView::create( chatSz );
     CCAssert( m_chatTableView, "GetChatTableView Failed" );
 	m_chatTableView->SetPosition( ccp(ptTitle.x, ptTitle.y+chatSz.height/2+szTitle.height/2) );
-	m_chatTableView->InitData( CUserManager::Instance().GetViewData().GetChatHistory() );
 	parent->addChild( m_chatTableView );
-	// test add data
-	/*
-	{
-		ChatTableViewData data(
-			ChatTableViewData::E_DataType_User,
-			a2u("小流"),
-			a2u("2014-07-16 17:32:23"));
-		g_chatData.push_back( data );
-	}
-	{
-		ChatTableViewData data(
-			ChatTableViewData::E_DataType_Text,
-			a2u("小流"),
-			a2u("斗地主房间101，速度"));
-		g_chatData.push_back( data );
-	}
-	{
-		ChatTableViewData data(
-			ChatTableViewData::E_DataType_User,
-			a2u("大瞎"),
-			a2u("2014-07-16 17:32:56"));
-		g_chatData.push_back( data );
-	}
-	{
-		ChatTableViewData data(
-			ChatTableViewData::E_DataType_Text,
-			a2u("大瞎"),
-			a2u("三缺1，快"));
-		g_chatData.push_back( data );
-	}
-	{
-		ChatTableViewData data(
-			ChatTableViewData::E_DataType_Text,
-			a2u("大瞎"),
-			a2u("五马，快来"));
-		g_chatData.push_back( data );
-	}
-	m_chatTableView->InitData( g_chatData );
-	//*/
 
 	// add edit view
 	{
@@ -935,5 +912,53 @@ void CMainScene::_AskJoinGroup()
 		pop->SetView( this );
 		pop->setPosition( ccp(0, 0) );
 		addChild( pop, 99999 );
+	}
+}
+
+void CMainScene::_GroupMessageNotify()
+{
+	Chatmsg *msg = CUserManager::Instance().GetViewData().GetTopChatMsg();
+	if( msg )
+	{
+		bool self = ( msg->sender == CUserManager::Instance().GetBasic().GetUser() );
+		_AddChatContent( msg->groupid, msg->sender, msg->context, self );
+		CUserManager::Instance().GetViewData().PopChatMsg();
+	}
+}
+
+void CMainScene::_AddChatContent(u64 groupid, const std::string &user, const std::string &text, bool isSelf)
+{
+	CGroup *group = CUserManager::Instance().GetGroupManager().FindGroup( groupid );
+	if( !group )
+	{
+		CCLog( "[CMainScene::_AddChatContent][ERROR] group:%llu is null", groupid );
+		return;
+	}
+	group->CheckChatHistoryLimit();
+
+	CGroupMember *member = group->FindMember( user );
+	CCAssert( member, "CMainScene::_AddChatContent member is null" );
+	{
+		ChatTableViewData data(
+			ChatTableViewData::E_DataType_User,
+			member->GetName(),
+			GetCurTime() );
+		if( isSelf )
+		{
+			data.SetUser( CUserManager::Instance().GetBasic().GetUser() );
+		}
+		group->GetChatHistory().push_back( data );
+	}
+	{
+		ChatTableViewData data(
+			ChatTableViewData::E_DataType_Text,
+			member->GetName(),
+			text );
+		group->GetChatHistory().push_back( data );
+	}
+
+	if( CUserManager::Instance().GetViewData().GetSelectGroup() == group )
+	{
+		m_chatTableView->InsertUpdate();
 	}
 }

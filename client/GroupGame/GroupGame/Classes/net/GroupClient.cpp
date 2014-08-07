@@ -80,7 +80,7 @@ int CGroupClient::OnRecv(char *buf, int len)
 				sglib::groupproto::SCGroupMessageNtf msg;
 				if( msg.ParseFromArray(pbuf+MSG_ID_LEN+MSG_HEAD_LEN, pkgLen-MSG_ID_LEN-MSG_HEAD_LEN) )
 				{
-					//_GroupMessageNtf(ntf);
+					_GroupMessageNtf( msg );
 				}
 			}break;
 		case sglib::msgid::SC_GROUP_INFO_UPDATE:
@@ -241,6 +241,15 @@ void CGroupClient::AgreeJoinGroup(u64 groupid)
 	SendMsg( req, sglib::msgid::CS_GROUP_AGREE_JOIN_REQ );
 }
 
+void CGroupClient::ChatMessage(u64 groupid, const string &text)
+{
+	sglib::groupproto::CSGroupMessageReq req;
+	req.set_groupid( groupid );
+	req.set_content( text );
+
+	SendMsg( req, sglib::msgid::CS_GROUP_MESSAGE_REQ );
+}
+
 void CGroupClient::_LoginGroupResult(sglib::groupproto::SCGroupUserLoginRsp &msg)
 {
 	CMsgBase *gamemsg = new CMsgLoginGroupResult( msg.result() ); 
@@ -341,6 +350,24 @@ void CGroupClient::_MemberJoinGroupNtf(sglib::groupproto::SCGroupMemberJoinNtf &
 	if( !gamemsg )
 	{
 		CCLog( "[CGroupClient::_MemberJoinGroupNtf] new msg failed" );
+		return;
+	}
+
+	CNetManager::Instance().PushMessage( gamemsg );
+}
+
+void CGroupClient::_GroupMessageNtf(sglib::groupproto::SCGroupMessageNtf &msg)
+{
+	CCLog( "CGroupClient::_GroupMessageNtf group:%llu member:%s text:%s", msg.groupid(),
+		msg.sender().c_str(), msg.content().c_str() );
+
+	CMsgBase *gamemsg = new CMsgGroupMessage( 
+		msg.groupid(), 
+		msg.sender(),
+		msg.content() );
+	if( !gamemsg )
+	{
+		CCLog( "[CGroupClient::_GroupMessageNtf] new msg failed" );
 		return;
 	}
 

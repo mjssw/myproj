@@ -262,3 +262,24 @@ void CMsgMemberJoinGroup::Process()
 	member->SetOnline( true );
 	group->AddMember( member );
 }
+
+CMsgGroupMessage::CMsgGroupMessage(u64 groupid, const std::string &sender, const std::string &content) :
+	m_groupid( groupid ),
+	m_sender( sender ),
+	m_content( content )
+{
+}
+void CMsgGroupMessage::Process()
+{
+	CUserManager::Instance().GetViewData().PushChatMsg( 
+		m_groupid,
+		m_sender,
+		m_content );
+	CViewBase *view = CSceneManager::Instance().GetCurView();
+	if( !view )
+	{
+		CCLog( "[CMsgGroupMessage::Process] cur view is NULL" );
+		return;
+	}
+	view->UpdateView( CSceneManager::E_UpdateType_GroupMessage );
+}

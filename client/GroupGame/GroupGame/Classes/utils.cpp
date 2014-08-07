@@ -139,3 +139,12 @@ void CalcUserHead(const std::string &head, int sex, std::string &realhead, cocos
 		realhead = head;
 	}
 }
+
+std::string GetCurTime()
+{
+	time_t now;
+	time( &now );
+	char strtime[64] = {0};
+	strftime( strtime, sizeof(strtime), "%Y-%m-%d %X", localtime(&now) );
+	return std::string( strtime );
+}

@@ -17,4 +17,6 @@ cocos2d::Size asciiSizeWithFont(const char *font, int size);
 // 计算头像相关
 void CalcUserHead(const std::string &head, int sex, std::string &realhead, cocos2d::Rect &rc, bool &useRc);
 
+std::string GetCurTime();
+
 #endif

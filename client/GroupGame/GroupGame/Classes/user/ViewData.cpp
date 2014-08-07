@@ -105,7 +105,22 @@ const string& CUserViewData::GetChatText()
 	return m_chatText;
 }
 
-vector<ChatTableViewData>& CUserViewData::GetChatHistory()
+
+void CUserViewData::PushChatMsg(u64 groupid, const std::string &sender, const std::string &content)
 {
-	return m_chatHistory; 
+	m_chatmsg.push_back( Chatmsg(groupid, sender, content) );
+}
+
+Chatmsg* CUserViewData::GetTopChatMsg()
+{
+	if( m_chatmsg.empty() )
+	{
+		return NULL;
+	}
+	return &m_chatmsg.front();
+}
+
+void CUserViewData::PopChatMsg()
+{
+	m_chatmsg.pop_front();
 }

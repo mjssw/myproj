@@ -4,6 +4,7 @@
 #include "Define.h"
 #include <map>
 #include <vector>
+#include "view/ChatTableViewData.h"
 
 class CGroupMember;
 class CGroup
@@ -18,6 +19,9 @@ public:
 	void RemoveMember(const std::string &user);
 	CGroupMember* FindMember(const std::string &user);
 	void Dump(std::vector<std::string> &vec);
+	
+	std::vector<ChatTableViewData>& GetChatHistory();
+	void CheckChatHistoryLimit();
 
 private:
 	void _Destory();
@@ -27,6 +31,8 @@ private:
 	std::string m_name;
 	std::string m_head;
 	std::map<std::string, CGroupMember*> m_members;
+	
+	std::vector<ChatTableViewData> m_chatHistory;
 };
 
 #endif

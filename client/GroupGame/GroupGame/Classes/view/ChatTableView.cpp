@@ -1,6 +1,7 @@
 #include "ChatTableView.h"
 #include "utils.h"
 #include "CommDef.h"
+#include "user/UserManager.h"
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace std;
@@ -151,6 +152,12 @@ Size CChatTableView::tableCellSizeForIndex(TableView *table, ssize_t idx)
 
 TableViewCell* CChatTableView::tableCellAtIndex(TableView *table, ssize_t idx)
 {
+	if( !m_viewData )
+	{
+		CCLog( "[CChatTableView::tableCellAtIndex] Error" );
+		return NULL;
+	}
+
 	const int tagLabel = 666;
     TableViewCell *pCell = table->dequeueCell();
     if( !pCell )
@@ -177,7 +184,11 @@ TableViewCell* CChatTableView::tableCellAtIndex(TableView *table, ssize_t idx)
 	{
 		off = 0;
 		color = Color3B::BLUE;
-		text = (data.user + "  " + data.content);
+		if( data.user == CUserManager::Instance().GetBasic().GetUser() )
+		{
+			color = Color3B::GREEN;
+		}
+		text = (data.name + "  " + data.content);
 	}
 	else
 	{
