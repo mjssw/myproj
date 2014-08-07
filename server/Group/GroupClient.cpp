@@ -18,6 +18,7 @@ CGroupClient::CGroupClient(s32 nId) : CGateClientBase(nId)
 	_RegisterClientProc( sglib::msgid::CS_GROUP_DELETE_REQ,     &CGroupClient::_GroupDeleteProc );
 	_RegisterClientProc( sglib::msgid::CS_GROUP_MESSAGE_REQ,    &CGroupClient::_GroupMessageProc );
 	_RegisterClientProc( sglib::msgid::CS_GROUP_CREATE_GAMEROOM_REQ, &CGroupClient::_GroupCreateGameRoomProc );
+	_RegisterClientProc( sglib::msgid::CS_GROUP_MESSAGE_HISTORY_REQ, &CGroupClient::_GroupHistoryMessageProc );
 }
 
 void CGroupClient::ProcPlayerMessage(u64 gateid, u64 clientid, s32 msgid, const byte *pkg, s32 len)
@@ -192,5 +193,20 @@ void CGroupClient::_GroupCreateGameRoomProc(u64 clientid, const byte *pkg, s32 l
 	else
 	{
 		SERVER_LOG_ERROR( "CGroupClient,_GroupCreateGameRoomProc,ParseFromArray" );
+	}
+}
+
+void CGroupClient::_GroupHistoryMessageProc(u64 clientid, const byte *pkg, s32 len)
+{
+	sglib::groupproto::CSGroupMessageHistoryReq req;
+	if( req.ParseFromArray(pkg, len) )
+	{
+		CGroupManager::Instance().GroupHistoryMessage(
+			*this, GateResId(), GetClientId(), clientid, 
+			req.groupid(), req.idxfrom(), req.limit() );
+	}
+	else
+	{
+		SERVER_LOG_ERROR( "CGroupClient,_GroupHistoryMessageProc,ParseFromArray" );
 	}
 }

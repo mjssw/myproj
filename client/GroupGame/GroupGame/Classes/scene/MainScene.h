@@ -32,6 +32,7 @@ public:
 	void menuInviteMemberCallback(cocos2d::Object *pSender);
 	void menuMemberListCallback(cocos2d::Object *pSender);
 	void menuLeaveGroupCallback(cocos2d::Object *pSender);
+	void menuChatHistoryCallback(cocos2d::Object *pSender);
 
 	void GroupListTouchedCallback(Node *pSender, void *data);
 

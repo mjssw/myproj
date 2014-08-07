@@ -314,6 +314,25 @@ void CMainScene::menuLeaveGroupCallback(cocos2d::Object *pSender)
 	_LeaveGroup();
 }
 
+void CMainScene::menuChatHistoryCallback(cocos2d::Object *pSender)
+{
+	CCLog( "menuChatHistoryCallback" );
+	CGroupClient *client = CNetManager::Instance().GetGroupClientInstance();
+	if( !client )
+	{
+		CCLog( "[menuChatHistoryCallback][ERROR] group client null" );
+		return;
+	}
+
+	CGroup *group = CUserManager::Instance().GetViewData().GetSelectGroup();
+	if( !group )
+	{
+		CCLog( "[menuChatHistoryCallback][ERROR] select group null" );
+		return;
+	}
+	client->ChatHistory( group->GetId(), 0 );
+}
+
 void CMainScene::GroupListTouchedCallback(Node *pSender, void *data)
 {
 	if( data )
@@ -491,6 +510,8 @@ void CMainScene::_AddChatViewToMain()
 		chatTitle->addChild( menu, 0 );
 	}
 
+	Point sendItemPos;
+	Size sendItemSz;
 	{
 		CCMyMenuItemImage *sendItem = CCMyMenuItemImage::create(
 			"btn_send_normal.png",
@@ -498,15 +519,35 @@ void CMainScene::_AddChatViewToMain()
 			this,
 			menu_selector(CMainScene::menuSendCallback));
 		CCAssert( sendItem, "CreateSendItem Failed" );
-		CCSize sendSz = sendItem->getContentSize();
-		float scale = szTitle.height / sendSz.height;
-		CCSize realSz = sendSz * scale;
+		sendItemSz = sendItem->getContentSize();
+		float scale = szTitle.height / sendItemSz.height;
+		CCSize realSz = sendItemSz * scale;
 		sendItem->setScale( scale );
 		sendItem->setAnchorPoint( ccp(0.5, 0.5) );
-		sendItem->setPosition(ccp(szTitle.width - realSz.width/2, szTitle.height/2-1) );
+		sendItemPos = ccp(szTitle.width - realSz.width/2, szTitle.height/2-1);
+		sendItem->setPosition( sendItemPos );
 		CCMenu *menu = CCMenu::create( sendItem, NULL );
 		menu->setPosition( CCPointZero );
 		CCAssert( menu, "CreateSendMenu Failed" );
+		chatTitle->addChild( menu, 0 );
+	}
+
+	{
+		CCMyMenuItemImage *sendItem = CCMyMenuItemImage::create(
+			"chathistory_normal.png",
+			"chathistory_down.png",
+			this,
+			menu_selector(CMainScene::menuChatHistoryCallback));
+		CCAssert( sendItem, "CreateChatHistoryItem Failed" );
+		CCSize sz = sendItem->getContentSize();
+		float scale = szTitle.height / sz.height;
+		CCSize realSz = sz * scale;
+		sendItem->setScale( scale );
+		sendItem->setAnchorPoint( ccp(0.5, 0.5) );
+		sendItem->setPosition(ccp(sendItemPos.x-sendItemSz.width/2-sz.width/2, sendItemPos.y) );
+		CCMenu *menu = CCMenu::create( sendItem, NULL );
+		menu->setPosition( CCPointZero );
+		CCAssert( menu, "CreateChatHistoryMenu Failed" );
 		chatTitle->addChild( menu, 0 );
 	}
 

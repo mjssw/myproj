@@ -55,6 +55,7 @@ public:
 	void GroupMessage(s32 gateresid, u64 gateid, u64 clientid, u64 groupid, const std::string &content);
 	void UserLogout(s32 gateresid, u64 clientid);
 	void CreateGroupGame(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, u64 groupid, s32 game);
+	void GroupHistoryMessage(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, u64 groupid, s64 idxfrom, s32 limit); 
 
 	// group rpc client interface
 	void TryCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const std::string &user, const std::string &username, const std::string &userhead, const std::string &name, u64 groupid, const std::string &head, u64 groupserverid);
@@ -103,7 +104,7 @@ private:
 	void _TryGetUserBasicInfo(const std::string &user, CGroupInfo &group);
 	void _TryCreateGroup(CGroupInfo &group, CGroupMember &member);
 	void _TryStoreGroupMessage(CGroupInfo &group, const std::string &user, const std::string &msg);
-	void _LoadGroupMessageHistory(CGroupInfo &group);
+	void _LoadGroupMessageHistory(CGroupInfo &group, s64 idxfrom, s32 limit, s32 gateresid, u64 clientid);
 
 private:
 	void _GetGroupInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
@@ -111,6 +112,7 @@ private:
 	void _GetUserBasicInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 	void _CreateGroupCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 	void _GroupMessageCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
+	void _GroupHistoryMessageCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 
 private:
 	SGLib::CLock m_Lock;

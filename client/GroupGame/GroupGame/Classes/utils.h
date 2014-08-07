@@ -18,5 +18,6 @@ cocos2d::Size asciiSizeWithFont(const char *font, int size);
 void CalcUserHead(const std::string &head, int sex, std::string &realhead, cocos2d::Rect &rc, bool &useRc);
 
 std::string GetCurTime();
+std::string FormatTime(int timeval);
 
 #endif

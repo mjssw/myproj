@@ -5,6 +5,7 @@
 #include "msgid.pb.h"
 #include "user/Group.h"
 #include "user/GroupMember.h"
+#include "utils.h"
 using namespace SGLib;
 using namespace cocos2d;
 using namespace std;
@@ -163,6 +164,14 @@ int CGroupClient::OnRecv(char *buf, int len)
 					//_GroupMemberCreateGameRoomNtf( ntf );
 				}
 			}break;
+		case sglib::msgid::SC_GROUP_MESSAGE_HISTORY_RSP:
+			{
+				sglib::groupproto::SCGroupMessageHistoryRsp msg;
+				if( msg.ParseFromArray(pbuf+MSG_ID_LEN+MSG_HEAD_LEN, pkgLen-MSG_ID_LEN-MSG_HEAD_LEN) )
+				{
+					_GroupHistoryMessage( msg );
+				}
+			}break;
 		default:
 			break;
 		}
@@ -248,6 +257,16 @@ void CGroupClient::ChatMessage(u64 groupid, const string &text)
 	req.set_content( text );
 
 	SendMsg( req, sglib::msgid::CS_GROUP_MESSAGE_REQ );
+}
+
+void CGroupClient::ChatHistory(u64 groupid, s64 idxfrom)
+{
+	sglib::groupproto::CSGroupMessageHistoryReq req;
+	req.set_groupid( groupid );
+	req.set_idxfrom( idxfrom );
+	req.set_limit( CHAT_MESSAGE_LIMIT );
+
+	SendMsg( req, sglib::msgid::CS_GROUP_MESSAGE_HISTORY_REQ );
 }
 
 void CGroupClient::_LoginGroupResult(sglib::groupproto::SCGroupUserLoginRsp &msg)
@@ -372,6 +391,21 @@ void CGroupClient::_GroupMessageNtf(sglib::groupproto::SCGroupMessageNtf &msg)
 	}
 
 	CNetManager::Instance().PushMessage( gamemsg );
+}
+
+void CGroupClient::_GroupHistoryMessage(sglib::groupproto::SCGroupMessageHistoryRsp &msg)
+{
+	CCLog( "-------------------- GroupHistoryMessage ---------------------" );
+
+	// TODO
+	for( int i=0; i<msg.messages_size(); ++i )
+	{
+		CCLog( "[MSG][%lld:%s]\t[%s]\t%s",
+			msg.messages(i).idx(),
+			msg.messages(i).user().c_str(),
+			FormatTime( msg.messages(i).time() ).c_str(),
+			msg.messages(i).msg().c_str() );
+	}
 }
 
 #define _DESTORY_VECTOR_ELEM(vec, type) \

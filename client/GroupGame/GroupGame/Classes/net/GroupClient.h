@@ -20,6 +20,7 @@ public:
 	void InviteMember(u64 groupid, const std::string &user);
 	void AgreeJoinGroup(u64 groupid);
 	void ChatMessage(u64 groupid, const std::string &text);
+	void ChatHistory(u64 groupid, s64 idxfrom);
 
 private:
 	void _LoginGroupResult(sglib::groupproto::SCGroupUserLoginRsp &msg);
@@ -32,6 +33,7 @@ private:
 	void _AskJoinGroupNtf(sglib::groupproto::SCGroupAskJoinNtf &msg);
 	void _MemberJoinGroupNtf(sglib::groupproto::SCGroupMemberJoinNtf &msg);
 	void _GroupMessageNtf(sglib::groupproto::SCGroupMessageNtf &msg);
+	void _GroupHistoryMessage(sglib::groupproto::SCGroupMessageHistoryRsp &msg);
 };
 
 #endif

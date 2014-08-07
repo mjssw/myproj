@@ -16,6 +16,8 @@ typedef int				MsgHeadType;
 
 #define SYS_HEAD_SIZE_W	85
 #define SYS_HEAD_SIZE_H	85
+
+#define CHAT_MESSAGE_LIMIT	10
 	
 enum ESex
 {

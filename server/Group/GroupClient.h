@@ -35,6 +35,7 @@ private:
 	void _GroupDeleteProc(u64 clientid, const byte *pkg, s32 len);
 	void _GroupMessageProc(u64 clientid, const byte *pkg, s32 len);
 	void _GroupCreateGameRoomProc(u64 clientid, const byte *pkg, s32 len);
+	void _GroupHistoryMessageProc(u64 clientid, const byte *pkg, s32 len);
 
 private:
 	std::map<s32, ClientProtoProcFunc> m_mapProtoProc;

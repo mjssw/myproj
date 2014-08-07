@@ -279,9 +279,6 @@ void CGroupManager::NotifyGroupInfoToMember(u64 groupid, const std::string &memb
 
 	// 通知新玩家新的群详细信息 
 	_NotifyGroupInfoToMember( *group, vecUser, *pMember );
-
-	// 加载当前群的聊天记录
-	_LoadGroupMessageHistory( *group );
 }
 
 void CGroupManager::NotifyAllGroupGateAddGroupInfo(u64 groupid, s32 serverid)
@@ -460,6 +457,21 @@ void CGroupManager::CreateGroupGame(CGroupClient &client, s32 gateresid, u64 gat
 	}
 
 	_NotifyGroupManagerCreateGameRoom( gateresid, clientid, groupid, game );
+}
+
+void CGroupManager::GroupHistoryMessage(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, u64 groupid, s64 idxfrom, s32 limit)
+{
+	SERVER_LOG_DEBUG( "GroupHistoryMessage," << gateresid << "," << clientid <<\
+		"," << groupid << "," << idxfrom << "," << limit );
+	
+	CGroupInfo *group = CGroupManager::Instance().FindGroup( groupid );
+	if( !group )
+	{
+		SERVER_LOG_ERROR( "CGroupManager,GroupHistoryMessage,FindGroup," << groupid );
+		return;
+	}
+
+	_LoadGroupMessageHistory( *group, idxfrom, limit, gateresid, clientid );
 }
 
 void CGroupManager::TryCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const string &user, const string &username, const string &userhead, const string &name, u64 groupid, const string &head, u64 groupserverid)
@@ -1302,9 +1314,28 @@ void CGroupManager::_TryStoreGroupMessage(CGroupInfo &group, const string &user,
 	}
 }
 
-void CGroupManager::_LoadGroupMessageHistory(CGroupInfo &group)
+void CGroupManager::_LoadGroupMessageHistory(CGroupInfo &group, s64 idxfrom, s32 limit, s32 gateresid, u64 clientid)
 {
-	// TODO
+	// TODO 只取当月
+	_groupManagerDBParam _param = { group.GetId(), NULL, gateresid, clientid };
+
+	string checktime = ( CUtils::GetCurYear() + CUtils::GetCurMonth() );
+	char strGroupId[128] = {0};
+	sprintf( strGroupId, "%llu", group.GetId() );
+	string tablename = string("group_") + strGroupId + "_" + checktime;
+	char strIdxfrom[128] = {0};
+	sprintf( strIdxfrom, "%lld", idxfrom );
+	char strLimit[128] = {0};
+	sprintf( strLimit, "%d", limit );
+	string sql = string("call GroupMessageHistory('") + tablename + "'," +
+		string(strIdxfrom) + "," + string(strLimit) + ");";
+	s32 id = CServerManager::Instance().GetGroupMessageDbId();
+	bool ret = CServerManager::Instance().ExecSql( 
+		id, sql, this, &CGroupManager::_GroupHistoryMessageCallback, &_param, sizeof(_param) );
+	if( !ret )
+	{
+		SERVER_LOG_ERROR( "CGroupManager,_LoadGroupMessageHistory,ExecSql," << sql.c_str() );
+	}
 }
 
 void CGroupManager::_GetGroupInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
@@ -1510,4 +1541,63 @@ void CGroupManager::_CreateGroupCallback(SGLib::IDBRecordSet *RecordSet, char *E
 
 void CGroupManager::_GroupMessageCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
 {
+}
+
+void CGroupManager::_GroupHistoryMessageCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
+{
+	SELF_ASSERT( param, return; );
+	SELF_ASSERT( sizeof(_groupManagerDBParam)==len, return; );
+	_groupManagerDBParam *_param = (_groupManagerDBParam*)param;
+	u64 groupid = _param->groupid;
+	s32 gateresid = _param->gateresid;
+	u64 clientid = _param->clientid;
+
+	sglib::groupproto::SCGroupMessageHistoryRsp rsp;
+	while( RecordSet && RecordSet->GetRecord() )
+	{
+		sglib::groupproto::GroupMessage *gpmsg = rsp.add_messages();
+		if( !gpmsg )
+		{
+			SERVER_LOG_ERROR( "CGroupManager,_GroupHistoryMessageCallback,add_messages" << groupid );
+			break;
+		}
+		// Idx,User,Message,Time
+		s64 idx = -1;
+		const char *val = RecordSet->GetFieldValue( 1 );
+		if( val )
+		{
+			sscanf( val, "%lld", &idx );
+		}
+		gpmsg->set_idx( idx );
+
+		string sender = "";
+		val = RecordSet->GetFieldValue( 2 );
+		if( val )
+		{
+			sender = val;
+		}
+		gpmsg->set_user( sender );
+
+		string msg = "";
+		val = RecordSet->GetFieldValue( 3 );
+		if( val )
+		{
+			msg = val;
+		}
+		gpmsg->set_msg( msg );
+
+		s32 t = 0;
+		val = RecordSet->GetFieldValue( 4 );
+		if( val )
+		{
+			t = atoi( val );
+		}
+		gpmsg->set_time( t );
+	}
+
+	CGroupManager::Instance().SendMsgToClient( 
+		gateresid, clientid, rsp, sglib::msgid::SC_GROUP_MESSAGE_HISTORY_RSP );
+	
+	SERVER_LOG_DEBUG( "CGroupManager,_GroupHistoryMessageCallback," << groupid << "," << \
+		gateresid << "," << clientid << "," << rsp.messages_size() );
 }

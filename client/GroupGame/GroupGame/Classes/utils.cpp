@@ -148,3 +148,11 @@ std::string GetCurTime()
 	strftime( strtime, sizeof(strtime), "%Y-%m-%d %X", localtime(&now) );
 	return std::string( strtime );
 }
+
+std::string FormatTime(int timeval)
+{
+	time_t t = timeval;
+	char strtime[64] = {0};
+	strftime( strtime, sizeof(strtime), "%Y-%m-%d %X", localtime(&t) );
+	return std::string( strtime );
+}
