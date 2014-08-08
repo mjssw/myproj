@@ -2,7 +2,7 @@
 #define _CHAT_TABLE_VIEW_H_
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include <vector>
 #include <string>
 #include "ChatTableViewData.h"
@@ -20,7 +20,7 @@ public:
 
 	void InitData(std::vector<ChatTableViewData> &data); 
 	void SetAnchorPoint(cocos2d::CCPoint &pt);
-	void SetPosition(cocos2d::CCPoint &pt);
+	void SetPosition(cocos2d::Vec2 pt);
 	cocos2d::CCSize GetSize();
 	bool InsertUpdate();
 	void RemoveUpdate(int elemH);

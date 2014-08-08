@@ -1,5 +1,5 @@
 #include "MainScene.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 USING_NS_CC;
 USING_NS_CC_EXT;
 
@@ -623,7 +623,8 @@ void CMainScene::_AddGroupsToListView()
 	}
 	//*/
 	_DumpGroupList( vecData );
-	m_pGroupList = CMyTableView::create(m_szTableView, CCSize(264,58), vecData, "selectbg.png" );
+    Size _sz = CCSize(264,58);
+	m_pGroupList = CMyTableView::create(m_szTableView, _sz, vecData, "selectbg.png" );
     CCAssert( m_pGroupList, "GetTableView Failed" );
 	m_pGroupList->SetPosition( ccp(sz.width/2, sz.height/2) );
 	m_pGroupList->SetTouchCallback( callfuncND_selector(CMainScene::GroupListTouchedCallback), this );
@@ -879,7 +880,7 @@ void CMainScene::_AddCreateGroupBtn(Node &parent, Size &sz)
 
 void CMainScene::_AddGroupFuncBtns(cocos2d::Node &parent)
 {
-	char *png[] = {
+	const char *png[] = {
 		"creategame_normal.png",
 		"creategame_hover.png",
 		"addmember_normal.png",

@@ -40,7 +40,7 @@ void CChatTableView::SetAnchorPoint(CCPoint &pt)
 	setAnchorPoint( pt );
 }
 
-void CChatTableView::SetPosition(CCPoint &pt)
+void CChatTableView::SetPosition(Vec2 pt)
 {
 	setPosition( pt );
 }
@@ -133,7 +133,7 @@ void CChatTableView::scrollViewDidZoom(ScrollView *view)
 
 void CChatTableView::tableCellTouched(TableView *table, TableViewCell *cell)
 {
-	CCLog( "CChatTableView::tableCellTouched %d", cell->getIdx() );
+	CCLog( "CChatTableView::tableCellTouched %d", (int)cell->getIdx() );
 }
 
 Size CChatTableView::tableCellSizeForIndex(TableView *table, ssize_t idx)
@@ -172,7 +172,7 @@ TableViewCell* CChatTableView::tableCellAtIndex(TableView *table, ssize_t idx)
 
 	if( idx >= m_viewData->size() )
 	{
-		CCLog( "[CChatTableView::tableCellAtIndex]Error. idx(%d) greater than data.Size(%d)", idx, m_viewData->size() );
+		CCLog( "[CChatTableView::tableCellAtIndex]Error. idx(%d) greater than data.Size(%d)", (int)idx, (int)m_viewData->size() );
 		return NULL;
 	}
 

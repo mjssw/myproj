@@ -21,7 +21,7 @@ bool CNetManager::Init()
 	m_isPauseProcessMessage = false;
 
 	CCDirector::sharedDirector()->getScheduler()->scheduleUpdateForTarget( this, 0, false );
-	return m_timer.Start();
+	return true;
 }
 
 void CNetManager::update(float delta)
@@ -32,7 +32,6 @@ void CNetManager::update(float delta)
 void CNetManager::Fini()
 {
 	CCDirector::sharedDirector()->getScheduler()->unscheduleUpdateForTarget( this );
-	m_timer.Stop();
 	_CloseAll();
 }
 

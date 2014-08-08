@@ -81,7 +81,7 @@ void CMyTableView::SetAnchorPoint(CCPoint &pt)
 	setAnchorPoint( pt );
 }
 
-void CMyTableView::SetPosition(CCPoint &pt)
+void CMyTableView::SetPosition(Vec2 pt)
 {
 	setPosition( pt );
 }
@@ -233,7 +233,7 @@ void CMyTableView::tableCellTouched(TableView *table, TableViewCell *cell)
 	m_lastTouchIdx = cell->getIdx();
 	m_lastTouchCell = cell;
 
-	CCLog( "tableCellTouched %d", cell->getIdx() );
+	CCLog( "tableCellTouched %d", (int)cell->getIdx() );
 
 	// »Øµ÷
 	if( m_callbackTarget && m_touchCallback )
@@ -270,7 +270,7 @@ TableViewCell* CMyTableView::tableCellAtIndex(TableView *table, ssize_t idx)
 
 	if( idx >= m_viewData.size() )
 	{
-		CCLog( "[CMyTableView::tableCellAtIndex]Error. idx(%d) greater than data.Size(%d)", idx, m_viewData.size() );
+		CCLog( "[CMyTableView::tableCellAtIndex]Error. idx(%d) greater than data.Size(%d)", (int)idx, (int)m_viewData.size() );
 		return NULL;
 	}
 

@@ -2,7 +2,7 @@
 #define _MY_TABLE_VIEW_H_
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include <vector>
 #include <string>
 
@@ -33,7 +33,7 @@ public:
 	~CMyTableView();
 
 	void SetAnchorPoint(cocos2d::CCPoint &pt);
-	void SetPosition(cocos2d::CCPoint &pt);
+	void SetPosition(cocos2d::Vec2 pt);
 	cocos2d::CCSize GetSize();
 	bool InsertElement(TableViewData &data);
 	void UpdateElements(std::vector<TableViewData> &data);

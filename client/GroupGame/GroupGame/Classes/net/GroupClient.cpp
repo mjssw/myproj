@@ -328,7 +328,7 @@ void CGroupClient::_MemberLeaveGroupNtf(sglib::groupproto::SCGroupMemberLeaveNtf
 
 void CGroupClient::_AddMemberRsp(sglib::groupproto::SCGroupAddMemberRsp &msg)
 {
-	CCLog( "CGroupClient::_AddMemberRsp result:%s in groupid:%llu",
+	CCLog( "CGroupClient::_AddMemberRsp result:%d in groupid:%llu",
 		msg.result(), msg.groupid() );
 
 	CMsgBase *gamemsg = new CMsgAddMemberRsp( msg.groupid(), msg.result() ); 

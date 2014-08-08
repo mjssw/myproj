@@ -70,7 +70,7 @@ void CMsgGroupListUpdate::Process()
 	{
 		bool ret = CUserManager::Instance().GetGroupManager().AddGroup( *it );
 		CCLog( "[CMsgGroupListUpdate::Process][DEBUG] add group:%llu:%s result:%d name:%s",
-			(*it)->GetId(), (*it)->GetName().c_str(), ret?1:0, u2a((*it)->GetName().c_str()) );
+			(*it)->GetId(), (*it)->GetName().c_str(), ret?1:0, u2a((*it)->GetName().c_str()).c_str() );
 	}
 	SAFE_DELETE( m_groups );
 	
@@ -220,7 +220,7 @@ CMsgAskJoinGroup::CMsgAskJoinGroup(u64 groupid, const std::string &name) :
 void CMsgAskJoinGroup::Process()
 {
 	CCLog( "[CMsgAskJoinGroup::Process] groupid:%llu groupname:%s", 
-		m_groupid, u2a(m_name.c_str()));
+		m_groupid, u2a(m_name.c_str()).c_str() );
 	CUserManager::Instance().GetViewData().SetJoinGroupInfo( m_groupid, m_name );
 	CViewBase *view = CSceneManager::Instance().GetCurView();
 	if( !view )
@@ -241,7 +241,7 @@ CMsgMemberJoinGroup::CMsgMemberJoinGroup(u64 groupid, const std::string &user, c
 void CMsgMemberJoinGroup::Process()
 {
 	CCLog( "[CMsgMemberJoinGroup::Process] groupid:%llu user:%s name:%s", 
-		m_groupid, m_user.c_str(), u2a(m_name.c_str()));
+		m_groupid, m_user.c_str(), u2a(m_name.c_str()).c_str() );
 
 	CGroup *group = CUserManager::Instance().GetGroupManager().FindGroup( m_groupid );
 	if( !group )

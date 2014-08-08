@@ -22,7 +22,7 @@ void CMyLoadingItem::SetAnchorPoint(cocos2d::CCPoint &pt)
 	setAnchorPoint( pt );
 }
 
-void CMyLoadingItem::SetPosition(cocos2d::CCPoint &pt)
+void CMyLoadingItem::SetPosition(cocos2d::Vec2 pt)
 {
 	setPosition( pt );
 }

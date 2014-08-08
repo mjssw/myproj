@@ -2,7 +2,7 @@
 #define _MY_EDITBOX_H_
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include <string>
 
 typedef void (*TextChangedHandler)(const std::string &text);
@@ -18,7 +18,7 @@ public:
     virtual void editBoxTextChanged(cocos2d::extension::EditBox *editBox, const std::string &text);
     virtual void editBoxReturn(cocos2d::extension::EditBox *editBox);
 
-    static CMyEditBox* create(cocos2d::CCSize &sz, cocos2d::CCPoint &pos, const char *bgImage, const char *font, int fontSize, const cocos2d::ccColor3B &color, int maxLen);
+    static CMyEditBox* create(cocos2d::CCSize &sz, cocos2d::Vec2 pos, const char *bgImage, const char *font, int fontSize, const cocos2d::ccColor3B &color, int maxLen);
 
 	cocos2d::extension::EditBox *GetEditBox();
 	void SetAnchorPoint(cocos2d::CCPoint &pt);

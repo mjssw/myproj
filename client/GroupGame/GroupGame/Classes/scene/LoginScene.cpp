@@ -2,7 +2,7 @@
 #include "res/ResManager.h"
 #include "net/NetManager.h"
 #include "CommDef.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "view/MyMenuItemImage.h"
 #include "view/MyEditBox.h"
 #include "user/UserManager.h"

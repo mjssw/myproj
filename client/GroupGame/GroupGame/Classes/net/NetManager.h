@@ -7,7 +7,6 @@
 #include "GroupClient.h"
 #include "GameClient.h"
 #include "RegisterClient.h"
-#include "Timer.h"
 #include <deque>
 
 #ifdef _LOCAL_SERVER
@@ -65,8 +64,6 @@ private:
 	SGLib::CClientManager<CGroupClient> *m_groupConn;
 	SGLib::CClientManager<CGameClient> *m_gameConn;
 	SGLib::CClientManager<CRegisterClient> *m_regConn;
-
-	SGLib::CTimer<E_Max_Timer_Count>  m_timer;
 
 	SGLib::CLock m_msgLock;
 	std::deque<CMsgBase*> m_msgQueue;

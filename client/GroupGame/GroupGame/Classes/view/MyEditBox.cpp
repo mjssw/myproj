@@ -63,7 +63,7 @@ void CMyEditBox::SetEditChangedCallback(TextChangedHandler callback)
 	m_textChangedCallback = callback;
 }
 
-CMyEditBox* CMyEditBox::create(CCSize &sz, CCPoint &pos, const char *bgImage, const char *font, int fontSize, const cocos2d::ccColor3B &color, int maxLen)
+CMyEditBox* CMyEditBox::create(CCSize &sz, Vec2 pos, const char *bgImage, const char *font, int fontSize, const cocos2d::ccColor3B &color, int maxLen)
 {
 	CMyEditBox *editBox = new CMyEditBox();
 	if( !editBox )
