@@ -8,10 +8,10 @@ SIGNLETON_CLASS_INIT(CResManager);
 bool CResManager::Init(const char *resRoot)
 {
 	string root( resRoot );
-	string res = "";
+	string res = ""; 
 
 #define _LOAD_RES(var, res_name) \
-	res = root + res_name;\
+	res = res_name;\
 	var = CCSprite::create( res.c_str() );\
 	if( !var )\
 	{\
@@ -37,7 +37,6 @@ bool CResManager::Init(const char *resRoot)
 	_LOAD_RES( m_spriteLoadHead,		"loadhead.png" );;
 	_LOAD_RES( m_spriteLoadTail,		"loadtail.png" );;
 	_LOAD_RES( m_spriteLoadMid,			"loadmid.png" );;
-
 #undef _LOAD_RES
 
 	return true;

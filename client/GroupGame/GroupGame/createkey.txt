@@ -1,0 +1,1 @@
+keytool -genkey -v -keystore FirstGame.keystore -alias FirstGame -keyalg RSA -keysize 2048 -validaty 10000

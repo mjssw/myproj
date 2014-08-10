@@ -621,7 +621,7 @@ void CGroupManager::LoadGroup(sglib::groupproto::GroupmanagerGroupLoadGroupNtf &
 		_groupManagerDBParam _param = { ntf.groupid(), struser, ntf.gateresid(), ntf.clientid() };
 
 		char strid[128] = {0};
-		sprintf( strid, "%llu", ntf.groupid() );
+		sprintf( strid, "%llu", (u64)ntf.groupid() );
 		string sql = string("select name,head from groups where id=") + strid + ";";
 		s32 id = CServerManager::Instance().GetGroupDbId();
 		bool ret = CServerManager::Instance().ExecSql( 
@@ -1343,7 +1343,8 @@ void CGroupManager::_GetGroupInfoCallback(SGLib::IDBRecordSet *RecordSet, char *
 	SELF_ASSERT( param, return; );
 	SELF_ASSERT( sizeof(_groupManagerDBParam)==len, return; );
 	_groupManagerDBParam *_param = (_groupManagerDBParam*)param;
-	string user = string( ((char*)_param->data) );
+    char *puser = ((char*)_param->data);
+	string user = string( puser );
 	u64 groupid = _param->groupid;
 	
 	string groupname="", grouphead="";
@@ -1379,7 +1380,7 @@ void CGroupManager::_GetGroupInfoCallback(SGLib::IDBRecordSet *RecordSet, char *
 	// 如果此群已经存在了，可能有两种情况,一个是正在加载群成员列表，还一个是已经加载完了
 	if( group->MemberCount() > 0 )
 	{
-		SAFE_DELETE( _param->data );
+		SAFE_DELETE_ARRAY( puser );
 		_LoadGroupDone( groupid, user );
 		return;
 	}
@@ -1401,9 +1402,10 @@ void CGroupManager::_GetGroupMemberCallback(SGLib::IDBRecordSet *RecordSet, char
 	SELF_ASSERT( param, return; );
 	SELF_ASSERT( sizeof(_groupManagerDBParam)==len, return; );
 	_groupManagerDBParam *_param = (_groupManagerDBParam*)param;
-	string user = string( ((char*)_param->data) );
+    char *puser = ((char*)_param->data);
+	string user = string( puser );
 	u64 groupid = _param->groupid;
-	SAFE_DELETE( _param->data );
+	SAFE_DELETE_ARRAY( puser );
 	
 	// 在找一下是否存在此群了
 	CGroupInfo *group = CGroupManager::Instance().FindGroup( groupid );

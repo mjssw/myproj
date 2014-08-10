@@ -2,14 +2,13 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
+#NDK_MODULE_PATH := $(LOCAL_PATH)/../../../../cocos2d-x
+#NDK_MODULE_PATH += $(LOCAL_PATH)/../../../../cocos2d-x/cocos
+#NDK_MODULE_PATH += $(LOCAL_PATH)/../../../../cocos2d-x/external
+
 LOCAL_MODULE := groupgame_shared
 
 LOCAL_MODULE_FILENAME := libgroupgame
-LOCAL_CPPFLAGS += -fexceptions
-LOCAL_CPPFLAGS += -frtti
-LOCAL_CFLAGS += -std=c++11
-LOCAL_CXXFLAGS := -DHAVE_PTHREADS
-LOCAL_CPP_EXTENSION := .cc .cpp
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
@@ -106,10 +105,10 @@ LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 
 # LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static
-#LOCAL_WHOLE_STATIC_LIBRARIES += cocosbuilder_static
-#LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
-#LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
-#LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
+# LOCAL_WHOLE_STATIC_LIBRARIES += cocosbuilder_static
+# LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
+# LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
+# LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
 
 
@@ -119,8 +118,8 @@ $(call import-module,.)
 $(call import-module,audio/android)
 
 # $(call import-module,Box2D)
-#$(call import-module,editor-support/cocosbuilder)
-#$(call import-module,editor-support/spine)
-#$(call import-module,editor-support/cocostudio)
-$(call import-module,network)
+# $(call import-module,editor-support/cocosbuilder)
+# $(call import-module,editor-support/spine)
+# $(call import-module,editor-support/cocostudio)
+# $(call import-module,network)
 $(call import-module,extensions)

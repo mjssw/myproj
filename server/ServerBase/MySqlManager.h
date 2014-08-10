@@ -20,7 +20,7 @@ public:
 	template<typename Func>
 	bool Execute(const char *sql, Func callbackFunc, void *param, s32 len)
 	{
-		if( len > DB_PARAM_MAX_LEN )
+		if( len > (s32)DB_PARAM_MAX_LEN )
 		{
 			return false;
 		}
@@ -41,7 +41,7 @@ public:
 	template<class ClassObj, class ClassMemFunc>
 	bool Execute(const char *sql, const ClassObj &classObj, ClassMemFunc memCallbackFunc, void *param, s32 len)
 	{
-		if( len > DB_PARAM_MAX_LEN )
+		if( len > (s32)DB_PARAM_MAX_LEN )
 		{
 			return false;
 		}

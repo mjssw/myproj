@@ -45,7 +45,7 @@ set(GAME_SRC
   Classes/HelloWorldScene.cpp
 )
 
-set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
+set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/../../cocos2d-x)
 
 include_directories(
   /usr/local/include/GLFW

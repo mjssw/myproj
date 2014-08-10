@@ -1,3 +1,4 @@
+#include "cocos2d.h"
 #include "NetManager.h"
 #include "gamemsg/MsgBase.h"
 using namespace cocos2d;
@@ -39,9 +40,11 @@ bool CNetManager::StartLogin(const char *ip, int port)
 {
 	_CloseAll();
 
+    CCLog( "StartLogin %s:%d\n", ip, port );
 	m_loginConn = new SGLib::CClientManager<CLoginClient>( 1 );
 	if( !m_loginConn )
 	{
+        CCLog( "[ERROR] StartLogin %s:%d\n", ip, port );
 		return false;
 	}
 

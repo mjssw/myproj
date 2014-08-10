@@ -88,6 +88,7 @@ int CLoginClient::OnRecv(char *buf, int len)
 
 void CLoginClient::OnConnect()
 {
+    CCLog( "[CLoginClient::OnConnect] success" );
 	CNetManager::Instance().SetLoginClientInstance( this );
 
 	CMsgBase *msg = new CMsgConnectLogin();
@@ -102,6 +103,7 @@ void CLoginClient::OnConnect()
 
 void CLoginClient::OnClose()
 {
+    CCLog( "[CLoginClient::OnClose] success" );
 	CMsgBase *msg = new CMsgCloseLogin();
 	if( !msg )
 	{
@@ -114,6 +116,7 @@ void CLoginClient::OnClose()
 
 void CLoginClient::OnConnectError()
 {
+    CCLog( "[CLoginClient::OnConnectError] success" );
 	CMsgBase *msg = new CMsgConnectLoginError();
 	if( !msg )
 	{

@@ -127,6 +127,8 @@ def copy_resources(app_android_root):
 
 def build(ndk_build_param,android_platform,build_mode):
 
+	print '------> build begin'
+	
     ndk_root = check_environment_variables()
     sdk_root = None
     select_toolchain_version()
@@ -155,6 +157,8 @@ def build(ndk_build_param,android_platform,build_mode):
 # -------------- main --------------
 if __name__ == '__main__':
 
+	print '------> build_native main begin'
+	
     parser = OptionParser()
     parser.add_option("-n", "--ndk", dest="ndk_build_param", help='parameter for ndk-build', action="append")
     parser.add_option("-p", "--platform", dest="android_platform", 

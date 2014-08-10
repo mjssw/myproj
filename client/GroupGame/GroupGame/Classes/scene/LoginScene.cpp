@@ -125,7 +125,7 @@ bool CLoginScene::init()
 			CUserManager::Instance().GetViewData().GetAutoLogin() );
 		m_loadView.m_loadItem = NULL;
         
-#ifdef _DEBUG
+//#ifdef _DEBUG
 		// for test some code	
 		CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
             "CloseNormal.png",
@@ -138,7 +138,7 @@ bool CLoginScene::init()
         pMenu->setPosition(CCPointZero);
         CC_BREAK_IF(! pMenu);
         this->addChild(pMenu, 1);
-#endif
+//#endif
 
 		// test control button
 		//CCScale9Sprite *backgroundButton = CCScale9Sprite::create("btn_normal_p9.9.png");
@@ -180,7 +180,8 @@ void CLoginScene::TestTimer(float t)
 
 void CLoginScene::menuTestCallback(CCObject *pSender)
 {
-#ifdef _DEBUG
+//#ifdef _DEBUG
+    CCDirector::sharedDirector()->end();
 	CUserManager::Instance().GetBasic().SetName( a2u("´ó»¢") );
 	CUserManager::Instance().GetBasic().SetHead( "#1" );
 	CUserManager::Instance().GetBasic().SetSex( 0 );
@@ -188,7 +189,7 @@ void CLoginScene::menuTestCallback(CCObject *pSender)
 	CUserManager::Instance().GetBasic().SetLevel( 11 );
 	CUserManager::Instance().GetBasic().SetMoney( E_Money_Gold, 1000 );
 	CUserManager::Instance().GetBasic().SetMoney( E_Money_Diamond, 23 );
-	CCDirector::sharedDirector()->replaceScene( CMainScene::scene() );
+	//CCDirector::sharedDirector()->replaceScene( CMainScene::scene() );
 	/*
 	static int a = 1;
 	if( a % 2 == 1 )
@@ -203,7 +204,7 @@ void CLoginScene::menuTestCallback(CCObject *pSender)
 	}
 	++a;
 	//*/
-#endif
+//#endif
 }
 
 const int g_loadingStep = 7;
@@ -264,7 +265,8 @@ void CLoginScene::menuRegisterCallback(cocos2d::Object *pSender)
 
 void CLoginScene::_AddSceneBg()
 {
-	CCSprite *pSprite = CResManager::Instance().GetSpriteBg();
+	//CCSprite *pSprite = CResManager::Instance().GetSpriteBg();
+	CCSprite *pSprite = Sprite::create( "bg.png" );
     CCAssert( pSprite, "GetResLoginBg Failed" );
 	pSprite->setAnchorPoint( ccp(0, 0) );
 	pSprite->setScaleX( WIN_SIZE_W / pSprite->getContentSize().width );
