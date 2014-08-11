@@ -125,7 +125,7 @@ bool CLoginScene::init()
 			CUserManager::Instance().GetViewData().GetAutoLogin() );
 		m_loadView.m_loadItem = NULL;
         
-//#ifdef _DEBUG
+#ifdef _DEBUG
 		// for test some code	
 		CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
             "CloseNormal.png",
@@ -138,7 +138,7 @@ bool CLoginScene::init()
         pMenu->setPosition(CCPointZero);
         CC_BREAK_IF(! pMenu);
         this->addChild(pMenu, 1);
-//#endif
+#endif
 
 		// test control button
 		//CCScale9Sprite *backgroundButton = CCScale9Sprite::create("btn_normal_p9.9.png");
@@ -463,7 +463,7 @@ void CLoginScene::_AddBtnLogin(CCSprite &loginBg)
 	loginItem->setAnchorPoint( ccp(0, 0) );
 
 	int x = (bgSz.width - btnSz.width) / 2;
-#if _ENABLE_EXIT_BTN
+#if !_DISABLE_EXIT_BTN
 	x = (bgSz.width/2 - btnSz.width) / 2;
 #endif
 	int y = bgSz.height/6 - btnSz.height/2;
@@ -477,7 +477,7 @@ void CLoginScene::_AddBtnLogin(CCSprite &loginBg)
 
 void CLoginScene::_AddBtnExit(CCSprite &loginBg)
 {
-#if _ENABLE_EXIT_BTN
+#if !_DISABLE_EXIT_BTN
 	CCSize bgSz = loginBg.getContentSize();
 
 	CCMyMenuItemImage *exitItem = CCMyMenuItemImage::create(

@@ -28,7 +28,7 @@ class MySqlDBQuery : public IDBQuery
 {
 public:
 	~MySqlDBQuery();
-	bool SetConnection(void *dbinfo, char *CharacterSet=0);
+	bool SetConnection(void *dbinfo, const char *CharacterSet=0);
 	bool Connect();
 	bool Close();
 	bool IsConnected();

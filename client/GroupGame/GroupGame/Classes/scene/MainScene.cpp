@@ -570,7 +570,7 @@ void CMainScene::_AddChatViewToMain()
 		Size editSz = Size(szTitle.width-szSplite.width/2, ptTitle.y-szTitle.height/2);
 		CMyEditBox *editChat = CMyEditBox::create(
 			editSz, ccp(ptTitle.x-szTitle.width/2+szSplite.width/2, 0), 
-			"white_edit.png", NULL, 10, ccBLACK, 100 );
+			"white_edit.png", NULL, 10, ccBLACK, 200 );
 		CCAssert( editChat, "GetChatEditBox Failed" );
 		editChat->SetEditChangedCallback( TextChatChanged );
 		editChat->GetEditBox()->setFontName("arial");

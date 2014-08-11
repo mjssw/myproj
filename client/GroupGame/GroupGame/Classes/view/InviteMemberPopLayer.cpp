@@ -111,7 +111,7 @@ void CInviteMemberPopLayer::_AddEditBox()
 	CCSprite *wordUser = CResManager::Instance().GetSpriteWordUser();
 	CCAssert( wordUser, "GetResWordUser Failed" );
 	
-	Label *text = Label::createWithSystemFont( a2u("帐号:"), "arial", 25 );
+	Label *text = Label::createWithSystemFont( a2u("帐号:").c_str(), "arial", 25 );
 	CCAssert( text, "text group name failed" );
 	CCSize wsz = text->getContentSize();
 	int userY = (sz.height/2-wsz.height)/2 + (sz.height/2);
@@ -162,7 +162,7 @@ void CInviteMemberPopLayer::_AddCreateBtn()
 	menu->setPosition( CCPointZero );
 	parent->addChild( menu, 1, E_Tag_OkBtn );
 
-	Label *text = Label::createWithSystemFont( a2u("确定"), "arial", 25 );
+	Label *text = Label::createWithSystemFont( a2u("确定").c_str(), "arial", 25 );
 	CCAssert( text, "text register failed" );
 	text->setPosition( ccp(szItem.width/2, szItem.height/2) );
 	regItem->addChild( text );
@@ -208,7 +208,7 @@ void CInviteMemberPopLayer::_AddCloseBtn(bool isCenter)
 	menu->setPosition( CCPointZero );
 	parent->addChild( menu, 1, E_Tag_CloseBtn );
 	
-	Label *text = Label::createWithSystemFont( a2u("退出"), "arial", 25 );
+	Label *text = Label::createWithSystemFont( a2u("退出").c_str(), "arial", 25 );
 	CCAssert( text, "text close failed" );
 	text->setPosition( ccp(szItem.width/2, szItem.height/2) );
 	closeItem->addChild( text );
@@ -230,7 +230,7 @@ void CInviteMemberPopLayer::_AddTitle()
 	char title[128] = {0};
 	string gpname = u2a(group->GetName().c_str());
 	sprintf( title, "邀请朋友加入群:%s", gpname.c_str() );
-	Label *text = Label::createWithSystemFont( a2u(title), "arial", 25 );
+	Label *text = Label::createWithSystemFont( a2u(title).c_str(), "arial", 25 );
 	CCAssert( text, "text close failed" );
 	Size textSz = text->getContentSize();
 	text->setPosition( ccp(sz.width/2, sz.height-textSz.height/2-10) );

@@ -77,7 +77,7 @@ namespace SGLib
 			Stop();
 		}
 
-		bool Start(void *ConnectDBInfo, char *CharacterSet=0);
+		bool Start(void *ConnectDBInfo, const char *CharacterSet=0);
 		void Stop();
 
 		template<typename Func>
@@ -99,7 +99,7 @@ namespace SGLib
 	};
 
 	template<class TDBQuery>
-	bool CDBPool<TDBQuery>::Start(void *ConnectDBInfo, char *CharacterSet)
+	bool CDBPool<TDBQuery>::Start(void *ConnectDBInfo, const char *CharacterSet)
 	{
 		m_pDBQuery = new TDBQuery();
 		if( m_pDBQuery == NULL )

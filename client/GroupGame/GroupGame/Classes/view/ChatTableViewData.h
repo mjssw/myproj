@@ -19,7 +19,8 @@ public:
 		type(type_),
 		name(name_),
 		content(content_),
-		line(1)
+		line(1),
+		hasConvert(false)
 	{}
 
 	void SetUser(const std::string &user_)
@@ -33,6 +34,7 @@ private:
 	std::string name;
 	std::string content;
 	int line;		// ÐÐÊý
+	bool hasConvert;
 };
 
 #endif

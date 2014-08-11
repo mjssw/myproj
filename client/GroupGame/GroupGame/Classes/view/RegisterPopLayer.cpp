@@ -176,7 +176,7 @@ void CRegisterPopLayer::_AddRegisterBtn()
 	menu->setPosition( CCPointZero );
 	parent->addChild( menu, 1, E_Tag_RegBtn );
 
-	Label *text = Label::createWithSystemFont( a2u("注册"), "arial", 25 );
+	Label *text = Label::createWithSystemFont( a2u("注册").c_str(), "arial", 25 );
 	CCAssert( text, "text register failed" );
 	text->setPosition( ccp(szItem.width/2, szItem.height/2) );
 	regItem->addChild( text );
@@ -222,7 +222,7 @@ void CRegisterPopLayer::_AddCloseBtn(bool isCenter)
 	menu->setPosition( CCPointZero );
 	parent->addChild( menu, 1, E_Tag_CloseBtn );
 	
-	Label *text = Label::createWithSystemFont( a2u("退出"), "arial", 25 );
+	Label *text = Label::createWithSystemFont( a2u("退出").c_str(), "arial", 25 );
 	CCAssert( text, "text close failed" );
 	text->setPosition( ccp(szItem.width/2, szItem.height/2) );
 	closeItem->addChild( text );
@@ -240,7 +240,7 @@ void CRegisterPopLayer::_AddRegisterResult()
 
 	char strRet[128] = {0};
 	sprintf( strRet, "注册结果:%d", CUserManager::Instance().GetBasic().GetRegResult() );
-	Label *text = Label::createWithSystemFont( a2u(strRet), "arial", 25 );
+	Label *text = Label::createWithSystemFont( a2u(strRet).c_str(), "arial", 25 );
 	CCAssert( text, "text result failed" );
 	text->setPosition( ccp(sz.width/2, sz.height/2) );
 	parent->addChild( text );
@@ -256,7 +256,7 @@ void CRegisterPopLayer::_AddTitle()
 	}
 	Size sz = parent->getContentSize();
 
-	Label *text = Label::createWithSystemFont( a2u("注册新用户"), "arial", 25 );
+	Label *text = Label::createWithSystemFont( a2u("注册新用户").c_str(), "arial", 25 );
 	CCAssert( text, "text close failed" );
 	Size textSz = text->getContentSize();
 	text->setPosition( ccp(sz.width/2, sz.height-textSz.height/2-10) );

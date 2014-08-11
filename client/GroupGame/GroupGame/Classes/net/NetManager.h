@@ -17,7 +17,8 @@
 #define LOGIN_IP	"192.168.1.106"
 #endif
 //*/
-#define LOGIN_IP	"192.168.1.106"
+//#define LOGIN_IP	"192.168.1.106"
+#define LOGIN_IP	"172.18.5.55"
 #define LOGIN_PORT	10003
 
 class CMsgBase;

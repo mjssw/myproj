@@ -15,7 +15,7 @@ MySqlDBQuery::~MySqlDBQuery()
 	}
 }
 
-bool MySqlDBQuery::SetConnection(void *dbinfo, char *CharacterSet)
+bool MySqlDBQuery::SetConnection(void *dbinfo, const char *CharacterSet)
 {
 	MySqlDBInfo *mysql_dbinfo = (MySqlDBInfo*)dbinfo;
 

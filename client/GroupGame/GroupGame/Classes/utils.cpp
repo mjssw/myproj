@@ -74,7 +74,7 @@ Size chineseSizeWithFont(const char *font, int size)
 		return Size(0, 0);
 	}
 
-	Label *labelText = Label::createWithSystemFont( a2u("жа"), font, size );
+	Label *labelText = Label::createWithSystemFont( a2u("жа").c_str(), font, size );
 	if( !labelText )
 	{
 		return Size(0, 0);

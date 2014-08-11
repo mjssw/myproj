@@ -100,7 +100,7 @@ void CAskJoinGroupPopLayer::_AddJoinBtn()
 	menu->setPosition( CCPointZero );
 	parent->addChild( menu, 1, E_Tag_OkBtn );
 
-	Label *text = Label::createWithSystemFont( a2u("确定"), "arial", 25 );
+	Label *text = Label::createWithSystemFont( a2u("确定").c_str(), "arial", 25 );
 	CCAssert( text, "text register failed" );
 	text->setPosition( ccp(szItem.width/2, szItem.height/2) );
 	regItem->addChild( text );
@@ -146,7 +146,7 @@ void CAskJoinGroupPopLayer::_AddCloseBtn(bool isCenter)
 	menu->setPosition( CCPointZero );
 	parent->addChild( menu, 1, E_Tag_CloseBtn );
 	
-	Label *text = Label::createWithSystemFont( a2u("退出"), "arial", 25 );
+	Label *text = Label::createWithSystemFont( a2u("退出").c_str(), "arial", 25 );
 	CCAssert( text, "text close failed" );
 	text->setPosition( ccp(szItem.width/2, szItem.height/2) );
 	closeItem->addChild( text );
@@ -166,7 +166,7 @@ void CAskJoinGroupPopLayer::_AddTitle()
 	char title[128] = {0};
 	string gpname = u2a(groupname.c_str());
 	sprintf( title, "邀您加入群:%s 是否同意?", gpname.c_str() );
-	Label *text = Label::createWithSystemFont( a2u(title), "arial", 25 );
+	Label *text = Label::createWithSystemFont( a2u(title).c_str(), "arial", 25 );
 	CCAssert( text, "text close failed" );
 	Size textSz = text->getContentSize();
 	text->setPosition( ccp(sz.width/2, sz.height-textSz.height/2-10) );

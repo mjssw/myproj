@@ -27,7 +27,7 @@ struct _callbackData
 
 void CGateRpcClient::TimerCallBack(void *pData, s32 nDataLen)
 {
-	SELF_ASSERT( nDataLen == sizeof(_callbackData) );
+	SELF_ASSERT( nDataLen == sizeof(_callbackData), return; );
 	CGateRpcClient *pClient = (CGateRpcClient*)(((_callbackData*)pData)->pthis);
 
 	if( pClient )

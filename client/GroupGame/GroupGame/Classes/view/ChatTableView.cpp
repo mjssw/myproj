@@ -220,7 +220,8 @@ ssize_t CChatTableView::numberOfCellsInTableView(TableView *table)
 
 void CChatTableView::_AdjustChatContent(ChatTableViewData &data)
 {
-	if( data.type == ChatTableViewData::E_DataType_User )
+	if( data.type == ChatTableViewData::E_DataType_User ||
+		data.hasConvert )
 	{
 		// 发言者的当前行不需要调整(必然不超过1行)
 		return;
@@ -265,4 +266,5 @@ void CChatTableView::_AdjustChatContent(ChatTableViewData &data)
 
 	data.content = ret;
 	data.line = line;
+	data.hasConvert = true;
 }

@@ -10,7 +10,7 @@ class IDBQuery
 public:
 	virtual ~IDBQuery(){}
 
-	virtual bool SetConnection(void *dbinfo, char *CharacterSet=0) = 0;
+	virtual bool SetConnection(void *dbinfo, const char *CharacterSet=0) = 0;
 
 	virtual bool Connect() = 0;
 

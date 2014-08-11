@@ -6,6 +6,7 @@ fi
 sudo cp ./log4cxx/lib/liblog4cxx.* "$DEPS_PATH"
 sudo cp ./protobuf/lib/libprotobuf* "$DEPS_PATH"
 sudo cp ./tinyxml/lib/libtinyxml* "$DEPS_PATH"
+sudo cp ./lua/lib/liblua.a "$DEPS_PATH"
 #sudo echo "$DEPS_PATH" >> /etc/ld.so.conf
 
 MYSQL_LIB_PATH="/usr/lib"
