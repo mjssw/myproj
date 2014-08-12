@@ -2,7 +2,6 @@
 #include "CommDef.h"
 using namespace cocos2d;
 
-#ifdef _WINDOWS
 #include "iconv.h"
 
 static int code_convert(const char *from_charset, const char *to_charset, const char *inbuf, size_t inlen, char *outbuf, size_t outlen)
@@ -52,20 +51,6 @@ std::string a2u(const char *inbuf)
     delete [] outbuf;
     return strRet;
 }
-
-#else
-
-std::string u2a( const char *inbuf )
-{
-	return std::string( inbuf );
-}
-
-std::string a2u(const char *inbuf)
-{
-	return std::string( inbuf );
-}
-
-#endif
 
 Size chineseSizeWithFont(const char *font, int size)
 {

@@ -2,10 +2,6 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-#NDK_MODULE_PATH := $(LOCAL_PATH)/../../../../cocos2d-x
-#NDK_MODULE_PATH += $(LOCAL_PATH)/../../../../cocos2d-x/cocos
-#NDK_MODULE_PATH += $(LOCAL_PATH)/../../../../cocos2d-x/external
-
 LOCAL_MODULE := groupgame_shared
 
 LOCAL_MODULE_FILENAME := libgroupgame
@@ -99,7 +95,13 @@ $(LOCAL_PATH)/../../../../../third_part/protobuf-android/include \
 $(LOCAL_PATH)/../../../../../third_part/protobuf-android/include/google \
 $(LOCAL_PATH)/../../../../../third_part/protobuf-android/include/google/protobuf \
 $(LOCAL_PATH)/../../../../../third_part/protobuf-android/include/google/protobuf/io \
-$(LOCAL_PATH)/../../../../../third_part/protobuf-android/include/google/protobuf/stubs
+$(LOCAL_PATH)/../../../../../third_part/protobuf-android/include/google/protobuf/stubs \
+$(LOCAL_PATH)/../../../../cocos2d-x/iconv/include \
+$(LOCAL_PATH)/../../../../cocos2d-x/iconv/libcharset \
+$(LOCAL_PATH)/../../../../cocos2d-x/iconv/lib \
+$(LOCAL_PATH)/../../../../cocos2d-x/iconv/licharset/include \
+$(LOCAL_PATH)/../../../../cocos2d-x/iconv/srclib \
+$(LOCAL_PATH)/../../../../cocos2d-x/iconv
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
@@ -110,9 +112,12 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 # LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
 # LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
+LOCAL_WHOLE_STATIC_LIBRARIES += iconv_static
 
 
 include $(BUILD_SHARED_LIBRARY)
+
+#$(call import-add-path,$(LOCAL_PATH)/../../../../cocos2d-x/iconv)
 
 $(call import-module,.)
 $(call import-module,audio/android)
@@ -123,3 +128,4 @@ $(call import-module,audio/android)
 # $(call import-module,editor-support/cocostudio)
 # $(call import-module,network)
 $(call import-module,extensions)
+$(call import-module,iconv)
