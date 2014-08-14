@@ -1,5 +1,7 @@
 #include "MainScene.h"
 #include "extensions/cocos-ext.h"
+#include "base/CCScriptSupport.h"
+#include "CCLuaEngine.h"
 USING_NS_CC;
 USING_NS_CC_EXT;
 
@@ -95,6 +97,8 @@ bool CMainScene::init()
 
 		CSceneManager::Instance().SetCurView( this );
 		//CNetManager::Instance().ResumeProcessMessage();
+		
+		lua_register(LuaEngine::getInstance()->getLuaStack()->getLuaState(), "GobackHome", GobackHome);
 
 #ifdef _DEBUG
         CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
@@ -182,12 +186,16 @@ void CMainScene::menuTestCallback(Object *pSender)
 	//*/
 
 	// test pop layer
+	/*
 	CMemberListPopLayer *pop = CMemberListPopLayer::create( "memberlistbg.png" ); 
 	if( pop )
 	{
 		pop->setPosition(ccp(0,0));
 		addChild( pop, 99999 );
-	}
+	}//*/
+
+	// test jump lua scene
+	LuaEngine::getInstance()->reload("srclua/ddz/main.lua");
 }
 
 void CMainScene::menuRadioButtonGroupCallback(Object *pSender)
@@ -348,6 +356,22 @@ void CMainScene::GroupListTouchedCallback(Node *pSender, void *data)
 			m_chatTableView->InsertUpdate();
 		}
 	}
+}
+
+int CMainScene::GobackHome(lua_State *ls)
+{
+	Scene *home = CMainScene::scene();
+    Director *director = Director::getInstance();
+	if( director->getRunningScene() )
+	{
+		director->replaceScene( home );
+	}
+	else
+	{
+		director->runWithScene( home );
+	}
+
+	return 0;
 }
 
 void CMainScene::_AddSceneBg()

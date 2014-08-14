@@ -38,6 +38,8 @@ public:
 
     CREATE_FUNC(CMainScene);
 
+	static int GobackHome(lua_State *ls);
+
 private:
 	void _AddSceneBg();
 	void _AddTitle();

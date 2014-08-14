@@ -1,4 +1,5 @@
 #include "AppDelegate.h"
+#include "CCLuaEngine.h"
 #include "scene/LoginScene.h"
 #include "CommDef.h"
 #include "res/ResManager.h"
@@ -47,6 +48,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 		return false;
 	}
 	CSceneManager::Instance();
+    
+	LuaEngine* engine = LuaEngine::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
 
     // create a scene. it's an autorelease object
 	CCScene *pScene = CLoginScene::scene();
