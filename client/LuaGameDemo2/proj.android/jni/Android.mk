@@ -12,6 +12,8 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
+LOCAL_STATIC_LIBRARIES := curl_static_prebuilt
+
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 
@@ -21,6 +23,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 # LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
 # LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
 # LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_lua_static
 
 
 include $(BUILD_SHARED_LIBRARY)
@@ -34,3 +37,4 @@ $(call import-module,audio/android)
 # $(call import-module,editor-support/cocostudio)
 # $(call import-module,network)
 # $(call import-module,extensions)
+$(call import-module,scripting/lua-bindings)
