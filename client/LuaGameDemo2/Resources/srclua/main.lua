@@ -7,7 +7,7 @@ cclog = function(...)
     print(string.format(...))
 end
 
-function testfunc()
+function printabc()
 end
 
 function main_scene()

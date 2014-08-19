@@ -6,6 +6,7 @@
 #include "net/NetManager.h"
 #include "user/UserManager.h"
 #include "scene/SceneManager.h"
+#include "lua/ExportProtobuf.h"
 
 using namespace CocosDenshion;
 
@@ -51,6 +52,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     
 	LuaEngine* engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
+	register_dynamicproto( engine->getLuaStack()->getLuaState() );
+	lua_register(
+		LuaEngine::getInstance()->getLuaStack()->getLuaState(), "SendGameMessage", CNetManager::SendGameMessage);
 
     // create a scene. it's an autorelease object
 	CCScene *pScene = CLoginScene::scene();

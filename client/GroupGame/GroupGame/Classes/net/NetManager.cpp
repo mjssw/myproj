@@ -1,6 +1,7 @@
 #include "cocos2d.h"
 #include "NetManager.h"
 #include "gamemsg/MsgBase.h"
+#include "tolua++.h"
 using namespace cocos2d;
 using namespace SGLib;
 using namespace std;
@@ -200,6 +201,27 @@ void CNetManager::SetRegClientInstance(CRegisterClient *client)
 CRegisterClient* CNetManager::GetRegClientInstance()
 {
 	return m_registerClient;
+}
+
+int CNetManager::SendGameMessage(lua_State *ls)
+{
+	void **data = (void**)lua_touserdata( ls, 1 );
+	google::protobuf::Message *msg = ((google::protobuf::Message*)(*data));
+	int ret = 1;
+	if( !msg )
+	{
+		ret = 0;
+	}
+	else
+	{
+		int msgid = (int)lua_tonumber( ls, 2 );
+
+		// TODO here should be gameclient
+		Instance().GetGroupClientInstance()->SendMsg( *msg, msgid );
+	}
+	lua_pushinteger( ls, ret );
+	delete msg;
+	return 1;
 }
 
 void CNetManager::_CloseAll()

@@ -11,6 +11,8 @@ function enterGame()
     collectgarbage("setpause", 100)
     collectgarbage("setstepmul", 5000)
 	
+	DPB_Init("../../../../protomsg/proto");
+	
 	cc.FileUtils:getInstance():addSearchResolutionsOrder("srclua");
 	cc.FileUtils:getInstance():addSearchResolutionsOrder("srclua/ddz");
 	cc.FileUtils:getInstance():addSearchResolutionsOrder("Resources");
@@ -37,7 +39,15 @@ function enterGame()
         local menuPopup
         local function menuCallbackOpenPopup()
 			cclog("menuCallbackOpenPopup")
-            GobackHome()
+            --GobackHome()
+			local msg = DPB_CreateMessage("group.proto", "sglib.groupproto.CSGroupMessageHistoryReq");
+			local ret = DPB_SetUInt64(msg, "groupid", 1);
+			print("DPB_SetUInt64 groupid ret:", ret);
+			ret = DPB_SetInt64(msg, "idxfrom", 0);
+			print("DPB_SetInt64 idxfrom ret:" , ret);
+			ret = DPB_SetInt32(msg, "limit", 10);
+			print("DPB_SetInt32 limit ret:" , ret);
+			SendGameMessage( msg, 931 )
         end
 
         local menuPopupItem = cc.MenuItemImage:create("btn2_normal.png", "btn2_hover.png")

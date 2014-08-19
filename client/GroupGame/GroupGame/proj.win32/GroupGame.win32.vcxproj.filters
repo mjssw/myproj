@@ -37,6 +37,9 @@
     <Filter Include="gamemsg">
       <UniqueIdentifier>{24c4839f-2258-403f-85b3-41c272a5e5f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lua">
+      <UniqueIdentifier>{2d0156fd-c349-4a22-8a53-3739222a3e5c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\GroupGame.ico">
@@ -223,6 +226,12 @@
     <ClInclude Include="..\Classes\view\ChatTableViewData.h">
       <Filter>view</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\lua\DynamicProto.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\lua\ExportProtobuf.h">
+      <Filter>lua</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -374,6 +383,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\view\AskJoinGroupPopLayer.cpp">
       <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\lua\DynamicProto.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\lua\ExportProtobuf.cpp">
+      <Filter>lua</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -157,6 +157,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\cocos2d-x\external\websockets\prebuilt\win32\
     <ClInclude Include="..\Classes\CommDef.h" />
     <ClInclude Include="..\Classes\gamemsg\MsgGroupModule.h" />
     <ClInclude Include="..\Classes\gamemsg\MsgLoginModule.h" />
+    <ClInclude Include="..\Classes\lua\DynamicProto.h" />
+    <ClInclude Include="..\Classes\lua\ExportProtobuf.h" />
     <ClInclude Include="..\Classes\net\GameClient.h" />
     <ClInclude Include="..\Classes\net\GroupClient.h" />
     <ClInclude Include="..\Classes\net\LoginClient.h" />
@@ -212,6 +214,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\cocos2d-x\external\websockets\prebuilt\win32\
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\gamemsg\MsgGroupModule.cpp" />
     <ClCompile Include="..\Classes\gamemsg\MsgLoginModule.cpp" />
+    <ClCompile Include="..\Classes\lua\DynamicProto.cpp" />
+    <ClCompile Include="..\Classes\lua\ExportProtobuf.cpp" />
     <ClCompile Include="..\Classes\net\GameClient.cpp" />
     <ClCompile Include="..\Classes\net\GroupClient.cpp" />
     <ClCompile Include="..\Classes\net\LoginClient.cpp" />
