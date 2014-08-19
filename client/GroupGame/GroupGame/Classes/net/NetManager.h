@@ -57,6 +57,7 @@ public:
 	CRegisterClient* GetRegClientInstance();
 	
 	static int SendGameMessage(lua_State *ls);
+	void LuaProcessGameMessage(int msgid, int msglen, void *data);
 
 private:
 	void _CloseAll();

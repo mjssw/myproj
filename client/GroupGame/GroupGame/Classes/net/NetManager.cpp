@@ -2,6 +2,7 @@
 #include "NetManager.h"
 #include "gamemsg/MsgBase.h"
 #include "tolua++.h"
+#include "CCLuaEngine.h"
 using namespace cocos2d;
 using namespace SGLib;
 using namespace std;
@@ -222,6 +223,17 @@ int CNetManager::SendGameMessage(lua_State *ls)
 	lua_pushinteger( ls, ret );
 	delete msg;
 	return 1;
+}
+
+void CNetManager::LuaProcessGameMessage(int msgid, int msglen, void *data)
+{
+	const char *strFuncName = "ProcessGameMessage";
+	lua_State *ls = LuaEngine::getInstance()->getLuaStack()->getLuaState();
+    lua_getglobal( ls, strFuncName );
+	lua_pushnumber( ls, msgid );
+	lua_pushnumber( ls, msglen );
+    *(void**)lua_newuserdata(ls, sizeof(void*)) = data;
+    lua_pcall( ls, 3, 0, 0 );
 }
 
 void CNetManager::_CloseAll()

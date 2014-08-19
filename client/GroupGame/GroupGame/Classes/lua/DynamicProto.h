@@ -32,6 +32,7 @@ public:
 	google::protobuf::Message* CreateMessage(const std::string &protofile, const std::string &name);
 	google::protobuf::Message* MutableMessage(google::protobuf::Message *parent, const std::string &field);
 	google::protobuf::Message* AddMessage(google::protobuf::Message *parent, const std::string &field);
+	void DeleteMessage(google::protobuf::Message *message);
 
 	bool SetInt32 (google::protobuf::Message *message, const std::string &field, google::protobuf::int32  value);
 	bool SetInt64 (google::protobuf::Message *message, const std::string &field, google::protobuf::int64  value);
@@ -50,6 +51,30 @@ public:
 	bool AddDouble(google::protobuf::Message *message, const std::string &field, double value);
 	bool AddBool  (google::protobuf::Message *message, const std::string &field, bool   value);
 	bool AddString(google::protobuf::Message *message, const std::string &field, const std::string& value);
+
+	bool ParseFromArray(google::protobuf::Message *msg, const void *data, int size);
+
+	google::protobuf::int32  GetInt32 (const google::protobuf::Message& message, const std::string &field);
+	google::protobuf::int64  GetInt64 (const google::protobuf::Message& message, const std::string &field);
+	google::protobuf::uint32 GetUInt32(const google::protobuf::Message& message, const std::string &field);
+	google::protobuf::uint64 GetUInt64(const google::protobuf::Message& message, const std::string &field);
+	float  GetFloat (const google::protobuf::Message& message, const std::string &field);
+	double GetDouble(const google::protobuf::Message& message, const std::string &field);
+	bool   GetBool  (const google::protobuf::Message& message, const std::string &field);
+	std::string GetString(const google::protobuf::Message& message, const std::string &field);
+	const google::protobuf::Message* GetMessage(const google::protobuf::Message &parent, const std::string &field);
+
+	google::protobuf::int32  GetRepeatedInt32 (const google::protobuf::Message& message, const std::string &field, int index);
+	google::protobuf::int64  GetRepeatedInt64 (const google::protobuf::Message& message, const std::string &field, int index);
+	google::protobuf::uint32 GetRepeatedUInt32(const google::protobuf::Message& message, const std::string &field, int index);
+	google::protobuf::uint64 GetRepeatedUInt64(const google::protobuf::Message& message, const std::string &field, int index);
+	float  GetRepeatedFloat (const google::protobuf::Message& message, const std::string &field, int index);
+	double GetRepeatedDouble(const google::protobuf::Message& message, const std::string &field, int index);
+	bool   GetRepeatedBool  (const google::protobuf::Message& message, const std::string &field, int index);
+	std::string GetRepeatedString(const google::protobuf::Message& message, const std::string &field, int index);
+	const google::protobuf::Message* GetRepeatedMessage(const google::protobuf::Message &parent, const std::string &field, int index);
+
+	int GetFieldSize(const google::protobuf::Message& message, const std::string &field); 
 
 	virtual void AddError(const std::string& filename, int line, int column, const std::string& message);
 

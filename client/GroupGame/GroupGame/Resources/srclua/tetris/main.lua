@@ -6,6 +6,28 @@ cclog = function(...)
     print(string.format(...))
 end
 
+function _processMessageHistroy(msgid, msglen, data)
+	print( "[LUA][_processMessageHistroy] : ", msgid, ":", msglen );
+	local msg = DPB_CreateMessage("group.proto", "sglib.groupproto.SCGroupMessageHistoryRsp");
+	local ret = DPB_ParseFromArray(msg, data, msglen);
+	print( "[LUA][_processMessageHistroy] ParseFromArray ret=", ret );
+	local size = DPB_GetFieldSize(msg, "messages");
+	print( "[LUA][_processMessageHistroy] MessageSize=", size );
+	for i=0,size-1,1 do
+		local g = DPB_GetRepeatedMessage(msg, "messages", i);
+		print( "[HISTORY][user]:", DPB_GetString(g, "user"),"[msg]:",DPB_GetString(g,"msg"),"[time]:",DPB_GetInt32(g,"time"),"[idx]:",DPB_GetInt64(g,"idx"));
+	end
+	DPB_DeleteMessage(msg);
+end
+
+function ProcessGameMessage(msgid, msglen, data)
+	print( "in lua ProcessGameMessage : ", msgid, ":", msglen );
+	if msgid==932 then
+		_processMessageHistroy(msgid, msglen, data);
+		return
+	end
+end
+
 function enterGame()
     collectgarbage("collect")
     collectgarbage("setpause", 100)

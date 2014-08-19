@@ -195,7 +195,7 @@ void CMainScene::menuTestCallback(Object *pSender)
 	}//*/
 
 	// test jump lua scene
-	LuaEngine::getInstance()->reload("srclua/ddz/main.lua");
+	LuaEngine::getInstance()->reload("srclua/tetris/main.lua");
 }
 
 void CMainScene::menuRadioButtonGroupCallback(Object *pSender)
