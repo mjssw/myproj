@@ -169,7 +169,7 @@ void CGateRpcClient::_ReportStatus()
 	req.set_gateid( CServerManager::Instance().ServerId() );
 	req.set_cur_conn( CServerManager::Instance().GetClientCount() );
 	req.set_max_conn( CServerManager::Instance().MaxConnectionCount() );
-	if( !m_bHasReportIpPort )
+	//if( !m_bHasReportIpPort )
 	{
 		const CServerConfig *pCfg = CServerManager::Instance().GetServerConfig();
 		if( pCfg != NULL )

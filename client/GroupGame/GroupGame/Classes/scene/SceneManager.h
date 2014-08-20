@@ -23,6 +23,7 @@ public:
 		E_UpdateType_RegisterResult,
 		E_UpdateType_AskJoinGroup,
 		E_UpdateType_GroupMessage,
+		E_UpdateType_GameRoomUpdate,
 	};
 
 	void SetCurView(CViewBase *curView);

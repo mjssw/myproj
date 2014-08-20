@@ -35,6 +35,7 @@ public:
 	void menuChatHistoryCallback(cocos2d::Object *pSender);
 
 	void GroupListTouchedCallback(Node *pSender, void *data);
+	void GameRoomListTouchedCallback(Node *pSender, void *data);
 
     CREATE_FUNC(CMainScene);
 
@@ -76,6 +77,8 @@ private:
 	void _GroupMessageNotify();
 
 	void _AddChatContent(u64 groupid, const std::string &user, const std::string &text, bool isSelf);
+	void _GameRoomUpdate();
+	void _AddGameRoomList(cocos2d::Node &parent, cocos2d::Size &lstSz, cocos2d::Size &cellSz);
 
 private:
 	int m_mainViewOffX;
@@ -93,6 +96,8 @@ private:
 	CMyTableView *m_pGroupList;
 	CMyEditBox *m_chatHistory;
 	CChatTableView *m_chatTableView;
+
+	CMyTableView *m_pGameRoomList;
 };
 
 #endif

@@ -232,6 +232,15 @@
     <ClInclude Include="..\Classes\lua\ExportProtobuf.h">
       <Filter>lua</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\view\CreateGamePopLayer.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\user\GameRoomInfo.h">
+      <Filter>user</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\view\TableViewData.h">
+      <Filter>view</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -389,6 +398,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\lua\ExportProtobuf.cpp">
       <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\view\CreateGamePopLayer.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\user\GameRoomInfo.cpp">
+      <Filter>user</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

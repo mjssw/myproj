@@ -153,7 +153,7 @@ int CGroupClient::OnRecv(char *buf, int len)
 				sglib::groupproto::SCGroupCreateGameRoomRsp msg;
 				if( msg.ParseFromArray(pbuf+MSG_ID_LEN+MSG_HEAD_LEN, pkgLen-MSG_ID_LEN-MSG_HEAD_LEN) )
 				{
-					//_GroupCreateGameRoomResult( rsp );
+					_GroupCreateGameRoomResult( msg );
 				}
 			}break;
 		case sglib::msgid::SC_GROUP_CREATE_GAMEROOM_NTF:
@@ -161,7 +161,7 @@ int CGroupClient::OnRecv(char *buf, int len)
 				sglib::groupproto::SCGroupCreateGameRoomNtf msg;
 				if( msg.ParseFromArray(pbuf+MSG_ID_LEN+MSG_HEAD_LEN, pkgLen-MSG_ID_LEN-MSG_HEAD_LEN) )
 				{
-					//_GroupMemberCreateGameRoomNtf( ntf );
+					_GroupMemberCreateGameRoomNtf( msg );
 				}
 			}break;
 		case sglib::msgid::SC_GROUP_MESSAGE_HISTORY_RSP:
@@ -274,6 +274,15 @@ void CGroupClient::ChatHistory(u64 groupid, s64 idxfrom)
 	req.set_limit( CHAT_MESSAGE_LIMIT );
 
 	SendMsg( req, sglib::msgid::CS_GROUP_MESSAGE_HISTORY_REQ );
+}
+
+void CGroupClient::CreateGameRoom(u64 groupid, s32 game)
+{
+	sglib::groupproto::CSGroupCreateGameRoomReq req;
+	req.set_groupid( groupid );
+	req.set_game( game );
+
+	SendMsg( req, sglib::msgid::CS_GROUP_CREATE_GAMEROOM_REQ );
 }
 
 void CGroupClient::_LoginGroupResult(sglib::groupproto::SCGroupUserLoginRsp &msg)
@@ -397,6 +406,36 @@ void CGroupClient::_GroupMessageNtf(sglib::groupproto::SCGroupMessageNtf &msg)
 		return;
 	}
 
+	CNetManager::Instance().PushMessage( gamemsg );
+}
+
+void CGroupClient::_GroupCreateGameRoomResult(sglib::groupproto::SCGroupCreateGameRoomRsp &msg)
+{
+	CCLog( "CGroupClient::_GroupCreateGameRoomResult result:%d group:%llu game:%d [ip:%s,port:%d,roomid:%d]", 
+		msg.result(), msg.groupid(), msg.game(), msg.ip().c_str(), msg.port(), msg.roomid() );
+
+	CMsgBase *gamemsg = new CMsgGroupCreateGameRoomRsp(
+		msg.result(), msg.groupid(), msg.game(), msg.ip(), msg.port(), msg.roomid(), msg.password() );
+	if( !gamemsg )
+	{
+		CCLog( "[CGroupClient::_GroupCreateGameRoomResult] new msg failed" );
+		return;
+	}
+	CNetManager::Instance().PushMessage( gamemsg );
+}
+
+void CGroupClient::_GroupMemberCreateGameRoomNtf(sglib::groupproto::SCGroupCreateGameRoomNtf &msg)
+{
+	CCLog( "CGroupClient::_GroupMemberCreateGameRoomNtf creater:%s group:%llu game:%d [ip:%s,port:%d,roomid:%d]", 
+		msg.creater().c_str(), msg.groupid(), msg.game(), msg.ip().c_str(), msg.port(), msg.roomid() );
+	
+	CMsgBase *gamemsg = new CMsgGroupCreateGameRoomNtf(
+		msg.creater(), msg.groupid(), msg.game(), msg.ip(), msg.port(), msg.roomid(), msg.password() );
+	if( !gamemsg )
+	{
+		CCLog( "[CGroupClient::_GroupMemberCreateGameRoomNtf] new msg failed" );
+		return;
+	}
 	CNetManager::Instance().PushMessage( gamemsg );
 }
 

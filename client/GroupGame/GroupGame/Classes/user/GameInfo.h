@@ -3,6 +3,7 @@
 
 #include "Define.h"
 #include <map>
+#include <vector>
 
 class CGameInfo
 {
@@ -23,6 +24,8 @@ public:
 	~CGameList();
 
 	void AddGameInfo(CGameInfo &game);
+	void Dump(std::vector<s32> &games);
+	CGameInfo* GetGameInfo(s32 gameid);
 
 private:
 	std::map<s32, CGameInfo> m_games;

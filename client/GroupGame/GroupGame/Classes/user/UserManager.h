@@ -1,12 +1,18 @@
 #ifndef _USER_MANAGER_H_
 #define _USER_MANAGER_H_
 
+#include "GameRoomInfo.h"
 #include "Define.h"
 #include "Basic.h"
 #include "ViewData.h"
 #include "GameInfo.h"
 #include "GroupManager.h"
 #include <string>
+
+extern "C"
+{
+	#include "lua.h"
+}
 
 class CUserManager
 {
@@ -19,10 +25,14 @@ public:
 	CUserViewData& GetViewData(); 
 	CGameList& GetGameList();
 	CGroupManager& GetGroupManager();
+	CGameRoomList& GetGameRoomList();
 
 	void SetGroupConnInfo(const std::string &ip, s32 port);
 	const std::string& GetGroupGateIp();
 	s32 GetGroupGatePort();
+
+	bool LoadPublicScripts();
+	void GetGameInfo(int gameid, std::string &dir, std::string &icon, std::string &name);
 
 private:
 	std::string m_token;
@@ -32,6 +42,10 @@ private:
 	std::string m_groupGateIp;
 	s32 m_groupGatePort;
 	CGroupManager m_groupManager;
+
+	lua_State *m_pbState;
+
+	CGameRoomList m_roomList;
 };
 
 #endif

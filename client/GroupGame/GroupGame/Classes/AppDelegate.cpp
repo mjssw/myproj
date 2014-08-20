@@ -41,6 +41,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
+	if( !CUserManager::Instance().LoadPublicScripts() )
+	{
+		return false;
+	}
 	CUserManager::Instance().GetViewData().LoadFromConfig();
 	// 各组件初始化
 	if( !CResManager::Instance().Init( RES_ROOT ) ||

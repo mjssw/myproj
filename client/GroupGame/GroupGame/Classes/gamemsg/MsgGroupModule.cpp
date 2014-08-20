@@ -7,6 +7,7 @@
 #include "errno.pb.h"
 #include "user/Group.h"
 #include "user/GroupMember.h"
+#include "user/GameRoomInfo.h"
 #include "utils.h"
 using namespace std;
 using namespace cocos2d;
@@ -282,4 +283,52 @@ void CMsgGroupMessage::Process()
 		return;
 	}
 	view->UpdateView( CSceneManager::E_UpdateType_GroupMessage );
+}
+
+CMsgGroupCreateGameRoomRsp::CMsgGroupCreateGameRoomRsp(s32 result, u64 groupid, s32 game, const std::string &ip, s32 port, s32 roomid, const std::string &roompwd) :
+	m_result( result ),
+	m_groupid( groupid ),
+	m_game( game ),
+	m_ip( ip ),
+	m_port( port ),
+	m_roomid( roomid ),
+	m_roompwd( roompwd )
+{
+}
+void CMsgGroupCreateGameRoomRsp::Process()
+{
+	CCLog( "[CreateGameRoomResult]:%d groupid:%llu game:%d ip:%s port:%d roomid:%d roompwd:%s",
+		m_result, m_groupid, m_game, m_ip.c_str(), m_port, m_roomid, m_roompwd.c_str() );
+}
+	
+CMsgGroupCreateGameRoomNtf::CMsgGroupCreateGameRoomNtf(const std::string &creater, u64 groupid, s32 game, const std::string &ip, s32 port, s32 roomid, const std::string &roompwd) :
+	m_creater( creater ),
+	m_groupid( groupid ),
+	m_game( game ),
+	m_ip( ip ),
+	m_port( port ),
+	m_roomid( roomid ),
+	m_roompwd( roompwd )
+{
+}
+void CMsgGroupCreateGameRoomNtf::Process()
+{
+	CCLog( "[CreateGameRoomNotify] creater:%s groupid:%llu game:%d ip:%s port:%d roomid:%d roompwd:%s",
+		m_creater.c_str(), m_groupid, m_game, m_ip.c_str(), m_port, m_roomid, m_roompwd.c_str() );
+
+	if( CUserManager::Instance().GetGameRoomList().AddGameRoomInfo(
+		m_game, m_groupid, m_creater, m_ip, m_port, m_roomid, m_roompwd ) )
+	{
+		CViewBase *view = CSceneManager::Instance().GetCurView();
+		if( !view )
+		{
+			CCLog( "[CMsgGroupCreateGameRoomNtf::Process] cur view is NULL" );
+			return;
+		}
+		view->UpdateView( CSceneManager::E_UpdateType_GameRoomUpdate );
+	}
+	else
+	{
+		CCLog( "[CMsgGroupCreateGameRoomNtf::Process] AddGameRoomInfo failed" );
+	}
 }

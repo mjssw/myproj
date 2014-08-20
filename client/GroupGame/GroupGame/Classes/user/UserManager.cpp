@@ -1,6 +1,12 @@
 #include "UserManager.h"
 using namespace std;
 
+extern "C"
+{
+	#include "lualib.h"
+	#include "lauxlib.h"
+};
+
 SIGNLETON_CLASS_INIT(CUserManager);
 
 
@@ -34,6 +40,11 @@ CGroupManager& CUserManager::GetGroupManager()
 	return m_groupManager;
 }
 
+CGameRoomList& CUserManager::GetGameRoomList()
+{
+	return m_roomList;
+}
+
 void CUserManager::SetGroupConnInfo(const string &ip, s32 port)
 {
 	m_groupGateIp = ip;
@@ -48,4 +59,40 @@ const string& CUserManager::GetGroupGateIp()
 s32 CUserManager::GetGroupGatePort()
 {
 	return m_groupGatePort;
+}
+
+bool CUserManager::LoadPublicScripts()
+{
+	m_pbState = lua_open();
+	luaL_openlibs( m_pbState );
+	return (luaL_dofile( m_pbState, "./public/GetGameInfo.lua" ) == 0);
+}
+
+void CUserManager::GetGameInfo(int gameid, std::string &dir, std::string &icon, std::string &name)
+{
+	const char *strFuncName = "GetGameInfo";
+	lua_getglobal( m_pbState, strFuncName );
+	lua_pushnumber( m_pbState, gameid );
+
+	s32 game = lua_pcall( m_pbState, 1, 3, 0 );
+	if( game != 0 || lua_gettop(m_pbState) != 3 )
+	{
+		lua_pop( m_pbState, lua_gettop(m_pbState) );
+		return;
+	}
+
+	if( lua_isstring(m_pbState, -1) == 1 )
+	{
+		name = lua_tostring( m_pbState, -1 );
+	}
+	if( lua_isstring(m_pbState, -2) == 1 )
+	{
+		icon = lua_tostring( m_pbState, -2 );
+	}
+	if( lua_isstring(m_pbState, -3) == 1 )
+	{
+		dir = lua_tostring( m_pbState, -3 );
+	}
+
+	lua_pop( m_pbState, lua_gettop(m_pbState) );
 }

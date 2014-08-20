@@ -2,24 +2,10 @@
 #define _MY_TABLE_VIEW_H_
 
 #include "cocos2d.h"
+#include "TableViewData.h"
 #include "extensions/cocos-ext.h"
 #include <vector>
 #include <string>
-
-struct TableViewData
-{
-	TableViewData() : 
-		iconRect(0,0,0,0), 
-		useRect(false),
-		data(NULL)
-	{}
-
-	std::string icon;
-	std::string text;
-	cocos2d::Rect iconRect;
-	bool useRect;
-	void *data;
-};
 
 class CMyTableView : public cocos2d::CCNode , public cocos2d::extension::TableViewDataSource, public cocos2d::extension::TableViewDelegate
 {
@@ -38,6 +24,7 @@ public:
 	bool InsertElement(TableViewData &data);
 	void UpdateElements(std::vector<TableViewData> &data);
 	void RemoveElementAtIndex(int idx);
+	void SetDirection(bool isHorizontal);
 
 	//virtual void draw();
 

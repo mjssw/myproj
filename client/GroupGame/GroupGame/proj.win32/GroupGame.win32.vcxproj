@@ -172,6 +172,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\cocos2d-x\external\websockets\prebuilt\win32\
     <ClInclude Include="..\Classes\scene\ViewBase.h" />
     <ClInclude Include="..\Classes\user\Basic.h" />
     <ClInclude Include="..\Classes\user\GameInfo.h" />
+    <ClInclude Include="..\Classes\user\GameRoomInfo.h" />
     <ClInclude Include="..\Classes\user\Group.h" />
     <ClInclude Include="..\Classes\user\GroupManager.h" />
     <ClInclude Include="..\Classes\user\GroupMember.h" />
@@ -181,6 +182,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\cocos2d-x\external\websockets\prebuilt\win32\
     <ClInclude Include="..\Classes\view\AskJoinGroupPopLayer.h" />
     <ClInclude Include="..\Classes\view\ChatTableView.h" />
     <ClInclude Include="..\Classes\view\ChatTableViewData.h" />
+    <ClInclude Include="..\Classes\view\CreateGamePopLayer.h" />
     <ClInclude Include="..\Classes\view\CreateGroupPopLayer.h" />
     <ClInclude Include="..\Classes\view\InviteMemberPopLayer.h" />
     <ClInclude Include="..\Classes\view\MemberListPopLayer.h" />
@@ -191,6 +193,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\cocos2d-x\external\websockets\prebuilt\win32\
     <ClInclude Include="..\Classes\view\MyTableView.h" />
     <ClInclude Include="..\Classes\view\PopLayerBase.h" />
     <ClInclude Include="..\Classes\view\RegisterPopLayer.h" />
+    <ClInclude Include="..\Classes\view\TableViewData.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
@@ -228,6 +231,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\cocos2d-x\external\websockets\prebuilt\win32\
     <ClCompile Include="..\Classes\scene\SceneManager.cpp" />
     <ClCompile Include="..\Classes\user\Basic.cpp" />
     <ClCompile Include="..\Classes\user\GameInfo.cpp" />
+    <ClCompile Include="..\Classes\user\GameRoomInfo.cpp" />
     <ClCompile Include="..\Classes\user\Group.cpp" />
     <ClCompile Include="..\Classes\user\GroupManager.cpp" />
     <ClCompile Include="..\Classes\user\GroupMember.cpp" />
@@ -236,6 +240,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\cocos2d-x\external\websockets\prebuilt\win32\
     <ClCompile Include="..\Classes\utils.cpp" />
     <ClCompile Include="..\Classes\view\AskJoinGroupPopLayer.cpp" />
     <ClCompile Include="..\Classes\view\ChatTableView.cpp" />
+    <ClCompile Include="..\Classes\view\CreateGamePopLayer.cpp" />
     <ClCompile Include="..\Classes\view\CreateGroupPopLayer.cpp" />
     <ClCompile Include="..\Classes\view\InviteMemberPopLayer.cpp" />
     <ClCompile Include="..\Classes\view\MemberListPopLayer.cpp" />

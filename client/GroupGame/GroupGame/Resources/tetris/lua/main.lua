@@ -35,8 +35,7 @@ function enterGame()
 	
 	DPB_Init("../../../../protomsg/proto");
 	
-	cc.FileUtils:getInstance():addSearchResolutionsOrder("srclua");
-	cc.FileUtils:getInstance():addSearchResolutionsOrder("srclua/ddz");
+	cc.FileUtils:getInstance():addSearchResolutionsOrder("tetris/lua");
 	cc.FileUtils:getInstance():addSearchResolutionsOrder("Resources");
 	
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()

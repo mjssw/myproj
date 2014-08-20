@@ -119,4 +119,34 @@ private:
 	std::string m_content;
 };
 
+class CMsgGroupCreateGameRoomRsp : public CMsgBase
+{
+public:
+	CMsgGroupCreateGameRoomRsp(s32 result, u64 groupid, s32 game, const std::string &ip, s32 port, s32 roomid, const std::string &roompwd);
+	virtual void Process();
+private:
+	s32 m_result;
+	u64 m_groupid;
+	s32 m_game;
+	std::string m_ip;
+	s32 m_port;
+	s32 m_roomid;
+	std::string m_roompwd;
+};
+
+class CMsgGroupCreateGameRoomNtf : public CMsgBase
+{
+public:
+	CMsgGroupCreateGameRoomNtf(const std::string &creater, u64 groupid, s32 game, const std::string &ip, s32 port, s32 roomid, const std::string &roompwd);
+	virtual void Process();
+private:
+	std::string m_creater;
+	u64 m_groupid;
+	s32 m_game;
+	std::string m_ip;
+	s32 m_port;
+	s32 m_roomid;
+	std::string m_roompwd;
+};
+
 #endif

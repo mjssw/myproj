@@ -22,6 +22,7 @@ USING_NS_CC_EXT;
 #include "view/CreateGroupPopLayer.h"
 #include "view/InviteMemberPopLayer.h"
 #include "view/AskJoinGroupPopLayer.h"
+#include "view/CreateGamePopLayer.h"
 using namespace std;
 
 static void TextChatChanged(const std::string &text)
@@ -64,6 +65,11 @@ void CMainScene::UpdateView(int type)
 	case CSceneManager::E_UpdateType_GroupMessage:
 		{
 			_GroupMessageNotify();
+		}
+		break;
+	case CSceneManager::E_UpdateType_GameRoomUpdate:
+		{
+			_GameRoomUpdate();
 		}
 		break;
 	default:
@@ -195,7 +201,12 @@ void CMainScene::menuTestCallback(Object *pSender)
 	}//*/
 
 	// test jump lua scene
-	LuaEngine::getInstance()->reload("srclua/tetris/main.lua");
+	//LuaEngine::getInstance()->reload("tetris/lua/main.lua");
+
+	// test room list
+	CUserManager::Instance().GetGameRoomList().AddGameRoomInfo(
+		10, 1, "sjj1", "127.0.0.1", 123, 111, "" );
+	_GameRoomUpdate();
 }
 
 void CMainScene::menuRadioButtonGroupCallback(Object *pSender)
@@ -286,7 +297,19 @@ void CMainScene::menuCreateGroupCallback(cocos2d::Object *pSender)
 
 void CMainScene::menuCreateGameCallback(cocos2d::Object *pSender)
 {
-	CCLog( "menuCreateGameCallback" );
+	if( CUserManager::Instance().GetViewData().GetSelectGroup() )
+	{
+		CCreateGamePopLayer *pop = CCreateGamePopLayer::create( "memberlistbg.png" ); 
+		if( pop )
+		{
+			pop->setPosition( ccp(0, 0) );
+			addChild( pop, 99999 );
+		}
+	}
+	else
+	{
+		CCLog( "Not select group , cant not create game" );
+	}
 }
 
 void CMainScene::menuInviteMemberCallback(cocos2d::Object *pSender)
@@ -355,6 +378,17 @@ void CMainScene::GroupListTouchedCallback(Node *pSender, void *data)
 				group->GetChatHistory() );
 			m_chatTableView->InsertUpdate();
 		}
+	}
+}
+
+void CMainScene::GameRoomListTouchedCallback(Node *pSender, void *data)
+{
+	CCLog( "CMainScene::GameRoomListTouchedCallback" );
+	if( data )
+	{
+		CGameRoomInfo *info = (CGameRoomInfo*)data;
+		CCLog( "try enter game:%d ip:%s port:%d room:%d",
+			info->m_gameid, info->m_ip.c_str(), info->m_port, info->m_roomid);
 	}
 }
 
@@ -603,6 +637,10 @@ void CMainScene::_AddChatViewToMain()
 	}
 
 	_AddGroupFuncBtns( *parent );
+
+	Size roomListSz = Size( ptSplite.x - szSplite.width/2 ,parentSz.height - 20);
+	Size roomCellSz = Size(roomListSz.width, 40); 
+	_AddGameRoomList( *parent, roomListSz, roomCellSz );
 }
 
 void CMainScene::_AddContentToListView()
@@ -1027,4 +1065,25 @@ void CMainScene::_AddChatContent(u64 groupid, const std::string &user, const std
 	{
 		m_chatTableView->InsertUpdate();
 	}
+}
+
+extern void DumpRoomList(CGameRoomList &roomList, std::vector<TableViewData> &vecData);
+void CMainScene::_GameRoomUpdate()
+{
+	if( m_pGameRoomList )
+	{
+		vector<TableViewData> vecData;
+		DumpRoomList( CUserManager::Instance().GetGameRoomList(), vecData );
+		m_pGameRoomList->UpdateElements( vecData );
+	}
+}
+
+void CMainScene::_AddGameRoomList(cocos2d::Node &parent, Size &lstSz, Size &cellSz)
+{
+	vector<TableViewData> vecData;
+	m_pGameRoomList = CMyTableView::create( lstSz, cellSz, vecData, "selectbg.png" );
+    CCAssert( m_pGameRoomList, "_AddGameRoomList GetTableView Failed" );
+	m_pGameRoomList->SetPosition( ccp(lstSz.width/2, lstSz.height/2 + 10) );
+	m_pGameRoomList->SetTouchCallback( callfuncND_selector(CMainScene::GameRoomListTouchedCallback), this );
+	parent.addChild( m_pGameRoomList );
 }

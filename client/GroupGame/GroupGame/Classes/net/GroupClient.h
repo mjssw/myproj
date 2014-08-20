@@ -21,6 +21,7 @@ public:
 	void AgreeJoinGroup(u64 groupid);
 	void ChatMessage(u64 groupid, const std::string &text);
 	void ChatHistory(u64 groupid, s64 idxfrom);
+	void CreateGameRoom(u64 groupid, s32 game);
 
 private:
 	void _LoginGroupResult(sglib::groupproto::SCGroupUserLoginRsp &msg);
@@ -34,6 +35,8 @@ private:
 	void _MemberJoinGroupNtf(sglib::groupproto::SCGroupMemberJoinNtf &msg);
 	void _GroupMessageNtf(sglib::groupproto::SCGroupMessageNtf &msg);
 	void _GroupHistoryMessage(sglib::groupproto::SCGroupMessageHistoryRsp &msg);
+	void _GroupCreateGameRoomResult(sglib::groupproto::SCGroupCreateGameRoomRsp &msg);
+	void _GroupMemberCreateGameRoomNtf(sglib::groupproto::SCGroupCreateGameRoomNtf &msg);
 };
 
 #endif

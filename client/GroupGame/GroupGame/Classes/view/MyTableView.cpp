@@ -160,6 +160,18 @@ void CMyTableView::RemoveElementAtIndex(int idx)
 	m_tableView->reloadData();
 }
 
+void CMyTableView::SetDirection(bool isHorizontal)
+{
+	if( isHorizontal )
+	{
+		m_tableView->setDirection( ScrollView::Direction::HORIZONTAL );
+	}
+	else
+	{
+		m_tableView->setDirection( ScrollView::Direction::VERTICAL );
+	}
+}
+
 /*
 void CMyTableView::draw()
 {
