@@ -11,6 +11,8 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/utils.cpp \
 				   ../../Classes/gamemsg/MsgGroupModule.cpp \
 				   ../../Classes/gamemsg/MsgLoginModule.cpp \
+				   ../../Classes/lua/DynamicProto.cpp \
+				   ../../Classes/lua/ExportProtobuf.cpp \
 				   ../../Classes/net/GameClient.cpp \
 				   ../../Classes/net/GroupClient.cpp \
 				   ../../Classes/net/LoginClient.cpp \
@@ -27,6 +29,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 				   ../../Classes/user/GroupMember.cpp \
 				   ../../Classes/user/UserManager.cpp \
 				   ../../Classes/user/ViewData.cpp \
+				   ../../Classes/user/GameRoomInfo.cpp \
 				   ../../Classes/res/ResManager.cpp \
 				   ../../Classes/view/AskJoinGroupPopLayer.cpp \
 				   ../../Classes/view/ChatTableView.cpp \
@@ -40,6 +43,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 				   ../../Classes/view/MyTableView.cpp \
 				   ../../Classes/view/PopLayerBase.cpp \
 				   ../../Classes/view/RegisterPopLayer.cpp \
+				   ../../Classes/view/CreateGamePopLayer.cpp \
 				   ../../../../../sglib/Event.cpp \
                    ../../../../../sglib/Lock.cpp \
                    ../../../../../sglib/Thread.cpp \
@@ -85,7 +89,9 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../../../third_part/protobuf-android/include/google/protobuf/stubs/stringprintf.cc \
                    ../../../../../third_part/protobuf-android/include/google/protobuf/stubs/structurally_valid.cc \
                    ../../../../../third_part/protobuf-android/include/google/protobuf/stubs/strutil.cc \
-                   ../../../../../third_part/protobuf-android/include/google/protobuf/stubs/substitute.cc
+                   ../../../../../third_part/protobuf-android/include/google/protobuf/stubs/substitute.cc \
+				   ../../../../../third_part/protobuf-android/include/google/protobuf/compiler/importer.cc \
+				   ../../../../../third_part/protobuf-android/include/google/protobuf/compiler/parser.cc
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
 $(LOCAL_PATH)/../../../../../sglib \
