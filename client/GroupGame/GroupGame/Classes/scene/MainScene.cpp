@@ -72,6 +72,11 @@ void CMainScene::UpdateView(int type)
 			_GameRoomUpdate();
 		}
 		break;
+	case CSceneManager::E_UpdateType_ConnectGame:
+		{
+			_ConnectGameSuccess();
+		}
+		break;
 	default:
 		CCLog( "[CMainScene::UpdateView] unknown type:%d", type );
 		break;
@@ -204,9 +209,8 @@ void CMainScene::menuTestCallback(Object *pSender)
 	//LuaEngine::getInstance()->reload("tetris/lua/main.lua");
 
 	// test room list
-	CUserManager::Instance().GetGameRoomList().AddGameRoomInfo(
-		10, 1, "sjj1", "127.0.0.1", 123, 111, "" );
-	_GameRoomUpdate();
+	//CUserManager::Instance().GetGameRoomList().AddGameRoomInfo( 10, 1, "sjj1", "127.0.0.1", 123, 111, "" );
+	//_GameRoomUpdate();
 }
 
 void CMainScene::menuRadioButtonGroupCallback(Object *pSender)
@@ -378,6 +382,10 @@ void CMainScene::GroupListTouchedCallback(Node *pSender, void *data)
 				group->GetChatHistory() );
 			m_chatTableView->InsertUpdate();
 		}
+		if( m_pGameRoomList )
+		{
+			_GameRoomUpdate();
+		}
 	}
 }
 
@@ -389,6 +397,17 @@ void CMainScene::GameRoomListTouchedCallback(Node *pSender, void *data)
 		CGameRoomInfo *info = (CGameRoomInfo*)data;
 		CCLog( "try enter game:%d ip:%s port:%d room:%d",
 			info->m_gameid, info->m_ip.c_str(), info->m_port, info->m_roomid);
+
+		bool ret = CNetManager::Instance().StartGame( info->m_ip.c_str(), info->m_port );
+		if( !ret )
+		{
+			CCLog( "[CMainScene::GameRoomListTouchedCallback][ERROR] connect game(%d:%s:%d) failed",
+				info->m_gameid, info->m_ip.c_str(), info->m_port );
+		}
+		else
+		{
+			CUserManager::Instance().GetViewData().SetCurGameRoom( info );
+		}
 	}
 }
 
@@ -404,6 +423,11 @@ int CMainScene::GobackHome(lua_State *ls)
 	{
 		director->runWithScene( home );
 	}
+
+	// 断开游戏连接，清理各类资源
+	CNetManager::Instance().CloseGameConn();
+	CNetManager::Instance().SetGameClientInstance( NULL );
+	CUserManager::Instance().GetViewData().SetCurGameRoom( NULL );
 
 	return 0;
 }
@@ -1067,13 +1091,15 @@ void CMainScene::_AddChatContent(u64 groupid, const std::string &user, const std
 	}
 }
 
-extern void DumpRoomList(CGameRoomList &roomList, std::vector<TableViewData> &vecData);
+extern void DumpRoomList(u64 groupid, CGameRoomList &roomList, std::vector<TableViewData> &vecData);
 void CMainScene::_GameRoomUpdate()
 {
-	if( m_pGameRoomList )
+	if( m_pGameRoomList && CUserManager::Instance().GetViewData().GetSelectGroup() )
 	{
 		vector<TableViewData> vecData;
-		DumpRoomList( CUserManager::Instance().GetGameRoomList(), vecData );
+		DumpRoomList( 
+			CUserManager::Instance().GetViewData().GetSelectGroup()->GetId(),
+			CUserManager::Instance().GetGameRoomList(), vecData );
 		m_pGameRoomList->UpdateElements( vecData );
 	}
 }
@@ -1086,4 +1112,15 @@ void CMainScene::_AddGameRoomList(cocos2d::Node &parent, Size &lstSz, Size &cell
 	m_pGameRoomList->SetPosition( ccp(lstSz.width/2, lstSz.height/2 + 10) );
 	m_pGameRoomList->SetTouchCallback( callfuncND_selector(CMainScene::GameRoomListTouchedCallback), this );
 	parent.addChild( m_pGameRoomList );
+}
+
+void CMainScene::_ConnectGameSuccess()
+{
+	int gameid = CUserManager::Instance().GetViewData().GetCurGameRoom()->m_gameid; 
+	CCLog( "CMainScene::_ConnectGameSuccess game:%d", gameid );
+
+	string dir,name,icon;
+	CUserManager::Instance().GetGameInfo(gameid, dir, icon, name);
+	string gamelua = dir + "/lua/main.lua";
+	LuaEngine::getInstance()->reload( gamelua.c_str() );
 }

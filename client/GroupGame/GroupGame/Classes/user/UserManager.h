@@ -33,6 +33,13 @@ public:
 
 	bool LoadPublicScripts();
 	void GetGameInfo(int gameid, std::string &dir, std::string &icon, std::string &name);
+	void RegisterLuaInterface();
+
+public:
+	// for lua interface
+	static int GetUser(lua_State *ls);
+	static int GetToken(lua_State *ls);
+	static int GetRoomId(lua_State *ls);
 
 private:
 	std::string m_token;

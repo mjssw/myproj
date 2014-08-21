@@ -53,6 +53,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 		return false;
 	}
 	CSceneManager::Instance();
+	CUserManager::Instance().RegisterLuaInterface();
     
 	LuaEngine* engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);

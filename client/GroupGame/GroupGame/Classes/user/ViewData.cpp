@@ -1,10 +1,12 @@
+#include "user/GameRoomInfo.h"
 #include "ViewData.h"
 using namespace std;
 
 CUserViewData::CUserViewData() : 
 	m_isSavePwd( false ),
 	m_isAutoLogin( false ),
-	m_selectGroup( 0 )
+	m_selectGroup( 0 ),
+	m_curGameRoom( NULL )
 {
 }
 
@@ -123,4 +125,14 @@ Chatmsg* CUserViewData::GetTopChatMsg()
 void CUserViewData::PopChatMsg()
 {
 	m_chatmsg.pop_front();
+}
+
+void CUserViewData::SetCurGameRoom(CGameRoomInfo *room)
+{
+	m_curGameRoom = room;
+}
+
+CGameRoomInfo* CUserViewData::GetCurGameRoom()
+{
+	return m_curGameRoom;
 }

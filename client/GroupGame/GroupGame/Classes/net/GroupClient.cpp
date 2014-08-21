@@ -171,13 +171,15 @@ int CGroupClient::OnRecv(char *buf, int len)
 				{
 					_GroupHistoryMessage( msg );
 				}
-				// TODO test
+				// test
+				/*
 				CCLog( "---------- begin LuaProcessGameMessage -----------" );
 				CNetManager::Instance().LuaProcessGameMessage(
 					sglib::msgid::SC_GROUP_MESSAGE_HISTORY_RSP,
 					pkgLen-MSG_ID_LEN-MSG_HEAD_LEN,
 					pbuf+MSG_ID_LEN+MSG_HEAD_LEN );
 				CCLog( "---------- end LuaProcessGameMessage -----------" );
+				//*/
 			}break;
 		default:
 			break;

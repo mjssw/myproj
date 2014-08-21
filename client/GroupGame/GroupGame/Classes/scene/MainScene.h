@@ -79,6 +79,7 @@ private:
 	void _AddChatContent(u64 groupid, const std::string &user, const std::string &text, bool isSelf);
 	void _GameRoomUpdate();
 	void _AddGameRoomList(cocos2d::Node &parent, cocos2d::Size &lstSz, cocos2d::Size &cellSz);
+	void _ConnectGameSuccess();
 
 private:
 	int m_mainViewOffX;

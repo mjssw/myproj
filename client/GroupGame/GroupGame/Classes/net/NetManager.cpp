@@ -216,9 +216,7 @@ int CNetManager::SendGameMessage(lua_State *ls)
 	else
 	{
 		int msgid = (int)lua_tonumber( ls, 2 );
-
-		// TODO here should be gameclient
-		Instance().GetGroupClientInstance()->SendMsg( *msg, msgid );
+		Instance().GetGameClientInstance()->SendMsg( *msg, msgid );
 	}
 	lua_pushinteger( ls, ret );
 	delete msg;

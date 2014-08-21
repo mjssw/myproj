@@ -52,10 +52,12 @@ public:
 	void SetChatText(const std::string &text);
 	const std::string& GetChatText();
 
-
 	void PushChatMsg(u64 groupid, const std::string &sender, const std::string &content);
 	Chatmsg* GetTopChatMsg();
 	void PopChatMsg();
+
+	void SetCurGameRoom(CGameRoomInfo *room);
+	CGameRoomInfo* GetCurGameRoom();
 
 private:
 	bool m_isSavePwd;
@@ -74,6 +76,8 @@ private:
 	
 
 	std::deque<Chatmsg> m_chatmsg;
+
+	CGameRoomInfo *m_curGameRoom;
 };
 
 #endif

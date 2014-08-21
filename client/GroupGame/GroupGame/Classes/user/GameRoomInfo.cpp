@@ -67,7 +67,7 @@ const std::map<s32, std::map<s32, CGameRoomInfo*> >& CGameRoomList::GetRooms()
 	return m_gameRooms;
 }
 
-void DumpRoomList(CGameRoomList &roomList, std::vector<TableViewData> &vecData)
+void DumpRoomList(u64 groupid, CGameRoomList &roomList, std::vector<TableViewData> &vecData)
 {
 	vecData.clear();
 	const map<s32, map<s32, CGameRoomInfo*> > &rooms = roomList.GetRooms();
@@ -77,6 +77,11 @@ void DumpRoomList(CGameRoomList &roomList, std::vector<TableViewData> &vecData)
 		map<s32, CGameRoomInfo*>::const_iterator _it = it->second.begin();
 		for( ; _it != it->second.end(); ++_it )
 		{
+			if( _it->second->m_groupid != groupid )
+			{
+				continue;
+			}
+
 			TableViewData data;
 
 			string dir,name,icon;

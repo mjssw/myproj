@@ -155,6 +155,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\cocos2d-x\external\websockets\prebuilt\win32\
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\gamemsg\MsgBase.h" />
     <ClInclude Include="..\Classes\CommDef.h" />
+    <ClInclude Include="..\Classes\gamemsg\MsgGameModule.h" />
     <ClInclude Include="..\Classes\gamemsg\MsgGroupModule.h" />
     <ClInclude Include="..\Classes\gamemsg\MsgLoginModule.h" />
     <ClInclude Include="..\Classes\lua\DynamicProto.h" />
@@ -215,6 +216,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\cocos2d-x\external\websockets\prebuilt\win32\
     <ClCompile Include="..\..\..\..\sglib\StackTrace.cpp" />
     <ClCompile Include="..\..\..\..\sglib\Thread.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\gamemsg\MsgGameModule.cpp" />
     <ClCompile Include="..\Classes\gamemsg\MsgGroupModule.cpp" />
     <ClCompile Include="..\Classes\gamemsg\MsgLoginModule.cpp" />
     <ClCompile Include="..\Classes\lua\DynamicProto.cpp" />

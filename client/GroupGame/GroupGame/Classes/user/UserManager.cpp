@@ -1,5 +1,8 @@
+#include "base/CCScriptSupport.h"
+#include "CCLuaEngine.h"
 #include "UserManager.h"
 using namespace std;
+using namespace cocos2d;
 
 extern "C"
 {
@@ -95,4 +98,35 @@ void CUserManager::GetGameInfo(int gameid, std::string &dir, std::string &icon, 
 	}
 
 	lua_pop( m_pbState, lua_gettop(m_pbState) );
+}
+
+void CUserManager::RegisterLuaInterface()
+{
+	lua_register(LuaEngine::getInstance()->getLuaStack()->getLuaState(), "GetUser", GetUser );
+	lua_register(LuaEngine::getInstance()->getLuaStack()->getLuaState(), "GetToken", GetToken );
+	lua_register(LuaEngine::getInstance()->getLuaStack()->getLuaState(), "GetRoomId", GetRoomId );
+}
+
+// ------------------------------------------------------------------
+
+int CUserManager::GetUser(lua_State *ls)
+{
+	lua_pushstring( ls, Instance().GetBasic().GetUser().c_str() );
+	return 1;
+}
+
+int CUserManager::GetToken(lua_State *ls)
+{
+	lua_pushstring( ls, Instance().GetToken().c_str() );
+	return 1;
+}
+
+int CUserManager::GetRoomId(lua_State *ls)
+{
+	if( Instance().GetViewData().GetCurGameRoom() )
+	{
+		lua_pushnumber( ls, Instance().GetViewData().GetCurGameRoom()->m_roomid );
+		return 1;
+	}
+	return 0;
 }

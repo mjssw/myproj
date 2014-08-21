@@ -241,6 +241,9 @@
     <ClInclude Include="..\Classes\view\TableViewData.h">
       <Filter>view</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\gamemsg\MsgGameModule.h">
+      <Filter>gamemsg</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -404,6 +407,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\user\GameRoomInfo.cpp">
       <Filter>user</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\gamemsg\MsgGameModule.cpp">
+      <Filter>gamemsg</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

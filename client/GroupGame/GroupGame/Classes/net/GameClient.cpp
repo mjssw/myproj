@@ -1,6 +1,10 @@
+#include "cocos2d.h"
 #include "GameClient.h"
 #include "CommDef.h"
+#include "gamemsg/MsgGameModule.h"
+#include "NetManager.h"
 using namespace SGLib;
+using namespace cocos2d;
 
 CGameClient::CGameClient(s32 id) : 
 	CProtoClientBase( id )
@@ -26,10 +30,15 @@ int CGameClient::OnRecv(char *buf, int len)
 		}
 
 		int _id = *((int*)( pbuf + MSG_HEAD_LEN ));
-		switch( _id )
+
+		CMsgBase *msg = new CMsgGameMessage(_id, pkgLen-MSG_ID_LEN-MSG_HEAD_LEN, pbuf+MSG_ID_LEN+MSG_HEAD_LEN );
+		if( msg )
 		{
-		default:
-			break;
+			CNetManager::Instance().PushMessage( msg );
+		}
+		else
+		{
+			CCLog( "[ERROR][CMsgGameMessage] new msg failed. msgid=%d", _id );
 		}
 
 		procLen = (pkgLen);
@@ -43,6 +52,17 @@ int CGameClient::OnRecv(char *buf, int len)
 
 void CGameClient::OnConnect()
 {
+	CCLog( "[CGameClient::OnConnect] success" );
+	CNetManager::Instance().SetGameClientInstance( this );
+
+	CMsgBase *msg = new CMsgConnectGame();
+	if( !msg )
+	{
+		CCLog( "[CGameClient::OnConnect] new msg failed" );
+		return;
+	}
+
+	CNetManager::Instance().PushMessage( msg );
 }
 
 void CGameClient::OnClose()
