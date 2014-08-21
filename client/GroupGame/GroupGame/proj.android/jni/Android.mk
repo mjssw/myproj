@@ -11,6 +11,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/utils.cpp \
 				   ../../Classes/gamemsg/MsgGroupModule.cpp \
 				   ../../Classes/gamemsg/MsgLoginModule.cpp \
+				   ../../Classes/gamemsg/MsgGameModule.cpp \
 				   ../../Classes/lua/DynamicProto.cpp \
 				   ../../Classes/lua/ExportProtobuf.cpp \
 				   ../../Classes/net/GameClient.cpp \
