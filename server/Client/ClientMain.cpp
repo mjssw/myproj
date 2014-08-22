@@ -301,14 +301,15 @@ extern void TestForTestServer(const char *ip, int port, int clientNum, int freq)
 extern void TestForIoService(const char *ip, int port, int clientNum, int freq);
 int main(int argc, char *argv[])
 {
+    /*
 	if( argc == 3 )
 	{
 		TestGroupGame( argv[1], atoi(argv[2]) );
 		return 0;
 	}
 	return 0;
+    //*/
 
-	/*
 	testtime();
 	if( argc == 5 )
 	{

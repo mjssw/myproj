@@ -235,7 +235,12 @@ bool CIoServiceEx::CEpoolWaitInterrupter::Init(s32 epollfd)
     }
 
     uint64_t counter(1UL);
-    write( m_fdWrite, &counter, sizeof(uint64_t) );
+    s32 wl = (s32)write( m_fdWrite, &counter, sizeof(uint64_t) );
+    if( wl != sizeof(uint64_t) )
+    {
+		CLog::ErrorLog( "CIoServiceEx::CEpoolWaitInterrupter::Init->write Error %d!=%d", 
+            wl, sizeof(uint64_t) );
+    }
 
     return true;
 }

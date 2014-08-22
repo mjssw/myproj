@@ -31,7 +31,7 @@ void CConnectorEx::Stop()
 void CConnectorEx::Connect(const char *ip, s32 port)
 {
 	CLog::DebugLog( "CConnectorEx::Connect %s:%d ", ip, port );
-	CConnectObj *connObj;
+	CConnectObj *connObj = NULL;
 	if( !m_freeConnQueue.Pop( connObj ) )
 	{
 		connObj = new CConnectObj( this );

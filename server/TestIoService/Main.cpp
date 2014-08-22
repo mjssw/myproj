@@ -225,15 +225,15 @@ void TimerCallBackFunc(void *pData, s32 nDataLen)
 
 void testBasicServer(s32 listenport, s32 nouse, s32 bufsize, s32 maxcount)
 {
-	CBasicServerEx<CSession> server(1,maxcount,bufsize,bufsize);
+	CBasicServerEx<CSession> server(6,maxcount,bufsize,bufsize);
 	bool ret = server.Start();
 	if( !ret ) return;
 	ret = server.StartListen( listenport );
 
-	CTimer<5> timer;
-	ret = timer.Start();
-	if( !ret ) return;
-	timer.AddTimer( 10000, TimerCallBackFunc, NULL, 0, true );
+	//CTimer<5> timer;
+	//ret = timer.Start();
+	//if( !ret ) return;
+	//timer.AddTimer( 10000, TimerCallBackFunc, NULL, 0, true );
 
 	printf( "Server start:%d. press enter to quit\n", (ret?1:0) );
 	while(1)
@@ -282,7 +282,7 @@ void testBasicServer(s32 listenport, s32 nouse, s32 bufsize, s32 maxcount)
 		}
 	}
 
-	timer.Stop();
+	//timer.Stop();
 	server.Stop();
 }
 
@@ -442,19 +442,21 @@ void TestTimer(int tcount)
 
 int main(int argc, char *argv[])
 {
+    /*
 	if( argc == 2 )
 	{
 		TestTimer( atoi(argv[1]) ); 
 		return 0;
 	}
 	return 0;
+    //*/
 
 	//testCycleBuffer(); getchar(); return 0;
 
 	if( argc == 5 )
 	{
-		testAdvServer( atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4]) );
-		//testBasicServer( atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4]) );
+		//testAdvServer( atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4]) );
+		testBasicServer( atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4]) );
 		//testOldServer( atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4]) );
 	}
 	else
