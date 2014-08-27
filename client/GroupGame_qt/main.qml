@@ -18,6 +18,7 @@ ApplicationWindow {
         source: "res/topbar.png";
         anchors.top : parent.top;
         width: parent.width;
+        z: 0.9;
     }
 
     Image  {
@@ -26,10 +27,88 @@ ApplicationWindow {
         anchors.left: parent.left;
         anchors.bottom : parent.bottom;
         width: parent.width;
+        z: 0.9;
     }
 
-    ListModel {
-        id: grouplist;
+    Rectangle{
+        id: rectlist;
+        anchors.top: titlebar.bottom;
+        anchors.bottom: toolbar.bottom;
+        anchors.left: parent.left;
+        anchors.right:parent.right;
+        //color: "#787878"
+        color: "#FFFFFF"
+        z: 0.5;
+
+        ListModel {
+            id: grouplist;
+            ListElement{
+                name:"abc";
+                phone:"123"
+            }
+            ListElement{
+                name:"xyz";
+                phone:"456"
+            }
+            ListElement{
+                name:"xyz";
+                phone:"456"
+            }
+            ListElement{
+                name:"xyz";
+                phone:"456"
+            }
+            ListElement{
+                name:"xyz";
+                phone:"456"
+            }
+            ListElement{
+                name:"xyz";
+                phone:"456"
+            }
+            ListElement{
+                name:"xyz";
+                phone:"456"
+            }
+        }
+
+        Component {
+            id: groupdelegate
+            Item {
+                width: wnd.width;
+                height: 90
+                Image {
+                    id: icon
+                    source: "res/groupdefault.png";
+                }
+                Text {
+                    id: nameField;
+                    text: name
+                    anchors.left: icon.right
+                }
+                Text {
+                    text: '\t PHONE:' + phone;
+                    anchors.left: nameField.right
+                }
+
+
+            }
+        }
+
+        ListView {
+            anchors.fill: parent
+            model: grouplist
+            delegate: groupdelegate
+        }
+    }
+
+    Label {
+        text: "好友";
+        font.pixelSize: 35;
+        font.weight: Font.Black;
+        color: "white";
+        anchors.centerIn: titlebar;
+        z: 1.0;
     }
 
     function pall()
@@ -41,7 +120,8 @@ ApplicationWindow {
     }
 
     Row{
-        anchors.centerIn: toolbar
+        anchors.centerIn: toolbar;
+        z: 1.0;
 
         Button {
             id: friendbtn

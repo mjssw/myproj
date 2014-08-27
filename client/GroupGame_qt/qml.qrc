@@ -11,5 +11,6 @@
         <file>res/find_2.png</file>
         <file>res/more_1.png</file>
         <file>res/more_2.png</file>
+        <file>res/groupdefault.png</file>
     </qresource>
 </RCC>
