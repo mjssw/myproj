@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>res/topbar.png</file>
+        <file>res/bottombar.png</file>
+        <file>res/friend_1.png</file>
+        <file>res/friend_2.png</file>
+        <file>res/game_1.png</file>
+        <file>res/game_2.png</file>
+        <file>res/find_1.png</file>
+        <file>res/find_2.png</file>
+        <file>res/more_1.png</file>
+        <file>res/more_2.png</file>
+    </qresource>
+</RCC>
