@@ -42,24 +42,22 @@ ApplicationWindow {
 
     Row{
         anchors.centerIn: toolbar
-        anchors.verticalCenterOffset: -toolbar.height/8;
-        spacing: toolbar.width/8
 
         Button {
             id: friendbtn
             style: ButtonStyle {
                 panel: Item {
-                    implicitHeight: 50
-                    implicitWidth: 50
+                    implicitHeight: toolbar.height
+                    implicitWidth: toolbar.width/4
                     BorderImage {
-                        anchors.left: parent.left;
-                        anchors.bottom: parent.bottom;
-                        source: control.pressed ? "res/friend_2.png" : "res/friend_1.png"
+                        anchors.top : parent.top;
+                        anchors.topMargin: toolbar.height/6;
+                        anchors.horizontalCenter: parent.horizontalCenter;
+                        source: friendbtn.pressed ? "res/friend_2.png" : "res/friend_1.png"
                         Text {
                             text: "朋友"
-                            anchors.horizontalCenter: parent.horizontalCenter;
                             anchors.top: parent.bottom;
-                            anchors.topMargin: 5;
+                            anchors.horizontalCenter: parent.horizontalCenter;
                             color: control.pressed ? "white" : "#929292"
                             font.pixelSize: 20
                             renderType: Text.NativeRendering
@@ -74,17 +72,17 @@ ApplicationWindow {
             id: gamebtn
             style: ButtonStyle {
                 panel: Item {
-                    implicitHeight: 50
-                    implicitWidth: 50
+                    implicitHeight: toolbar.height
+                    implicitWidth: toolbar.width/4
                     BorderImage {
-                        anchors.left: parent.left;
-                        anchors.bottom: parent.bottom;
+                        anchors.top : parent.top;
+                        anchors.topMargin: toolbar.height/6;
+                        anchors.horizontalCenter: parent.horizontalCenter;
                         source: control.pressed ? "res/game_2.png" : "res/game_1.png"
                         Text {
                             text: "游戏"
-                            anchors.horizontalCenter: parent.horizontalCenter;
                             anchors.top: parent.bottom;
-                            anchors.topMargin: 5;
+                            anchors.horizontalCenter: parent.horizontalCenter;
                             color: control.pressed ? "white" : "#929292"
                             font.pixelSize: 20
                             renderType: Text.NativeRendering
@@ -99,17 +97,17 @@ ApplicationWindow {
             id: findbtn
             style: ButtonStyle {
                 panel: Item {
-                    implicitHeight: 50
-                    implicitWidth: 50
+                    implicitHeight: 100
+                    implicitWidth: toolbar.width/4
                     BorderImage {
-                        anchors.left: parent.left;
-                        anchors.bottom: parent.bottom;
+                        anchors.top : parent.top;
+                        anchors.topMargin: toolbar.height/6;
+                        anchors.horizontalCenter: parent.horizontalCenter;
                         source: control.pressed ? "res/find_2.png" : "res/find_1.png"
                         Text {
                             text: "发现"
-                            anchors.horizontalCenter: parent.horizontalCenter;
                             anchors.top: parent.bottom;
-                            anchors.topMargin: 5;
+                            anchors.horizontalCenter: parent.horizontalCenter;
                             color: control.pressed ? "white" : "#929292"
                             font.pixelSize: 20
                             renderType: Text.NativeRendering
@@ -124,17 +122,17 @@ ApplicationWindow {
             id: morebtn
             style: ButtonStyle {
                 panel: Item {
-                    implicitHeight: 50
-                    implicitWidth: 50
+                    implicitHeight: 100
+                    implicitWidth: toolbar.width/4
                     BorderImage {
-                        anchors.left: parent.left;
-                        anchors.bottom: parent.bottom;
+                        anchors.top : parent.top;
+                        anchors.topMargin: toolbar.height/6;
+                        anchors.horizontalCenter: parent.horizontalCenter;
                         source: control.pressed ? "res/more_2.png" : "res/more_1.png"
                         Text {
                             text: "更多"
-                            anchors.horizontalCenter: parent.horizontalCenter;
                             anchors.top: parent.bottom;
-                            anchors.topMargin: 5;
+                            anchors.horizontalCenter: parent.horizontalCenter;
                             color: control.pressed ? "white" : "#929292"
                             font.pixelSize: 20
                             renderType: Text.NativeRendering
@@ -143,6 +141,6 @@ ApplicationWindow {
                 }
             }
             onClicked: pall();
-        }
+        }//*/
     }
 }
