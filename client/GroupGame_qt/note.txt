@@ -1,0 +1,8 @@
+1. qml中Image 加载图片
+(1) 如果资源已经绑定在qrc中，则直接使用资源的路径及名称即可，如 res/game_1.png
+(2) 如果资源没有在qrc中定义，则需要使用 file:/sdcard/mygame/res/game_1.png 或者 file:./res/game_1.png, 注意可执行文件的执行目录
+
+2. 关于在kind file 1 中不能运行问题，目前在小米1（android 2.3 api-10)环境下是可以正常运行的。
+   暂时忽略kind file 1 这个设备
+
+3. 在项目->运行里面可以生成AndroidManifest.xml文件，并可手动修改参数

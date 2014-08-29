@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>res/topbar.png</file>
+        <file>res/bottombar.png</file>
+    </qresource>
+</RCC>

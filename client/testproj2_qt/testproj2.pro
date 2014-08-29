@@ -2,7 +2,8 @@ TEMPLATE = app
 
 QT += qml quick widgets
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    user/UserManager.cpp
 
 RESOURCES += qml.qrc
 
@@ -16,3 +17,7 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 OTHER_FILES += \
     android/AndroidManifest.xml
+
+HEADERS += \
+    user/UserManager.h \
+    Utils.h
