@@ -2,6 +2,9 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>qml/ImageBtn.qml</file>
+        <file>qml/ChatScene.qml</file>
+        <file>qml/FriendScene.qml</file>
+        <file>qml/LoginScene.qml</file>
         <file>res/topbar.png</file>
         <file>res/bottombar.png</file>
         <file>res/friend_1.png</file>

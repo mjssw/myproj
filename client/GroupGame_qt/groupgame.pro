@@ -16,4 +16,7 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 OTHER_FILES += \
     android/AndroidManifest.xml \
-    qml/ImageBtn.qml
+    qml/ImageBtn.qml \
+    qml/ChatScene.qml \
+    qml/FriendScene.qml \
+    qml/LoginScene.qml
