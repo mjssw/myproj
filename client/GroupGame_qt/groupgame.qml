@@ -5,18 +5,16 @@ import QtQml.Models 2.1
 import "qml"
 
 ApplicationWindow {
-    id: root
-    color: "lightgray"
-    width: 480
-    height: 640
+    id: groupgame
     visible: true
-    property bool printDestruction: false
-
+    width: Qt.platform.os === "android"? Screen.width: 480
+    height: Qt.platform.os === "android"? Screen.height: 640
 
 //! [0]
     Item {
         id: itemModel
-        anchors { fill: parent; bottomMargin: 30 }
+        //anchors { fill: parent; bottomMargin: 30 }
+        anchors { fill: parent;}
 
         function showpage(id)
         {
@@ -40,41 +38,32 @@ ApplicationWindow {
             }
         }
 
-        Rectangle {
+        MainScene {
             id: page1
-            //width: view.width; height: view.height
             anchors { fill: parent;}
-            color: "#FFFEF0"
-            Text { text: "Page 1"; font.bold: true; anchors.centerIn: parent }
             visible:true
             opacity: 1
-            //Component.onDestruction: if (printDestruction) print("destroyed 1")
         }
-        Rectangle {
+
+        LoginScene {
             id: page2
-            //width: view.width; height: view.height
             anchors { fill: parent;}
-            color: "#F0FFF7"
-            Text { text: "Page 2"; font.bold: true; anchors.centerIn: parent }
             visible:false
             opacity: 1
-            //Component.onDestruction: if (printDestruction) print("destroyed 2")
         }
-        Rectangle {
+
+        StartScene{
             id: page3
-            //width: view.width; height: view.height
             anchors { fill: parent;}
-            color: "#F4F0FF"
-            Text { text: "Page 3"; font.bold: true; anchors.centerIn: parent }
             visible:false
             opacity: 1
-            //Component.onDestruction: if (printDestruction) print("destroyed 3")
         }
     }
 
 //! [0]
+    /*
     Rectangle {
-        width: root.width; height: 30
+        width: groupgame.width; height: 30
         anchors { top: itemModel.bottom; bottom: parent.bottom }
         color: "red"
 

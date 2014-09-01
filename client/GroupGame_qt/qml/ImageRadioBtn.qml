@@ -2,10 +2,10 @@ import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 
-Button {
+RadioButton {
     id: btn
     property string btnSource:""
-    style: ButtonStyle {
+    style: RadioButtonStyle {
         panel: Item {
             BorderImage {
                 id: btnimage
@@ -18,9 +18,9 @@ Button {
                     text: btn.text
                     anchors.top: parent.bottom;
                     anchors.horizontalCenter: parent.horizontalCenter;
-                    color: control.pressed ? "white" : "#929292"
+                    color: control.checked ? "white" : "#929292"
                     font.pixelSize: 20
-                    renderType: Text.NativeRendering
+                    //renderType: Text.NativeRendering
                 }
             }
         }

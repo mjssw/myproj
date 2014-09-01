@@ -6,3 +6,5 @@
    暂时忽略kind file 1 这个设备
 
 3. 在项目->运行里面可以生成AndroidManifest.xml文件，并可手动修改参数
+
+3. 小米1的系统 使用 Label 显示中文会乱码，但是使用Text不会（不能设置font的属性才行）,试过几个高版本的android系统是正常的

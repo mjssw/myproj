@@ -1,10 +1,20 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>qml/ImageBtn.qml</file>
-        <file>qml/ChatScene.qml</file>
-        <file>qml/FriendScene.qml</file>
+        <file>groupgame.qml</file>
+
         <file>qml/LoginScene.qml</file>
+        <file>qml/StartScene.qml</file>
+        <file>qml/MainScene.qml</file>
+
+        <file>qml/FriendView.qml</file>
+        <file>qml/GameView.qml</file>
+        <file>qml/FindView.qml</file>
+        <file>qml/MoreView.qml</file>
+
+        <file>qml/ChatView.qml</file>
+
+        <file>qml/ImageRadioBtn.qml</file>
+
         <file>res/topbar.png</file>
         <file>res/bottombar.png</file>
         <file>res/friend_1.png</file>
@@ -16,5 +26,10 @@
         <file>res/more_1.png</file>
         <file>res/more_2.png</file>
         <file>res/groupdefault.png</file>
+        <file>res/start.png</file>
+        <file>res/loginbg.png</file>
+        <file>res/user.png</file>
+        <file>res/password.png</file>
+        <file>res/loginbtn.png</file>
     </qresource>
 </RCC>
