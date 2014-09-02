@@ -5,7 +5,8 @@ import QtQuick.Controls.Styles 1.2
 Item {
     id: loginscene;
     anchors.fill: parent
-    BorderImage{
+
+    BorderImage {
         id: loginbg
         anchors.fill : parent
         source: "../res/loginbg.png"
@@ -26,7 +27,7 @@ Item {
         }
     }
 
-    Image{
+    Image {
         id: userinput
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
@@ -42,7 +43,7 @@ Item {
         }
     }
 
-    Image{
+    Image {
         id: passinput
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: userinput.bottom
@@ -59,7 +60,7 @@ Item {
         }
     }
 
-    Image{
+    Image {
         id: loginbtn
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top:passinput.bottom
@@ -75,8 +76,7 @@ Item {
             id: clickarea
             anchors.fill: parent
             onClicked: {
-                console.log("press login btn")
-
+                console.debug("press login btn")
             }
         }
     }

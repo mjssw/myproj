@@ -11,6 +11,10 @@ Item {
     property int gameIdx: 2
     property int findIdx: 3
     property int moreIdx: 4
+    property string friendtext: qsTr("朋友")
+    property string gametext: qsTr("游戏")
+    property string findtext: qsTr("发现")
+    property string moretext: qsTr("更多")
 
     Image {
         id: titlebar;
@@ -23,14 +27,35 @@ Item {
     Image  {
         id: toolbar;
         source: "../res/bottombar.png";
-        anchors.left: parent.left;
         anchors.bottom : parent.bottom;
         width: parent.width;
         z: 0.9;
-        //opacity: 0.5
+    }
+
+    Image {
+        id: backbtn
+        visible: false
+        anchors.verticalCenter: titlebar.verticalCenter
+        anchors.left: titlebar.left
+        anchors.leftMargin: 30
+        source: mouse.pressed ? "../res/back_2.png" : "../res/back_1.png"
+        z: 1
+
+        signal clicked
+        onClicked: {
+            backToGroupList()
+        }
+        MouseArea {
+            id: mouse
+            anchors.fill: parent
+            onClicked: {
+                backbtn.clicked()
+            }
+        }
     }
 
     GroupBox {
+        id: gbid
         flat:true
         anchors.fill: toolbar;
         z: 1.0;
@@ -45,7 +70,7 @@ Item {
                 implicitHeight:parent.height
                 implicitWidth: parent.width/4
                 anchors.topMargin:parent.height/10
-                text: qsTr("朋友")
+                text: mainscene.friendtext
                 checked: true
                 btnSource: checked ? "../res/friend_2.png" : "../res/friend_1.png"
                 onClicked: clickViewBtn(friendIdx)
@@ -57,7 +82,7 @@ Item {
                 implicitHeight:parent.height
                 implicitWidth: parent.width/4
                 anchors.topMargin:parent.height/10
-                text: qsTr("游戏")
+                text: mainscene.gametext
                 btnSource: checked ? "../res/game_2.png" : "../res/game_1.png"
                 onClicked: clickViewBtn(gameIdx)
             }
@@ -68,7 +93,7 @@ Item {
                 implicitHeight:parent.height
                 implicitWidth: parent.width/4
                 anchors.topMargin:parent.height/10
-                text: qsTr("发现")
+                text: mainscene.findtext
                 btnSource: checked ? "../res/find_2.png" : "../res/find_1.png"
                 onClicked: clickViewBtn(findIdx)
             }
@@ -79,24 +104,12 @@ Item {
                 implicitHeight:parent.height
                 implicitWidth: parent.width/4
                 anchors.topMargin:parent.height/10
-                text: qsTr("更多")
+                text: mainscene.moretext
                 btnSource: checked ? "../res/more_2.png" : "../res/more_1.png"
                 onClicked: clickViewBtn(moreIdx)
             }
             //*/
         }
-    }
-
-    function clickViewBtn(viewidx)
-    {
-        console.log("clickviewbtn:", viewidx)
-        views.showView(viewidx)
-    }
-
-    function addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
-    {
-        console.log("mainscene addGroup")
-        views.addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
     }
 
     Text {
@@ -114,7 +127,24 @@ Item {
         anchors.top: titlebar.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        anchors.bottom: toolbar.top
+
+        FriendView{
+            id: friendview
+            chatHeight: mainscene.height-titlebar.height
+        }
+
+        GameView{
+            id: gameview
+        }
+
+        FindView{
+            id: findview
+        }
+
+        MoreView{
+            id: moreview
+        }
 
         function invisableAll()
         {
@@ -131,45 +161,76 @@ Item {
             if( viewidx === friendIdx)
             {
                 friendview.visible = true;
-                parent.labeltext = qsTr("朋友")
+                parent.labeltext = mainscene.findtext
             }
             else if(viewidx === gameIdx)
             {
                 gameview.visible = true;
-                parent.labeltext = qsTr("游戏")
+                parent.labeltext = mainscene.gametext
             }
             else if(viewidx === findIdx)
             {
                 findview.visible = true;
-                parent.labeltext = qsTr("发现")
+                parent.labeltext = mainscene.findtext
             }
             else if(viewidx === moreIdx)
             {
                 moreview.visible = true;
-                parent.labeltext = qsTr("更多")
+                parent.labeltext = mainscene.moretext
             }
         }
 
         function addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
         {
-            console.log("mainscene addGroup")
+            console.debug("mainscene addGroup 2")
             friendview.addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
         }
 
-        FriendView{
-            id: friendview
+        function clickGroup(index, groupname)
+        {
+            console.debug("mainscene views clickGroup idx=", index, "groupname=", groupname)
+            parent.clickGroup(index, groupname)
         }
 
-        GameView{
-            id: gameview
+        function backToGroupList()
+        {
+            console.debug("views backToGroupList")
+            friendview.backToGroupList()
         }
+    }
 
-        FindView{
-            id: findview
-        }
+    function clickViewBtn(viewidx)
+    {
+        console.debug("clickviewbtn:", viewidx)
+        views.showView(viewidx)
+    }
 
-        MoreView{
-            id: moreview
-        }
+    function addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
+    {
+        console.debug("mainscene addGroup")
+        views.addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
+    }
+
+    function showGroupComponts(isshow)
+    {
+        toolbar.visible=isshow
+        //views.visible=isshow
+        gbid.visible=isshow
+        backbtn.visible=(!isshow)
+    }
+
+    function clickGroup(index, groupname)
+    {
+        console.debug("mainscene clickGroup idx=", index, " groupname=", groupname)
+        showGroupComponts(false)
+        labeltext=groupname
+    }
+
+    function backToGroupList()
+    {
+        console.debug("backToGroupList")
+        showGroupComponts(true)
+        labeltext=mainscene.friendtext
+        views.backToGroupList()
     }
 }

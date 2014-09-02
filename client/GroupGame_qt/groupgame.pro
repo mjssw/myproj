@@ -24,4 +24,5 @@ OTHER_FILES += \
     qml/GameView.qml \
     qml/FindView.qml \
     qml/MoreView.qml \
-    qml/ImageRadioBtn.qml
+    qml/ImageRadioBtn.qml \
+    qml/GroupView.qml

@@ -11,10 +11,10 @@ ApplicationWindow {
     width: Qt.platform.os === "android"? Screen.width: 480
     height: Qt.platform.os === "android"? Screen.height: 640
 
-    Rectangle{
-        anchors.fill: parent
-        color: "white"
-    }
+//    Rectangle{
+//        anchors.fill: parent
+//        color: "white"
+//    }
 
     Item {
         id: itemModel
@@ -59,21 +59,18 @@ ApplicationWindow {
             id: mainscene
             anchors { fill: parent;}
             visible:true
-            opacity: 1
         }
 
         LoginScene {
             id: loginscene
             anchors { fill: parent;}
             visible:false
-            opacity: 1
         }
 
         StartScene{
             id: startscene
             anchors { fill: parent;}
             visible:false
-            opacity: 1
         }
     }
 
@@ -99,7 +96,7 @@ ApplicationWindow {
                         width: 20; height: 20
                         anchors.centerIn: parent
                         onClicked: {
-                            console.log("indx=", index)
+                            console.debug("indx=", index)
                             itemModel.testfunc(index+1)
                         }
                     }
