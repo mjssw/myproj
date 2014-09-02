@@ -11,6 +11,11 @@ ApplicationWindow {
     width: Qt.platform.os === "android"? Screen.width: 480
     height: Qt.platform.os === "android"? Screen.height: 640
 
+    Rectangle{
+        anchors.fill: parent
+        color: "white"
+    }
+
     Item {
         id: itemModel
         //anchors { fill: parent;}

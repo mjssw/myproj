@@ -21,7 +21,15 @@ Item {
             id: groupitem
             width: grouplist.width
             height: friendview.groupItemHeight
-            clip: true
+
+            //clip: true
+            signal clicked
+
+            Rectangle {
+                anchors.fill: parent
+                color: "lightgray"
+                visible: mouse.pressed
+            }
 
             // 群头像
             Image {
@@ -75,6 +83,16 @@ Item {
                 anchors.right: parent.right
                 font.pixelSize: 16
                 color: "gray"
+            }
+
+            MouseArea {
+                id: mouse
+                anchors.fill: parent
+                onClicked: {
+                    groupitem.clicked()
+                    console.log("list item clicked")
+                }
+
             }
         }
 

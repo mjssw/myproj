@@ -9,7 +9,7 @@ Item {
 
     Rectangle{
         anchors.fill: parent
-        color:"yellow"
+        color:"white"
     }
 
     function showView(isshow)
