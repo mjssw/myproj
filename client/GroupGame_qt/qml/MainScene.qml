@@ -93,6 +93,12 @@ Item {
         views.showView(viewidx)
     }
 
+    function addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
+    {
+        console.log("mainscene addGroup")
+        views.addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
+    }
+
     Text {
         id: viewtext
         text: parent.labeltext;
@@ -142,6 +148,12 @@ Item {
                 moreview.visible = true;
                 parent.labeltext = qsTr("更多")
             }
+        }
+
+        function addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
+        {
+            console.log("mainscene addGroup")
+            friendview.addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
         }
 
         FriendView{

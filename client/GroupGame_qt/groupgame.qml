@@ -2,6 +2,7 @@ import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 import QtQml.Models 2.1
+import QtQuick.Window 2.1
 import "qml"
 
 ApplicationWindow {
@@ -10,58 +11,68 @@ ApplicationWindow {
     width: Qt.platform.os === "android"? Screen.width: 480
     height: Qt.platform.os === "android"? Screen.height: 640
 
-//! [0]
     Item {
         id: itemModel
-        //anchors { fill: parent; bottomMargin: 30 }
-        anchors { fill: parent;}
+        //anchors { fill: parent;}
 
-        function showpage(id)
+        // test code
+        anchors { fill: parent; bottomMargin: 30 }
+        function testfunc(id)
         {
             if(id === 1)
             {
-                page1.visible=true;
-                page2.visible=false;
-                page3.visible=false;
+                mainscene.visible=true;
+                loginscene.visible=false;
+                startscene.visible=false;
             }
             else if(id === 2)
             {
-                page1.visible=false;
-                page2.visible=true;
-                page3.visible=false;
+                mainscene.visible=false;
+                loginscene.visible=true;
+                startscene.visible=false;
             }
-            else
+            else if( id === 3)
             {
-                page1.visible=false;
-                page2.visible=false;
-                page3.visible=true;
+                mainscene.visible=false;
+                loginscene.visible=false;
+                startscene.visible=true;
+            }
+            else if( id === 4 )
+            {
+                mainscene.addGroup(
+                    qsTr("../res/groupdefault.png"),
+                    qsTr("群1"), qsTr("1110001"),
+                    12, 50,
+                    qsTr("昨天赢了100"), qsTr("2014-09-02 11:25"))
+            }
+            else if( id === 5 )
+            {
             }
         }
 
         MainScene {
-            id: page1
+            id: mainscene
             anchors { fill: parent;}
             visible:true
             opacity: 1
         }
 
         LoginScene {
-            id: page2
+            id: loginscene
             anchors { fill: parent;}
             visible:false
             opacity: 1
         }
 
         StartScene{
-            id: page3
+            id: startscene
             anchors { fill: parent;}
             visible:false
             opacity: 1
         }
     }
 
-//! [0]
-    /*
+    // add test button
     Rectangle {
         width: groupgame.width; height: 30
         anchors { top: itemModel.bottom; bottom: parent.bottom }
@@ -72,11 +83,11 @@ ApplicationWindow {
             spacing: 20
 
             Repeater {
-                model: 3
+                model: 5
 
                 Rectangle {
-                    width: 5; height: 5
-                    radius: 3
+                    width: 20; height: 20
+                    //radius: 3
                     color: "white"
 
                     MouseArea {
@@ -84,7 +95,7 @@ ApplicationWindow {
                         anchors.centerIn: parent
                         onClicked: {
                             console.log("indx=", index)
-                            itemModel.showpage(index+1)
+                            itemModel.testfunc(index+1)
                         }
                     }
                 }
