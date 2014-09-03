@@ -21,7 +21,7 @@ ApplicationWindow {
         //anchors { fill: parent;}
 
         // test code
-        anchors { fill: parent; bottomMargin: 30 }
+        anchors { fill: parent; bottomMargin: 60 }
         function testfunc(id)
         {
             if(id === 1)
@@ -79,6 +79,7 @@ ApplicationWindow {
         width: groupgame.width; height: 30
         anchors { top: itemModel.bottom; bottom: parent.bottom }
         color: "red"
+        visible: true
 
         Row {
             anchors.centerIn: parent
@@ -88,12 +89,12 @@ ApplicationWindow {
                 model: 5
 
                 Rectangle {
-                    width: 20; height: 20
+                    width: 40; height: 40
                     //radius: 3
                     color: "white"
 
                     MouseArea {
-                        width: 20; height: 20
+                        width: 40; height: 40
                         anchors.centerIn: parent
                         onClicked: {
                             console.debug("indx=", index)

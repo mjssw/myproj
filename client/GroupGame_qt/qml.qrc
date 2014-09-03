@@ -34,7 +34,6 @@
         <file>res/loginbtn.png</file>
         <file>res/back_1.png</file>
         <file>res/back_2.png</file>
-        <file>res/chatbg.png</file>
         <file>res/input.png</file>
         <file>res/add_1.png</file>
         <file>res/add_2.png</file>
@@ -43,5 +42,9 @@
         <file>res/send_2.png</file>
         <file>res/smile_1.png</file>
         <file>res/smile_2.png</file>
+        <file>res/chat_friend.png</file>
+        <file>res/chat_me.png</file>
+        <file>res/boy.png</file>
+        <file>res/girl.png</file>
     </qresource>
 </RCC>

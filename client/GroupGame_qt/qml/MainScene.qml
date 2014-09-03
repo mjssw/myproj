@@ -45,9 +45,15 @@ Item {
         onClicked: {
             backToGroupList()
         }
+
         MouseArea {
+            property int off: -20
             id: mouse
             anchors.fill: parent
+            anchors.leftMargin: off
+            anchors.rightMargin: off
+            anchors.topMargin: off
+            anchors.bottomMargin: off
             onClicked: {
                 backbtn.clicked()
             }
