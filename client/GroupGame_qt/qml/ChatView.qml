@@ -4,17 +4,77 @@ import QtQuick.Controls.Styles 1.1
 
 Item {
     id: chatview;
-    visible: false
-    property int chatHeight: 0
+    width: parent.width
+
     property int minMsgHeight: 40
-    anchors.fill: parent
+    property string headerText: ""
 
     Item {
-        id: cview
+        id: chatheader
+        width: parent.width
+        height: chatheaderbg.sourceSize.height
         anchors.top: parent.top
         anchors.left: parent.left
+
+        BorderImage {
+            id: chatheaderbg;
+            source: "../res/topbar.png";
+            border.left: 1; border.right: 1;
+            border.top: 1; border.bottom: 2;
+            anchors.fill: parent
+        }
+
+        Text {
+            id: chatheadtext
+            text: chatview.headerText
+            font.pixelSize: 35;
+            color: "white";
+            anchors.centerIn: parent;
+        }
+
+        Image {
+            id: backbtn
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            anchors.leftMargin: 30
+            source: mouse.pressed ? "../res/back_2.png" : "../res/back_1.png"
+
+            signal clicked
+            onClicked: {
+                parent.backToGroupList()
+            }
+
+            MouseArea {
+                property int off: -20
+                id: mouse
+                anchors.fill: parent
+                anchors.leftMargin: off
+                anchors.rightMargin: off
+                anchors.topMargin: off
+                anchors.bottomMargin: off
+                onClicked: {
+                    backbtn.clicked()
+                }
+            }
+        }
+
+        function showHeader(isshow)
+        {
+            visible = isshow
+        }
+
+        function backToGroupList()
+        {
+            parent.backToGroupList()
+        }
+    }
+
+    Item {
+        id: chatbar
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
         anchors.right: parent.right
-        height: parent.chatHeight
+        height: inputbg.sourceSize.height
 
         property int inputbgDefaultHeight: 90
         BorderImage {
@@ -25,12 +85,10 @@ Item {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            z: 0.5
         }
 
         Image {
             id: addbtn
-            z: 0.5
             anchors.verticalCenter: inputbg.verticalCenter
             anchors.left: inputbg.left
             anchors.leftMargin: 20
@@ -53,7 +111,6 @@ Item {
 
         Image {
             id: splite1
-            z: 0.5
             anchors.verticalCenter: inputbg.verticalCenter
             anchors.left: addbtn.right
             anchors.leftMargin: 20
@@ -62,7 +119,6 @@ Item {
 
         Image {
             id: sendbtn
-            z: 0.5
             anchors.verticalCenter: inputbg.verticalCenter
             anchors.right: inputbg.right
             anchors.rightMargin: 20
@@ -85,7 +141,6 @@ Item {
 
         Image {
             id: splite2
-            z: 0.5
             anchors.verticalCenter: inputbg.verticalCenter
             anchors.right: sendbtn.left
             anchors.rightMargin: 20
@@ -94,7 +149,6 @@ Item {
 
         Image {
             id: smilebtn
-            z: 0.5
             anchors.verticalCenter: inputbg.verticalCenter
             anchors.right: splite2.left
             anchors.rightMargin: 10
@@ -120,7 +174,6 @@ Item {
             property int signleHeight: 40
 
             id: inputtext
-            z: 0.5
             height: signleHeight
             anchors.verticalCenter: inputbg.verticalCenter
             anchors.left: splite1.right
@@ -140,16 +193,64 @@ Item {
                     lastline = lineCount
 
                     inputbg.height = parent.inputbgDefaultHeight + (lineCount-1)*signleHeight
+                    chatbar.height = inputbg.height
+                    //chatmsglist.positionViewAtEnd()
                 }
             }
         }
 
+        function clickAddMoreBtn()
+        {
+            parent.clickAddMoreBtn()
+        }
+
+        function clickSendMsg()
+        {
+            parent.clickSendMsg()
+        }
+
+        function clickSmileBtn()
+        {
+            parent.clickSmileBtn()
+        }
+
+        function formatInputMsg()
+        {
+            var bkPos=[]
+            var singlelineh = inputtext.contentHeight / inputtext.lineCount
+            for(var i=0; i<inputtext.lineCount; ++i)
+            {
+                var pos = inputtext.positionAt(0, (singlelineh/2)+(i*singlelineh))
+                bkPos.push(pos)
+            }
+            bkPos.push(inputtext.text.length)
+            var str = ""
+            for (var i=0; i<bkPos.length-1; i++)
+            {
+                var from, to
+                from=bkPos[i]; to=bkPos[i+1];
+                var substr=inputtext.text.substring(from, to)
+                str += substr
+                if( i+1 != bkPos.length-1)
+                {
+                    str += "\n"
+                }
+            }
+            inputtext.text = ""
+            return str
+        }
+    }
+
+    Item {
+        id: chatmsgview
+        anchors.top: chatheader.bottom
+        anchors.bottom: chatbar.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+
         Rectangle {
             id: chatbg
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: inputbg.top
+            anchors.fill: parent
             color: "#E8E8E8"
         }
 
@@ -208,58 +309,38 @@ Item {
             delegate: chatmsgdelegate
         }
 
-        function formatInputMsg()
+        function sendMsg(sender_, isself_, msg)
         {
-            var bkPos=[]
-            var singlelineh = inputtext.contentHeight / inputtext.lineCount
-            for(var i=0; i<inputtext.lineCount; ++i)
-            {
-                var pos = inputtext.positionAt(0, (singlelineh/2)+(i*singlelineh))
-                bkPos.push(pos)
-            }
-            bkPos.push(inputtext.text.length)
-            var str = ""
-            for (var i=0; i<bkPos.length-1; i++)
-            {
-                var from, to
-                from=bkPos[i]; to=bkPos[i+1];
-                var substr=inputtext.text.substring(from, to)
-                str += substr
-                if( i+1 != bkPos.length-1)
-                {
-                    str += "\n"
-                }
-            }
-            inputtext.text = ""
-            return str
-        }
-
-        function clickSendMsg()
-        {
-            var formatstr = formatInputMsg()
             chatmsgmodel.append({
-                                    msgcontent: formatstr,
-                                    isself: 1,
-                                    sender: "",
+                                    msgcontent: msg,
+                                    isself: isself_,
+                                    sender: sender_,
                                 })
             chatmsglist.positionViewAtEnd()
         }
+    }
 
-        function clickAddMoreBtn()
-        {
-            var formatstr = formatInputMsg()
-            chatmsgmodel.append({
-                                    msgcontent: formatstr,
-                                    isself: 0,
-                                    sender: "",
-                                })
-            chatmsglist.positionViewAtEnd()
-        }
+    function backToGroupList()
+    {
+        console.debug("chatview::backToGroupList")
+        parent.backToGroupList()
+    }
 
-        function clickSmileBtn()
-        {
-            console.debug("clickSmileBtn")
-        }
+    function clickSendMsg()
+    {
+        var formatstr = chatbar.formatInputMsg()
+        chatmsgview.sendMsg("", 1, formatstr)
+    }
+
+    function clickAddMoreBtn()
+    {
+        var formatstr = chatbar.formatInputMsg()
+        chatmsgview.sendMsg("", 0, formatstr)
+    }
+
+    function clickSmileBtn()
+    {
+        console.debug("clickSmileBtn")
     }
 }
 

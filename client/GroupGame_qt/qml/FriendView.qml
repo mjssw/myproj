@@ -6,16 +6,21 @@ Item {
     id: friendview;
     visible: true
     anchors.fill: parent
-    property int chatHeight: height
+    property int headerHeight: parent.headerHeight
+    property int tailerHeight: parent.tailerHeight
 
     GroupView {
         id: groupview
     }
 
     ChatView {
+        // 使用整个屏幕
         id: chatview
         visible: false
-        chatHeight: parent.chatHeight
+        height: parent.height+parent.headerHeight+parent.tailerHeight
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.topMargin: -parent.headerHeight
     }
 
     function showView(isshow)
@@ -37,10 +42,12 @@ Item {
 
     function clickGroup(index, groupname)
     {
+        console.debug("headerHeight=", headerHeight, "tailerHeight=", tailerHeight)
         console.debug("friendview clickGroup idx=", index, "groupname=", groupname)
-        groupview.visible=false
-        chatview.visible=true
-        parent.clickGroup(index, groupname)
+        groupview.visible = false
+        chatview.visible = true
+        chatview.headerText = groupname
+        parent.showHeaderAndTailer(false)
     }
 
     function backToGroupList()
@@ -48,5 +55,6 @@ Item {
         console.debug("friendview backToGroupList")
         groupview.visible=true
         chatview.visible=false
+        parent.showHeaderAndTailer(true)
     }
 }

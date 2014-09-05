@@ -16,128 +16,19 @@ Item {
     property string findtext: qsTr("发现")
     property string moretext: qsTr("更多")
 
-    Image {
-        id: titlebar;
-        source: "../res/topbar.png";
-        anchors.top : parent.top;
-        width: parent.width;
-        z: 0.9;
-    }
-
-    Image  {
-        id: toolbar;
-        source: "../res/bottombar.png";
-        anchors.bottom : parent.bottom;
-        width: parent.width;
-        z: 0.9;
-    }
-
-    Image {
-        id: backbtn
-        visible: false
-        anchors.verticalCenter: titlebar.verticalCenter
-        anchors.left: titlebar.left
-        anchors.leftMargin: 30
-        source: mouse.pressed ? "../res/back_2.png" : "../res/back_1.png"
-        z: 1
-
-        signal clicked
-        onClicked: {
-            backToGroupList()
-        }
-
-        MouseArea {
-            property int off: -20
-            id: mouse
-            anchors.fill: parent
-            anchors.leftMargin: off
-            anchors.rightMargin: off
-            anchors.topMargin: off
-            anchors.bottomMargin: off
-            onClicked: {
-                backbtn.clicked()
-            }
-        }
-    }
-
-    GroupBox {
-        id: gbid
-        flat:true
-        anchors.fill: toolbar;
-        z: 1.0;
-        Row{
-            anchors.fill: parent
-
-            ExclusiveGroup { id: group }
-
-            ImageRadioBtn {
-                id: friendbtn
-                exclusiveGroup: group
-                implicitHeight:parent.height
-                implicitWidth: parent.width/4
-                anchors.topMargin:parent.height/10
-                text: mainscene.friendtext
-                checked: true
-                btnSource: checked ? "../res/friend_2.png" : "../res/friend_1.png"
-                onClicked: clickViewBtn(friendIdx)
-            }
-
-            ImageRadioBtn {
-                id: gamebtn
-                exclusiveGroup: group
-                implicitHeight:parent.height
-                implicitWidth: parent.width/4
-                anchors.topMargin:parent.height/10
-                text: mainscene.gametext
-                btnSource: checked ? "../res/game_2.png" : "../res/game_1.png"
-                onClicked: clickViewBtn(gameIdx)
-            }
-
-            ImageRadioBtn {
-                id: findbtn
-                exclusiveGroup: group
-                implicitHeight:parent.height
-                implicitWidth: parent.width/4
-                anchors.topMargin:parent.height/10
-                text: mainscene.findtext
-                btnSource: checked ? "../res/find_2.png" : "../res/find_1.png"
-                onClicked: clickViewBtn(findIdx)
-            }
-
-            ImageRadioBtn {
-                id: morebtn
-                exclusiveGroup: group
-                implicitHeight:parent.height
-                implicitWidth: parent.width/4
-                anchors.topMargin:parent.height/10
-                text: mainscene.moretext
-                btnSource: checked ? "../res/more_2.png" : "../res/more_1.png"
-                onClicked: clickViewBtn(moreIdx)
-            }
-            //*/
-        }
-    }
-
-    Text {
-        id: viewtext
-        text: parent.labeltext;
-        font.pixelSize: 35;
-        //font.weight: Font.Black;
-        color: "white";
-        anchors.centerIn: titlebar;
-        z: 1.0;
-    }
-
-    Item{
+    Item {
         id: views
-        anchors.top: titlebar.bottom
+        anchors.top: header.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.bottom: toolbar.top
+        anchors.bottom: tailer.top
+
+        property alias headerHeight: header.height
+        property alias tailerHeight: tailer.height
 
         FriendView{
             id: friendview
-            chatHeight: mainscene.height-titlebar.height
+            //chatHeight: mainscene.height-titlebar.height
         }
 
         GameView{
@@ -186,24 +77,124 @@ Item {
             }
         }
 
+        function showHeaderAndTailer(isshow)
+        {
+            parent.showHeaderAndTailer(isshow)
+        }
+
         function addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
         {
             console.debug("mainscene addGroup 2")
             friendview.addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
         }
+    }
 
-        function clickGroup(index, groupname)
-        {
-            console.debug("mainscene views clickGroup idx=", index, "groupname=", groupname)
-            parent.clickGroup(index, groupname)
+    Item {
+        id: header
+        width: parent.width
+        height: headerbg.sourceSize.height
+        anchors.top: parent.top
+        anchors.left: parent.left
+
+        BorderImage {
+            id: headerbg;
+            source: "../res/topbar.png";
+            border.left: 1; border.right: 1;
+            border.top: 1; border.bottom: 2;
+            anchors.fill: parent
         }
 
-        function backToGroupList()
+        Text {
+            id: headtext
+            text: mainscene.labeltext;
+            font.pixelSize: 35;
+            color: "white";
+            anchors.centerIn: parent;
+        }
+
+        function showHeader(isshow)
         {
-            console.debug("views backToGroupList")
-            friendview.backToGroupList()
+            visible = isshow
         }
     }
+
+    Item {
+        id: tailer
+        width: parent.width
+        height: tailerbg.sourceSize.height
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+
+        BorderImage  {
+            id: tailerbg;
+            source: "../res/bottombar.png";
+            border.left: 1; border.right: 1;
+            border.top: 1; border.bottom: 1;
+            anchors.fill: parent
+        }
+
+        GroupBox {
+            id: gbid
+            flat:true
+            anchors.fill: parent;
+            Row{
+                anchors.fill: parent
+
+                ExclusiveGroup { id: group }
+
+                ImageRadioBtn {
+                    id: friendbtn
+                    exclusiveGroup: group
+                    implicitHeight:parent.height
+                    implicitWidth: parent.width/4
+                    anchors.topMargin:parent.height/10
+                    text: mainscene.friendtext
+                    checked: true
+                    btnSource: checked ? "../res/friend_2.png" : "../res/friend_1.png"
+                    onClicked: clickViewBtn(friendIdx)
+                }
+
+                ImageRadioBtn {
+                    id: gamebtn
+                    exclusiveGroup: group
+                    implicitHeight:parent.height
+                    implicitWidth: parent.width/4
+                    anchors.topMargin:parent.height/10
+                    text: mainscene.gametext
+                    btnSource: checked ? "../res/game_2.png" : "../res/game_1.png"
+                    onClicked: clickViewBtn(gameIdx)
+                }
+
+                ImageRadioBtn {
+                    id: findbtn
+                    exclusiveGroup: group
+                    implicitHeight:parent.height
+                    implicitWidth: parent.width/4
+                    anchors.topMargin:parent.height/10
+                    text: mainscene.findtext
+                    btnSource: checked ? "../res/find_2.png" : "../res/find_1.png"
+                    onClicked: clickViewBtn(findIdx)
+                }
+
+                ImageRadioBtn {
+                    id: morebtn
+                    exclusiveGroup: group
+                    implicitHeight:parent.height
+                    implicitWidth: parent.width/4
+                    anchors.topMargin:parent.height/10
+                    text: mainscene.moretext
+                    btnSource: checked ? "../res/more_2.png" : "../res/more_1.png"
+                    onClicked: clickViewBtn(moreIdx)
+                }
+            }
+        }
+
+        function showTailer(isshow)
+        {
+            visible = isshow
+        }
+    }
+
 
     function clickViewBtn(viewidx)
     {
@@ -211,32 +202,15 @@ Item {
         views.showView(viewidx)
     }
 
+    function showHeaderAndTailer(isshow)
+    {
+        header.showHeader(isshow)
+        tailer.showTailer(isshow)
+    }
+
     function addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
     {
         console.debug("mainscene addGroup")
         views.addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
-    }
-
-    function showGroupComponts(isshow)
-    {
-        toolbar.visible=isshow
-        //views.visible=isshow
-        gbid.visible=isshow
-        backbtn.visible=(!isshow)
-    }
-
-    function clickGroup(index, groupname)
-    {
-        console.debug("mainscene clickGroup idx=", index, " groupname=", groupname)
-        showGroupComponts(false)
-        labeltext=groupname
-    }
-
-    function backToGroupList()
-    {
-        console.debug("backToGroupList")
-        showGroupComponts(true)
-        labeltext=mainscene.friendtext
-        views.backToGroupList()
     }
 }
