@@ -46,5 +46,7 @@
         <file>res/chat_me.png</file>
         <file>res/boy.png</file>
         <file>res/girl.png</file>
+        <file>res/forward_1.png</file>
+        <file>res/forward_2.png</file>
     </qresource>
 </RCC>

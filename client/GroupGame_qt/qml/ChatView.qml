@@ -11,10 +11,13 @@ Item {
 
     Item {
         id: chatheader
+        z: 0.1
         width: parent.width
         height: chatheaderbg.sourceSize.height
         anchors.top: parent.top
         anchors.left: parent.left
+
+        property alias backStrText: backbtn.backStrText
 
         BorderImage {
             id: chatheaderbg;
@@ -39,22 +42,77 @@ Item {
             anchors.leftMargin: 30
             source: mouse.pressed ? "../res/back_2.png" : "../res/back_1.png"
 
+            property string backStrText: qsTr("群列表")
+
             signal clicked
             onClicked: {
-                parent.backToGroupList()
+                parent.backBtnClicked()
+            }
+
+            Text {
+                id: backtext
+                text: parent.backStrText
+                font.pixelSize: 20;
+                color: mouse.pressed ? "white" : "lightgray";
+                anchors.left: parent.right
+                anchors.leftMargin: 5
+                anchors.verticalCenter: parent.verticalCenter
             }
 
             MouseArea {
                 property int off: -20
                 id: mouse
-                anchors.fill: parent
-                anchors.leftMargin: off
-                anchors.rightMargin: off
+                anchors.top: parent.top
                 anchors.topMargin: off
+                anchors.bottom: parent.bottom
                 anchors.bottomMargin: off
+                anchors.left: backbtn.left
+                anchors.right: backtext.right
                 onClicked: {
                     backbtn.clicked()
                 }
+            }
+        }
+
+        Image {
+            id: forwardbtn
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            anchors.rightMargin: 30
+            source: fdmouse.pressed ? "../res/forward_2.png" : "../res/forward_1.png"
+
+            signal clicked
+            onClicked: {
+                parent.gotoGroupGameRoomList()
+            }
+
+            Text {
+                id: forwardtext
+                text: qsTr("游戏")
+                font.pixelSize: 20;
+                color: fdmouse.pressed ? "white" : "lightgray";
+                anchors.right: parent.left
+                anchors.rightMargin: 5
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            MouseArea {
+                property int off: -20
+                id: fdmouse
+                anchors.top: parent.top
+                anchors.topMargin: off
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: off
+                anchors.left: forwardtext.left
+                anchors.right: forwardbtn.right
+                onClicked: {
+                    forwardbtn.clicked()
+                }
+            }
+
+            function showForwardBtn(isshow)
+            {
+                visible = isshow
             }
         }
 
@@ -63,14 +121,30 @@ Item {
             visible = isshow
         }
 
-        function backToGroupList()
+        function backBtnClicked()
         {
-            parent.backToGroupList()
+            parent.backBtnClicked()
+        }
+
+        function gotoGroupGameRoomList()
+        {
+            parent.gotoGroupGameRoomList()
+        }
+
+        function showForwardBtn(isshow)
+        {
+            forwardbtn.showForwardBtn(isshow)
+        }
+
+        function setBackBtnText(str)
+        {
+            backStrText = str
         }
     }
 
     Item {
         id: chatbar
+        z: 0.1
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
@@ -199,6 +273,11 @@ Item {
             }
         }
 
+        function showBar(isshow)
+        {
+            visible = isshow
+        }
+
         function clickAddMoreBtn()
         {
             parent.clickAddMoreBtn()
@@ -309,6 +388,11 @@ Item {
             delegate: chatmsgdelegate
         }
 
+        function showMsgView(isshow)
+        {
+            visible = isshow
+        }
+
         function sendMsg(sender_, isself_, msg)
         {
             chatmsgmodel.append({
@@ -320,10 +404,62 @@ Item {
         }
     }
 
+    Item {
+        id: gameroomview
+        visible: false
+        anchors.top: chatheader.bottom
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        Rectangle {
+            anchors.fill: parent
+            //color: "#E8E8E8"
+            color: "yellow"
+        }
+
+        function showGameRoomView(isshow)
+        {
+            visible = isshow
+        }
+    }
+
+    function backBtnClicked()
+    {
+        if(gameroomview.visible)
+        {
+            // 返回聊天界面
+            backToChatView()
+        }
+        else
+        {
+            // 返回群列表界面
+            backToGroupList()
+        }
+    }
+
     function backToGroupList()
     {
         console.debug("chatview::backToGroupList")
         parent.backToGroupList()
+    }
+
+    function backToChatView()
+    {
+        gameroomview.showGameRoomView(false)
+        chatmsgview.showMsgView(true)
+        chatbar.showBar(true)
+        chatheader.showForwardBtn(true)
+        chatheader.setBackBtnText(qsTr("群列表"))
+    }
+
+    function gotoGroupGameRoomList()
+    {
+        gameroomview.showGameRoomView(true)
+        chatmsgview.showMsgView(false)
+        chatbar.showBar(false)
+        chatheader.showForwardBtn(false)
+        chatheader.setBackBtnText(qsTr("聊天"))
     }
 
     function clickSendMsg()
