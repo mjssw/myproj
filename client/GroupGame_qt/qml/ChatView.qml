@@ -7,9 +7,6 @@ Item {
     visible: false
     property int chatHeight: 0
     property int minMsgHeight: 40
-    property string realmsg: ""
-    property int useRealMsg: 0
-    property int lastLineCount: 1
     anchors.fill: parent
 
     Item {
@@ -19,9 +16,12 @@ Item {
         anchors.right: parent.right
         height: parent.chatHeight
 
-        Image {
+        property int inputbgDefaultHeight: 90
+        BorderImage {
             id: inputbg
             source: "../res/input.png"
+            border.bottom: 1; border.top:1;
+            border.left: 1; border.right: 1;
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
@@ -115,37 +115,32 @@ Item {
             }
         }
 
-        TextArea {
+
+        TextEdit{
+            property int signleHeight: 40
+
             id: inputtext
             z: 0.5
+            height: signleHeight
             anchors.verticalCenter: inputbg.verticalCenter
             anchors.left: splite1.right
             anchors.leftMargin: 15
             anchors.right: smilebtn.left
             anchors.rightMargin: 15
-            height: inputbg.height-10
-            //length: 10
-            //platformMaxImplicitWidth: 20
-            verticalAlignment: TextEdit.AlignVCenter
+
+            color: "black"
+            wrapMode: TextEdit.Wrap
             font.pixelSize: 30
 
-//            onCursorPositionChanged: {
-//                console.debug("onCursorPositionChanged")
-//            }
-            onLineCountChanged: {
-                chatview.useRealMsg = 1
-                chatview.realmsg = text;
-                if(chatview.lastLineCount < lineCount)
+            property int lastline: 1
+            onCursorRectangleChanged:{
+                if( lastline < lineCount || lastline > lineCount )
                 {
-                    chatview.realmsg += "\n"
-                }
-                console.debug("onLineCountChanged line=", lineCount, "chatview.realmsg=", chatview.realmsg)
-            }
-            onContentItemChanged: {
-                console.debug("onContentItemChanged")
-            }
-            onDataChanged: {
+                    height = signleHeight * lineCount
+                    lastline = lineCount
 
+                    inputbg.height = parent.inputbgDefaultHeight + (lineCount-1)*signleHeight
+                }
             }
         }
 
@@ -213,12 +208,37 @@ Item {
             delegate: chatmsgdelegate
         }
 
+        function formatInputMsg()
+        {
+            var bkPos=[]
+            var singlelineh = inputtext.contentHeight / inputtext.lineCount
+            for(var i=0; i<inputtext.lineCount; ++i)
+            {
+                var pos = inputtext.positionAt(0, (singlelineh/2)+(i*singlelineh))
+                bkPos.push(pos)
+            }
+            bkPos.push(inputtext.text.length)
+            var str = ""
+            for (var i=0; i<bkPos.length-1; i++)
+            {
+                var from, to
+                from=bkPos[i]; to=bkPos[i+1];
+                var substr=inputtext.text.substring(from, to)
+                str += substr
+                if( i+1 != bkPos.length-1)
+                {
+                    str += "\n"
+                }
+            }
+            inputtext.text = ""
+            return str
+        }
 
         function clickSendMsg()
         {
-            console.debug("clickSendMsg useRealMsg=",useRealMsg,"text=",inputtext.text,"realmsg=",realmsg )
+            var formatstr = formatInputMsg()
             chatmsgmodel.append({
-                                    msgcontent: useRealMsg==0?inputtext.text:realmsg,
+                                    msgcontent: formatstr,
                                     isself: 1,
                                     sender: "",
                                 })
@@ -227,9 +247,9 @@ Item {
 
         function clickAddMoreBtn()
         {
-            console.debug("clickAddMoreBtn useRealMsg=",useRealMsg,"text=",inputtext.text,"realmsg=",realmsg )
+            var formatstr = formatInputMsg()
             chatmsgmodel.append({
-                                    msgcontent: useRealMsg==0?inputtext.text:realmsg,
+                                    msgcontent: formatstr,
                                     isself: 0,
                                     sender: "",
                                 })
