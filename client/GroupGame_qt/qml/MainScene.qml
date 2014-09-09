@@ -15,6 +15,7 @@ Item {
     property string gametext: qsTr("游戏")
     property string findtext: qsTr("发现")
     property string moretext: qsTr("更多")
+    property string creategrouptext: qsTr("新建群")
 
     Item {
         id: views
@@ -43,12 +44,22 @@ Item {
             id: moreview
         }
 
+        CreateGroup {
+            id: creategroupview
+            visible: false
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: parent.height + tailer.height
+        }
+
         function invisableAll()
         {
             friendview.visible = false;
             gameview.visible = false;
             findview.visible = false;
             moreview.visible = false;
+            header.showNewGroupButton(false)
+            header.showCancelCreateGroup(false)
         }
 
         function showView(viewidx)
@@ -59,6 +70,7 @@ Item {
             {
                 friendview.visible = true;
                 parent.labeltext = mainscene.findtext
+                header.showNewGroupButton(true)
             }
             else if(viewidx === gameIdx)
             {
@@ -75,6 +87,11 @@ Item {
                 moreview.visible = true;
                 parent.labeltext = mainscene.moretext
             }
+        }
+
+        function showCreateGroupView(isshow)
+        {
+            creategroupview.visible = isshow
         }
 
         function showHeaderAndTailer(isshow)
@@ -112,9 +129,75 @@ Item {
             anchors.centerIn: parent;
         }
 
+        Item {
+            id: newgroup
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            width: newgrouptext.width+20
+            signal clicked
+            onClicked: {
+                createNewGroup()
+            }
+            Text {
+                id: newgrouptext
+                text: mainscene.creategrouptext
+                font.pixelSize: 20
+                color: mouse.pressed ? "white" : "lightgray"
+                anchors.centerIn: parent
+            }
+
+            MouseArea {
+                property int off: -20
+                id: mouse
+                anchors.fill: parent
+                onClicked: {
+                    newgroup.clicked()
+                }
+            }
+        }
+
+        Item {
+            id: backbtn
+            visible: false
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: backimg.sourceSize.width*3
+
+            signal clicked
+            onClicked: {
+                cancelCreateGroup()
+            }
+
+            Image {
+                id: backimg
+                anchors.centerIn: parent
+                source: backmouse.pressed ? "../res/back_2.png" : "../res/back_1.png"
+            }
+
+            MouseArea {
+                id: backmouse
+                anchors.fill: parent
+                onClicked: {
+                    backbtn.clicked()
+                }
+            }
+        }
+
         function showHeader(isshow)
         {
             visible = isshow
+        }
+
+        function showNewGroupButton(isshow)
+        {
+            newgroup.visible = isshow
+        }
+
+        function showCancelCreateGroup(isshow)
+        {
+            backbtn.visible = isshow
         }
     }
 
@@ -212,5 +295,28 @@ Item {
     {
         console.debug("mainscene addGroup")
         views.addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
+    }
+
+    function createNewGroup()
+    {
+        console.debug("mainscene createNewGroup")
+        views.invisableAll()
+        tailer.showTailer(false)
+        views.showCreateGroupView(true)
+        header.showCancelCreateGroup(true)
+        header.showNewGroupButton(false)
+        mainscene.labeltext = mainscene.creategrouptext
+    }
+
+    function cancelCreateGroup()
+    {
+        console.debug("mainscene cancelCreateGroup")
+        views.invisableAll()
+        views.showView(friendIdx)
+        tailer.showTailer(true)
+        views.showCreateGroupView(false)
+        header.showCancelCreateGroup(false)
+        header.showNewGroupButton(true)
+        mainscene.labeltext = mainscene.friendtext
     }
 }

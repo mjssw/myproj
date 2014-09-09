@@ -16,6 +16,11 @@
 
         <file>qml/ImageRadioBtn.qml</file>
 
+        <file>qml/ChatMenu.qml</file>
+        <file>qml/GameMenu.qml</file>
+        <file>qml/MembersMenu.qml</file>
+        <file>qml/CreateGroup.qml</file>
+
         <file>res/topbar.png</file>
         <file>res/bottombar.png</file>
         <file>res/friend_1.png</file>
@@ -46,6 +51,12 @@
         <file>res/chat_me.png</file>
         <file>res/boy.png</file>
         <file>res/girl.png</file>
+        <file>res/menuchat_1.png</file>
+        <file>res/menuchat_2.png</file>
+        <file>res/menugame_1.png</file>
+        <file>res/menugame_2.png</file>
+        <file>res/menumembers_1.png</file>
+        <file>res/menumembers_2.png</file>
         <file>res/forward_1.png</file>
         <file>res/forward_2.png</file>
     </qresource>

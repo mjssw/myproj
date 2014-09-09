@@ -25,4 +25,8 @@ OTHER_FILES += \
     qml/FindView.qml \
     qml/MoreView.qml \
     qml/ImageRadioBtn.qml \
-    qml/GroupView.qml
+    qml/GroupView.qml \
+    qml/ChatMenu.qml \
+    qml/GameMenu.qml \
+    qml/MembersMenu.qml \
+    qml/CreateGroup.qml

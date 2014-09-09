@@ -6,6 +6,7 @@ Item {
     id: groupview;
     visible: true
     anchors.fill: parent
+
     property int groupHeadWidth: 95
     property int groupHeadHeight: 95
     property int groupItemHeight: 100
