@@ -1,15 +1,17 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
-import QtQml.Models 2.1
+//import QtQml.Models 2.1
 import QtQuick.Window 2.1
 import "qml"
 
 ApplicationWindow {
     id: groupgame
     visible: true
-    width: Qt.platform.os === "android"? Screen.width: 480
-    height: Qt.platform.os === "android"? Screen.height: 640
+    //width: Qt.platform.os === "android"? Screen.width: 480
+    //height: Qt.platform.os === "android"? Screen.height: 640
+    width: Qt.platform.os === "android"? Screen.desktopAvailableWidth: 480
+    height: Qt.platform.os === "android"? Screen.desktopAvailableHeight: 640
 
 //    Rectangle{
 //        anchors.fill: parent
@@ -52,6 +54,7 @@ ApplicationWindow {
             }
             else if( id === 5 )
             {
+                console.debug(groupgame.height, itemModel.height, testbtns.height)
             }
         }
 
@@ -76,6 +79,7 @@ ApplicationWindow {
 
     // add test button
     Rectangle {
+        id: testbtns
         width: groupgame.width; height: 30
         anchors { top: itemModel.bottom; bottom: parent.bottom }
         color: "red"

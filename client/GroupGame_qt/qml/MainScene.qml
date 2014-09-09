@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+import QtQuick.Window 2.1
 
 Item {
     id: mainscene;
@@ -306,6 +307,13 @@ Item {
         header.showCancelCreateGroup(true)
         header.showNewGroupButton(false)
         mainscene.labeltext = mainscene.creategrouptext
+        //*/
+
+        /*
+        console.debug("parent:", parent.width, parent.height, mainscene.height, friendview.height)
+        console.debug("current:", header.height, tailer.height, views.height)
+        console.debug("avaiable:", Screen.desktopAvailableHeight, Screen.desktopAvailableWidth)
+        //*/
     }
 
     function cancelCreateGroup()
