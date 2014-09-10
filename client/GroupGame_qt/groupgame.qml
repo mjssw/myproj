@@ -54,7 +54,8 @@ ApplicationWindow {
             }
             else if( id === 5 )
             {
-                console.debug(groupgame.height, itemModel.height, testbtns.height)
+                //console.debug(groupgame.height, itemModel.height, testbtns.height)
+                console.log(mgr.testmethod());
             }
         }
 
