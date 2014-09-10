@@ -1,14 +1,13 @@
 #ifndef USERMANAGER_H
 #define USERMANAGER_H
 
-#include "Utils.h"
 #include <QObject>
 #include <QDebug>
 #include <string>
 
 extern void testprotobuf();
 
-class CUserManger : public QObject
+class CUserManger2 : public QObject
 {
     Q_OBJECT
 
@@ -17,20 +16,20 @@ class CUserManger : public QObject
 
     // 单件
 public:
-    static CUserManger& Instance()
+    static CUserManger2& Instance()
     {
         if( m_pInstance == NULL )
         {
-            m_pInstance = new CUserManger();
+            m_pInstance = new CUserManger2();
         }
         return *m_pInstance;
     }
-    ~CUserManger(){ delete m_pInstance; }
+    ~CUserManger2(){ delete m_pInstance; }
 private:
-    CUserManger(QObject* parent = Q_NULLPTR ) :
+    CUserManger2(QObject* parent = Q_NULLPTR ) :
         QObject(parent)
     {}
-    static CUserManger *m_pInstance;
+    static CUserManger2 *m_pInstance;
 
 public:
     // (1) qml 调用函数

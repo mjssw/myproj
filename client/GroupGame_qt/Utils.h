@@ -1,22 +1,11 @@
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef _UTILS_H_
+#define _UTILS_H_
 
-#define SINGLETON_CLASS_DEFINE(class_name)	\
-public:\
-    static class_name& Instance()\
-    {\
-        if( m_pInstance == NULL )\
-        {\
-            m_pInstance = new class_name();\
-        }\
-        return *m_pInstance;\
-    }\
-    ~class_name(){ delete m_pInstance; };\
-private:\
-    class_name(){};\
-    static class_name *m_pInstance;\
+#include <string>
 
-#define SIGNLETON_CLASS_INIT(class_name)	\
-class_name* class_name::m_pInstance = NULL;
+//void CalcUserHead(const std::string &head, int sex, std::string &realhead, cocos2d::Rect &rc, bool &useRc);
 
-#endif // UTILS_H
+std::string GetCurTime();
+std::string FormatTime(int timeval);
+
+#endif

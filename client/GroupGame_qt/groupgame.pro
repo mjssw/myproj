@@ -1,16 +1,23 @@
 TEMPLATE = app
 
 CONFIG(release, debug|release) {  
-DEFINES += MYRELEASE  
+DEFINES += MYRELEASE
 }  
 else {  
-DEFINES += MYDEBUG  
+DEFINES += MYDEBUG
+win32:DEFINES += _USE_WIN32
 } 
+
+win32:LIBS += -lWS2_32
 
 QT += qml quick widgets
 
 SOURCES += main.cpp \
-	../../protomsg/msg/center.pb.cc \
+    ../../sglib/Event.cpp \
+    ../../sglib/Lock.cpp \
+    ../../sglib/Thread.cpp \
+    ../../sglib/Log.cpp \
+    ../../protomsg/msg/center.pb.cc \
     ../../protomsg/msg/login.pb.cc \
     ../../protomsg/msg/gate.pb.cc \
     ../../protomsg/msg/common.pb.cc \
@@ -54,7 +61,25 @@ SOURCES += main.cpp \
     ../../third_part/protobuf-android/include/google/protobuf/stubs/substitute.cc \
     ../../third_part/protobuf-android/include/google/protobuf/compiler/importer.cc \
     ../../third_part/protobuf-android/include/google/protobuf/compiler/parser.cc \
-    UserManager.cpp
+    user/Basic.cpp \
+    user/GameInfo.cpp \
+    user/GameRoomInfo.cpp \
+    user/Group.cpp \
+    user/GroupManager.cpp \
+    user/GroupMember.cpp \
+    user/UserManager.cpp \
+    user/ViewData.cpp \
+    UserManager2.cpp \
+    net/GameClient.cpp \
+    net/GroupClient.cpp \
+    net/LoginClient.cpp \
+    net/NetManager.cpp \
+    net/ProtoClientBase.cpp \
+    net/RegisterClient.cpp \
+    utils.cpp \
+    gamemsg/MsgGameModule.cpp \
+    gamemsg/MsgGroupModule.cpp \
+    gamemsg/MsgLoginModule.cpp
 
 RESOURCES += qml.qrc
 
@@ -84,6 +109,7 @@ OTHER_FILES += \
     qml/CreateGroup.qml
 	
 INCLUDEPATH += ./ \
+        ../../sglib \
 	../../protomsg/msg \
 	../../third_part/protobuf-android \
 	../../third_part/protobuf-android/include \
@@ -93,5 +119,24 @@ INCLUDEPATH += ./ \
 	../../third_part/protobuf-android/include/google/protobuf/stubs
 
 HEADERS += \
-    UserManager.h \
-    Utils.h
+    CommDef.h \
+    user/Basic.h \
+    user/GameInfo.h \
+    user/GameRoomInfo.h \
+    user/Group.h \
+    user/GroupManager.h \
+    user/GroupMember.h \
+    user/UserManager.h \
+    user/ViewData.h \
+    UserManager2.h \
+    net/GameClient.h \
+    net/GroupClient.h \
+    net/LoginClient.h \
+    net/NetManager.h \
+    net/ProtoClientBase.h \
+    net/RegisterClient.h \
+    utils.h \
+    gamemsg/MsgBase.h \
+    gamemsg/MsgGameModule.h \
+    gamemsg/MsgGroupModule.h \
+    gamemsg/MsgLoginModule.h
