@@ -1,6 +1,7 @@
 #include "NetManager.h"
 #include "CommDef.h"
 #include "gamemsg/MsgBase.h"
+#include "wrapper/QtWrapper.h"
 
 using namespace SGLib;
 using namespace std;
@@ -123,7 +124,9 @@ void CNetManager::PushMessage(CMsgBase *msg)
 	if( msg )
 	{
 		CGuardLock<CLock> g( m_msgLock );
-		m_msgQueue.push_back( msg );
+        m_msgQueue.push_back( msg );
+
+        emit CQtWrapper::Instance().newMessageCome();
 	}
 }
 

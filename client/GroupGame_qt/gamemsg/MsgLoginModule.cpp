@@ -1,8 +1,10 @@
 #include "MsgLoginModule.h"
 #include "net/NetManager.h"
 #include "user/UserManager.h"
+#include "net/LoginClient.h"
 #include "CommDef.h"
 #include "errno.pb.h"
+#include <QThread>
 
 using namespace std;
 
@@ -12,8 +14,18 @@ CMsgConnectLogin::CMsgConnectLogin()
 
 void CMsgConnectLogin::Process()
 {
-	CCLog( "[CMsgConnectLogin::Process] connect login(%s:%d) success", LOGIN_IP, LOGIN_PORT );
-    // TODO
+    CCLog( "[T:%d][CMsgConnectLogin::Process] connect login(%s:%d) success", \
+        QThread::currentThreadId(), LOGIN_IP, LOGIN_PORT );
+
+    CLoginClient *client = CNetManager::Instance().GetLoginClientInstance();
+    if( client )
+    {
+        client->Login(
+            CUserManager::Instance().GetBasic().GetUser(),
+            CUserManager::Instance().GetBasic().GetPwd() );
+
+        qDebug( "User try login now" );
+    }
 }
 
 CMsgCloseLogin::CMsgCloseLogin()
@@ -43,7 +55,7 @@ CMsgGameInfoNotify::CMsgGameInfoNotify(std::vector<CGameInfo> &games)
 
 void CMsgGameInfoNotify::Process()
 {
-	CCLog( "[CMsgGameInfoNotify::Process] get game info" );
+    CCLog( "[T:%d][[CMsgGameInfoNotify::Process] get game info", QThread::currentThreadId() );
 
 	vector<CGameInfo>::iterator it = m_games.begin();
 	for( ; it != m_games.end(); ++it )
@@ -61,7 +73,8 @@ CMsgGroupGateNotify::CMsgGroupGateNotify(const std::string &ip, s32 port) :
 
 void CMsgGroupGateNotify::Process()
 {
-	CCLog( "[CMsgGroupGateNotify::Process] get group gate info %s:%d", m_ip.c_str(), m_port );
+    CCLog( "[T:%d][CMsgGroupGateNotify::Process] get group gate info %s:%d", \
+           QThread::currentThreadId(), m_ip.c_str(), m_port );
 
 	CUserManager::Instance().SetGroupConnInfo( m_ip, m_port );
     // TODO
@@ -83,7 +96,8 @@ CMsgLoginResult::CMsgLoginResult(s32 result, const string &token) :
 
 void CMsgLoginResult::Process()
 {
-	CCLog( "[CMsgLoginResult::Process] login result:%d token:%s", m_result, m_token.c_str() );
+    CCLog( "[T:%d][CMsgLoginResult::Process] login result:%d token:%s", \
+           QThread::currentThreadId(), m_result, m_token.c_str() );
 
 	CUserManager::Instance().SetToken( m_token );
 	if( m_result == sglib::errorcode::E_ErrorCode_Success )
@@ -109,8 +123,8 @@ CMsgUserBasicInfoNotify::CMsgUserBasicInfoNotify(const std::string &name, const 
 
 void CMsgUserBasicInfoNotify::Process()
 {
-	CCLog( "[CMsgUserBasicInfoNotify::Process] get user basic info name:%s head:%s sex:%d exp:%llu level:%llu gold:%llu diamond:%llu",
-		m_name.c_str(), m_head.c_str(), m_sex, m_exp, m_level, m_gold, m_diamond );
+    CCLog( "[T:%d][CMsgUserBasicInfoNotify::Process] get user basic info name:%s head:%s sex:%d exp:%llu level:%llu gold:%llu diamond:%llu",\
+        QThread::currentThreadId(), m_name.c_str(), m_head.c_str(), m_sex, m_exp, m_level, m_gold, m_diamond );
 
 	CUserManager::Instance().GetBasic().SetName( m_name );
 	CUserManager::Instance().GetBasic().SetHead( m_head );
@@ -127,7 +141,8 @@ CMsgConnectRegister::CMsgConnectRegister()
 }
 void CMsgConnectRegister::Process()
 {
-	CCLog( "[CMsgConnectRegister::Process] connect register(%s:%d) success", LOGIN_IP, LOGIN_PORT );
+    CCLog( "[T:%d][CMsgConnectRegister::Process] connect register(%s:%d) success", \
+           QThread::currentThreadId(), LOGIN_IP, LOGIN_PORT );
     // TODO
 }
 	
@@ -137,7 +152,7 @@ CMsgResiterRsp::CMsgResiterRsp(s32 result) : m_result(result)
 }
 void CMsgResiterRsp::Process()
 {
-	CCLog( "[CMsgResiterRsp::Process] register result:%d", m_result );
+    CCLog( "[T:%d][CMsgResiterRsp::Process] register result:%d", QThread::currentThreadId(), m_result );
 
 	CUserManager::Instance().GetBasic().SetRegResult( m_result );
         // TODO

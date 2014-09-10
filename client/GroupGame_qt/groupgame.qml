@@ -1,7 +1,6 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
-//import QtQml.Models 2.1
 import QtQuick.Window 2.1
 import "qml"
 
@@ -13,62 +12,23 @@ ApplicationWindow {
     width: Qt.platform.os === "android"? Screen.desktopAvailableWidth: 480
     height: Qt.platform.os === "android"? Screen.desktopAvailableHeight: 640
 
-//    Rectangle{
-//        anchors.fill: parent
-//        color: "white"
-//    }
-
+    // set debugButton=1 to enable debug buttons, other whise set 0 to disable
+    property int debugButton: 1
+    property int btmMargin: 60 * debugButton
     Item {
         id: itemModel
-        //anchors { fill: parent;}
-
-        // test code
-        anchors { fill: parent; bottomMargin: 60 }
-        function testfunc(id)
-        {
-            if(id === 1)
-            {
-                mainscene.visible=true;
-                loginscene.visible=false;
-                startscene.visible=false;
-            }
-            else if(id === 2)
-            {
-                mainscene.visible=false;
-                loginscene.visible=true;
-                startscene.visible=false;
-            }
-            else if( id === 3)
-            {
-                mainscene.visible=false;
-                loginscene.visible=false;
-                startscene.visible=true;
-            }
-            else if( id === 4 )
-            {
-                mainscene.addGroup(
-                    qsTr("../res/groupdefault.png"),
-                    qsTr("群1"), qsTr("1110001"),
-                    12, 50,
-                    qsTr("昨天赢了100"), qsTr("2014-09-02 11:25"))
-            }
-            else if( id === 5 )
-            {
-                //console.debug(groupgame.height, itemModel.height, testbtns.height)
-                console.log(mgr.testmethod());
-            }
-        }
+        anchors { fill: parent; bottomMargin: groupgame.btmMargin }
 
         MainScene {
             id: mainscene
             anchors { fill: parent;}
-            visible:true
+            visible:false
         }
 
         LoginScene {
             id: loginscene
             anchors { fill: parent;}
-            visible:false
+            visible:true
         }
 
         StartScene{
@@ -76,15 +36,73 @@ ApplicationWindow {
             anchors { fill: parent;}
             visible:false
         }
+
+        function showMainScene(isshow)
+        {
+            mainscene.visible = isshow
+        }
+
+        function showLoginScene(isshow)
+        {
+            loginscene.visible = isshow
+        }
+
+        function showStartScene(isshow)
+        {
+            startscene.visible = isshow
+        }
+
+        function addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
+        {
+            console.debug("groupgame addGroup")
+            mainscene.addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
+        }
+
+        function userLogin(user, pwd)
+        {
+            console.debug("[groupgame][itemmodel] >> userlogin", user, pwd)
+            groupgame.userLogin(user, pwd)
+        }
+    }
+
+    function hideAllScene()
+    {
+        itemModel.showLoginScene(false)
+        itemModel.showMainScene(false)
+        itemModel.showStartScene(false)
+    }
+
+    function showStartScene()
+    {
+        hideAllScene()
+        itemModel.showStartScene(true)
+    }
+
+    function showLoginScene()
+    {
+        hideAllScene()
+        itemModel.showLoginScene(true)
+    }
+
+    function showMainScene()
+    {
+        hideAllScene()
+        itemModel.showMainScene(true)
+    }
+
+    function userLogin(user, pwd)
+    {
+        var ret = wrapper.UserLogin(user, pwd)
+        console.debug("groupgame >> userlogin", user, pwd, ret)
     }
 
     // add test button
     Rectangle {
         id: testbtns
-        width: groupgame.width; height: 30
+        width: groupgame.width; height: groupgame.btmMargin
         anchors { top: itemModel.bottom; bottom: parent.bottom }
         color: "red"
-        visible: true
+        visible: groupgame.debugButton==1 ? true : false
 
         Row {
             anchors.centerIn: parent
@@ -103,7 +121,32 @@ ApplicationWindow {
                         anchors.centerIn: parent
                         onClicked: {
                             console.debug("indx=", index)
-                            itemModel.testfunc(index+1)
+                            var id = index + 1
+                            if(id === 1)
+                            {
+                                showMainScene()
+                            }
+                            else if(id === 2)
+                            {
+                                showLoginScene()
+                            }
+                            else if( id === 3)
+                            {
+                                showStartScene()
+                            }
+                            else if( id === 4 )
+                            {
+                                itemModel.addGroup(
+                                    qsTr("../res/groupdefault.png"),
+                                    qsTr("群1"), qsTr("1110001"),
+                                    12, 50,
+                                    qsTr("昨天赢了100"), qsTr("2014-09-02 11:25"))
+                            }
+                            else if( id === 5 )
+                            {
+                                //console.debug(groupgame.height, itemModel.height, testbtns.height)
+                                //console.log(mgr.testmethod());
+                            }
                         }
                     }
                 }

@@ -79,7 +79,9 @@ SOURCES += main.cpp \
     utils.cpp \
     gamemsg/MsgGameModule.cpp \
     gamemsg/MsgGroupModule.cpp \
-    gamemsg/MsgLoginModule.cpp
+    gamemsg/MsgLoginModule.cpp \
+    wrapper/QtWrapper.cpp \
+    wrapper/MainApplication.cpp
 
 RESOURCES += qml.qrc
 
@@ -139,4 +141,6 @@ HEADERS += \
     gamemsg/MsgBase.h \
     gamemsg/MsgGameModule.h \
     gamemsg/MsgGroupModule.h \
-    gamemsg/MsgLoginModule.h
+    gamemsg/MsgLoginModule.h \
+    wrapper/QtWrapper.h \
+    wrapper/MainApplication.h

@@ -2,13 +2,16 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QTextCodec>
-//#include <QFont>
 #include <QObject>
 #include <QDebug>
+#include <QtCore>
 
 #include "../../protomsg/msg/group.pb.h"
 #include "UserManager2.h"
 #include "net/NetManager.h"
+#include "user/UserManager.h"
+#include "wrapper/QtWrapper.h"
+#include "wrapper/MainApplication.h"
 
 void testprotobuf()
 {
@@ -22,6 +25,7 @@ void testprotobuf()
 
     ret = CNetManager::Instance().StartLogin(LOGIN_IP, LOGIN_PORT);
     qDebug("connect login result:%s", ret?"true":"false");
+
 }
 
 #if MYDEBUG
@@ -34,21 +38,24 @@ int b = 11;
 
 int main(int argc, char *argv[])
 {
+    CUserManager::Instance().Instance();
     CNetManager::Instance().Init();
 
-    QApplication app(argc, argv);
-   // QFont newFont("宋体", 8, QFont::Bold, true);
-    //app.setFont();
-
+    CMainQApplication app( argc, argv );
     QQmlApplicationEngine engine;
 
-    //CTest1 *mgr = new CTest1();
-    CUserManger2 *mgr = &CUserManger2::Instance();
+    //app.connect()
 
+    CUserManger2 *mgr = &CUserManger2::Instance();
     engine.rootContext()->setContextProperty("mgr", mgr);
+
+    CQtWrapper *wrapper = &CQtWrapper::Instance();
+    engine.rootContext()->setContextProperty( "wrapper", wrapper );
+
+    QObject::connect( wrapper, SIGNAL(newMessageCome()), &app, SLOT(messagePushed()), Qt::QueuedConnection);
 
     engine.load(QUrl(QStringLiteral("qrc:///groupgame.qml")));
 
-    qDebug("==============run now(%d,%d)=================\n", a, b);
+    qDebug("==============[T:%d]run now(%d,%d)=================\n", QThread::currentThreadId(), a, b);
     return app.exec();
 }

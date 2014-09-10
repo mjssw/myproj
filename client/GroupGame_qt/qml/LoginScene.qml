@@ -16,6 +16,8 @@ Item {
     property int default_height: 960
     property int offset:15
     property int textoff:120
+    property string defaultUserText: qsTr("帐号")
+    property string defaultPwsText: qsTr("密码")
 
     Component {
         id: touchStyle
@@ -35,11 +37,14 @@ Item {
         width: parent.width*sourceSize.width/default_width
         height:parent.height*sourceSize.height/default_height
 
+        property alias userText: usertext.text
+
         TextField {
+            id: usertext
             anchors.fill: parent
             anchors.leftMargin: parent.width*textoff/default_width
             style: touchStyle
-            placeholderText: qsTr("帐号")
+            placeholderText: defaultUserText
         }
     }
 
@@ -52,11 +57,14 @@ Item {
         width: parent.width*sourceSize.width/default_width
         height:parent.height*sourceSize.height/default_height
 
+        property alias passText: passtext.text
+
         TextField {
+            id: passtext
             anchors.fill: parent
             anchors.leftMargin: parent.width*textoff/default_width
             style: touchStyle
-            placeholderText: qsTr("密码")
+            placeholderText: defaultPwsText
         }
     }
 
@@ -70,14 +78,20 @@ Item {
         height: parent.height*sourceSize.height/default_height
 
         property alias pressed: clickarea.pressed
-        opacity: pressed?0.7:1
+        opacity: pressed ? 0.7 : 1
 
         MouseArea{
             id: clickarea
             anchors.fill: parent
             onClicked: {
-                console.debug("press login btn")
+                onclickLogin()
             }
         }
+    }
+
+    function onclickLogin()
+    {
+        console.debug("loginscene >> press login btn", userinput.userText, passinput.passText)
+        parent.userLogin(userinput.userText, passinput.passText)
     }
 }
