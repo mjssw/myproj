@@ -14,6 +14,7 @@ Item {
     ListModel {
         id: groupmodel
 
+        /*
         ListElement {
             head: "../res/groupdefault.png"
             name: "333"
@@ -23,6 +24,7 @@ Item {
             msgtext: "hello"
             msgtime: "2014-09-01 22:55:21"
         }
+        //*/
     }
 
     Component {

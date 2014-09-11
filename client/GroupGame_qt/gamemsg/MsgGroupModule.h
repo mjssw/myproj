@@ -16,6 +16,13 @@ public:
 	virtual void Process();
 };
 
+class CMsgConnectGroupError : public CMsgBase
+{
+public:
+    CMsgConnectGroupError();
+    virtual void Process();
+};
+
 class CMsgLoginGroupResult : public CMsgBase
 {
 public:

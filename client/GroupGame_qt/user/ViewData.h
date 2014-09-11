@@ -56,7 +56,10 @@ public:
 	void PopChatMsg();
 
 	void SetCurGameRoom(CGameRoomInfo *room);
-	CGameRoomInfo* GetCurGameRoom();
+    CGameRoomInfo* GetCurGameRoom();
+
+    void ResetLoginProgress();
+    void UpdateLoginProgress();
 
 private:
 	bool m_isSavePwd;
@@ -76,7 +79,10 @@ private:
 
 	std::deque<Chatmsg> m_chatmsg;
 
-	CGameRoomInfo *m_curGameRoom;
+    CGameRoomInfo *m_curGameRoom;
+
+    enum { E_LoginProgress_Limit = 7, };
+    s32 m_loginProgress;
 };
 
 #endif

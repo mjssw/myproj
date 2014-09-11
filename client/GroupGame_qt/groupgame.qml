@@ -61,7 +61,27 @@ ApplicationWindow {
         function userLogin(user, pwd)
         {
             console.debug("[groupgame][itemmodel] >> userlogin", user, pwd)
-            groupgame.userLogin(user, pwd)
+            return groupgame.userLogin(user, pwd)
+        }
+
+        function userLoginFailed(param)
+        {
+            loginscene.userLoginFailed(param)
+        }
+
+        function userLoginSuccess()
+        {
+            loginscene.userLoginSuccess()
+        }
+
+        function initMainScene()
+        {
+            loginscene.initMainScene()
+        }
+
+        function registerResult(result)
+        {
+            loginscene.registerResult(result)
         }
     }
 
@@ -92,8 +112,31 @@ ApplicationWindow {
 
     function userLogin(user, pwd)
     {
-        var ret = wrapper.UserLogin(user, pwd)
-        console.debug("groupgame >> userlogin", user, pwd, ret)
+        return wrapper.UserLogin(user, pwd)
+    }
+
+    Connections {
+        target: wrapper
+        onUserLoginFailed: {
+            itemModel.userLoginFailed(errmsg)
+        }
+        onUserLoginSuccess: {
+            itemModel.userLoginSuccess()
+        }
+        onUserLoginGroupDone: {
+            itemModel.initMainScene()
+            showMainScene()
+        }
+        onAddGroup: {
+            itemModel.addGroup(
+                qsTr("../res/groupdefault.png"),
+                name, id,
+                1, 50,
+                qsTr(""), qsTr(""))
+        }
+        onRegisterResult: {
+            itemModel.registerResult(result)
+        }
     }
 
     // add test button
@@ -146,6 +189,7 @@ ApplicationWindow {
                             {
                                 //console.debug(groupgame.height, itemModel.height, testbtns.height)
                                 //console.log(mgr.testmethod());
+                                //wrapper.UserLogin("aaa", "bbb")
                             }
                         }
                     }

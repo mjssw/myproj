@@ -69,7 +69,6 @@ SOURCES += main.cpp \
     user/GroupMember.cpp \
     user/UserManager.cpp \
     user/ViewData.cpp \
-    UserManager2.cpp \
     net/GameClient.cpp \
     net/GroupClient.cpp \
     net/LoginClient.cpp \
@@ -130,7 +129,6 @@ HEADERS += \
     user/GroupMember.h \
     user/UserManager.h \
     user/ViewData.h \
-    UserManager2.h \
     net/GameClient.h \
     net/GroupClient.h \
     net/LoginClient.h \

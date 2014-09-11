@@ -1,5 +1,6 @@
 #include "user/GameRoomInfo.h"
 #include "ViewData.h"
+#include "wrapper/QtWrapper.h"
 using namespace std;
 
 CUserViewData::CUserViewData() : 
@@ -135,4 +136,19 @@ void CUserViewData::SetCurGameRoom(CGameRoomInfo *room)
 CGameRoomInfo* CUserViewData::GetCurGameRoom()
 {
 	return m_curGameRoom;
+}
+
+void CUserViewData::ResetLoginProgress()
+{
+    m_loginProgress = 0;
+}
+
+void CUserViewData::UpdateLoginProgress()
+{
+    m_loginProgress += 1;
+    qDebug("CUserViewData::UpdateLoginProgress %d", m_loginProgress );
+    if( m_loginProgress >= E_LoginProgress_Limit )
+    {
+        emit CQtWrapper::Instance().userLoginGroupDone();
+    }
 }

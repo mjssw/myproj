@@ -7,7 +7,6 @@
 #include <QtCore>
 
 #include "../../protomsg/msg/group.pb.h"
-#include "UserManager2.h"
 #include "net/NetManager.h"
 #include "user/UserManager.h"
 #include "wrapper/QtWrapper.h"
@@ -44,18 +43,16 @@ int main(int argc, char *argv[])
     CMainQApplication app( argc, argv );
     QQmlApplicationEngine engine;
 
-    //app.connect()
-
-    CUserManger2 *mgr = &CUserManger2::Instance();
-    engine.rootContext()->setContextProperty("mgr", mgr);
-
+    // let wrapper can be used in qml
     CQtWrapper *wrapper = &CQtWrapper::Instance();
     engine.rootContext()->setContextProperty( "wrapper", wrapper );
 
+    // set net msg process in main thread
     QObject::connect( wrapper, SIGNAL(newMessageCome()), &app, SLOT(messagePushed()), Qt::QueuedConnection);
 
     engine.load(QUrl(QStringLiteral("qrc:///groupgame.qml")));
 
     qDebug("==============[T:%d]run now(%d,%d)=================\n", QThread::currentThreadId(), a, b);
+
     return app.exec();
 }

@@ -144,7 +144,7 @@ Item {
                 id: newgrouptext
                 text: mainscene.creategrouptext
                 font.pixelSize: 20
-                color: mouse.pressed ? "white" : "lightgray"
+                color: mouse.pressed ? "white" : "#969696"
                 anchors.centerIn: parent
             }
 
@@ -307,13 +307,6 @@ Item {
         header.showCancelCreateGroup(true)
         header.showNewGroupButton(false)
         mainscene.labeltext = mainscene.creategrouptext
-        //*/
-
-        /*
-        console.debug("parent:", parent.width, parent.height, mainscene.height, friendview.height)
-        console.debug("current:", header.height, tailer.height, views.height)
-        console.debug("avaiable:", Screen.desktopAvailableHeight, Screen.desktopAvailableWidth)
-        //*/
     }
 
     function cancelCreateGroup()

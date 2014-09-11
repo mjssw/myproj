@@ -27,9 +27,18 @@ private:
 signals:
     void newMessageCome();
 
-    // net process wrapper
+    // call qml function
+signals:
+    void userLoginFailed(QString errmsg);
+    void userLoginSuccess();
+    void userLoginGroupDone();
+    void addGroup(quint64 id, QString name);
+    void registerResult(bool result);
+
+    // net process wrapper, called by qml
 public slots:
     bool UserLogin(QString user, QString pwd);
+    bool UserRegister(QString user, QString pwd);
 };
 
 #endif

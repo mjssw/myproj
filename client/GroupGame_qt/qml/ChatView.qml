@@ -53,7 +53,7 @@ Item {
                 id: backtext
                 text: parent.backStrText
                 font.pixelSize: 20;
-                color: mouse.pressed ? "white" : "lightgray";
+                color: mouse.pressed ? "white" : "#969696";
                 anchors.left: parent.right
                 anchors.leftMargin: 5
                 anchors.verticalCenter: parent.verticalCenter
@@ -209,7 +209,7 @@ Item {
             chatmenuview.visible = false
             gamemenuview.visible = true
             membersmenuview.visible = false
-            showChatviewHeader(false)
+            showChatviewHeader(true)
 
             console.debug(groupname, headerHeight, menuHeight)
         }
@@ -219,7 +219,7 @@ Item {
             chatmenuview.visible = false
             gamemenuview.visible = false
             membersmenuview.visible = true
-            showChatviewHeader(false)
+            showChatviewHeader(true)
         }
     }
 

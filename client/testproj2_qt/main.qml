@@ -46,7 +46,13 @@ ApplicationWindow {
 
     function resetLabel(param)
     {
+        console.debug("resetLabel")
         lb1.text = param
+    }
+
+    function ttt()
+    {
+        console.debug("tttt")
     }
 
     function btn3func()
@@ -101,7 +107,10 @@ ApplicationWindow {
         width:200
         height:100
         text: "resetlabel"
-        onClicked:mgr.func1("hello");
+        onClicked:{
+            mgr.func1("hello");
+            ttt()
+        }
     }
 
     Label{

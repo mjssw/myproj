@@ -213,6 +213,15 @@ void CGroupClient::OnClose()
 
 void CGroupClient::OnConnectError()
 {
+    CMsgBase *msg = new CMsgConnectGroupError();
+    if( !msg )
+    {
+        CCLog( "[CGroupClient::OnConnectError] new msg failed" );
+        return;
+    }
+
+    CNetManager::Instance().PushMessage( msg );
+
 }
 
 void CGroupClient::Login(const string &user, const string &token)

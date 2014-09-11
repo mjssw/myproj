@@ -5,6 +5,7 @@
 #include "user/Group.h"
 #include "user/GroupMember.h"
 #include "user/GameRoomInfo.h"
+#include "wrapper/QtWrapper.h"
 #include "utils.h"
 using namespace std;
 
@@ -17,6 +18,23 @@ void CMsgConnectGroup::Process()
 		CUserManager::Instance().GetGroupGateIp().c_str(), 
 		CUserManager::Instance().GetGroupGatePort() );
 
+    CUserManager::Instance().GetViewData().UpdateLoginProgress();
+
+    CGroupClient *client = CNetManager::Instance().GetGroupClientInstance();
+    if( client )
+    {
+        client->Login(
+            CUserManager::Instance().GetBasic().GetUser(),
+            CUserManager::Instance().GetToken() );
+    }
+}
+
+CMsgConnectGroupError::CMsgConnectGroupError()
+{
+}
+void CMsgConnectGroupError::Process()
+{
+    emit CQtWrapper::Instance().userLoginFailed("connect group error");
 }
 
 CMsgLoginGroupResult::CMsgLoginGroupResult(s32 result) :
@@ -27,6 +45,14 @@ void CMsgLoginGroupResult::Process()
 {
 	CCLog( "[CMsgLoginGroupResult::Process] login group result:%d", m_result );
 
+    if( m_result != sglib::errorcode::E_ErrorCode_Success )
+    {
+        emit CQtWrapper::Instance().userLoginFailed("login group error");
+    }
+    else
+    {
+        CUserManager::Instance().GetViewData().UpdateLoginProgress();
+    }
 }
 
 CMsgGroupListUpdate::CMsgGroupListUpdate(vector<CGroup*> *groups) : 
@@ -46,10 +72,15 @@ void CMsgGroupListUpdate::Process()
 		bool ret = CUserManager::Instance().GetGroupManager().AddGroup( *it );
 		CCLog( "[CMsgGroupListUpdate::Process][DEBUG] add group:%llu:%s result:%d name:%s",
             (*it)->GetId(), (*it)->GetName().c_str(), ret?1:0, (*it)->GetName().c_str() );
+
+        // add group info to qml group view
+        emit CQtWrapper::Instance().addGroup(
+            (*it)->GetId(),
+            QString::fromStdString((*it)->GetName()) );
 	}
 	SAFE_DELETE( m_groups );
 	
-
+    CUserManager::Instance().GetViewData().UpdateLoginProgress();
 }
 
 CMsgGroupInfoUpdate::CMsgGroupInfoUpdate(u64 groupid, vector<CGroupMember*> *members) : 

@@ -59,5 +59,6 @@
         <file>res/menumembers_2.png</file>
         <file>res/forward_1.png</file>
         <file>res/forward_2.png</file>
+        <file>res/loading.png</file>
     </qresource>
 </RCC>
