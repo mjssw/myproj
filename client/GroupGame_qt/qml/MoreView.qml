@@ -9,7 +9,12 @@ Item {
 
     Rectangle{
         anchors.fill: parent
-        color:"blue"
+        color: "white"
+    }
+
+    CommonListView {
+        id: findlst
+        anchors.fill: parent
     }
 
     function showView(isshow)

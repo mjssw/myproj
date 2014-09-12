@@ -107,7 +107,8 @@ OTHER_FILES += \
     qml/ChatMenu.qml \
     qml/GameMenu.qml \
     qml/MembersMenu.qml \
-    qml/CreateGroup.qml
+    qml/CreateGroup.qml \
+    qml/CommonListView.qml
 	
 INCLUDEPATH += ./ \
         ../../sglib \
