@@ -101,12 +101,21 @@ Item {
                 color: "gray"
             }
 
+            // 分割条
+            Rectangle {
+                height: 1
+                width: parent.width
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                color: "gray"
+            }
+
             MouseArea {
                 id: mouse
                 anchors.fill: parent
                 onClicked: {
                     groupitem.clicked()
-                    console.log("list item clicked")
                 }
 
             }

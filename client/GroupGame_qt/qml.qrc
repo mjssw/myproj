@@ -60,5 +60,7 @@
         <file>res/forward_1.png</file>
         <file>res/forward_2.png</file>
         <file>res/loading.png</file>
+        <file>res/icon1.png</file>
+        <file>res/icon2.png</file>
     </qresource>
 </RCC>

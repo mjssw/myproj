@@ -74,11 +74,6 @@ ApplicationWindow {
             loginscene.userLoginSuccess()
         }
 
-        function initMainScene()
-        {
-            loginscene.initMainScene()
-        }
-
         function registerResult(result)
         {
             loginscene.registerResult(result)
@@ -110,11 +105,6 @@ ApplicationWindow {
         itemModel.showMainScene(true)
     }
 
-    function userLogin(user, pwd)
-    {
-        return wrapper.UserLogin(user, pwd)
-    }
-
     Connections {
         target: wrapper
         onUserLoginFailed: {
@@ -124,7 +114,6 @@ ApplicationWindow {
             itemModel.userLoginSuccess()
         }
         onUserLoginGroupDone: {
-            itemModel.initMainScene()
             showMainScene()
         }
         onAddGroup: {
