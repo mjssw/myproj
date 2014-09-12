@@ -30,10 +30,11 @@ Item {
     Component {
         id: groupdelegate
 
-        Item {
+        Rectangle {
             id: groupitem
             width: grouplist.width
             height: groupview.groupItemHeight
+            color: "white"
 
             //clip: true
             signal clicked
@@ -64,7 +65,7 @@ Item {
                 anchors.top: headid.top
                 anchors.topMargin: 10
                 anchors.left: headid.right
-                font.pixelSize: 25
+                font.pixelSize: parent.height * 0.25
             }
 
             // 最后一条消息
@@ -74,7 +75,7 @@ Item {
                 anchors.bottom: headid.bottom
                 anchors.bottomMargin: 10
                 anchors.left: headid.right
-                font.pixelSize: 16
+                font.pixelSize: parent.height * 0.15
                 color: "gray"
             }
 
@@ -97,7 +98,7 @@ Item {
                 anchors.bottom:  headid.bottom
                 anchors.bottomMargin: 10
                 anchors.right: parent.right
-                font.pixelSize: 16
+                font.pixelSize: parent.height * 0.15
                 color: "gray"
             }
 
@@ -108,7 +109,7 @@ Item {
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right
-                color: "gray"
+                color: "lightgray"
             }
 
             MouseArea {

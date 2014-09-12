@@ -12,24 +12,22 @@ Item {
     Item {
         id: gamemenuheader
         z: 0.1
-        height: headerbg.sourceSize.height
+        height: parent.headerHeight
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.topMargin: -menuHeight-headerHeight
 
-        BorderImage {
+        Rectangle {
             id: headerbg;
-            source: "../res/topbar.png";
-            border.left: 1; border.right: 1;
-            border.top: 1; border.bottom: 2;
             anchors.fill: parent
+            color: "steelblue"
         }
 
         Text {
             id: headtext
             text: gamemenuview.groupname
-            font.pixelSize: 35;
+            font.pixelSize: parent.height * 0.5
             color: "white";
             anchors.centerIn: parent;
         }
@@ -72,7 +70,7 @@ Item {
                 text: gameid + "(" + roomid + ")"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: 25
+                font.pixelSize: parent.height * 0.3
             }
 
             MouseArea {

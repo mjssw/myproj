@@ -110,24 +110,22 @@ Item {
     Item {
         id: header
         width: parent.width
-        height: headerbg.sourceSize.height
+        height: 88
         anchors.top: parent.top
         anchors.left: parent.left
 
-        BorderImage {
-            id: headerbg;
-            source: "../res/topbar.png";
-            border.left: 1; border.right: 1;
-            border.top: 1; border.bottom: 2;
+        Rectangle {
+            id: headerbg
             anchors.fill: parent
+            color: "steelblue"
         }
 
         Text {
             id: headtext
-            text: mainscene.labeltext;
-            font.pixelSize: 35;
-            color: "white";
-            anchors.centerIn: parent;
+            text: mainscene.labeltext
+            font.pixelSize: parent.height * 0.4
+            color: "white"
+            anchors.centerIn: parent
         }
 
         Item {
@@ -143,8 +141,8 @@ Item {
             Text {
                 id: newgrouptext
                 text: mainscene.creategrouptext
-                font.pixelSize: 20
-                color: mouse.pressed ? "white" : "#969696"
+                font.pixelSize: parent.height/2 * 0.5
+                color: mouse.pressed ? "#DEDE6F" : "white"
                 anchors.centerIn: parent
             }
 
@@ -174,7 +172,7 @@ Item {
             Image {
                 id: backimg
                 anchors.centerIn: parent
-                source: backmouse.pressed ? "../res/back_2.png" : "../res/back_1.png"
+                source: backmouse.pressed ? "../res/back_1.png" : "../res/back_2.png"
             }
 
             MouseArea {
@@ -205,16 +203,16 @@ Item {
     Item {
         id: tailer
         width: parent.width
-        height: tailerbg.sourceSize.height
+        height: 100
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
-        BorderImage  {
-            id: tailerbg;
-            source: "../res/bottombar.png";
-            border.left: 1; border.right: 1;
-            border.top: 1; border.bottom: 1;
+        Rectangle {
+            id: tailerbg
             anchors.fill: parent
+            border.width: 1
+            border.color: "lightgray"
+            color: "#F5FAF5"
         }
 
         GroupBox {

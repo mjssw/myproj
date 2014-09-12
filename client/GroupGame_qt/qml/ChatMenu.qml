@@ -191,7 +191,8 @@ Item {
         Rectangle {
             id: chatbg
             anchors.fill: parent
-            color: "#E8E8E8"
+            //color: "#E8E8E8"
+            color: "white"
         }
 
         ListModel {

@@ -21,8 +21,6 @@
         <file>qml/MembersMenu.qml</file>
         <file>qml/CreateGroup.qml</file>
 
-        <file>res/topbar.png</file>
-        <file>res/bottombar.png</file>
         <file>res/friend_1.png</file>
         <file>res/friend_2.png</file>
         <file>res/game_1.png</file>
@@ -34,12 +32,8 @@
         <file>res/groupdefault.png</file>
         <file>res/start.png</file>
         <file>res/loginbg.png</file>
-        <file>res/user.png</file>
-        <file>res/password.png</file>
-        <file>res/loginbtn.png</file>
         <file>res/back_1.png</file>
         <file>res/back_2.png</file>
-        <file>res/input.png</file>
         <file>res/add_1.png</file>
         <file>res/add_2.png</file>
         <file>res/split.png</file>
@@ -62,5 +56,6 @@
         <file>res/loading.png</file>
         <file>res/icon1.png</file>
         <file>res/icon2.png</file>
+        <file>res/input.png</file>
     </qresource>
 </RCC>

@@ -13,24 +13,22 @@ Item {
         id: chatheader
         z: 0.1
         width: parent.width
-        height: chatheaderbg.sourceSize.height
+        height: 88
         anchors.top: parent.top
         anchors.left: parent.left
 
         property alias backStrText: backbtn.backStrText
 
-        BorderImage {
+        Rectangle {
             id: chatheaderbg;
-            source: "../res/topbar.png";
-            border.left: 1; border.right: 1;
-            border.top: 1; border.bottom: 2;
             anchors.fill: parent
+            color: "steelblue"
         }
 
         Text {
             id: chatheadtext
             text: chatview.headerText
-            font.pixelSize: 35;
+            font.pixelSize: parent.height * 0.4
             color: "white";
             anchors.centerIn: parent;
         }
@@ -40,7 +38,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: 30
-            source: mouse.pressed ? "../res/back_2.png" : "../res/back_1.png"
+            source: mouse.pressed ? "../res/back_1.png" : "../res/back_2.png"
 
             property string backStrText: qsTr("群列表")
 
@@ -52,8 +50,8 @@ Item {
             Text {
                 id: backtext
                 text: parent.backStrText
-                font.pixelSize: 20;
-                color: mouse.pressed ? "white" : "#969696";
+                font.pixelSize: parent.height/2
+                color: mouse.pressed ? "#969696" : "white"
                 anchors.left: parent.right
                 anchors.leftMargin: 5
                 anchors.verticalCenter: parent.verticalCenter
@@ -85,15 +83,21 @@ Item {
         }
     }
 
-    Rectangle {
+    Item {
         id: chatmenu
         z: 0.1
         anchors.top: chatheader.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         height: chatheader.height/2+10
-        //color: "#FFFFD2"
-        color: "white"
+
+        Rectangle {
+            height: 1
+            width: parent.width
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            color: "lightgray"
+        }
 
         GroupBox {
             id: menu

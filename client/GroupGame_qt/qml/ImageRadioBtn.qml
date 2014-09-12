@@ -18,7 +18,7 @@ RadioButton {
                     text: btn.text
                     anchors.top: parent.bottom;
                     anchors.horizontalCenter: parent.horizontalCenter;
-                    color: control.checked ? "white" : "#929292"
+                    color: control.checked ? "#007AFF" : "#929292"
                     font.pixelSize: 20
                     //renderType: Text.NativeRendering
                 }
