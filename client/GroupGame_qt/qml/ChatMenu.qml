@@ -171,6 +171,11 @@ Item {
                 from=bkPos[i]; to=bkPos[i+1];
                 var substr=inputtext.text.substring(from, to)
                 str += substr
+                if( inputtext.text.charAt(to-1) == '\n')
+                {
+                    continue
+                }
+
                 if( i+1 != bkPos.length-1)
                 {
                     str += "\n"

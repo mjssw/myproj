@@ -78,7 +78,7 @@ Item {
                 TextFieldStyle {
                     textColor: "black"
                     font.pixelSize: inputarea.height / 2 * 0.5
-                    font.bold: true
+                    //font.bold: true
                     background: Item {}
                 }
             }
@@ -128,8 +128,8 @@ Item {
                 anchors.centerIn: parent
                 text: btnText
                 font.pixelSize: parent.height * 0.6
-                font.bold: true
                 font.letterSpacing: 10
+                font.weight: Font.DemiBold
                 color: "white"
             }
         }
@@ -326,10 +326,23 @@ Item {
         }
     }
 
+
+    function test1(callback)
+    {
+        console.debug("test1", typeof(callback))
+        callback()
+    }
+
+    function test2()
+    {
+        console.debug("test2")
+    }
+
     function onclickProblemitem()
     {
         // TODO
         console.debug("onclickProblemitem")
+        test1(test2)
     }
 
     function onclickFuncitem()

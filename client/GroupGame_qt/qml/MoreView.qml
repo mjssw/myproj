@@ -15,6 +15,15 @@ Item {
     CommonListView {
         id: findlst
         anchors.fill: parent
+
+        Component.onCompleted: {
+            /*
+            addElement("../res/boy.png", qsTr("帐号管理"), 100)
+            addSpliteElement(qsTr(""), 30)
+            addElement("../res/t2.png", qsTr("关于"), 60)
+            addElement("../res/t3.png", qsTr("帮助"), 60)
+            //*/
+        }
     }
 
     function showView(isshow)

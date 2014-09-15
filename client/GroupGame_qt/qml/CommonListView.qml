@@ -4,9 +4,12 @@ Item {
     id: commlist
     anchors.fill: parent
 
+    property string listname: "mylistname"
+
     ListModel {
         id: lstmodel
 
+        /*
         ListElement {
             type: 1
             icon: "../res/0.png"
@@ -46,7 +49,7 @@ Item {
             more: "../res/3.png"
             flag: 1
         }
-
+        //*/
     }
 
     Component {
@@ -139,6 +142,13 @@ Item {
 
             signal clicked
             onClicked: {
+                //callback()
+                console.debug(callback.toString(), typeof(callback), typeof(icon), typeof(flag))
+
+                var f = callback
+                //f()
+                //var func = function(callback)
+                Function.call(callback)
             }
 
             MouseArea {
@@ -159,5 +169,45 @@ Item {
         anchors.fill: parent
         model: lstmodel
         delegate: lstdelegate
+    }
+
+    function addItem(type_, icon_, str_, w_, moretype_, more_, flag_, callback_)
+    {
+        lstmodel.append({
+            "type": type_,
+            "icon": icon_,
+            "str": str_,
+            "w": w_,
+            "moretype": moretype_,
+            "more": more_,
+            "flag": flag_,
+            "callback": callback_
+        })
+    }
+
+    function defaultCallback()
+    {
+        console.debug("CommonListView::defaultCallback")
+    }
+
+    function addElement(icon_, str_, w_, callback_)
+    {
+        //addItem(1, icon_, str_, w_, 0, "", 0, callback_)
+        addItem(1, icon_, str_, w_, 0, "", 0, defaultCallback )
+    }
+
+    function addElementWithTailStr(icon_, str_, w_, more_)
+    {
+        addItem(1, icon_, str_, w_, 1, more_, 0, defaultCallback)
+    }
+
+    function addElementWithTailImg(type_, icon_, str_, w_, more_)
+    {
+        addItem(1, icon_, str_, w_, 2, more_, 0, defaultCallback)
+    }
+
+    function addSpliteElement(str_, w_)
+    {
+        addItem(0, "", str_, w_, 0, "", 0, defaultCallback)
     }
 }

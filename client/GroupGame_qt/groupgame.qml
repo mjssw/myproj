@@ -12,6 +12,8 @@ ApplicationWindow {
     width: Qt.platform.os === "android"? Screen.desktopAvailableWidth: 480
     height: Qt.platform.os === "android"? Screen.desktopAvailableHeight: 640
 
+    //FontLoader { id: localmsyhFont; source: "res/msyh.ttf" }
+
     // set debugButton=1 to enable debug buttons, other whise set 0 to disable
     property int debugButton: 1
     property int btmMargin: 60 * debugButton

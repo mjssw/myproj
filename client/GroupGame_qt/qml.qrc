@@ -58,9 +58,8 @@
         <file>res/icon1.png</file>
         <file>res/icon2.png</file>
         <file>res/input.png</file>
-        <file>res/0.png</file>
-        <file>res/1.png</file>
-        <file>res/2.png</file>
-        <file>res/3.png</file>
+        <file>res/t1.png</file>
+        <file>res/t2.png</file>
+        <file>res/t3.png</file>
     </qresource>
 </RCC>

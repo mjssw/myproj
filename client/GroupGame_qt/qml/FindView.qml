@@ -15,6 +15,24 @@ Item {
     CommonListView {
         id: findlst
         anchors.fill: parent
+
+
+
+        Component.onCompleted: {
+            addElement("../res/t2.png", qsTr("加入群"), 60, clickJoinGroup)
+            addSpliteElement(qsTr(""), 30)
+            addElement("../res/t1.png", qsTr("附近的群"), 60, clickFindGroups)
+        }
+
+        function clickJoinGroup()
+        {
+            console.debug("clickJoinGroup")
+        }
+
+        function clickFindGroups()
+        {
+            console.debug("clickFindGroups")
+        }
     }
 
     function showView(isshow)
