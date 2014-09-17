@@ -106,6 +106,12 @@ Item {
             console.debug("mainscene addGroup 2")
             friendview.addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
         }
+
+        function testFunc()
+        {
+            console.debug("testfunc")
+            moreview.testFunc()
+        }
     }
 
     Item {
@@ -318,5 +324,11 @@ Item {
         header.showCancelCreateGroup(false)
         header.showNewGroupButton(true)
         mainscene.labeltext = mainscene.friendtext
+    }
+
+    function testFunc()
+    {
+        console.debug("testfunc1")
+        views.testFunc()
     }
 }

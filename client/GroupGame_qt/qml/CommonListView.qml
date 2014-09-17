@@ -5,6 +5,7 @@ Item {
     anchors.fill: parent
 
     property string listname: "mylistname"
+    property bool hoverenable: false
 
     ListModel {
         id: lstmodel
@@ -16,7 +17,7 @@ Item {
         Rectangle {
             id: lstitem
             width: commlist.width
-            height: w
+            height: h
             color: type==0 ? "lightgray" : "white"
 
             Image {
@@ -104,14 +105,37 @@ Item {
                 clickElement(clickkey)
             }
 
+            function doEnterElement(clickkey)
+            {
+                if(commlist.enterElement)
+                {
+                    enterElement(clickkey, index)
+                }
+            }
+
+            function doLeaveElement(clickkey)
+            {
+                if(commlist.leaveElement)
+                {
+                    leaveElement(clickkey, index)
+                }
+            }
+
             MouseArea {
                 id: mouse
+                hoverEnabled: hoverenable
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: type==0 ? parent.top : parent.bottom
                 onClicked: {
                     lstitem.clicked()
+                }
+                onEntered: {
+                    lstitem.doEnterElement(clickkey)
+                }
+                onExited: {
+                    lstitem.doLeaveElement(clickkey)
                 }
             }
         }
@@ -122,6 +146,18 @@ Item {
         anchors.fill: parent
         model: lstmodel
         delegate: lstdelegate
+
+        interactive: false
+    }
+
+    function debugInfo()
+    {
+        console.debug(lstview.height, lstview.contentHeight)
+    }
+
+    function setMoveable(isenable)
+    {
+        lstview.interactive = isenable
     }
 
     function clearAll()
@@ -129,37 +165,46 @@ Item {
         lstmodel.clear()
     }
 
-    function addItem(type_, icon_, str_, w_, moretype_, more_, flag_, key_)
+    function addItem(type_, icon_, str_, h_, moretype_, more_, flag_, key_)
     {
         lstmodel.append({
             "type": type_,
             "icon": icon_,
             "str": str_,
-            "w": w_,
+            "h": h_,
             "moretype": moretype_,
             "more": more_,
             "flag": flag_,
             "clickkey": key_
         })
+
+        if(lstview.contentHeight + h_ >= lstview.height)
+        {
+            setMoveable(true)
+        }
+        else
+        {
+            setMoveable(false)
+        }
     }
 
-    function addElement(icon_, str_, w_, key_)
+    function addElement(icon_, str_, h_, key_)
     {
-        addItem(1, icon_, str_, w_, 0, "", 0, key_)
+        addItem(1, icon_, str_, h_, 0, "", 0, key_)
     }
 
-    function addElementWithTailStr(icon_, str_, w_, more_, key_)
+    function addElementWithTailStr(icon_, str_, h_, more_, key_)
     {
-        addItem(1, icon_, str_, w_, 1, more_, 0, key_)
+        addItem(1, icon_, str_, h_, 1, more_, 0, key_)
     }
 
-    function addElementWithTailImg(type_, icon_, str_, w_, more_, key_)
+    function addElementWithTailImg(type_, icon_, str_, h_, more_, key_)
     {
-        addItem(1, icon_, str_, w_, 2, more_, 0, key_)
+        addItem(1, icon_, str_, h_, 2, more_, 0, key_)
     }
 
-    function addSpliteElement(str_, w_)
+    function addSpliteElement(str_, h_)
     {
-        addItem(0, "", str_, w_, 0, "", 0, 0)
+        addItem(0, "", str_, h_, 0, "", 0, 0)
     }
 }

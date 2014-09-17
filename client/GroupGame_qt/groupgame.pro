@@ -113,7 +113,8 @@ OTHER_FILES += \
     qml/CommHeader.qml \
     qml/CommBackbtn.qml \
     qml/CommEdit.qml \
-    qml/CommColorButton.qml
+    qml/CommColorButton.qml \
+    qml/CommHint.qml
 	
 INCLUDEPATH += ./ \
         ../../sglib \

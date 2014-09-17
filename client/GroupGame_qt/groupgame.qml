@@ -80,6 +80,12 @@ ApplicationWindow {
         {
             loginscene.registerResult(result)
         }
+
+        function testFunc()
+        {
+            console.debug("testfunc1")
+            mainscene.testFunc()
+        }
     }
 
     function hideAllScene()
@@ -181,6 +187,7 @@ ApplicationWindow {
                                 //console.debug(groupgame.height, itemModel.height, testbtns.height)
                                 //console.log(mgr.testmethod());
                                 //wrapper.UserLogin("aaa", "bbb")
+                                itemModel.testFunc()
                             }
                         }
                     }

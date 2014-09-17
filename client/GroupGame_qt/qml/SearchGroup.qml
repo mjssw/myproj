@@ -15,9 +15,15 @@ Rectangle {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
+        property int spliteH: 30
+        property int elemH: 50
+
         CommonListView {
             id: findlst
             anchors.fill: parent
+            hoverenable: true
+
+            property int joinkey: 0
 
             Component.onCompleted: {
             }
@@ -25,16 +31,50 @@ Rectangle {
             function clickElement(clickkey)
             {
             }
+
+            function enterElement(clickkey, index)
+            {
+                joinbtn.visible = true
+                var pos = parent.spliteH + parent.elemH*(index-1) + (parent.elemH-joinbtn.height)/2
+                joinbtn.anchors.topMargin = pos
+                joinkey = clickkey
+            }
+
+            function leaveElement(clickkey, index)
+            {
+                joinbtn.visible = false
+            }
+
+            Item {
+                id: joinbtn
+                visible: false
+                anchors.right: parent.right
+                anchors.rightMargin: searchgroup.off
+                anchors.top: parent.top
+                height: findresult.elemH * 0.5
+                width: height * 1.5
+                CommColorButton {
+                    id: colorbtn
+                    color: "red"
+                    btnText: qsTr("加入")
+
+                    function clickButton()
+                    {
+                        console.debug("click join btn", findlst.joinkey)
+                        showHint(qsTr("已发送"))
+                    }
+                }
+            }
         }
 
         function addSplite()
         {
-            findlst.addSpliteElement(qsTr(""), 30)
+            findlst.addSpliteElement(qsTr(""), spliteH)
         }
 
-        function addResult(icon_, str_, w_, key_)
+        function addResult(icon_, str_, key_)
         {
-            findlst.addElement(icon_, str_, w_, key_)
+            findlst.addElement(icon_, str_, elemH, key_)
         }
 
         function clearAll()
@@ -96,6 +136,7 @@ Rectangle {
 
             CommColorButton {
                 btnText: qsTr("查找")
+                letterspacing: 10
 
                 function clickButton()
                 {
@@ -103,6 +144,25 @@ Rectangle {
                     clickSearch()
                 }
             }
+        }
+    }
+
+    Item {
+        id: hintitem
+        width: parent.width * 0.9
+        height: parent.height / 14
+        anchors.top: parent.top
+        anchors.topMargin: 5
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        CommHint {
+            id: hint
+        }
+
+        function showHint(text)
+        {
+            hintitem.visible = true
+            hint.showHint(text)
         }
     }
 
@@ -117,6 +177,12 @@ Rectangle {
         console.debug("clickSearch", searchedit.getEditText())
         findresult.clearAll()
         findresult.addSplite()
-        findresult.addResult("../res/t1.png", qsTr("g1"), 50, 123)
+        findresult.addResult("../res/t1.png", qsTr("g1"), 123)
+        findresult.addResult("../res/t1.png", qsTr("g2"), 125)
+    }
+
+    function showHint(text)
+    {
+        hintitem.showHint(text)
     }
 }

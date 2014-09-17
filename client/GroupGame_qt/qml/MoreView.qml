@@ -13,7 +13,7 @@ Item {
     }
 
     CommonListView {
-        id: findlst
+        id: morelst
         anchors.fill: parent
 
         property int keyUserManager: 201
@@ -30,11 +30,22 @@ Item {
 
         function clickElement(clickkey)
         {
+            morelst.debugInfo()
+        }
+
+        function testFunc()
+        {
+            addElement("../res/t3.png", qsTr("帮助"), 60, keyHelp)
         }
     }
 
     function showView(isshow)
     {
         visible = isshow ? true : false;
+    }
+
+    function testFunc()
+    {
+        morelst.testFunc()
     }
 }

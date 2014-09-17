@@ -7,6 +7,7 @@ Rectangle {
     radius: 8
 
     property string btnText: ""
+    property int letterspacing: 0
     property alias pressed: clickarea.pressed
     opacity: pressed ? 0.7 : 0.95
 
@@ -22,7 +23,7 @@ Rectangle {
         anchors.centerIn: parent
         text: btnText
         font.pixelSize: parent.height * 0.4
-        font.letterSpacing: 10
+        font.letterSpacing: parent.letterspacing
         font.weight: Font.DemiBold
         color: "white"
     }
