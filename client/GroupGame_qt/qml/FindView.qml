@@ -7,36 +7,80 @@ Item {
     visible: false
     anchors.fill: parent
 
-    Rectangle{
-        anchors.fill: parent
-        color: "white"
+    property int headerHeight: parent.headerHeight
+    property int tailerHeight: parent.tailerHeight
+
+    Loader {
+        id: findloader
+        source: ""
+
+        anchors.top: parent.top
+        anchors.topMargin: -parent.headerHeight
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: parent.height + parent.headerHeight + parent.tailerHeight
+
+        function backFindView()
+        {
+            parent.backFindView()
+        }
     }
 
-    CommonListView {
-        id: findlst
+    Rectangle{
+        id: findlist
         anchors.fill: parent
+        color: "white"
 
+        CommonListView {
+            id: findlst
+            anchors.fill: parent
 
+            property int keySearchGroup: 101
+            property int keyNearGroup: 102
 
-        Component.onCompleted: {
-            addElement("../res/t2.png", qsTr("加入群"), 60, clickJoinGroup)
-            addSpliteElement(qsTr(""), 30)
-            addElement("../res/t1.png", qsTr("附近的群"), 60, clickFindGroups)
-        }
+            Component.onCompleted: {
+                addElement("../res/t2.png", qsTr("搜索群"), 60, keySearchGroup)
+                addSpliteElement(qsTr(""), 30)
+                addElement("../res/t1.png", qsTr("附近的群"), 60, keyNearGroup)
+            }
 
-        function clickJoinGroup()
-        {
-            console.debug("clickJoinGroup")
-        }
-
-        function clickFindGroups()
-        {
-            console.debug("clickFindGroups")
+            function clickElement(clickkey)
+            {
+                switch(clickkey)
+                {
+                case keySearchGroup:
+                    clickFindGroups()
+                    break
+                case keyNearGroup:
+                    clickJoinGroup()
+                    break;
+                }
+            }
         }
     }
 
     function showView(isshow)
     {
         visible = isshow ? true : false;
+    }
+
+    function clickJoinGroup()
+    {
+        console.debug("clickJoinGroup")
+    }
+
+    function clickFindGroups()
+    {
+        console.debug("clickFindGroups")
+        findloader.source = "SearchGroup.qml"
+        findlist.visible = false
+        parent.showHeaderAndTailer(false)
+    }
+
+    function backFindView()
+    {
+        findloader.source = ""
+        findlist.visible = true
+        parent.showHeaderAndTailer(true)
     }
 }

@@ -24,6 +24,7 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: tailer.top
+        //z: 0.3
 
         property alias headerHeight: header.height
         property alias tailerHeight: tailer.height
@@ -70,7 +71,7 @@ Item {
             if( viewidx === friendIdx)
             {
                 friendview.visible = true;
-                parent.labeltext = mainscene.findtext
+                parent.labeltext = mainscene.friendtext
                 header.showNewGroupButton(true)
             }
             else if(viewidx === gameIdx)

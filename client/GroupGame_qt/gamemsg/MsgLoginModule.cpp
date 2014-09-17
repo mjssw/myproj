@@ -36,7 +36,7 @@ CMsgCloseLogin::CMsgCloseLogin()
 void CMsgCloseLogin::Process()
 {
     CCLog( "[CMsgCloseLogin::Process]" );
-	CNetManager::Instance().CloseLoginConn();
+    //CNetManager::Instance().CloseLoginConn();
 }
 
 CMsgConnectLoginError::CMsgConnectLoginError()

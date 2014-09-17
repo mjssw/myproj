@@ -2,10 +2,11 @@ import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 
-Item {
+Rectangle {
     id: friendview;
     visible: true
     anchors.fill: parent
+    color: "white"
     property int headerHeight: parent.headerHeight
     property int tailerHeight: parent.tailerHeight
 

@@ -63,6 +63,8 @@ public:
 	void GroupGateNotifyToUser(CLoginRpcClient &rpcClient, u64 gateid, u64 clientid, const std::string &ip, s32 port);
 	void EnterGameRspToUser(CLoginRpcClient &rpcClient, u64 gateid, u64 clientid, s32 result, s32 gameid, const std::string &ip, s32 port);
 
+	void DisconnectClient(u64 gateid, u64 clientid);
+
 private:
 	void _NotifyLoginResult(CLoginClient &client, u64 clientId, s32 result, const std::string &token);
 	std::string _BuildToken(const std::string &user, const std::string &flag);

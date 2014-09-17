@@ -326,6 +326,38 @@ Item {
         }
     }
 
+    Timer {
+        id: logintimer
+        interval: 1000
+        repeat: false
+
+        onTriggered: {
+            ontimer()
+        }
+    }
+
+    Timer {
+        id: logintimeout
+        interval: 10000
+        repeat: false
+
+        onTriggered: {
+            onloginTimeout()
+        }
+    }
+
+    function ontimer()
+    {
+        mainview.enabled = true
+        loadingview.visible = false
+    }
+
+    function onloginTimeout()
+    {
+        var msg = qsTr("登录超时")
+        loadingview.showResult(msg)
+        logintimer.start()
+    }
 
     function test1(callback)
     {
@@ -415,6 +447,7 @@ Item {
     {
         console.debug("userLoginFailed", param)
         loadingview.showResult(param)
+        logintimer.start()
     }
 
     function userLoginSuccess()
@@ -428,5 +461,6 @@ Item {
         console.debug("registerResult", result)
         var msg = result? qsTr("注册成功") : qsTr("注册失败")
         loadingview.showResult(msg)
+        logintimer.start()
     }
 }

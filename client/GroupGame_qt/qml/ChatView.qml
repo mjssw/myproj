@@ -50,7 +50,7 @@ Item {
             Text {
                 id: backtext
                 text: parent.backStrText
-                font.pixelSize: parent.height/2
+                font.pixelSize: parent.height*0.7
                 color: mouse.pressed ? "#969696" : "white"
                 anchors.left: parent.right
                 anchors.leftMargin: 5

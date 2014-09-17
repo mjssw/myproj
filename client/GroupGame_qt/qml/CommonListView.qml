@@ -8,48 +8,6 @@ Item {
 
     ListModel {
         id: lstmodel
-
-        /*
-        ListElement {
-            type: 1
-            icon: "../res/0.png"
-            str: "abc"
-            w: 60
-            moretype: 0
-            more: ""
-            flag: 0
-        }
-
-        ListElement {
-            type: 1
-            icon: "../res/1.png"
-            str: "xyz"
-            w: 60
-            moretype: 1
-            more: "xxxx"
-            flag: 0
-        }
-
-        ListElement {
-            type: 0
-            icon: ""
-            str: "123"
-            w: 30
-            moretype: 0
-            more: ""
-            flag: 0
-        }
-
-        ListElement {
-            type: 1
-            icon: "../res/2.png"
-            str: "hhh"
-            w: 60
-            moretype: 2
-            more: "../res/3.png"
-            flag: 1
-        }
-        //*/
     }
 
     Component {
@@ -60,12 +18,6 @@ Item {
             width: commlist.width
             height: w
             color: type==0 ? "lightgray" : "white"
-
-            Rectangle {
-                anchors.fill: parent
-                color: "#7A7A7A"
-                visible: mouse.pressed
-            }
 
             Image {
                 id: lstimg
@@ -84,8 +36,8 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: type==0 ? parent.left : lstimg.right
                 anchors.leftMargin: 10
-                font.pixelSize: parent.height * 0.5
-                font.bold: true
+                font.pixelSize: parent.height * 0.4
+                font.weight: Font.DemiBold
                 color: "black"
             }
 
@@ -110,7 +62,7 @@ Item {
                     visible: moretype==1 ? true : false
                     text: more
                     font.pixelSize: parent.height * 0.4
-                    font.bold: true
+                    font.weight: Font.DemiBold
                     color: "lightgray"
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
@@ -140,15 +92,16 @@ Item {
                 }
             }
 
+            Rectangle {
+                anchors.fill: parent
+                color: "#7A7A7A"
+                visible: mouse.pressed
+                opacity: 0.7
+            }
+
             signal clicked
             onClicked: {
-                //callback()
-                console.debug(callback.toString(), typeof(callback), typeof(icon), typeof(flag))
-
-                var f = callback
-                //f()
-                //var func = function(callback)
-                Function.call(callback)
+                clickElement(clickkey)
             }
 
             MouseArea {
@@ -171,7 +124,12 @@ Item {
         delegate: lstdelegate
     }
 
-    function addItem(type_, icon_, str_, w_, moretype_, more_, flag_, callback_)
+    function clearAll()
+    {
+        lstmodel.clear()
+    }
+
+    function addItem(type_, icon_, str_, w_, moretype_, more_, flag_, key_)
     {
         lstmodel.append({
             "type": type_,
@@ -181,33 +139,27 @@ Item {
             "moretype": moretype_,
             "more": more_,
             "flag": flag_,
-            "callback": callback_
+            "clickkey": key_
         })
     }
 
-    function defaultCallback()
+    function addElement(icon_, str_, w_, key_)
     {
-        console.debug("CommonListView::defaultCallback")
+        addItem(1, icon_, str_, w_, 0, "", 0, key_)
     }
 
-    function addElement(icon_, str_, w_, callback_)
+    function addElementWithTailStr(icon_, str_, w_, more_, key_)
     {
-        //addItem(1, icon_, str_, w_, 0, "", 0, callback_)
-        addItem(1, icon_, str_, w_, 0, "", 0, defaultCallback )
+        addItem(1, icon_, str_, w_, 1, more_, 0, key_)
     }
 
-    function addElementWithTailStr(icon_, str_, w_, more_)
+    function addElementWithTailImg(type_, icon_, str_, w_, more_, key_)
     {
-        addItem(1, icon_, str_, w_, 1, more_, 0, defaultCallback)
-    }
-
-    function addElementWithTailImg(type_, icon_, str_, w_, more_)
-    {
-        addItem(1, icon_, str_, w_, 2, more_, 0, defaultCallback)
+        addItem(1, icon_, str_, w_, 2, more_, 0, key_)
     }
 
     function addSpliteElement(str_, w_)
     {
-        addItem(0, "", str_, w_, 0, "", 0, defaultCallback)
+        addItem(0, "", str_, w_, 0, "", 0, 0)
     }
 }

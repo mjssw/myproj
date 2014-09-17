@@ -108,7 +108,12 @@ OTHER_FILES += \
     qml/GameMenu.qml \
     qml/MembersMenu.qml \
     qml/CreateGroup.qml \
-    qml/CommonListView.qml
+    qml/CommonListView.qml \
+    qml/SearchGroup.qml \
+    qml/CommHeader.qml \
+    qml/CommBackbtn.qml \
+    qml/CommEdit.qml \
+    qml/CommColorButton.qml
 	
 INCLUDEPATH += ./ \
         ../../sglib \

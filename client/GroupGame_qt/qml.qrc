@@ -21,6 +21,11 @@
         <file>qml/MembersMenu.qml</file>
         <file>qml/CreateGroup.qml</file>
         <file>qml/CommonListView.qml</file>
+        <file>qml/SearchGroup.qml</file>
+        <file>qml/CommHeader.qml</file>
+        <file>qml/CommBackbtn.qml</file>
+        <file>qml/CommEdit.qml</file>
+        <file>qml/CommColorButton.qml</file>
 
         <file>res/friend_1.png</file>
         <file>res/friend_2.png</file>

@@ -96,6 +96,8 @@ void CLoginRpcClient::CenterLoginGroupGateNotify(const byte *pPkg, s32 nPkgLen)
 	{
 		CLoginManager::Instance().GroupGateNotifyToUser(
 			*this, ntf.gateid(), ntf.clientid(), ntf.ip(), ntf.port() );
+
+		//CLoginManager::Instance().DisconnectClient( ntf.gateid(), ntf.clientid() );
 	}
 	else
 	{

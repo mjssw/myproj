@@ -165,6 +165,21 @@ void CLoginManager::EnterGameRspToUser(CLoginRpcClient &rpcClient, u64 gateid, u
 	rpcClient.SendMsgToClient( gateid, clientid, msg, sglib::msgid::SC_USER_ENTER_GAME_RSP );
 }
 
+void CLoginManager::DisconnectClient(u64 gateid, u64 clientid)
+{
+	sglib::gateproto::ServerGateCloseClientReq req;
+	req.set_clientid( clientid );
+	
+	CClient *client = CServerManager::Instance().FindClient( gateid );
+	if( !client )
+	{
+		SERVER_LOG_ERROR( "CLoginManager,DisconnectClient," << gateid << "," << clientid );
+		return;
+	}
+	CLoginClient *cli = (CLoginClient*)client;
+	cli->SendMsg( req, sglib::msgid::SG_CLOSE_CLIENT_REQ );
+}
+
 void CLoginManager::_NotifyLoginResult(CLoginClient &client, u64 clientId, s32 result, const std::string &token)
 {
 	sglib::loginproto::SCUserLoginRsp rsp;

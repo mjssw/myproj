@@ -16,13 +16,20 @@ Item {
         id: findlst
         anchors.fill: parent
 
+        property int keyUserManager: 201
+        property int keyAbout: 202
+        property int keyHelp: 203
+
         Component.onCompleted: {
-            /*
-            addElement("../res/boy.png", qsTr("帐号管理"), 100)
+            addElement("../res/boy.png", qsTr("帐号管理"), 100, keyUserManager)
             addSpliteElement(qsTr(""), 30)
-            addElement("../res/t2.png", qsTr("关于"), 60)
-            addElement("../res/t3.png", qsTr("帮助"), 60)
-            //*/
+            addElement("../res/t2.png", qsTr("关于"), 60, keyAbout)
+            addSpliteElement(qsTr(""), 30)
+            addElement("../res/t3.png", qsTr("帮助"), 60, keyHelp)
+        }
+
+        function clickElement(clickkey)
+        {
         }
     }
 
