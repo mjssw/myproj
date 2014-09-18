@@ -7,6 +7,10 @@ Item {
     visible: false
     anchors.fill: parent
 
+    property int selfH: 100
+    property int elemH: 80
+    property int spliteH: 40
+
     Rectangle{
         anchors.fill: parent
         color: "white"
@@ -21,11 +25,11 @@ Item {
         property int keyHelp: 203
 
         Component.onCompleted: {
-            addElement("../res/boy.png", qsTr("帐号管理"), 100, keyUserManager)
-            addSpliteElement(qsTr(""), 30)
-            addElement("../res/t2.png", qsTr("关于"), 60, keyAbout)
-            addSpliteElement(qsTr(""), 30)
-            addElement("../res/t3.png", qsTr("帮助"), 60, keyHelp)
+            addElement("../res/boy.png", qsTr("帐号管理"), moreview.selfH, keyUserManager)
+            addSpliteElement(qsTr(""), moreview.spliteH)
+            addElement("../res/t2.png", qsTr("关于"), moreview.elemH, keyAbout)
+            addSpliteElement(qsTr(""), moreview.spliteH)
+            addElement("../res/t3.png", qsTr("帮助"), moreview.elemH, keyHelp)
         }
 
         function clickElement(clickkey)
@@ -35,7 +39,7 @@ Item {
 
         function testFunc()
         {
-            addElement("../res/t3.png", qsTr("帮助"), 60, keyHelp)
+            addElement("../res/t3.png", qsTr("帮助"), moreview.elemH, keyHelp)
         }
     }
 

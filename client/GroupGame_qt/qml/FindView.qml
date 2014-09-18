@@ -10,6 +10,9 @@ Item {
     property int headerHeight: parent.headerHeight
     property int tailerHeight: parent.tailerHeight
 
+    property int elemH: 80
+    property int spliteH: 40
+
     Loader {
         id: findloader
         source: ""
@@ -39,9 +42,9 @@ Item {
             property int keyNearGroup: 102
 
             Component.onCompleted: {
-                addElement("../res/t2.png", qsTr("搜索群"), 60, keySearchGroup)
-                addSpliteElement(qsTr(""), 30)
-                addElement("../res/t1.png", qsTr("附近的群"), 60, keyNearGroup)
+                addElement("../res/t2.png", qsTr("搜索群"), findview.elemH, keySearchGroup)
+                addSpliteElement(qsTr(""), findview.spliteH)
+                addElement("../res/t1.png", qsTr("附近的群"), findview.elemH, keyNearGroup)
             }
 
             function clickElement(clickkey)

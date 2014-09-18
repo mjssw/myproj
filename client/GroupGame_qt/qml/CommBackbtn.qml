@@ -30,7 +30,7 @@ Item {
         anchors.leftMargin: margin
         anchors.verticalCenter: parent.verticalCenter
         text: parent.backStr
-        font.pixelSize: backimg.height * 0.6
+        font.pixelSize: backimg.height * 0.8
         font.weight: Font.DemiBold
         color: backmouse.pressed ? "gray" : "white"
     }

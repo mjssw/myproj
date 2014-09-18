@@ -12,6 +12,9 @@ ApplicationWindow {
     width: Qt.platform.os === "android"? Screen.desktopAvailableWidth: 480
     height: Qt.platform.os === "android"? Screen.desktopAvailableHeight: 640
 
+    //onClosing: {close.accepted = false}
+
+
     //FontLoader { id: localmsyhFont; source: "res/msyh.ttf" }
 
     // set debugButton=1 to enable debug buttons, other whise set 0 to disable
@@ -20,6 +23,18 @@ ApplicationWindow {
     Item {
         id: itemModel
         anchors { fill: parent; bottomMargin: groupgame.btmMargin }
+        focus: true
+
+        Keys.onReleased: {
+                console.log("Key pressed: ",event.key)
+                if (event.key === Qt.Key_Back) {
+                    console.log("Back button pressed.  Stack depth ")
+                    event.accepted = true
+
+                    //event.key = Qt.Key_Home
+                    //event.accepted = false
+                }
+            }
 
         MainScene {
             id: mainscene
@@ -85,6 +100,7 @@ ApplicationWindow {
         {
             console.debug("testfunc1")
             mainscene.testFunc()
+            //Qt.quit()
         }
     }
 

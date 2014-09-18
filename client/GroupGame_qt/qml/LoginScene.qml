@@ -16,7 +16,7 @@ Item {
     property string probText: qsTr("无法登陆？")
     property string btnText: defaultLoginText
     property bool islogin: true
-    property string logopath: "../res/icon1.png"
+    property string logopath: "../res/icon2.png"
     property string resultText: qsTr("帐号密码error")
     property string loginingText: qsTr("正在登录")
     property string registingText: qsTr("正在注册")

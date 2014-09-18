@@ -157,6 +157,7 @@ Item {
 
     function setMoveable(isenable)
     {
+        console.debug("old_interactive=", lstview.interactive, isenable)
         lstview.interactive = isenable
     }
 
@@ -177,6 +178,8 @@ Item {
             "flag": flag_,
             "clickkey": key_
         })
+
+        console.debug("contentH=", lstview.contentHeight, h_, lstview.height)
 
         if(lstview.contentHeight + h_ >= lstview.height)
         {

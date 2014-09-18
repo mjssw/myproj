@@ -27,6 +27,7 @@
         <file>qml/CommEdit.qml</file>
         <file>qml/CommColorButton.qml</file>
         <file>qml/CommHint.qml</file>
+        <file>qml/GroupInfo.qml</file>
 
         <file>res/friend_1.png</file>
         <file>res/friend_2.png</file>

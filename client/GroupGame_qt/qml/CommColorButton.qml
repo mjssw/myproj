@@ -22,7 +22,7 @@ Rectangle {
     Text {
         anchors.centerIn: parent
         text: btnText
-        font.pixelSize: parent.height * 0.4
+        font.pixelSize: parent.height * 0.5
         font.letterSpacing: parent.letterspacing
         font.weight: Font.DemiBold
         color: "white"
