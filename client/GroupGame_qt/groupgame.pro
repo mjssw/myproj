@@ -115,7 +115,9 @@ OTHER_FILES += \
     qml/CommEdit.qml \
     qml/CommColorButton.qml \
     qml/CommHint.qml \
-    qml/GroupInfo.qml
+    qml/GroupInfo.qml \
+    qml/MemberList.qml \
+    qml/MemberInfo.qml
 	
 INCLUDEPATH += ./ \
         ../../sglib \
