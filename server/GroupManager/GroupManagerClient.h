@@ -43,6 +43,7 @@ private:
 	void _GameManagerReportInfo(const byte *pkg, s32 len);
 	void _GroupCreateGameRoomProc(const byte *pkg, s32 len);
 	void _GameManagerCreateRoomResultProc(const byte *pkg, s32 len);
+	void _UserJoinGroupProc(const byte *pkg, s32 len);
 	
 private:
 	void _NotifyCenterGateClose(s32 gateid);
@@ -61,12 +62,16 @@ private:
 	void _DoLoadUserBasicInfo(const std::string &user);
 	void _TryAddMemberToGroup(google::protobuf::Message &msg, CGroupMemberPosition &member, u64 groupid);
 	void _MemberLeaveGroup(const std::string &user, u64 groupid);
+	void _UserJoinGroup(u64 groupid, s32 gateresid, u64 clientid);
+	void _NotifyJoinGroupResult(u64 groupid, s32 gateresid, u64 clientid, s32 result);
+	void _NotifyGroupMasterUserAskJoin(u64 groupid, const std::string &user);
 
 private:
 	void _GetUserGroupsCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 	void _GetUserBasicInfoCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 	void _AddMemberToGroupCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 	void _MemberLeaveGroupCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
+	void _UserJoinGroupCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len);
 
 private:
 	std::map<s32, ProtoProc> m_mapProtoProc;

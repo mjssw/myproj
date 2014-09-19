@@ -96,6 +96,8 @@ class GroupmanagerGroupCreateGameRoomRsp;
 class GroupmanagerGamemanagerCreateGameRoomReq;
 class GamemanagerGroupmanagerCreateGameRoomRsp;
 class GroupGateLoginSuccessNtf;
+class GroupGroupmanagerJoinGroupReq;
+class GroupmanagerGroupJoinGroupRsp;
 
 // ===================================================================
 
@@ -6678,6 +6680,220 @@ class GroupGateLoginSuccessNtf : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static GroupGateLoginSuccessNtf* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class GroupGroupmanagerJoinGroupReq : public ::google::protobuf::Message {
+ public:
+  GroupGroupmanagerJoinGroupReq();
+  virtual ~GroupGroupmanagerJoinGroupReq();
+
+  GroupGroupmanagerJoinGroupReq(const GroupGroupmanagerJoinGroupReq& from);
+
+  inline GroupGroupmanagerJoinGroupReq& operator=(const GroupGroupmanagerJoinGroupReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GroupGroupmanagerJoinGroupReq& default_instance();
+
+  void Swap(GroupGroupmanagerJoinGroupReq* other);
+
+  // implements Message ----------------------------------------------
+
+  GroupGroupmanagerJoinGroupReq* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const GroupGroupmanagerJoinGroupReq& from);
+  void MergeFrom(const GroupGroupmanagerJoinGroupReq& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint64 groupid = 1;
+  inline bool has_groupid() const;
+  inline void clear_groupid();
+  static const int kGroupidFieldNumber = 1;
+  inline ::google::protobuf::uint64 groupid() const;
+  inline void set_groupid(::google::protobuf::uint64 value);
+
+  // required int32 gateresid = 2;
+  inline bool has_gateresid() const;
+  inline void clear_gateresid();
+  static const int kGateresidFieldNumber = 2;
+  inline ::google::protobuf::int32 gateresid() const;
+  inline void set_gateresid(::google::protobuf::int32 value);
+
+  // required uint64 clientid = 3;
+  inline bool has_clientid() const;
+  inline void clear_clientid();
+  static const int kClientidFieldNumber = 3;
+  inline ::google::protobuf::uint64 clientid() const;
+  inline void set_clientid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:sglib.groupproto.GroupGroupmanagerJoinGroupReq)
+ private:
+  inline void set_has_groupid();
+  inline void clear_has_groupid();
+  inline void set_has_gateresid();
+  inline void clear_has_gateresid();
+  inline void set_has_clientid();
+  inline void clear_has_clientid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint64 groupid_;
+  ::google::protobuf::uint64 clientid_;
+  ::google::protobuf::int32 gateresid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_group_2eproto();
+  friend void protobuf_AssignDesc_group_2eproto();
+  friend void protobuf_ShutdownFile_group_2eproto();
+
+  void InitAsDefaultInstance();
+  static GroupGroupmanagerJoinGroupReq* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class GroupmanagerGroupJoinGroupRsp : public ::google::protobuf::Message {
+ public:
+  GroupmanagerGroupJoinGroupRsp();
+  virtual ~GroupmanagerGroupJoinGroupRsp();
+
+  GroupmanagerGroupJoinGroupRsp(const GroupmanagerGroupJoinGroupRsp& from);
+
+  inline GroupmanagerGroupJoinGroupRsp& operator=(const GroupmanagerGroupJoinGroupRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GroupmanagerGroupJoinGroupRsp& default_instance();
+
+  void Swap(GroupmanagerGroupJoinGroupRsp* other);
+
+  // implements Message ----------------------------------------------
+
+  GroupmanagerGroupJoinGroupRsp* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const GroupmanagerGroupJoinGroupRsp& from);
+  void MergeFrom(const GroupmanagerGroupJoinGroupRsp& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 result = 1;
+  inline bool has_result() const;
+  inline void clear_result();
+  static const int kResultFieldNumber = 1;
+  inline ::google::protobuf::int32 result() const;
+  inline void set_result(::google::protobuf::int32 value);
+
+  // required uint64 groupid = 2;
+  inline bool has_groupid() const;
+  inline void clear_groupid();
+  static const int kGroupidFieldNumber = 2;
+  inline ::google::protobuf::uint64 groupid() const;
+  inline void set_groupid(::google::protobuf::uint64 value);
+
+  // required int32 gateresid = 3;
+  inline bool has_gateresid() const;
+  inline void clear_gateresid();
+  static const int kGateresidFieldNumber = 3;
+  inline ::google::protobuf::int32 gateresid() const;
+  inline void set_gateresid(::google::protobuf::int32 value);
+
+  // required uint64 clientid = 4;
+  inline bool has_clientid() const;
+  inline void clear_clientid();
+  static const int kClientidFieldNumber = 4;
+  inline ::google::protobuf::uint64 clientid() const;
+  inline void set_clientid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:sglib.groupproto.GroupmanagerGroupJoinGroupRsp)
+ private:
+  inline void set_has_result();
+  inline void clear_has_result();
+  inline void set_has_groupid();
+  inline void clear_has_groupid();
+  inline void set_has_gateresid();
+  inline void clear_has_gateresid();
+  inline void set_has_clientid();
+  inline void clear_has_clientid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint64 groupid_;
+  ::google::protobuf::int32 result_;
+  ::google::protobuf::int32 gateresid_;
+  ::google::protobuf::uint64 clientid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+
+  friend void  protobuf_AddDesc_group_2eproto();
+  friend void protobuf_AssignDesc_group_2eproto();
+  friend void protobuf_ShutdownFile_group_2eproto();
+
+  void InitAsDefaultInstance();
+  static GroupmanagerGroupJoinGroupRsp* default_instance_;
 };
 // ===================================================================
 
@@ -13438,6 +13654,168 @@ inline ::google::protobuf::uint64 GroupGateLoginSuccessNtf::clientid() const {
   return clientid_;
 }
 inline void GroupGateLoginSuccessNtf::set_clientid(::google::protobuf::uint64 value) {
+  set_has_clientid();
+  clientid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// GroupGroupmanagerJoinGroupReq
+
+// required uint64 groupid = 1;
+inline bool GroupGroupmanagerJoinGroupReq::has_groupid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void GroupGroupmanagerJoinGroupReq::set_has_groupid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void GroupGroupmanagerJoinGroupReq::clear_has_groupid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void GroupGroupmanagerJoinGroupReq::clear_groupid() {
+  groupid_ = GOOGLE_ULONGLONG(0);
+  clear_has_groupid();
+}
+inline ::google::protobuf::uint64 GroupGroupmanagerJoinGroupReq::groupid() const {
+  return groupid_;
+}
+inline void GroupGroupmanagerJoinGroupReq::set_groupid(::google::protobuf::uint64 value) {
+  set_has_groupid();
+  groupid_ = value;
+}
+
+// required int32 gateresid = 2;
+inline bool GroupGroupmanagerJoinGroupReq::has_gateresid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void GroupGroupmanagerJoinGroupReq::set_has_gateresid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void GroupGroupmanagerJoinGroupReq::clear_has_gateresid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void GroupGroupmanagerJoinGroupReq::clear_gateresid() {
+  gateresid_ = 0;
+  clear_has_gateresid();
+}
+inline ::google::protobuf::int32 GroupGroupmanagerJoinGroupReq::gateresid() const {
+  return gateresid_;
+}
+inline void GroupGroupmanagerJoinGroupReq::set_gateresid(::google::protobuf::int32 value) {
+  set_has_gateresid();
+  gateresid_ = value;
+}
+
+// required uint64 clientid = 3;
+inline bool GroupGroupmanagerJoinGroupReq::has_clientid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void GroupGroupmanagerJoinGroupReq::set_has_clientid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void GroupGroupmanagerJoinGroupReq::clear_has_clientid() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void GroupGroupmanagerJoinGroupReq::clear_clientid() {
+  clientid_ = GOOGLE_ULONGLONG(0);
+  clear_has_clientid();
+}
+inline ::google::protobuf::uint64 GroupGroupmanagerJoinGroupReq::clientid() const {
+  return clientid_;
+}
+inline void GroupGroupmanagerJoinGroupReq::set_clientid(::google::protobuf::uint64 value) {
+  set_has_clientid();
+  clientid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// GroupmanagerGroupJoinGroupRsp
+
+// required int32 result = 1;
+inline bool GroupmanagerGroupJoinGroupRsp::has_result() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void GroupmanagerGroupJoinGroupRsp::set_has_result() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void GroupmanagerGroupJoinGroupRsp::clear_has_result() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void GroupmanagerGroupJoinGroupRsp::clear_result() {
+  result_ = 0;
+  clear_has_result();
+}
+inline ::google::protobuf::int32 GroupmanagerGroupJoinGroupRsp::result() const {
+  return result_;
+}
+inline void GroupmanagerGroupJoinGroupRsp::set_result(::google::protobuf::int32 value) {
+  set_has_result();
+  result_ = value;
+}
+
+// required uint64 groupid = 2;
+inline bool GroupmanagerGroupJoinGroupRsp::has_groupid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void GroupmanagerGroupJoinGroupRsp::set_has_groupid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void GroupmanagerGroupJoinGroupRsp::clear_has_groupid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void GroupmanagerGroupJoinGroupRsp::clear_groupid() {
+  groupid_ = GOOGLE_ULONGLONG(0);
+  clear_has_groupid();
+}
+inline ::google::protobuf::uint64 GroupmanagerGroupJoinGroupRsp::groupid() const {
+  return groupid_;
+}
+inline void GroupmanagerGroupJoinGroupRsp::set_groupid(::google::protobuf::uint64 value) {
+  set_has_groupid();
+  groupid_ = value;
+}
+
+// required int32 gateresid = 3;
+inline bool GroupmanagerGroupJoinGroupRsp::has_gateresid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void GroupmanagerGroupJoinGroupRsp::set_has_gateresid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void GroupmanagerGroupJoinGroupRsp::clear_has_gateresid() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void GroupmanagerGroupJoinGroupRsp::clear_gateresid() {
+  gateresid_ = 0;
+  clear_has_gateresid();
+}
+inline ::google::protobuf::int32 GroupmanagerGroupJoinGroupRsp::gateresid() const {
+  return gateresid_;
+}
+inline void GroupmanagerGroupJoinGroupRsp::set_gateresid(::google::protobuf::int32 value) {
+  set_has_gateresid();
+  gateresid_ = value;
+}
+
+// required uint64 clientid = 4;
+inline bool GroupmanagerGroupJoinGroupRsp::has_clientid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void GroupmanagerGroupJoinGroupRsp::set_has_clientid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void GroupmanagerGroupJoinGroupRsp::clear_has_clientid() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void GroupmanagerGroupJoinGroupRsp::clear_clientid() {
+  clientid_ = GOOGLE_ULONGLONG(0);
+  clear_has_clientid();
+}
+inline ::google::protobuf::uint64 GroupmanagerGroupJoinGroupRsp::clientid() const {
+  return clientid_;
+}
+inline void GroupmanagerGroupJoinGroupRsp::set_clientid(::google::protobuf::uint64 value) {
   set_has_clientid();
   clientid_ = value;
 }

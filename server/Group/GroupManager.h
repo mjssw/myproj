@@ -56,6 +56,7 @@ public:
 	void UserLogout(s32 gateresid, u64 clientid);
 	void CreateGroupGame(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, u64 groupid, s32 game);
 	void GroupHistoryMessage(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, u64 groupid, s64 idxfrom, s32 limit); 
+	void UserJoinGroup(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, u64 groupid);
 
 	// group rpc client interface
 	void TryCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const std::string &user, const std::string &username, const std::string &userhead, const std::string &name, u64 groupid, const std::string &head, u64 groupserverid);
@@ -66,6 +67,7 @@ public:
 	void GroupMemberOnline(sglib::groupproto::GroupmanagerGroupMemberOnlineNtf &ntf);
 	void GroupMemberOffline(sglib::groupproto::GroupmanagerGroupMemberOfflineNtf &ntf);
 	void CreateGroupGameResult(sglib::groupproto::GroupmanagerGroupCreateGameRoomRsp &rsp);
+	void UserJoinGroupResult(sglib::groupproto::GroupmanagerGroupJoinGroupRsp &rsp);
 
 	void DisplayInfo();
 private:

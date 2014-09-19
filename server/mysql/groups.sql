@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50537
 File Encoding         : 65001
 
-Date: 2014-08-01 13:48:09
+Date: 2014-09-19 16:41:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,11 +25,6 @@ CREATE TABLE `groupid` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of groupid
--- ----------------------------
-INSERT INTO `groupid` VALUES ('0000000000000000000000000000000000000000000000000000000000000102');
-
--- ----------------------------
 -- Table structure for groups
 -- ----------------------------
 DROP TABLE IF EXISTS `groups`;
@@ -40,12 +35,6 @@ CREATE TABLE `groups` (
   PRIMARY KEY (`id`),
   KEY `idIndex` (`id`) USING HASH
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of groups
--- ----------------------------
-INSERT INTO `groups` VALUES ('1', '斗地主高中群', 'group1.png');
-INSERT INTO `groups` VALUES ('2', '麻将大学群', 'group3.png');
 
 -- ----------------------------
 -- Table structure for group_1
@@ -61,10 +50,169 @@ CREATE TABLE `group_1` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of group_1
+-- Table structure for group_102
 -- ----------------------------
-INSERT INTO `group_1` VALUES ('sjj1', '解析', '#7', '00000000000000000000000000000001');
-INSERT INTO `group_1` VALUES ('sjj2', '哈罗oo丕', '#9', '00000000000000000000000000000000');
+DROP TABLE IF EXISTS `group_102`;
+CREATE TABLE `group_102` (
+  `user` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `head` varchar(64) DEFAULT NULL,
+  `ismaster` int(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for group_103
+-- ----------------------------
+DROP TABLE IF EXISTS `group_103`;
+CREATE TABLE `group_103` (
+  `user` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `head` varchar(64) DEFAULT NULL,
+  `ismaster` int(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for group_104
+-- ----------------------------
+DROP TABLE IF EXISTS `group_104`;
+CREATE TABLE `group_104` (
+  `user` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `head` varchar(64) DEFAULT NULL,
+  `ismaster` int(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for group_105
+-- ----------------------------
+DROP TABLE IF EXISTS `group_105`;
+CREATE TABLE `group_105` (
+  `user` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `head` varchar(64) DEFAULT NULL,
+  `ismaster` int(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for group_106
+-- ----------------------------
+DROP TABLE IF EXISTS `group_106`;
+CREATE TABLE `group_106` (
+  `user` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `head` varchar(64) DEFAULT NULL,
+  `ismaster` int(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for group_107
+-- ----------------------------
+DROP TABLE IF EXISTS `group_107`;
+CREATE TABLE `group_107` (
+  `user` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `head` varchar(64) DEFAULT NULL,
+  `ismaster` int(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for group_108
+-- ----------------------------
+DROP TABLE IF EXISTS `group_108`;
+CREATE TABLE `group_108` (
+  `user` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `head` varchar(64) DEFAULT NULL,
+  `ismaster` int(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for group_109
+-- ----------------------------
+DROP TABLE IF EXISTS `group_109`;
+CREATE TABLE `group_109` (
+  `user` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `head` varchar(64) DEFAULT NULL,
+  `ismaster` int(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for group_110
+-- ----------------------------
+DROP TABLE IF EXISTS `group_110`;
+CREATE TABLE `group_110` (
+  `user` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `head` varchar(64) DEFAULT NULL,
+  `ismaster` int(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for group_111
+-- ----------------------------
+DROP TABLE IF EXISTS `group_111`;
+CREATE TABLE `group_111` (
+  `user` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `head` varchar(64) DEFAULT NULL,
+  `ismaster` int(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for group_112
+-- ----------------------------
+DROP TABLE IF EXISTS `group_112`;
+CREATE TABLE `group_112` (
+  `user` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `head` varchar(64) DEFAULT NULL,
+  `ismaster` int(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for group_113
+-- ----------------------------
+DROP TABLE IF EXISTS `group_113`;
+CREATE TABLE `group_113` (
+  `user` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `head` varchar(64) DEFAULT NULL,
+  `ismaster` int(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for group_114
+-- ----------------------------
+DROP TABLE IF EXISTS `group_114`;
+CREATE TABLE `group_114` (
+  `user` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `head` varchar(64) DEFAULT NULL,
+  `ismaster` int(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for group_115
+-- ----------------------------
+DROP TABLE IF EXISTS `group_115`;
+CREATE TABLE `group_115` (
+  `user` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `head` varchar(64) DEFAULT NULL,
+  `ismaster` int(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for group_116
+-- ----------------------------
+DROP TABLE IF EXISTS `group_116`;
+CREATE TABLE `group_116` (
+  `user` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `head` varchar(64) DEFAULT NULL,
+  `ismaster` int(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for group_2
@@ -78,12 +226,6 @@ CREATE TABLE `group_2` (
   PRIMARY KEY (`user`),
   KEY `UserIndex` (`user`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of group_2
--- ----------------------------
-INSERT INTO `group_2` VALUES ('sjj1', '解析', '#7', '00000000000000000000000000000000');
-INSERT INTO `group_2` VALUES ('sjj3', '大吉ho', '#8', '00000000000000000000000000000001');
 
 -- ----------------------------
 -- Procedure structure for AddMemberToGroup
@@ -118,6 +260,67 @@ BEGIN
 		SET result=-1;
 	END IF;
 
+	SELECT result;
+END
+;;
+DELIMITER ;
+
+-- ----------------------------
+-- Procedure structure for AskJoinGroup
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `AskJoinGroup`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` PROCEDURE `AskJoinGroup`(IN `groupid_` bigint(128),IN `user_` varchar(64))
+BEGIN
+  DECLARE tablename_ varchar(128);
+	DECLARE result int;
+
+	# (1) find group is EXISTS
+	SET result=0;
+	SELECT COUNT(*) into result from groups where id=groupid_;
+	IF(result=0) THEN
+		SET result=-4;
+	ELSE
+		SET tablename_=CONCAT("join_group_",groupid_);
+		IF NOT EXISTS( select 1 from information_schema.tables where table_schema=DATABASE() and table_name=tablename_) THEN
+			SET @STMT :=CONCAT("CREATE TABLE ",tablename_," (user varchar(64),state int(32));"); 
+			PREPARE STMT FROM @STMT; 
+			EXECUTE STMT; 
+		END IF;
+		SET result=-1;
+		# state: 
+		# 	0: valid request, more same request is ignored
+		#		1: request processed, aleardy in groupid, more request is ignored
+		# 	2: request processed, rejust, can apply join again
+		#		3: request processed, rejust, can not apply join any more, feedback user
+		IF EXISTS( select 1 from information_schema.tables where table_schema=DATABASE() and table_name=tablename_) THEN
+			SET result=1;
+			SET @joinstate=-1;
+			SET @STMT :=CONCAT("SELECT state into @joinstate FROM ",tablename_," where user='", user_, "';");
+			PREPARE STMT FROM @STMT; 
+			EXECUTE STMT;
+			SELECT @joinstate;
+			IF(@joinstate!=-1) THEN
+				IF(@joinstate=1) THEN
+					SET result=-2;
+				ELSEIF(@joinstate=2) THEN
+					SET @STMT :=CONCAT("UPDATE ",tablename_," SET state=0 where user='", user_, "';"); 
+					PREPARE STMT FROM @STMT; 
+					EXECUTE STMT;
+					# TODO check
+				ELSEIF(@joinstate=3) THEN
+					SET result=-3;
+				ELSE
+					SET result=1;
+				END IF;
+			ELSE
+				SET @STMT :=CONCAT("INSERT INTO ",tablename_,"(user,state) VALUES('", user_, "',0);"); 
+				PREPARE STMT FROM @STMT; 
+				EXECUTE STMT;
+				# TODO check insert result
+			END IF;
+		END IF;
+	END IF;
 	SELECT result;
 END
 ;;
@@ -221,10 +424,12 @@ BEGIN
 	SET result=1;
 
 	SET @delsql :=CONCAT("DELETE FROM group_",group_," WHERE user='",user_,"';");
+	#SELECT @delsql;
 	PREPARE delsql FROM @delsql; 
 	EXECUTE delsql;
 
 	SET @delsql2 :=CONCAT("DELETE FROM ",udname_,".user_",user_,"_group WHERE groupid=",group_,";");
+	#SELECT @delsql2;
 	PREPARE delsql2 FROM @delsql2; 
 	EXECUTE delsql2;
 

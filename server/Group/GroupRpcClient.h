@@ -32,6 +32,7 @@ private:
 	void _GroupmanagerGroupMemberOnlineProc(const byte *pkg, s32 len);
 	void _GroupmanagerGroupMemberOfflineProc(const byte *pkg, s32 len); 
 	void _GroupmanagerGroupCreateGameResultProc(const byte *pkg, s32 len);
+	void _GroupmanagerGroupJoinGroupResultProc(const byte *pkg, s32 len);
 
 private:
 	std::map<s32, ProtoProc> m_mapProtoProc;

@@ -474,6 +474,18 @@ void CGroupManager::GroupHistoryMessage(CGroupClient &client, s32 gateresid, u64
 	_LoadGroupMessageHistory( *group, idxfrom, limit, gateresid, clientid );
 }
 
+void CGroupManager::UserJoinGroup(CGroupClient &client, s32 gateresid, u64 gateid, u64 clientid, u64 groupid)
+{
+	sglib::groupproto::GroupGroupmanagerJoinGroupReq req;
+    req.set_gateresid( gateresid );
+    req.set_clientid( clientid );
+	req.set_groupid( groupid );
+		
+    CServerManager::Instance().SendRpcMsg( 
+        CServerManager::Instance().GetGroupManagerServerId(),
+        req, sglib::msgid::GPGM_GROUP_CREATE_REQ );
+}
+
 void CGroupManager::TryCreateGroup(u64 gateid, s32 gateresid, u64 clientid, const string &user, const string &username, const string &userhead, const string &name, u64 groupid, const string &head, u64 groupserverid)
 {
 	SERVER_LOG_INFO( "RpcCreateGroupResult," << gateid << "," <<\
@@ -534,9 +546,9 @@ void CGroupManager::AddGroupMemberRsp(sglib::groupproto::GroupmanagerGroupAddMem
 	SG_ASSERT( client != NULL );
 	_NotifyAddGroupMemberRsp( *client, rsp.clientid(), rsp.groupid(), sglib::errorcode::E_ErrorCode_Success );
 
+	/* 2014-09-19 改为直接同意加入, 即群内好友邀请玩家可直接加入
 	CGroupInfo *groupInfo = CGroupManager::Instance().FindGroup( rsp.groupid() );
 	SG_ASSERT( groupInfo != NULL );
-
 	// 发出请求给被邀请的玩家
 	sglib::groupproto::SCGroupAskJoinNtf ntf;
 	sglib::publicproto::GroupInfo *pInfo = ntf.mutable_group();
@@ -567,6 +579,24 @@ void CGroupManager::AddGroupMemberRsp(sglib::groupproto::GroupmanagerGroupAddMem
 		else
 		{
 			SERVER_LOG_WARN( "CGroupRpcClient,_GroupmanagerGroupAddMemberRspProc,GetGateInfo," << it->first );
+		}
+	}
+	//*/
+	
+	u64 groupid = rsp.groupid();
+	map<s32, vector<u64> > alluser;
+	for( s32 i=0; i<(s32)rsp.users_size(); ++i )
+	{
+		const sglib::publicproto::GroupMemberPosInfo &info = rsp.users( i );
+		alluser[ info.gateresid() ].push_back( info.clientid() );
+	}
+	map<s32, vector<u64> >::iterator it = alluser.begin();
+	for( ; it != alluser.end(); ++it )
+	{
+		vector<u64>::iterator _clientid = it->second.begin();
+		for( ; _clientid != it->second.end(); ++_clientid )
+		{
+			_AskManagerInfoToAgree( it->first, *_clientid, groupid );
 		}
 	}
 }
@@ -701,6 +731,21 @@ void CGroupManager::CreateGroupGameResult(sglib::groupproto::GroupmanagerGroupCr
 		CGroupManager::Instance().BroadcastMsgInGroup( 
 			rsp.groupid(), ntf, sglib::msgid::SC_GROUP_CREATE_GAMEROOM_NTF );
 	}
+}
+
+void CGroupManager::UserJoinGroupResult(sglib::groupproto::GroupmanagerGroupJoinGroupRsp &rsp)
+{
+	SERVER_LOG_INFO( "UserJoinGroupResult," << rsp.result() << "," \
+		<< rsp.gateresid() << "," << rsp.clientid() << "," << rsp.groupid() );
+
+	s32 result = rsp.result()==1 ? sglib::errorcode::E_ErrorCode_Success : rsp.result();
+	sglib::groupproto::SCGroupJoinRsp msg;
+	msg.set_groupid( rsp.groupid() );
+	msg.set_result( result );
+
+    SendMsgToClient(
+		rsp.gateresid(), rsp.clientid(), 
+		msg, sglib::msgid::SC_GROUP_JOIN_RSP );
 }
 
 void CGroupManager::DisplayInfo()

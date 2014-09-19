@@ -204,6 +204,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* GroupGateLoginSuccessNtf_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   GroupGateLoginSuccessNtf_reflection_ = NULL;
+const ::google::protobuf::Descriptor* GroupGroupmanagerJoinGroupReq_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  GroupGroupmanagerJoinGroupReq_reflection_ = NULL;
+const ::google::protobuf::Descriptor* GroupmanagerGroupJoinGroupRsp_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  GroupmanagerGroupJoinGroupRsp_reflection_ = NULL;
 
 }  // namespace
 
@@ -1260,6 +1266,41 @@ void protobuf_AssignDesc_group_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GroupGateLoginSuccessNtf));
+  GroupGroupmanagerJoinGroupReq_descriptor_ = file->message_type(61);
+  static const int GroupGroupmanagerJoinGroupReq_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerJoinGroupReq, groupid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerJoinGroupReq, gateresid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerJoinGroupReq, clientid_),
+  };
+  GroupGroupmanagerJoinGroupReq_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      GroupGroupmanagerJoinGroupReq_descriptor_,
+      GroupGroupmanagerJoinGroupReq::default_instance_,
+      GroupGroupmanagerJoinGroupReq_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerJoinGroupReq, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupGroupmanagerJoinGroupReq, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(GroupGroupmanagerJoinGroupReq));
+  GroupmanagerGroupJoinGroupRsp_descriptor_ = file->message_type(62);
+  static const int GroupmanagerGroupJoinGroupRsp_offsets_[4] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupJoinGroupRsp, result_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupJoinGroupRsp, groupid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupJoinGroupRsp, gateresid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupJoinGroupRsp, clientid_),
+  };
+  GroupmanagerGroupJoinGroupRsp_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      GroupmanagerGroupJoinGroupRsp_descriptor_,
+      GroupmanagerGroupJoinGroupRsp::default_instance_,
+      GroupmanagerGroupJoinGroupRsp_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupJoinGroupRsp, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GroupmanagerGroupJoinGroupRsp, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(GroupmanagerGroupJoinGroupRsp));
 }
 
 namespace {
@@ -1394,6 +1435,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
     GamemanagerGroupmanagerCreateGameRoomRsp_descriptor_, &GamemanagerGroupmanagerCreateGameRoomRsp::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GroupGateLoginSuccessNtf_descriptor_, &GroupGateLoginSuccessNtf::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    GroupGroupmanagerJoinGroupReq_descriptor_, &GroupGroupmanagerJoinGroupReq::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    GroupmanagerGroupJoinGroupRsp_descriptor_, &GroupmanagerGroupJoinGroupRsp::default_instance());
 }
 
 }  // namespace
@@ -1521,6 +1566,10 @@ void protobuf_ShutdownFile_group_2eproto() {
   delete GamemanagerGroupmanagerCreateGameRoomRsp_reflection_;
   delete GroupGateLoginSuccessNtf::default_instance_;
   delete GroupGateLoginSuccessNtf_reflection_;
+  delete GroupGroupmanagerJoinGroupReq::default_instance_;
+  delete GroupGroupmanagerJoinGroupReq_reflection_;
+  delete GroupmanagerGroupJoinGroupRsp::default_instance_;
+  delete GroupmanagerGroupJoinGroupRsp_reflection_;
 }
 
 void protobuf_AddDesc_group_2eproto() {
@@ -1662,7 +1711,12 @@ void protobuf_AddDesc_group_2eproto() {
     "\n\010clientid\030\004 \002(\004\022\014\n\004game\030\005 \002(\005\022\020\n\010server"
     "id\030\006 \002(\004\022\n\n\002ip\030\007 \001(\t\022\014\n\004port\030\010 \001(\005\022\016\n\006ro"
     "omid\030\t \001(\005\022\020\n\010password\030\n \001(\t\",\n\030GroupGat"
-    "eLoginSuccessNtf\022\020\n\010clientid\030\001 \002(\004", 5274);
+    "eLoginSuccessNtf\022\020\n\010clientid\030\001 \002(\004\"U\n\035Gr"
+    "oupGroupmanagerJoinGroupReq\022\017\n\007groupid\030\001"
+    " \002(\004\022\021\n\tgateresid\030\002 \002(\005\022\020\n\010clientid\030\003 \002("
+    "\004\"e\n\035GroupmanagerGroupJoinGroupRsp\022\016\n\006re"
+    "sult\030\001 \002(\005\022\017\n\007groupid\030\002 \002(\004\022\021\n\tgateresid"
+    "\030\003 \002(\005\022\020\n\010clientid\030\004 \002(\004", 5464);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "group.proto", &protobuf_RegisterTypes);
   CSGroupUserLoginReq::default_instance_ = new CSGroupUserLoginReq();
@@ -1726,6 +1780,8 @@ void protobuf_AddDesc_group_2eproto() {
   GroupmanagerGamemanagerCreateGameRoomReq::default_instance_ = new GroupmanagerGamemanagerCreateGameRoomReq();
   GamemanagerGroupmanagerCreateGameRoomRsp::default_instance_ = new GamemanagerGroupmanagerCreateGameRoomRsp();
   GroupGateLoginSuccessNtf::default_instance_ = new GroupGateLoginSuccessNtf();
+  GroupGroupmanagerJoinGroupReq::default_instance_ = new GroupGroupmanagerJoinGroupReq();
+  GroupmanagerGroupJoinGroupRsp::default_instance_ = new GroupmanagerGroupJoinGroupRsp();
   CSGroupUserLoginReq::default_instance_->InitAsDefaultInstance();
   SCGroupUserLoginRsp::default_instance_->InitAsDefaultInstance();
   SCGroupListUpdate::default_instance_->InitAsDefaultInstance();
@@ -1787,6 +1843,8 @@ void protobuf_AddDesc_group_2eproto() {
   GroupmanagerGamemanagerCreateGameRoomReq::default_instance_->InitAsDefaultInstance();
   GamemanagerGroupmanagerCreateGameRoomRsp::default_instance_->InitAsDefaultInstance();
   GroupGateLoginSuccessNtf::default_instance_->InitAsDefaultInstance();
+  GroupGroupmanagerJoinGroupReq::default_instance_->InitAsDefaultInstance();
+  GroupmanagerGroupJoinGroupRsp::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_group_2eproto);
 }
 
@@ -20619,6 +20677,624 @@ void GroupGateLoginSuccessNtf::Swap(GroupGateLoginSuccessNtf* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = GroupGateLoginSuccessNtf_descriptor_;
   metadata.reflection = GroupGateLoginSuccessNtf_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int GroupGroupmanagerJoinGroupReq::kGroupidFieldNumber;
+const int GroupGroupmanagerJoinGroupReq::kGateresidFieldNumber;
+const int GroupGroupmanagerJoinGroupReq::kClientidFieldNumber;
+#endif  // !_MSC_VER
+
+GroupGroupmanagerJoinGroupReq::GroupGroupmanagerJoinGroupReq()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void GroupGroupmanagerJoinGroupReq::InitAsDefaultInstance() {
+}
+
+GroupGroupmanagerJoinGroupReq::GroupGroupmanagerJoinGroupReq(const GroupGroupmanagerJoinGroupReq& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void GroupGroupmanagerJoinGroupReq::SharedCtor() {
+  _cached_size_ = 0;
+  groupid_ = GOOGLE_ULONGLONG(0);
+  gateresid_ = 0;
+  clientid_ = GOOGLE_ULONGLONG(0);
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+GroupGroupmanagerJoinGroupReq::~GroupGroupmanagerJoinGroupReq() {
+  SharedDtor();
+}
+
+void GroupGroupmanagerJoinGroupReq::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void GroupGroupmanagerJoinGroupReq::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* GroupGroupmanagerJoinGroupReq::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return GroupGroupmanagerJoinGroupReq_descriptor_;
+}
+
+const GroupGroupmanagerJoinGroupReq& GroupGroupmanagerJoinGroupReq::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_group_2eproto();
+  return *default_instance_;
+}
+
+GroupGroupmanagerJoinGroupReq* GroupGroupmanagerJoinGroupReq::default_instance_ = NULL;
+
+GroupGroupmanagerJoinGroupReq* GroupGroupmanagerJoinGroupReq::New() const {
+  return new GroupGroupmanagerJoinGroupReq;
+}
+
+void GroupGroupmanagerJoinGroupReq::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    groupid_ = GOOGLE_ULONGLONG(0);
+    gateresid_ = 0;
+    clientid_ = GOOGLE_ULONGLONG(0);
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool GroupGroupmanagerJoinGroupReq::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint64 groupid = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &groupid_)));
+          set_has_groupid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(16)) goto parse_gateresid;
+        break;
+      }
+
+      // required int32 gateresid = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_gateresid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &gateresid_)));
+          set_has_gateresid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(24)) goto parse_clientid;
+        break;
+      }
+
+      // required uint64 clientid = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_clientid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &clientid_)));
+          set_has_clientid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void GroupGroupmanagerJoinGroupReq::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required uint64 groupid = 1;
+  if (has_groupid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->groupid(), output);
+  }
+
+  // required int32 gateresid = 2;
+  if (has_gateresid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->gateresid(), output);
+  }
+
+  // required uint64 clientid = 3;
+  if (has_clientid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->clientid(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* GroupGroupmanagerJoinGroupReq::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required uint64 groupid = 1;
+  if (has_groupid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->groupid(), target);
+  }
+
+  // required int32 gateresid = 2;
+  if (has_gateresid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->gateresid(), target);
+  }
+
+  // required uint64 clientid = 3;
+  if (has_clientid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->clientid(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int GroupGroupmanagerJoinGroupReq::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint64 groupid = 1;
+    if (has_groupid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->groupid());
+    }
+
+    // required int32 gateresid = 2;
+    if (has_gateresid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->gateresid());
+    }
+
+    // required uint64 clientid = 3;
+    if (has_clientid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->clientid());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void GroupGroupmanagerJoinGroupReq::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const GroupGroupmanagerJoinGroupReq* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const GroupGroupmanagerJoinGroupReq*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void GroupGroupmanagerJoinGroupReq::MergeFrom(const GroupGroupmanagerJoinGroupReq& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_groupid()) {
+      set_groupid(from.groupid());
+    }
+    if (from.has_gateresid()) {
+      set_gateresid(from.gateresid());
+    }
+    if (from.has_clientid()) {
+      set_clientid(from.clientid());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void GroupGroupmanagerJoinGroupReq::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GroupGroupmanagerJoinGroupReq::CopyFrom(const GroupGroupmanagerJoinGroupReq& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GroupGroupmanagerJoinGroupReq::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+
+  return true;
+}
+
+void GroupGroupmanagerJoinGroupReq::Swap(GroupGroupmanagerJoinGroupReq* other) {
+  if (other != this) {
+    std::swap(groupid_, other->groupid_);
+    std::swap(gateresid_, other->gateresid_);
+    std::swap(clientid_, other->clientid_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata GroupGroupmanagerJoinGroupReq::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = GroupGroupmanagerJoinGroupReq_descriptor_;
+  metadata.reflection = GroupGroupmanagerJoinGroupReq_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int GroupmanagerGroupJoinGroupRsp::kResultFieldNumber;
+const int GroupmanagerGroupJoinGroupRsp::kGroupidFieldNumber;
+const int GroupmanagerGroupJoinGroupRsp::kGateresidFieldNumber;
+const int GroupmanagerGroupJoinGroupRsp::kClientidFieldNumber;
+#endif  // !_MSC_VER
+
+GroupmanagerGroupJoinGroupRsp::GroupmanagerGroupJoinGroupRsp()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void GroupmanagerGroupJoinGroupRsp::InitAsDefaultInstance() {
+}
+
+GroupmanagerGroupJoinGroupRsp::GroupmanagerGroupJoinGroupRsp(const GroupmanagerGroupJoinGroupRsp& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void GroupmanagerGroupJoinGroupRsp::SharedCtor() {
+  _cached_size_ = 0;
+  result_ = 0;
+  groupid_ = GOOGLE_ULONGLONG(0);
+  gateresid_ = 0;
+  clientid_ = GOOGLE_ULONGLONG(0);
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+GroupmanagerGroupJoinGroupRsp::~GroupmanagerGroupJoinGroupRsp() {
+  SharedDtor();
+}
+
+void GroupmanagerGroupJoinGroupRsp::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void GroupmanagerGroupJoinGroupRsp::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* GroupmanagerGroupJoinGroupRsp::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return GroupmanagerGroupJoinGroupRsp_descriptor_;
+}
+
+const GroupmanagerGroupJoinGroupRsp& GroupmanagerGroupJoinGroupRsp::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_group_2eproto();
+  return *default_instance_;
+}
+
+GroupmanagerGroupJoinGroupRsp* GroupmanagerGroupJoinGroupRsp::default_instance_ = NULL;
+
+GroupmanagerGroupJoinGroupRsp* GroupmanagerGroupJoinGroupRsp::New() const {
+  return new GroupmanagerGroupJoinGroupRsp;
+}
+
+void GroupmanagerGroupJoinGroupRsp::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    result_ = 0;
+    groupid_ = GOOGLE_ULONGLONG(0);
+    gateresid_ = 0;
+    clientid_ = GOOGLE_ULONGLONG(0);
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool GroupmanagerGroupJoinGroupRsp::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required int32 result = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &result_)));
+          set_has_result();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(16)) goto parse_groupid;
+        break;
+      }
+
+      // required uint64 groupid = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_groupid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &groupid_)));
+          set_has_groupid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(24)) goto parse_gateresid;
+        break;
+      }
+
+      // required int32 gateresid = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_gateresid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &gateresid_)));
+          set_has_gateresid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(32)) goto parse_clientid;
+        break;
+      }
+
+      // required uint64 clientid = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_clientid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &clientid_)));
+          set_has_clientid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void GroupmanagerGroupJoinGroupRsp::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required int32 result = 1;
+  if (has_result()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->result(), output);
+  }
+
+  // required uint64 groupid = 2;
+  if (has_groupid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->groupid(), output);
+  }
+
+  // required int32 gateresid = 3;
+  if (has_gateresid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->gateresid(), output);
+  }
+
+  // required uint64 clientid = 4;
+  if (has_clientid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(4, this->clientid(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* GroupmanagerGroupJoinGroupRsp::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required int32 result = 1;
+  if (has_result()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->result(), target);
+  }
+
+  // required uint64 groupid = 2;
+  if (has_groupid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->groupid(), target);
+  }
+
+  // required int32 gateresid = 3;
+  if (has_gateresid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->gateresid(), target);
+  }
+
+  // required uint64 clientid = 4;
+  if (has_clientid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(4, this->clientid(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int GroupmanagerGroupJoinGroupRsp::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required int32 result = 1;
+    if (has_result()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->result());
+    }
+
+    // required uint64 groupid = 2;
+    if (has_groupid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->groupid());
+    }
+
+    // required int32 gateresid = 3;
+    if (has_gateresid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->gateresid());
+    }
+
+    // required uint64 clientid = 4;
+    if (has_clientid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->clientid());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void GroupmanagerGroupJoinGroupRsp::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const GroupmanagerGroupJoinGroupRsp* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const GroupmanagerGroupJoinGroupRsp*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void GroupmanagerGroupJoinGroupRsp::MergeFrom(const GroupmanagerGroupJoinGroupRsp& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_result()) {
+      set_result(from.result());
+    }
+    if (from.has_groupid()) {
+      set_groupid(from.groupid());
+    }
+    if (from.has_gateresid()) {
+      set_gateresid(from.gateresid());
+    }
+    if (from.has_clientid()) {
+      set_clientid(from.clientid());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void GroupmanagerGroupJoinGroupRsp::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GroupmanagerGroupJoinGroupRsp::CopyFrom(const GroupmanagerGroupJoinGroupRsp& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GroupmanagerGroupJoinGroupRsp::IsInitialized() const {
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
+
+  return true;
+}
+
+void GroupmanagerGroupJoinGroupRsp::Swap(GroupmanagerGroupJoinGroupRsp* other) {
+  if (other != this) {
+    std::swap(result_, other->result_);
+    std::swap(groupid_, other->groupid_);
+    std::swap(gateresid_, other->gateresid_);
+    std::swap(clientid_, other->clientid_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata GroupmanagerGroupJoinGroupRsp::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = GroupmanagerGroupJoinGroupRsp_descriptor_;
+  metadata.reflection = GroupmanagerGroupJoinGroupRsp_reflection_;
   return metadata;
 }
 

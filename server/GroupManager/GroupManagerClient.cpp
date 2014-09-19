@@ -571,6 +571,22 @@ void CGroupManagerClient::_GameManagerCreateRoomResultProc(const byte *pkg, s32 
 	}
 }
 
+void CGroupManagerClient::_UserJoinGroupProc(const byte *pkg, s32 len)
+{
+	sglib::groupproto::GroupGroupmanagerJoinGroupReq req;
+	if( req.ParseFromArray(pkg, len) )
+	{
+		SERVER_LOG_INFO( "CGroupManagerClient,_UserJoinGroupProc," \
+			<< req.groupid() << "," << req.gateresid() << "," << req.clientid() );
+
+		_UserJoinGroup( req.groupid(), req.gateresid(), req.clientid() );
+	}
+	else
+	{
+		SERVER_LOG_ERROR( "CGroupManagerClient,_UserJoinGroupProc,ParseFromArray" );
+	}
+}
+
 CGroupManagerClient* CGroupManagerClient::_FindUnDynamicServerClient(s32 serverid)
 {
 	vector<u64> vecClient;		
@@ -897,6 +913,43 @@ void CGroupManagerClient::_MemberLeaveGroup(const string &user, u64 groupid)
 	}
 }
 
+void CGroupManagerClient::_UserJoinGroup(u64 groupid, s32 gateresid, u64 clientid)
+{
+	SERVER_LOG_INFO( "CGroupManagerClient,_UserJoinGroup," << groupid << "," << gateresid << "," << clientid );
+
+	CGroupMemberPosition *member = CLoginMemberManager::Instance().MemberManager().FindMember( gateresid, clientid );
+	SELF_ASSERT( member, return; );
+	_GroupManagerDBParam _param = { 0, groupid, member };
+
+	string user = member->User();
+	s32 id = CServerManager::Instance().GetGroupDbId();
+	char strId[128] = {0};
+	sprintf( strId, "%llu", groupid );
+	string udname = CServerManager::Instance().HashUserDBName( user );
+	string sql = string("call AskJoinGroup(") + string(strId) + ",'" + user + "');";
+	bool ret = CServerManager::Instance().ExecSql( 
+		id, sql, this, &CGroupManagerClient::_UserJoinGroupCallback, &_param, sizeof(_param) );
+	if( !ret )
+	{
+		SERVER_LOG_ERROR( "CGroupManagerClient,_UserJoinGroup,ExecSql," << sql.c_str() );
+	}
+}
+
+void CGroupManagerClient::_NotifyJoinGroupResult(u64 groupid, s32 gateresid, u64 clientid, s32 result)
+{
+	sglib::groupproto::GroupmanagerGroupJoinGroupRsp rsp;
+	rsp.set_clientid( clientid );
+	rsp.set_gateresid( gateresid );
+	rsp.set_groupid( groupid );
+	rsp.set_result( result );
+		
+	SendMessageToGroupServer( rsp, sglib::msgid::GMGP_JOIN_GROUP_RSP );
+}
+
+void CGroupManagerClient::_NotifyGroupMasterUserAskJoin(u64 groupid, const std::string &user)
+{
+}
+
 void CGroupManagerClient::_GetUserGroupsCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
 {
 	SELF_ASSERT( param, return; );
@@ -1029,4 +1082,34 @@ void CGroupManagerClient::_MemberLeaveGroupCallback(SGLib::IDBRecordSet *RecordS
 	}
 
 	SERVER_LOG_INFO( "CGroupManagerClient,_MemberLeaveGroupCallback," << member->User().c_str() << "," << groupid << "," << flag );
+}
+
+void CGroupManagerClient::_UserJoinGroupCallback(SGLib::IDBRecordSet *RecordSet, char *ErrMsg, void *param, s32 len)
+{
+	SELF_ASSERT( param, return; );
+	SELF_ASSERT( len==sizeof(_GroupManagerDBParam), return; ); 
+	_GroupManagerDBParam *_param = (_GroupManagerDBParam*)param;
+	CGroupMemberPosition *member = (CGroupMemberPosition*)_param->data;
+	SELF_ASSERT( member, return; );
+	u64 groupid = _param->clientid;
+	
+	s32 ret = 0;
+	while( RecordSet && RecordSet->GetRecord() )
+	{
+		const char *val = RecordSet->GetFieldValue( 1 );
+		if( val )
+		{
+			ret = atoi(val);
+		}
+		break;
+	}
+
+	// 结果返回给请求的玩家
+	_NotifyJoinGroupResult( groupid, member->GetGateResId(), member->GetClientId(), ret );
+
+	if( ret == 1 )
+	{
+		//  通知群主有新人请求加入
+		_NotifyGroupMasterUserAskJoin( groupid, member->User() );	
+	}
 }

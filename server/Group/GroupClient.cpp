@@ -109,6 +109,20 @@ void CGroupClient::_GroupSearchProc(u64 clientid, const byte *pkg, s32 len)
 
 void CGroupClient::_GroupJoinProc(u64 clientid, const byte *pkg, s32 len)
 {
+	sglib::groupproto::CSGroupJoinReq req;
+	if( req.ParseFromArray(pkg, len) )
+	{
+		CGroupManager::Instance().UserJoinGroup( 
+			*this, 
+			GateResId(), 
+			GetClientId(), 
+			clientid, 
+			req.groupid() );
+	}
+	else
+	{
+		SERVER_LOG_ERROR( "CGroupClient,_GroupJoinProc,ParseFromArray" );
+	}
 }
 
 void CGroupClient::_GroupAddMemberProc(u64 clientid, const byte *pkg, s32 len)

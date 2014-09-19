@@ -201,3 +201,16 @@ void CGroupRpcClient::_GroupmanagerGroupCreateGameResultProc(const byte *pkg, s3
 		SERVER_LOG_ERROR( "CGroupRpcClient,_GroupmanagerGroupMemberOfflineProc,ParseFromArray" );
 	}
 }
+
+void CGroupRpcClient::_GroupmanagerGroupJoinGroupResultProc(const byte *pkg, s32 len)
+{
+	sglib::groupproto::GroupmanagerGroupJoinGroupRsp rsp;
+	if( rsp.ParseFromArray(pkg, len) )
+	{
+		CGroupManager::Instance().UserJoinGroupResult( rsp );
+	}
+	else
+	{
+		SERVER_LOG_ERROR( "CGroupRpcClient,_GroupmanagerGroupJoinGroupResultProc,ParseFromArray" );
+	}
+}

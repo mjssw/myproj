@@ -448,3 +448,18 @@ message GroupGateLoginSuccessNtf
 	required uint64 clientid	= 1;		// 通知登录group成功
 }
 
+message GroupGroupmanagerJoinGroupReq
+{
+	required uint64 groupid		= 1;
+	required int32 gateresid	= 2;		// 玩家所在的gate(xml配置的id)
+	required uint64 clientid	= 3;		// 玩家在gate上的id
+}
+
+message GroupmanagerGroupJoinGroupRsp
+{
+	required int32 result		= 1;
+	required uint64 groupid		= 2;
+	required int32 gateresid	= 3;		// 玩家所在的gate(xml配置的id)
+	required uint64 clientid	= 4;		// 玩家在gate上的id
+}
+
