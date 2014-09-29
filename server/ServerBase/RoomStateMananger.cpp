@@ -11,7 +11,16 @@ class CRoomStateWait : public CStateBase<StateOwner>
 public:
 	CRoomStateWait(s32 state) : CStateBase<StateOwner>(state){}
 
-	virtual void Enter(StateOwner *owner, CStateMachineBase<StateOwner> *machine){}
+	virtual void Enter(StateOwner *owner, CStateMachineBase<StateOwner> *machine)
+	{
+		CRoomBase *room = (CRoomBase*)owner;
+		if( room == NULL )
+		{
+			// TODO
+			return;
+		}
+		room->SetGroupRoomFree();
+	}
 	virtual void Leave(StateOwner *owner, CStateMachineBase<StateOwner> *machine){}
 	virtual void Update(StateOwner *owner, CStateMachineBase<StateOwner> *machine, s32 msgid, const byte *pkg, s32 len)
 	{

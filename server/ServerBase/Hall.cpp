@@ -44,11 +44,18 @@ void CHall::Init(s32 gameid, CPlayerBase *templatePlayer, const CHallConfig &hal
 	m_pHallConfig = &hallCfg;
 
 	m_nReportGateTimerId = CServerManager::Instance().AddTimer(
-			E_ReportGameInfo_Timer,
-			ReportGameInforCallBack,
-			NULL,
-			0,
-			true );
+		E_ReportGameInfo_Timer,
+		ReportGameInforCallBack,
+		NULL,
+		0,
+		true );
+	
+	m_roomTimerId = CServerManager::Instance().AddTimer(
+		E_Room_Timer,
+		RoomTimerCallBack,
+		NULL,
+		0,
+		true );
 
 	m_PlayerTemplate = templatePlayer;
 	SG_ASSERT( m_PlayerTemplate != NULL );
@@ -128,6 +135,15 @@ void CHall::ReportGameInforCallBack(void *pData, s32 nDataLen)
 		CServerManager::Instance().SendRpcMsg( 
 			CServerManager::Instance().GetGameManagerServerId(),
 			reportInfo, sglib::msgid::SGM_REPORT_GAME_INFO );
+	}
+}
+
+void CHall::RoomTimerCallBack(void *pData, s32 nDataLen)
+{
+	map<s32, CRoomBase*>::iterator it = CHall::Instance().m_mapRoom.begin();
+	for( ; it != CHall::Instance().m_mapRoom.end(); ++it )
+	{
+		it->second->TimerCallback();
 	}
 }
 
@@ -285,13 +301,15 @@ void CHall::SetGameServerReady()
 	m_bIsReady = true;
 }
 
-s32 CHall::FindFreeRoom()
+s32 CHall::FindFreeRoom(u64 groupid)
 {
 	map<s32, CRoomBase*>::iterator it = m_mapRoom.begin();
 	for( ; it != m_mapRoom.end(); ++it )
 	{
-		if( it->second->CurState() == E_RoomState_Wait )
+		if( it->second->CurState() == E_RoomState_Wait &&
+			!it->second->IsGroupRoom() )
 		{
+			it->second->SetGroupRoom( groupid );
 			return it->second->Id();
 		}
 	}

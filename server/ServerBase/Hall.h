@@ -16,6 +16,7 @@ public:
 	enum
 	{
 		E_ReportGameInfo_Timer = 10000,
+		E_Room_Timer = 1000,
 	};
 
 	~CHall();
@@ -47,9 +48,10 @@ public:
 
 	s32 PlayerCount();
 	void SetGameServerReady();
-	s32 FindFreeRoom();
+	s32 FindFreeRoom(u64 groupid);
 
 	static void ReportGameInforCallBack(void *pData, s32 nDataLen);
+	static void RoomTimerCallBack(void *pData, s32 nDataLen);
 
 private:
 	CHall() : 
@@ -83,6 +85,7 @@ private:
 	const CHallConfig *m_pHallConfig;
 	std::map<s32, CRoomBase*> m_mapRoom;
 	std::map<u64, std::map<u64, CPlayerBase*> > m_Players;
+	s32 m_roomTimerId;
 
 	s32 m_nGameId;
 

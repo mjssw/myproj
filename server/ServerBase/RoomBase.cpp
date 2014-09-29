@@ -3,7 +3,9 @@
 #include "Hall.h"
 #include "ServerManager.h"
 #include "RoomStateManager.h"
+#include "RoomStateBase.h"
 #include "StackTrace.h"
+#include "Utils.h"
 using namespace SGLib;
 
 #include "errno.pb.h"
@@ -14,7 +16,10 @@ CRoomBase::CRoomBase(s32 id) :
 	m_Id(id),
 	m_PlayerCount(0),
 	m_Players(NULL),
-	m_pStateMachine(NULL)
+	m_pStateMachine(NULL),
+	m_groupid(INVALID_VAL),
+	m_createTime(0),
+	m_freeTime(0)
 {}
 
 CRoomBase::~CRoomBase()
@@ -103,6 +108,46 @@ bool CRoomBase::PlayerInRoom(CPlayerBase *player)
 	return ret;
 }
 
+bool CRoomBase::IsGroupRoom()
+{
+	return (m_groupid != INVALID_VAL);
+}
+
+void CRoomBase::SetGroupRoom(u64 groupid)
+{
+	SELF_ASSERT( m_groupid==INVALID_VAL, return; );
+	m_groupid = groupid;
+	m_createTime = CUtils::GetTimeNow();
+	m_freeTime = m_createTime;
+}
+
+void CRoomBase::SetGroupRoomFree()
+{
+	if( IsGroupRoom() )
+	{
+		m_freeTime = CUtils::GetTimeNow();
+	}
+}
+
+s32 CRoomBase::GetGroupRoomFreeTime()
+{
+	return m_freeTime; 
+}
+
+void CRoomBase::ReleaseGroupRoom()
+{
+	m_groupid = INVALID_VAL;
+	m_createTime = 0;
+	m_freeTime = 0;
+}
+
+void CRoomBase::TimerCallback()
+{
+	// TODO check group room time out here.
+	// Maybe move to new timer in future.
+	_CheckGroupRoomTimeOut();
+}
+
 void CRoomBase::_Init()
 {
 	s32 count = CHall::Instance().RoomPlayerCount();
@@ -179,5 +224,24 @@ void CRoomBase::_NotifyEnterRoomSuccess(CPlayerBase *player, s32 roomid)
 		rsp.set_result( sglib::errorcode::E_ErrorCode_Success );
 		rsp.set_roomid( roomid );
 		player->SendMsg( rsp, sglib::msgid::SC_ENTER_ROOM_RSP );	
+	}
+}
+
+void CRoomBase::_CheckGroupRoomTimeOut()
+{
+	const s32 FreeGroupRoomTimeLimit = 600; // seconds
+
+	SGDEBUG( "_CheckGroupRoomTimeOut\n" );
+
+	if( IsGroupRoom() )
+	{
+		if( CurState() == E_RoomState_Wait )
+		{
+			s32 curTime = CUtils::GetTimeNow();
+			if( curTime - GetGroupRoomFreeTime() >= FreeGroupRoomTimeLimit )
+			{
+				ReleaseGroupRoom();
+			}
+		}
 	}
 }

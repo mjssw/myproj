@@ -25,6 +25,14 @@ public:
 	void Broadcast(const ::google::protobuf::Message &msg, s32 msgId, CPlayerBase *exclude=NULL);
 	bool PlayerInRoom(CPlayerBase *player);
 
+	bool IsGroupRoom();
+	void SetGroupRoom(u64 groupid);
+	void SetGroupRoomFree();
+	s32 GetGroupRoomFreeTime();
+	void ReleaseGroupRoom();
+
+	void TimerCallback();
+
 private:
 	void _Init();
 	void _PlayerEnter(CPlayerBase *player);
@@ -32,12 +40,18 @@ private:
 	void _PlayerLeave(CPlayerBase *player);
 	void _NotifyPlayerLeave(const std::string &userId);
 	void _NotifyEnterRoomSuccess(CPlayerBase *player, s32 roomid);
+	void _CheckGroupRoomTimeOut();
 
 protected:
 	s32 m_Id;
 	s32 m_PlayerCount;
 	CPlayerBase **m_Players;
 	CStateMachineBase<CRoomBase> *m_pStateMachine;
+
+	// 房间和群的联系
+	u64 m_groupid;		// 所属群
+	s32 m_createTime;	// 被创建时间
+	s32 m_freeTime;		// 房间处于wait状态的开始时间,用于回收属于群的房间
 };
 
 #endif

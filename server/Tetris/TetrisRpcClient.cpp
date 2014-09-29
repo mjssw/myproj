@@ -129,7 +129,8 @@ void CTetrisRpcClient::_GamemanagerServerCreateGameRoom(const byte *pPkg, s32 nP
 		SERVER_LOG_DEBUG( "_GamemanagerServerCreateGameRoom," << req.groupid() << "," <<\
 			req.gateresid() << "," << req.clientid() << "," << req.game() << "," << req.serverid() );
 
-		s32 roomid = CHall::Instance().FindFreeRoom();
+		// TODO
+		s32 roomid = CHall::Instance().FindFreeRoom( req.groupid() );
 		s32 result = (roomid!=INVALID_VAL) ? \
 			sglib::errorcode::E_ErrorCode_Success : sglib::errorcode::E_ErrorCode_NotEnoughRoom;
 
