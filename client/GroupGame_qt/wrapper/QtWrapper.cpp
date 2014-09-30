@@ -2,8 +2,15 @@
 #include "user/UserManager.h"
 #include "net/NetManager.h"
 #include <QDebug>
+#include <QKeyEvent>
+#include <QApplication>
 
 CQtWrapper* CQtWrapper::m_pInstance = NULL;
+
+void CQtWrapper::SetAppObject(QObject *app)
+{
+    m_appObj = app;
+}
 
 bool CQtWrapper::UserLogin(QString user, QString pwd)
 {
@@ -32,4 +39,11 @@ bool CQtWrapper::UserRegister(QString user, QString pwd)
         CUserManager::Instance().GetBasic().GetRegPwd().c_str() );
 
     return CNetManager::Instance().StartRegister( LOGIN_IP, LOGIN_PORT );
+}
+
+void CQtWrapper::SendHomeSignal()
+{
+    qDebug("CQtWrapper::SendHomeSignal");
+    QKeyEvent keyEvent( QEvent::KeyRelease, Qt::Key_Home, Qt::NoModifier );
+    QApplication::sendEvent( m_appObj, &keyEvent );
 }

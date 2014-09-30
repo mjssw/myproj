@@ -83,13 +83,15 @@ Item {
         }
     }
 
-    Item {
+    Rectangle {
         id: chatmenu
         z: 0.1
         anchors.top: chatheader.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         height: chatheader.height/2+10
+        color: "white"
+        opacity: 0.9
 
         Rectangle {
             height: 1

@@ -19,9 +19,15 @@ public:
     ~CQtWrapper(){ delete m_pInstance; }
 private:
     CQtWrapper(QObject* parent = Q_NULLPTR ) :
-        QObject(parent)
+        QObject(parent),
+        m_appObj(NULL)
     {}
     static CQtWrapper *m_pInstance;
+
+private:
+    QObject *m_appObj;
+public:
+    void SetAppObject(QObject *app);
 
     // signal to main thread to process net message
 signals:
@@ -39,6 +45,7 @@ signals:
 public slots:
     bool UserLogin(QString user, QString pwd);
     bool UserRegister(QString user, QString pwd);
+    void SendHomeSignal();
 };
 
 #endif

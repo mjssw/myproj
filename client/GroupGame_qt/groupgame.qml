@@ -26,15 +26,21 @@ ApplicationWindow {
         focus: true
 
         Keys.onReleased: {
-                console.log("Key pressed: ",event.key)
-                if (event.key === Qt.Key_Back) {
-                    console.log("Back button pressed.  Stack depth ")
-                    event.accepted = true
+            console.log("Key pressed: ",event.key)
+            if (event.key === Qt.Key_Back) {
+                console.log("Back button pressed.  Stack depth ")
+                event.accepted = true
 
-                    //event.key = Qt.Key_Home
-                    //event.accepted = false
-                }
+                //event.key = Qt.Key_Home
+                //event.accepted = false
+
+                //emit
             }
+            else if(event.key === Qt.Key_Home) {
+                console.debug("android home pressed")
+                event.accetped = false
+            }
+        }
 
         MainScene {
             id: mainscene
@@ -203,7 +209,8 @@ ApplicationWindow {
                                 //console.debug(groupgame.height, itemModel.height, testbtns.height)
                                 //console.log(mgr.testmethod());
                                 //wrapper.UserLogin("aaa", "bbb")
-                                itemModel.testFunc()
+                                //itemModel.testFunc()
+                                wrapper.SendHomeSignal()
                             }
                         }
                     }

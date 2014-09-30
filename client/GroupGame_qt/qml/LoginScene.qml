@@ -91,6 +91,10 @@ Item {
                 anchors.top: parent.top
                 style: touchStyle
                 placeholderText: defaultUserText
+
+                Keys.onReturnPressed: {
+                    InputMethod.hide()
+                }
             }
 
             TextField {
@@ -102,6 +106,10 @@ Item {
                 style: touchStyle
                 echoMode: TextInput.Password
                 placeholderText: defaultPwsText
+
+                Keys.onReturnPressed: {
+                    InputMethod.hide()
+                }
             }
         }
 

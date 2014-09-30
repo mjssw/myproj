@@ -11,13 +11,69 @@ Item {
         anchors.right: parent.right
         height: inputbg.sourceSize.height
 
+        property int moreItembasicHeight: height * 1.5
+        property int moreItemHeight: moreItembasicHeight+50
+
+        Rectangle {
+            id: moreitem
+            visible: true
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            height: 0
+            color: "whitesmoke"
+
+            Grid {
+                id: itemgrid
+                property int bordermargin: 10
+                property int elemW: chatbar.moreItembasicHeight
+                property int elemH: chatbar.moreItembasicHeight + 30
+                property int space: 20
+                anchors.fill: parent
+                anchors.leftMargin: bordermargin
+                anchors.rightMargin: bordermargin
+                anchors.topMargin: bordermargin
+                anchors.bottomMargin: bordermargin
+                columns: ((parent.width-2*bordermargin) + space)/(elemW+space)
+                spacing: space
+
+                Item {
+                    width: parent.elemW
+                    height: parent.elemH
+                    MoreGridItem {
+                        hinttext: qsTr("添加游戏")
+                        iconNormal: "../res/game.png"
+                        iconPressed: "../res/game.png"
+                    }
+                    function onClickGridItem()
+                    {
+                        console.debug("click grid item add game")
+                    }
+                }
+
+                Item {
+                    width: parent.elemW
+                    height: parent.elemH
+                    MoreGridItem {
+                        hinttext: qsTr("我的位置")
+                        iconNormal: "../res/position.png"
+                        iconPressed: "../res/position.png"
+                    }
+                    function onClickGridItem()
+                    {
+                        console.debug("click grid item add position")
+                    }
+                }
+            }
+        }
+
         property int inputbgDefaultHeight: 90
         BorderImage {
             id: inputbg
             source: "../res/input.png"
             border.bottom: 1; border.top:1;
             border.left: 1; border.right: 1;
-            anchors.bottom: parent.bottom
+            anchors.bottom: moreitem.top
             anchors.left: parent.left
             anchors.right: parent.right
         }
@@ -104,7 +160,6 @@ Item {
             }
         }
 
-
         TextEdit{
             property int signleHeight: 40
 
@@ -129,7 +184,6 @@ Item {
 
                     inputbg.height = parent.inputbgDefaultHeight + (lineCount-1)*signleHeight
                     chatbar.height = inputbg.height
-                    //chatmsglist.positionViewAtEnd()
                 }
             }
         }
@@ -141,7 +195,8 @@ Item {
 
         function clickAddMoreBtn()
         {
-            parent.clickAddMoreBtn()
+            //parent.clickAddMoreBtn()
+            moreitem.height = moreItemHeight
         }
 
         function clickSendMsg()
@@ -183,6 +238,11 @@ Item {
             }
             inputtext.text = ""
             return str
+        }
+
+        function hideMoreItemContent()
+        {
+            moreitem.height = 0
         }
     }
 
@@ -255,6 +315,15 @@ Item {
             delegate: chatmsgdelegate
         }
 
+        MouseArea {
+            // TODO bug here, can click old msgview area
+            anchors.fill: parent
+            onClicked: {
+                console.debug("click blank", parent.height)
+                hideMoreItemContent()
+            }
+        }//*/
+
         function showMsgView(isshow)
         {
             visible = isshow
@@ -280,6 +349,7 @@ Item {
     {
         var formatstr = chatbar.formatInputMsg()
         chatmsgview.sendMsg("", 1, formatstr)
+        InputMethod.hide()
     }
 
     function clickAddMoreBtn()
@@ -290,6 +360,11 @@ Item {
 
     function clickSmileBtn()
     {
-        console.debug("clickSmileBtn")
+        console.debug("clickSmileBtn chatmsgview->height", chatmsgview.height)
+    }
+
+    function hideMoreItemContent()
+    {
+        chatbar.hideMoreItemContent()
     }
 }

@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
 
     // let wrapper can be used in qml
     CQtWrapper *wrapper = &CQtWrapper::Instance();
+    wrapper->SetAppObject( &app );
     engine.rootContext()->setContextProperty( "wrapper", wrapper );
 
     // set net msg process in main thread

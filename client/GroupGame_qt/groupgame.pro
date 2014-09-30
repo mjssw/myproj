@@ -117,7 +117,8 @@ OTHER_FILES += \
     qml/CommHint.qml \
     qml/GroupInfo.qml \
     qml/MemberList.qml \
-    qml/MemberInfo.qml
+    qml/MemberInfo.qml \
+    qml/MoreGridItem.qml
 	
 INCLUDEPATH += ./ \
         ../../sglib \

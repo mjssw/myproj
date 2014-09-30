@@ -30,6 +30,7 @@
         <file>qml/GroupInfo.qml</file>
         <file>qml/MemberList.qml</file>
         <file>qml/MemberInfo.qml</file>
+        <file>qml/MoreGridItem.qml</file>
 
         <file>res/friend_1.png</file>
         <file>res/friend_2.png</file>
@@ -70,5 +71,7 @@
         <file>res/t1.png</file>
         <file>res/t2.png</file>
         <file>res/t3.png</file>
+        <file>res/game.png</file>
+        <file>res/position.png</file>
     </qresource>
 </RCC>
