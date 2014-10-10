@@ -48,8 +48,10 @@ Item {
         Image {
             id: logo
             source: logopath
+            width: (sourceSize.width<inputarea.y/2)?sourceSize.width:inputarea.y/2
+            height: width
             anchors.bottom: inputarea.top
-            anchors.bottomMargin: (inputarea.y - sourceSize.height) / 2
+            anchors.bottomMargin: inputarea.y/4
             anchors.horizontalCenter: parent.horizontalCenter
         }
 

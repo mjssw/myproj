@@ -25,12 +25,12 @@ Rectangle {
 
         CommHeader {
             id: header
+            height: parent.height / 10
             headtext: qsTr("成员列表")
             z: 0.1
 
             CommBackbtn {
                 id: backbtn
-                backStr: qsTr("返回")
 
                 function clickBackButton()
                 {

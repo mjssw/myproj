@@ -149,7 +149,7 @@ Item {
         model: lstmodel
         delegate: lstdelegate
 
-        interactive: false
+        //interactive: false
     }
 
     function debugInfo()
@@ -189,6 +189,7 @@ Item {
 
         console.debug("contentH=", lstview.contentHeight, h_, lstview.height)
 
+        /*
         if(lstview.contentHeight + h_ >= lstview.height)
         {
             setMoveable(true)
@@ -197,6 +198,7 @@ Item {
         {
             setMoveable(false)
         }
+        //*/
     }
 
     function addElement(icon_, str_, h_, key_)

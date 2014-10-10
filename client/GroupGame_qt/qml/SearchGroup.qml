@@ -76,11 +76,11 @@ Rectangle {
 
         CommHeader {
             id: header
+            height: parent.height / 10
             headtext: qsTr("发现")
 
             CommBackbtn {
                 id: backbtn
-                backStr: qsTr("返回")
 
                 function clickBackButton()
                 {

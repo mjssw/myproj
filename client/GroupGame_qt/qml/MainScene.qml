@@ -117,7 +117,7 @@ Item {
     Item {
         id: header
         width: parent.width
-        height: 88
+        height: parent.height / 10
         anchors.top: parent.top
         anchors.left: parent.left
 
@@ -169,7 +169,7 @@ Item {
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            width: backimg.sourceSize.width*3
+            width: backimg.sourceSize.width * 2
 
             signal clicked
             onClicked: {
@@ -179,6 +179,8 @@ Item {
             Image {
                 id: backimg
                 anchors.centerIn: parent
+                height: parent.height * 0.5
+                width: sourceSize.width * height / sourceSize.height
                 source: backmouse.pressed ? "../res/back_1.png" : "../res/back_2.png"
             }
 
@@ -210,7 +212,7 @@ Item {
     Item {
         id: tailer
         width: parent.width
-        height: 100
+        height: parent.height / 10 * 1.2
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 

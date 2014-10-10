@@ -5,11 +5,10 @@ Item {
     anchors.left: parent.left
     anchors.top: parent.top
     anchors.bottom: parent.bottom
-    width: backimg.sourceSize.width + backtext.width + off + margin
+    width: backimg.sourceSize.width * 2
 
     property int off: 10
     property int margin: 3
-    property string backStr: ""
 
     signal clicked
     onClicked: {
@@ -18,21 +17,10 @@ Item {
 
     Image {
         id: backimg
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: parent.left
-        anchors.leftMargin: off
+        anchors.centerIn: parent
+        height: parent.height * 0.5
+        width: sourceSize.width * height / sourceSize.height
         source: backmouse.pressed ? "../res/back_1.png" : "../res/back_2.png"
-    }
-
-    Text {
-        id: backtext
-        anchors.left: backimg.right
-        anchors.leftMargin: margin
-        anchors.verticalCenter: parent.verticalCenter
-        text: parent.backStr
-        font.pixelSize: backimg.height * 0.8
-        font.weight: Font.DemiBold
-        color: backmouse.pressed ? "gray" : "white"
     }
 
     MouseArea {

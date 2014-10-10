@@ -30,11 +30,11 @@ ApplicationWindow {
             console.log("Key pressed: ",event.key)
             if (event.key === Qt.Key_Back) {
                 console.log("Back button pressed.  Stack depth ")
-                event.accepted = true
-                wrapper.SendHomeSignal()
+                //event.accepted = true
+                //wrapper.SendHomeSignal()
 
                 //event.key = Qt.Key_Home
-                //event.accepted = false
+                event.accepted = false
 
                 //emit
             }
