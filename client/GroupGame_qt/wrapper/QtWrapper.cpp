@@ -4,6 +4,10 @@
 #include <QDebug>
 #include <QKeyEvent>
 #include <QApplication>
+#include <QWidget>
+#include <QDesktopWidget>
+#include <QWindow>
+#include <QWindowList>
 
 CQtWrapper* CQtWrapper::m_pInstance = NULL;
 
@@ -44,6 +48,26 @@ bool CQtWrapper::UserRegister(QString user, QString pwd)
 void CQtWrapper::SendHomeSignal()
 {
     qDebug("CQtWrapper::SendHomeSignal");
-    QKeyEvent keyEvent( QEvent::KeyRelease, Qt::Key_Home, Qt::NoModifier );
-    QApplication::sendEvent( m_appObj, &keyEvent );
+
+    //QKeyEvent keyEvent( QEvent::KeyRelease, Qt::Key_Home, Qt::NoModifier );
+    //QApplication::sendEvent( m_appObj, &keyEvent );
+
+    QApplication *app = (QApplication*)m_appObj;
+    //QWidget *w = app->activeWindow();
+    //w->lower();
+
+    //w->showMinimized();
+    //w->showFullScreen();
+    //w->lower();
+    //qDebug("w=%d h=%d", w->width(), w->height());
+
+    QWindowList list = app->allWindows();
+    //QWidgetList  list = app->allWidgets();
+    int count = list.count();
+    QWindow *w = list.at(0);
+    //w->showMinimized();
+    w->lower();
+    qDebug("w=%d h=%d", w->width(), w->height());
+    qDebug("widget count=%d", count);
+    //*/
 }

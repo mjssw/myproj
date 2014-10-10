@@ -1,21 +1,16 @@
 <RCC>
     <qresource prefix="/">
         <file>groupgame.qml</file>
-
         <file>qml/LoginScene.qml</file>
         <file>qml/StartScene.qml</file>
         <file>qml/MainScene.qml</file>
-
         <file>qml/FriendView.qml</file>
         <file>qml/GameView.qml</file>
         <file>qml/FindView.qml</file>
         <file>qml/MoreView.qml</file>
-
         <file>qml/ChatView.qml</file>
         <file>qml/GroupView.qml</file>
-
         <file>qml/ImageRadioBtn.qml</file>
-
         <file>qml/ChatMenu.qml</file>
         <file>qml/GameMenu.qml</file>
         <file>qml/MembersMenu.qml</file>
@@ -31,7 +26,7 @@
         <file>qml/MemberList.qml</file>
         <file>qml/MemberInfo.qml</file>
         <file>qml/MoreGridItem.qml</file>
-
+        <file>qml/JsListIndex.js</file>
         <file>res/friend_1.png</file>
         <file>res/friend_2.png</file>
         <file>res/game_1.png</file>

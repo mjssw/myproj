@@ -1,10 +1,11 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <QTextCodec>
-#include <QObject>
+//#include <QTextCodec>
+//#include <QObject>
 #include <QDebug>
 #include <QtCore>
+//#include <QtDeclarative/QDeclarativeContext>
 
 #include "../../protomsg/msg/group.pb.h"
 #include "net/NetManager.h"
@@ -42,6 +43,12 @@ int main(int argc, char *argv[])
 
     CMainQApplication app( argc, argv );
     QQmlApplicationEngine engine;
+    //QDeclarativeView view;
+
+    /*
+    QWidget *w = app.activeWindow();
+    w->lower();
+    //*/
 
     // let wrapper can be used in qml
     CQtWrapper *wrapper = &CQtWrapper::Instance();

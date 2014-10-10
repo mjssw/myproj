@@ -34,12 +34,14 @@ Item {
 
         function clickElement(clickkey)
         {
+            console.debug(clickkey)
             morelst.debugInfo()
         }
 
         function testFunc()
         {
-            addElement("../res/t3.png", qsTr("帮助"), moreview.elemH, keyHelp)
+            //addElement("../res/t3.png", qsTr("帮助"), moreview.elemH, keyHelp)
+            delElement(keyAbout)
         }
     }
 

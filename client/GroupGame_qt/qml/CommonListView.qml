@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import "JsListIndex.js" as JsIndex
 
 Item {
     id: commlist
@@ -6,6 +7,7 @@ Item {
 
     property string listname: "mylistname"
     property bool hoverenable: false
+    property var listidx: JsIndex.createmap()
 
     ListModel {
         id: lstmodel
@@ -153,6 +155,7 @@ Item {
     function debugInfo()
     {
         console.debug(lstview.height, lstview.contentHeight)
+        JsIndex.display(listidx)
     }
 
     function setMoveable(isenable)
@@ -168,6 +171,11 @@ Item {
 
     function addItem(type_, icon_, str_, h_, moretype_, more_, flag_, key_)
     {
+        if( key_ !== 0 )
+        {
+            JsIndex.add(listidx, key_, lstmodel.count)
+        }
+
         lstmodel.append({
             "type": type_,
             "icon": icon_,
@@ -209,5 +217,12 @@ Item {
     function addSpliteElement(str_, h_)
     {
         addItem(0, "", str_, h_, 0, "", 0, 0)
+    }
+
+    function delElement(key_)
+    {
+        var index = JsIndex.find(listidx, key_)
+        lstmodel.remove(index, 1)
+        JsIndex.del(listidx, key_)
     }
 }

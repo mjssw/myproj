@@ -3,6 +3,7 @@ import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 import QtQuick.Window 2.1
 import "qml"
+import "qml/JsListIndex.js" as JsIndex
 
 ApplicationWindow {
     id: groupgame
@@ -30,6 +31,7 @@ ApplicationWindow {
             if (event.key === Qt.Key_Back) {
                 console.log("Back button pressed.  Stack depth ")
                 event.accepted = true
+                wrapper.SendHomeSignal()
 
                 //event.key = Qt.Key_Home
                 //event.accepted = false
@@ -166,6 +168,9 @@ ApplicationWindow {
         color: "red"
         visible: groupgame.debugButton==1 ? true : false
 
+        property var idx2: JsIndex.createmap()
+        property var idx3: JsIndex.createmap()
+
         Row {
             anchors.centerIn: parent
             spacing: 20
@@ -195,14 +200,17 @@ ApplicationWindow {
                             else if( id === 3)
                             {
                                 showStartScene()
+                                //JsIndex.add(testbtns.idx2, '120', 11)
                             }
                             else if( id === 4 )
                             {
+                                //JsIndex.set(testbtns.idx2, '120', 13)
                                 itemModel.addGroup(
                                     qsTr("../res/groupdefault.png"),
                                     qsTr("群1"), qsTr("1110001"),
                                     12, 50,
                                     qsTr("昨天赢了100"), qsTr("2014-09-02 11:25"))
+                                //*/
                             }
                             else if( id === 5 )
                             {
@@ -211,6 +219,9 @@ ApplicationWindow {
                                 //wrapper.UserLogin("aaa", "bbb")
                                 //itemModel.testFunc()
                                 wrapper.SendHomeSignal()
+
+                                //JsIndex.add(testbtns.idx2, '120', 1)
+                                //JsIndex.display(testbtns.idx2)
                             }
                         }
                     }
