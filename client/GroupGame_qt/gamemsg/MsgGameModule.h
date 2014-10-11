@@ -22,7 +22,7 @@ public:
 private:
 	int m_msgid;
 	int m_msglen;
-	char *m_data;
+    std::string m_msgData;
 };
 
 

@@ -4,7 +4,7 @@ import QtQuick.Controls.Styles 1.1
 import QtQuick.Window 2.1
 
 Item {
-    id: mainscene;
+    id: mainscene
     anchors.fill: parent
     visible: true
     property string labeltext: qsTr("朋友")
@@ -18,6 +18,13 @@ Item {
     property string moretext: qsTr("更多")
     property string creategrouptext: qsTr("新建群")
 
+    property int headerH: height / 10
+    property int tailerH: height / 10 * 1.2
+
+    Component.onCompleted: {
+        console.debug("<-------> 3", height, headerH)
+    }
+
     Item {
         id: views
         anchors.top: header.bottom
@@ -26,12 +33,13 @@ Item {
         anchors.bottom: tailer.top
         //z: 0.3
 
-        property alias headerHeight: header.height
-        property alias tailerHeight: tailer.height
+        // careful here
+        property int appH: Qt.platform.os === "android"? Screen.desktopAvailableHeight: 640
+        property int headerHeight: appH / 10
+        property int tailerHeight: appH / 10 * 1.2
 
         FriendView{
             id: friendview
-            //chatHeight: mainscene.height-titlebar.height
         }
 
         GameView{
@@ -52,6 +60,10 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             height: parent.height + tailer.height
+        }
+
+        Component.onCompleted: {
+            console.debug("<-------> 2", headerHeight)
         }
 
         function invisableAll()
@@ -117,7 +129,7 @@ Item {
     Item {
         id: header
         width: parent.width
-        height: parent.height / 10
+        height: parent.headerH
         anchors.top: parent.top
         anchors.left: parent.left
 
@@ -169,10 +181,11 @@ Item {
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            width: backimg.sourceSize.width * 2
+            width: parent.width / 10
 
             signal clicked
             onClicked: {
+                console.debug(backimg.width, backimg.sourceSize.width, backbtn.width)
                 cancelCreateGroup()
             }
 
@@ -212,7 +225,7 @@ Item {
     Item {
         id: tailer
         width: parent.width
-        height: parent.height / 10 * 1.2
+        height: parent.tailerH
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
@@ -238,7 +251,6 @@ Item {
                     exclusiveGroup: group
                     implicitHeight:parent.height
                     implicitWidth: parent.width/4
-                    anchors.topMargin:parent.height/10
                     text: mainscene.friendtext
                     checked: true
                     btnSource: checked ? "../res/friend_2.png" : "../res/friend_1.png"
@@ -250,7 +262,6 @@ Item {
                     exclusiveGroup: group
                     implicitHeight:parent.height
                     implicitWidth: parent.width/4
-                    anchors.topMargin:parent.height/10
                     text: mainscene.gametext
                     btnSource: checked ? "../res/game_2.png" : "../res/game_1.png"
                     onClicked: clickViewBtn(gameIdx)
@@ -261,7 +272,6 @@ Item {
                     exclusiveGroup: group
                     implicitHeight:parent.height
                     implicitWidth: parent.width/4
-                    anchors.topMargin:parent.height/10
                     text: mainscene.findtext
                     btnSource: checked ? "../res/find_2.png" : "../res/find_1.png"
                     onClicked: clickViewBtn(findIdx)
@@ -272,7 +282,6 @@ Item {
                     exclusiveGroup: group
                     implicitHeight:parent.height
                     implicitWidth: parent.width/4
-                    anchors.topMargin:parent.height/10
                     text: mainscene.moretext
                     btnSource: checked ? "../res/more_2.png" : "../res/more_1.png"
                     onClicked: clickViewBtn(moreIdx)

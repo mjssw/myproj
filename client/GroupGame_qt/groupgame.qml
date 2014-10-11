@@ -1,7 +1,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
-import QtQuick.Window 2.1
+import QtQuick.Window 2.2
 import "qml"
 import "qml/JsListIndex.js" as JsIndex
 
@@ -13,9 +13,11 @@ ApplicationWindow {
     width: Qt.platform.os === "android"? Screen.desktopAvailableWidth: 480
     height: Qt.platform.os === "android"? Screen.desktopAvailableHeight: 640
 
+    Component.onCompleted: {
+        console.debug("<-------> 5", height, Screen.desktopAvailableHeight, Screen.height)
+    }
+
     //onClosing: {close.accepted = false}
-
-
     //FontLoader { id: localmsyhFont; source: "res/msyh.ttf" }
 
     // set debugButton=1 to enable debug buttons, other whise set 0 to disable
@@ -25,6 +27,7 @@ ApplicationWindow {
         id: itemModel
         anchors { fill: parent; bottomMargin: groupgame.btmMargin }
         focus: true
+        height: parent.height - parent.btmMargin
 
         Keys.onReleased: {
             console.log("Key pressed: ",event.key)
@@ -42,6 +45,10 @@ ApplicationWindow {
                 console.debug("android home pressed")
                 event.accetped = false
             }
+        }
+
+        Component.onCompleted: {
+            console.debug("<-------> 4", height)
         }
 
         MainScene {
@@ -104,6 +111,12 @@ ApplicationWindow {
             loginscene.registerResult(result)
         }
 
+        function processGameMessage(msgid, msgdata)
+        {
+            console.debug(">>> processGameMessage", msgid, msgdata)
+            wrapper.TestCppCall2(msgdata)
+        }
+
         function testFunc()
         {
             console.debug("testfunc1")
@@ -157,6 +170,9 @@ ApplicationWindow {
         }
         onRegisterResult: {
             itemModel.registerResult(result)
+        }
+        onProcessGameMessage: {
+            itemModel.processGameMessage(msgid, msgdata)
         }
     }
 
@@ -218,10 +234,14 @@ ApplicationWindow {
                                 //console.log(mgr.testmethod());
                                 //wrapper.UserLogin("aaa", "bbb")
                                 //itemModel.testFunc()
-                                wrapper.SendHomeSignal()
+                                //wrapper.SendHomeSignal()
 
                                 //JsIndex.add(testbtns.idx2, '120', 1)
                                 //JsIndex.display(testbtns.idx2)
+
+                                console.debug("<+++++>", Screen.desktopAvailableHeight, Screen.height)
+
+                                wrapper.TestCppCall()
                             }
                         }
                     }

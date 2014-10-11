@@ -5,8 +5,10 @@ Rectangle {
     anchors.fill: parent
     color: "white"
 
-    property int headH: 88
-    property int bottomH: 100
+    property int headH: height / 10
+    property int bottomH: headH * 1.2
+    property int elemH: headH
+    property int spliteH: elemH * 0.3
 
     Loader {
         id: loader
@@ -24,7 +26,7 @@ Rectangle {
 
         CommHeader {
             id: header
-            height: parent.height / 10
+            height: memberinfo.headH
             headtext: qsTr("成员信息")
             z: 0.1
 
@@ -51,10 +53,10 @@ Rectangle {
                 anchors.fill: parent
 
                 Component.onCompleted: {
-                    addElement("../res/boy.png", qsTr("帐号管理"), 100, 1)
-                    addSpliteElement(qsTr(""), 40)
-                    addElement("../res/t2.png", qsTr("等级"), 80, 1)
-                    addElement("../res/t2.png", qsTr("签名"), 80, 1)
+                    addElement("../res/boy.png", qsTr("帐号管理"), memberinfo.elemH*1.2, 1)
+                    addSpliteElement(qsTr(""), memberinfo.spliteH)
+                    addElement("../res/t2.png", qsTr("等级"), memberinfo.elemH, 1)
+                    addElement("../res/t2.png", qsTr("签名"), memberinfo.elemH, 1)
                     setMoveable(true)
                 }
 

@@ -5,6 +5,8 @@
 //#include <QObject>
 #include <QDebug>
 #include <QtCore>
+#include <QString>
+#include <QChar>
 //#include <QtDeclarative/QDeclarativeContext>
 
 #include "../../protomsg/msg/group.pb.h"
@@ -36,8 +38,36 @@ int a = 10;
 int b = 11;
 #endif
 
+void teststring()
+{
+    char s[10]= {12,96,0,59,29,5};
+    std::string data;
+    //data.resize(10);
+    //data.copy(s, 5);
+    data.append(s, 5);
+    qDebug("len=%d", data.length());
+    for(int i=0; i<5; ++i)
+    {
+        int a = (int)data.at(i);
+        qDebug("a[%d]=%d", i, a );
+    }
+
+    /*
+    QString qdata;
+    qdata.append(s);
+    qDebug("len2=%d", qdata.length());
+    for(int i=0; i<5; ++i)
+    {
+        int a = (int)qdata.at(i).toLatin1();
+        qDebug("a[%d]=%d", i, a );
+    }
+    //*/
+}
+
 int main(int argc, char *argv[])
 {
+    teststring();
+
     CUserManager::Instance().Instance();
     CNetManager::Instance().Init();
 

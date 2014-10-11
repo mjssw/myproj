@@ -6,6 +6,7 @@ Rectangle {
     color: "white"
 
     property int off: 5
+    property int headerH: height / 10
 
     Loader {
         id: groupinfoloader
@@ -31,8 +32,8 @@ Rectangle {
             anchors.right: parent.right
             anchors.bottom: parent.bottom
 
-            property int spliteH: 40
-            property int elemH: 80
+            property int elemH: searchgroup.headerH
+            property int spliteH: elemH * 0.3
 
             CommonListView {
                 id: findlst
@@ -76,7 +77,7 @@ Rectangle {
 
         CommHeader {
             id: header
-            height: parent.height / 10
+            height: searchgroup.headerH
             headtext: qsTr("发现")
 
             CommBackbtn {
@@ -93,7 +94,7 @@ Rectangle {
             id: searchitem
             anchors.left: parent.left
             anchors.top: header.bottom
-            height: 80
+            height: searchgroup.headerH * 1.2
             width: parent.width
 
             Item {
@@ -102,7 +103,7 @@ Rectangle {
                 anchors.leftMargin: off
                 height: parent.height - 2*off
                 anchors.verticalCenter: parent.verticalCenter
-                width: parent.width * 0.75
+                width: parent.width * 0.7
 
                 CommEdit {
                     id: edit

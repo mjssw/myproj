@@ -5,7 +5,8 @@ Item {
     anchors.left: parent.left
     anchors.top: parent.top
     anchors.bottom: parent.bottom
-    width: backimg.sourceSize.width * 2
+    //width: backimg.sourceSize.width * 2
+    width: parent.width / 10
 
     property int off: 10
     property int margin: 3

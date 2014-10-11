@@ -71,3 +71,78 @@ void CQtWrapper::SendHomeSignal()
     qDebug("widget count=%d", count);
     //*/
 }
+
+qint8 CQtWrapper::GetMsgDataS8(QVariant msgdata, int idx)
+{
+    const char *data = (const char*)msgdata.value<void*>();
+    return (qint8)ntohs( *((qint8*)(data+idx)) );
+}
+
+quint8 CQtWrapper::GetMsgDataU8(QVariant msgdata, int idx)
+{
+    const char *data = (const char*)msgdata.value<void*>();
+    return (quint8)ntohs( *((quint8*)(data+idx)) );
+}
+
+qint16 CQtWrapper::GetMsgDataS16(QVariant msgdata, int idx)
+{
+    const char *data = (const char*)msgdata.value<void*>();
+    return (qint16)ntohs( *((qint16*)(data+idx)) );
+}
+
+quint16 CQtWrapper::GetMsgDataU16(QVariant msgdata, int idx)
+{
+    const char *data = (const char*)msgdata.value<void*>();
+    return (quint16)ntohs( *((quint16*)(data+idx)) );
+}
+
+qint32 CQtWrapper::GetMsgDataS32(QVariant msgdata, int idx)
+{
+    const char *data = (const char*)msgdata.value<void*>();
+    return (qint32)ntohl( *((qint32*)(data+idx)) );
+}
+
+quint32 CQtWrapper::GetMsgDataU32(QVariant msgdata, int idx)
+{
+    const char *data = (const char*)msgdata.value<void*>();
+    return (quint32)ntohl( *((quint32*)(data+idx)) );
+}
+
+qint64 CQtWrapper::GetMsgDataS64(QVariant msgdata, int idx)
+{
+    const char *data = (const char*)msgdata.value<void*>();
+    return (qint64)ntohl( *((qint64*)(data+idx)) );
+}
+
+quint64 CQtWrapper::GetMsgDataU64(QVariant msgdata, int idx)
+{
+    const char *data = (const char*)msgdata.value<void*>();
+    return (quint64)ntohl( *((quint64*)(data+idx)) );
+}
+
+QString CQtWrapper::GetMsgDataStr(QVariant msgdata, int idx, int len)
+{
+    const char *data = (const char*)msgdata.value<void*>();
+    return QString( QLatin1String(data+idx, len) );
+}
+
+
+char s[10]= {12,96,0,59,29,5};
+void CQtWrapper::TestCppCall()
+{
+    qDebug("CQtWrapper::TestCppCall");
+
+    QVariant v = qVariantFromValue((void *)s);
+    emit processGameMessage(111, v);
+}
+
+void CQtWrapper::TestCppCall2(QVariant msgdata)
+{
+    qDebug("CQtWrapper::TestCppCall2");
+    const char *data = (const char*)msgdata.value<void *>();
+    for(int i=0; i<5; ++i)
+    {
+        qDebug("data[%d]=%d", i, (int)data[i]);
+    }
+}
+

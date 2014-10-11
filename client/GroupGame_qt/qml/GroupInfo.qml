@@ -5,9 +5,11 @@ Rectangle {
     anchors.fill: parent
     color: "white"
 
-    property int headH: 88
-    property int bottomH: 100
+    property int headH: height / 10
+    property int bottomH: headH * 1.2
     property bool isInGroup: false
+    property int elemH: headH
+    property int spliteH: elemH * 0.3
 
     Loader {
         id: memberlistloader
@@ -26,7 +28,7 @@ Rectangle {
 
         CommHeader {
             id: header
-            height: parent.height / 10
+            height: groupinfo.headH
             headtext: qsTr("详细信息")
             z: 0.1
 
@@ -91,13 +93,13 @@ Rectangle {
                 property int keyMemberList: 501
                 Component.onCompleted: {
                     console.debug("-- complete --")
-                    addElement("../res/groupdefault.png", qsTr("群名字"), 100, 1)
-                    addSpliteElement(qsTr(""), 40)
-                    addElement("../res/t2.png", qsTr("成员列表"), 80, keyMemberList)
-                    addSpliteElement(qsTr(""), 40)
-                    addElement("../res/t2.png", qsTr("等级"), 80, 2)
-                    addElement("../res/t2.png", qsTr("人数上限"), 80, 2)
-                    addElement("../res/t2.png", qsTr("介绍"), 80, 2)
+                    addElement("../res/groupdefault.png", qsTr("群名字"), groupinfo.elemH, 1)
+                    addSpliteElement(qsTr(""), groupinfo.spliteH)
+                    addElement("../res/t2.png", qsTr("成员列表"), groupinfo.elemH, keyMemberList)
+                    addSpliteElement(qsTr(""), groupinfo.spliteH)
+                    addElement("../res/t2.png", qsTr("等级"), groupinfo.elemH, 2)
+                    addElement("../res/t2.png", qsTr("人数上限"), groupinfo.elemH, 2)
+                    addElement("../res/t2.png", qsTr("介绍"), groupinfo.elemH, 2)
                     setMoveable(true)
                 }
 

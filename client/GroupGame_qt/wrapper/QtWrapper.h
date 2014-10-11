@@ -2,6 +2,7 @@
 #define _QT_WARPPER_H_
 
 #include <QObject>
+#include <QVariant>
 
 class CQtWrapper : public QObject
 {
@@ -40,12 +41,29 @@ signals:
     void userLoginGroupDone();
     void addGroup(quint64 id, QString name);
     void registerResult(bool result);
+    void processGameMessage(int msgid, QVariant msgdata);
 
     // net process wrapper, called by qml
 public slots:
     bool UserLogin(QString user, QString pwd);
     bool UserRegister(QString user, QString pwd);
     void SendHomeSignal();
+
+
+    void TestCppCall();
+    void TestCppCall2(QVariant msgdata);
+
+    // get variant msg field
+public slots:
+    qint8 GetMsgDataS8(QVariant msgdata, int idx);
+    quint8 GetMsgDataU8(QVariant msgdata, int idx);
+    qint16 GetMsgDataS16(QVariant msgdata, int idx);
+    quint16 GetMsgDataU16(QVariant msgdata, int idx);
+    qint32 GetMsgDataS32(QVariant msgdata, int idx);
+    quint32 GetMsgDataU32(QVariant msgdata, int idx);
+    qint64 GetMsgDataS64(QVariant msgdata, int idx);
+    quint64 GetMsgDataU64(QVariant msgdata, int idx);
+    QString GetMsgDataStr(QVariant msgdata, int idx, int len);
 };
 
 #endif

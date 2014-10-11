@@ -7,9 +7,10 @@ Item {
     visible: false
     anchors.fill: parent
 
-    property int selfH: 100
-    property int elemH: 80
-    property int spliteH: 40
+    property int headerH: parent.headerHeight
+    property int selfH: headerH * 1.5
+    property int elemH: headerH
+    property int spliteH: headerH * 0.3
 
     Rectangle{
         anchors.fill: parent
@@ -25,6 +26,7 @@ Item {
         property int keyHelp: 203
 
         Component.onCompleted: {
+            console.debug("<-------> 0", parent.headerH)
             addElement("../res/boy.png", qsTr("帐号管理"), moreview.selfH, keyUserManager)
             addSpliteElement(qsTr(""), moreview.spliteH)
             addElement("../res/t2.png", qsTr("关于"), moreview.elemH, keyAbout)
@@ -34,7 +36,7 @@ Item {
 
         function clickElement(clickkey)
         {
-            console.debug(clickkey)
+            console.debug(clickkey, parent.headerH)
             morelst.debugInfo()
         }
 
@@ -52,6 +54,12 @@ Item {
 
     function testFunc()
     {
-        morelst.testFunc()
+        //morelst.testFunc()
+        console.debug("headerH=", headerH)
+    }
+
+    Component.onCompleted: {
+        var h = Qt.platform.os === "android"? Screen.desktopAvailableHeight: 640
+        console.debug("<-------> 1", headerH, h)
     }
 }

@@ -10,8 +10,8 @@ Item {
     property int headerHeight: parent.headerHeight
     property int tailerHeight: parent.tailerHeight
 
-    property int elemH: 80
-    property int spliteH: 40
+    property int elemH: headerHeight
+    property int spliteH: headerHeight * 0.3
 
     Loader {
         id: findloader

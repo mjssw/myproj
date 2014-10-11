@@ -8,6 +8,7 @@ Item {
 
     property string resultText: ""
     property int timerstate: 0
+    property int headerH: parent.headerHeight
 
     Rectangle {
         id: createscene
@@ -16,10 +17,11 @@ Item {
 
         Image {
             id: groupinfo
+            height: creategroupview.headerH
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -sourceSize.height
+            anchors.verticalCenterOffset: -height
             source: "../res/input.png"
 
             property int off: 10
@@ -55,7 +57,7 @@ Item {
         Rectangle {
             id: btn
             width: groupinfo.width * 0.8
-            height: groupinfo.height * 0.6
+            height: groupinfo.height * 0.8
             anchors.top: groupinfo.bottom
             anchors.topMargin: groupinfo.height / 2
             anchors.horizontalCenter: parent.horizontalCenter
