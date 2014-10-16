@@ -17,112 +17,174 @@ ApplicationWindow {
         console.debug("<-------> 5", height, Screen.desktopAvailableHeight, Screen.height)
     }
 
+    Loader {
+        id: mainscene
+        anchors.fill: parent
+        sourceComponent: itemModel
+    }
+
     //onClosing: {close.accepted = false}
     //FontLoader { id: localmsyhFont; source: "res/msyh.ttf" }
 
     // set debugButton=1 to enable debug buttons, other whise set 0 to disable
     property int debugButton: 1
     property int btmMargin: 60 * debugButton
-    Item {
+    //Item {
+    Component {
         id: itemModel
-        anchors { fill: parent; bottomMargin: groupgame.btmMargin }
-        focus: true
-        height: parent.height - parent.btmMargin
+        Item {
+            id: mainitem
+            anchors { fill: parent; bottomMargin: groupgame.btmMargin }
+            focus: true
+            height: parent.height - parent.btmMargin
 
-        Keys.onReleased: {
-            console.log("Key pressed: ",event.key)
-            if (event.key === Qt.Key_Back) {
-                console.log("Back button pressed.  Stack depth ")
-                //event.accepted = true
-                //wrapper.SendHomeSignal()
+            Keys.onReleased: {
+                console.log("Key pressed: ",event.key)
+                if (event.key === Qt.Key_Back) {
+                    console.log("Back button pressed.  Stack depth ")
+                    //event.accepted = true
+                    //wrapper.SendHomeSignal()
 
-                //event.key = Qt.Key_Home
-                event.accepted = false
+                    //event.key = Qt.Key_Home
+                    event.accepted = false
 
-                //emit
+                    //emit
+                }
+                else if(event.key === Qt.Key_Home) {
+                    console.debug("android home pressed")
+                    event.accetped = false
+                }
             }
-            else if(event.key === Qt.Key_Home) {
-                console.debug("android home pressed")
-                event.accetped = false
+
+            Component.onCompleted: {
+                console.debug("<-------> 4", height)
+            }
+
+            MainScene {
+                id: mainscene
+                anchors { fill: parent;}
+                visible:false
+            }
+
+            LoginScene {
+                id: loginscene
+                anchors { fill: parent;}
+                visible:true
+            }
+
+            StartScene{
+                id: startscene
+                anchors { fill: parent;}
+                visible:false
+            }
+
+            function showMainScene(isshow)
+            {
+                mainscene.visible = isshow
+            }
+
+            function showLoginScene(isshow)
+            {
+                loginscene.visible = isshow
+            }
+
+            function showStartScene(isshow)
+            {
+                startscene.visible = isshow
+            }
+
+            function addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
+            {
+                console.debug("groupgame addGroup")
+                mainscene.addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
+            }
+
+            function userLogin(user, pwd)
+            {
+                console.debug("[groupgame][itemmodel] >> userlogin", user, pwd)
+                return groupgame.userLogin(user, pwd)
+            }
+
+            function userLoginFailed(param)
+            {
+                loginscene.userLoginFailed(param)
+            }
+
+            function userLoginSuccess()
+            {
+                loginscene.userLoginSuccess()
+            }
+
+            function registerResult(result)
+            {
+                loginscene.registerResult(result)
+            }
+
+            function processGameMessage(msgid, msgdata)
+            {
+                console.debug(">>> processGameMessage", msgid, msgdata)
+                wrapper.TestCppCall2(msgdata)
+            }
+
+            function testFunc()
+            {
+                console.debug("testfunc1")
+                mainscene.testFunc()
+                //Qt.quit()
             }
         }
 
-        Component.onCompleted: {
-            console.debug("<-------> 4", height)
-        }
-
-        MainScene {
-            id: mainscene
-            anchors { fill: parent;}
-            visible:false
-        }
-
-        LoginScene {
-            id: loginscene
-            anchors { fill: parent;}
-            visible:true
-        }
-
-        StartScene{
-            id: startscene
-            anchors { fill: parent;}
-            visible:false
-        }
-
+        /*
         function showMainScene(isshow)
         {
-            mainscene.visible = isshow
+            mainitem.showMainScene(isshow)
         }
 
         function showLoginScene(isshow)
         {
-            loginscene.visible = isshow
+            mainitem.showLoginScene(isshow)
         }
 
         function showStartScene(isshow)
         {
-            startscene.visible = isshow
+            mainitem.showStartScene(isshow)
         }
 
         function addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
         {
-            console.debug("groupgame addGroup")
-            mainscene.addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
+            mainitem.addGroup(head, name, groupid, curcount, maxcount, msg, msgtime)
         }
 
         function userLogin(user, pwd)
         {
-            console.debug("[groupgame][itemmodel] >> userlogin", user, pwd)
-            return groupgame.userLogin(user, pwd)
+            return mainitem.userLogin(user, pwd)
         }
 
         function userLoginFailed(param)
         {
-            loginscene.userLoginFailed(param)
+            mainitem.userLoginFailed(param)
         }
 
         function userLoginSuccess()
         {
-            loginscene.userLoginSuccess()
+            mainitem.userLoginSuccess()
         }
 
         function registerResult(result)
         {
-            loginscene.registerResult(result)
+            mainitem.registerResult(result)
         }
 
         function processGameMessage(msgid, msgdata)
         {
-            console.debug(">>> processGameMessage", msgid, msgdata)
-            wrapper.TestCppCall2(msgdata)
+            mainitem.processGameMessage(msgid, msgdata)
         }
 
         function testFunc()
         {
-            console.debug("testfunc1")
-            mainscene.testFunc()
-            //Qt.quit()
+            mainitem.testFunc()
         }
+        //*/
     }
 
     function hideAllScene()
@@ -233,15 +295,14 @@ ApplicationWindow {
                                 //console.debug(groupgame.height, itemModel.height, testbtns.height)
                                 //console.log(mgr.testmethod());
                                 //wrapper.UserLogin("aaa", "bbb")
-                                //itemModel.testFunc()
+                                itemModel.testFunc()
                                 //wrapper.SendHomeSignal()
 
                                 //JsIndex.add(testbtns.idx2, '120', 1)
                                 //JsIndex.display(testbtns.idx2)
 
-                                console.debug("<+++++>", Screen.desktopAvailableHeight, Screen.height)
-
-                                wrapper.TestCppCall()
+                                //console.debug("<+++++>", Screen.desktopAvailableHeight, Screen.height)
+                                //wrapper.TestCppCall()
                             }
                         }
                     }

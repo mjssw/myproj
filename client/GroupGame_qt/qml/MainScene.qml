@@ -122,7 +122,8 @@ Item {
         function testFunc()
         {
             console.debug("testfunc")
-            moreview.testFunc()
+            //moreview.testFunc()
+            findview.testFunc()
         }
     }
 

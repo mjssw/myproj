@@ -32,6 +32,7 @@ Item {
             addElement("../res/t2.png", qsTr("关于"), moreview.elemH, keyAbout)
             addSpliteElement(qsTr(""), moreview.spliteH)
             addElement("../res/t3.png", qsTr("帮助"), moreview.elemH, keyHelp)
+
         }
 
         function clickElement(clickkey)

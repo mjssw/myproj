@@ -10,6 +10,8 @@ Rectangle {
     property int elemH: headH
     property int spliteH: elemH * 0.3
 
+    signal myItemMessage(string msg)
+
     Loader {
         id: memberinfoloader
         anchors.fill: parent
@@ -76,6 +78,10 @@ Rectangle {
 
     function showMemberInfo()
     {
+        // can directly call function defined in Loader{}
+        // see GroupInfo.qml
+        //loadertest1()
+
         memberinfoloader.source = "MemberInfo.qml"
         memberlstmain.visible = false
     }
@@ -84,5 +90,12 @@ Rectangle {
     {
         memberinfoloader.source = ""
         memberlstmain.visible = true
+    }
+
+    function memberlistdebug()
+    {
+        console.debug("memberlistdebug")
+
+        myItemMessage("myItemMessage in memberlistdebug")
     }
 }

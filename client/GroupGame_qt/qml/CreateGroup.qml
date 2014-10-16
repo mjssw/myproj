@@ -157,7 +157,7 @@ Item {
                     id: errtext
                     anchors.centerIn: parent
                     color: "white"
-                    font.pixelSize: parent.height * 0.6
+                    font.pixelSize: parent.height * 0.6 * 0.6
                     text: resultText
                 }
             }

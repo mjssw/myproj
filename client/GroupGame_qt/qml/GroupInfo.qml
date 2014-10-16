@@ -20,6 +20,26 @@ Rectangle {
         {
             backtoGroupInfo()
         }
+
+        function loadertest1()
+        {
+            console.debug("loadertest1")
+        }
+
+        onLoaded: {
+            console.debug("Loader.onLoaded")
+
+            // can directly call the functions defined in the loaded item
+            item.memberlistdebug()
+
+        }
+    }
+
+    Connections {
+        target: memberlistloader.item
+        onMyItemMessage: {
+            console.debug(msg)
+        }
     }
 
     Item {
@@ -125,9 +145,8 @@ Rectangle {
             id: hintitem
             width: parent.width * 0.9
             height: parent.height / 14
-            anchors.top: parent.top
-            anchors.topMargin: 5
             anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: header.verticalCenter
             z: 0.1
 
             CommHint {

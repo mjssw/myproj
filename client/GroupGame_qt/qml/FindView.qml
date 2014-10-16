@@ -1,6 +1,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+import QtQuick.Window 2.2
 
 Item {
     id: findview;
@@ -27,6 +28,10 @@ Item {
         {
             parent.backFindView()
         }
+
+        onLoaded: {
+            console.debug("@@@@@@@@=1", Screen.desktopAvailableHeight, Screen.height)
+        }
     }
 
     Rectangle{
@@ -45,6 +50,8 @@ Item {
                 addElement("../res/t2.png", qsTr("搜索群"), findview.elemH, keySearchGroup)
                 addSpliteElement(qsTr(""), findview.spliteH)
                 addElement("../res/t1.png", qsTr("附近的群"), findview.elemH, keyNearGroup)
+
+                console.debug("@@@@@@@@=2", Screen.desktopAvailableHeight, Screen.height)
             }
 
             function clickElement(clickkey)
@@ -85,5 +92,11 @@ Item {
         findloader.source = ""
         findlist.visible = true
         parent.showHeaderAndTailer(true)
+    }
+
+    function testFunc()
+    {
+        console.debug("findview::testFunc")
+        clickFindGroups()
     }
 }
