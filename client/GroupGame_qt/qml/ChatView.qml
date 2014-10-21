@@ -17,7 +17,6 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
 
-        property alias backStrText: backbtn.backStrText
 
         Rectangle {
             id: chatheaderbg;
@@ -33,42 +32,11 @@ Item {
             anchors.centerIn: parent;
         }
 
-        Image {
+        CommBackbtn {
             id: backbtn
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: 30
-            source: mouse.pressed ? "../res/back_1.png" : "../res/back_2.png"
-
-            property string backStrText: qsTr("群列表")
-
-            signal clicked
-            onClicked: {
+            function clickBackButton()
+            {
                 parent.backBtnClicked()
-            }
-
-            Text {
-                id: backtext
-                text: parent.backStrText
-                font.pixelSize: parent.height*0.7
-                color: mouse.pressed ? "#969696" : "white"
-                anchors.left: parent.right
-                anchors.leftMargin: 5
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
-            MouseArea {
-                property int off: -20
-                id: mouse
-                anchors.top: parent.top
-                anchors.topMargin: off
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: off
-                anchors.left: backbtn.left
-                anchors.right: backtext.right
-                onClicked: {
-                    backbtn.clicked()
-                }
             }
         }
 
