@@ -120,7 +120,8 @@ OTHER_FILES += \
     qml/MemberInfo.qml \
     qml/MoreGridItem.qml \
     qml/ListIndex.qml \
-    qml/JsListIndex.js
+    qml/JsListIndex.js \
+    qml/GroupGame.qml
 	
 INCLUDEPATH += ./ \
         ../../sglib \

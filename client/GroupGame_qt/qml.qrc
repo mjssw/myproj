@@ -27,6 +27,7 @@
         <file>qml/MemberInfo.qml</file>
         <file>qml/MoreGridItem.qml</file>
         <file>qml/JsListIndex.js</file>
+        <file>qml/GroupGame.qml</file>
         <file>res/friend_1.png</file>
         <file>res/friend_2.png</file>
         <file>res/game_1.png</file>
