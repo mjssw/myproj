@@ -195,6 +195,13 @@ Item {
             membersmenuview.visible = true
             showChatviewHeader(true)
         }
+
+        function addGameRoom()
+        {
+            // TODO
+            console.debug("add game room")
+            gamemenuview.addGameRoom("../res/room.png", "俄罗斯方块", 100, 1234  )
+        }
     }
 
     function showChatviewHeader(isshow)

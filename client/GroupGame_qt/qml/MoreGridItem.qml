@@ -15,6 +15,13 @@ Item {
         source: clickmouse.pressed ? parent.iconPressed : parent.iconNormal
     }
 
+    Rectangle {
+        id: imgmask
+        anchors.fill: elemimg
+        color: "lightgray"
+        opacity: clickmouse.pressed ? 0.7 : 0
+    }
+
     Text {
         anchors.top: elemimg.bottom
         anchors.topMargin: 10

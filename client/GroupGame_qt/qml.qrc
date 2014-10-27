@@ -69,5 +69,6 @@
         <file>res/t3.png</file>
         <file>res/game.png</file>
         <file>res/position.png</file>
+        <file>res/room.png</file>
     </qresource>
 </RCC>

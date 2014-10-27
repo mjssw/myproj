@@ -9,10 +9,12 @@ Item {
     property int headerHeight: parent.headerHeight
     property int menuHeight: parent.menuHeight
 
+    /*
     Rectangle {
         anchors.fill: parent
         color: "yellow"
     }
+    //*/
 
     Item{
         id: roomlist

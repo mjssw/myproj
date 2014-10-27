@@ -48,6 +48,7 @@ Item {
                     function onClickGridItem()
                     {
                         console.debug("click grid item add game")
+                        addGame()
                     }
                 }
 
@@ -62,6 +63,7 @@ Item {
                     function onClickGridItem()
                     {
                         console.debug("click grid item add position")
+                        addSelfPosition()
                     }
                 }
             }
@@ -292,6 +294,17 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                 }
 
+                /*
+                Image {
+                    id: roomimg
+                    height: msgid.height
+                    width: height
+                    visible: isself===1?true:false
+                    source: "../res/room.png"
+                    anchors.left: msgid.right
+                    anchors.verticalCenter: parent.verticalCenter
+                }//*/
+
                 Image{
                     id: msgsender
                     width: chatview.minMsgHeight
@@ -338,6 +351,11 @@ Item {
                                 })
             chatmsglist.positionViewAtEnd()
         }
+
+        function sendGameRoomMsg()
+        {
+            console.debug("sendGameRoomMsg")
+        }
     }
 
     function showChatMenuView(isshow)
@@ -366,5 +384,18 @@ Item {
     function hideMoreItemContent()
     {
         chatbar.hideMoreItemContent()
+    }
+
+    function addGame()
+    {
+        console.debug("add game")
+        hideMoreItemContent()
+        parent.addGameRoom()
+        chatmsgview.sendGameRoomMsg()
+    }
+
+    function addSelfPosition()
+    {
+        console.debug("add self pos")
     }
 }
